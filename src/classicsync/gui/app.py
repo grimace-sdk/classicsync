@@ -9,7 +9,7 @@ from .branding import PRODUCT_NAME, set_naming
 from .macos import set_application_name
 from ..rapi.client import HKEY_LOCAL_MACHINE, RapiError
 from ..sync import Partnership, create_partnership, delete_partnership, find_partnership, read_device_partners
-from ..sync.partners import clear_device_partner, rename_device
+from ..sync.partners import clear_device_partner, describe_device, rename_device
 from .common.backup import BackupRunner
 from .common.sync_runner import SyncRunner
 from .frontends import AUTOMATIC, DEFAULT_IDLE, available_frontends, frontend_for_version
@@ -174,7 +174,7 @@ class Application(wx.App):
             wx.CallAfter(finished, None if error else future.result(), error)
         self.service.submit(self.service.with_rapi(operation)).add_done_callback(done)
 
-    def create_partnership(self, finished, name=None, exclusive=False, remove_slots=()):
+    def create_partnership(self, finished, name=None, exclusive=False, remove_slots=(), description=None):
         announcement = self.service.announcement
 
         async def create(client):
@@ -184,6 +184,8 @@ class Application(wx.App):
             current_name = self.device_details.get("name") or ""
             if name and name != current_name:
                 await rename_device(client, name)
+            if description is not None and description != self.device_details.get("description", ""):
+                await describe_device(client, description)
             return await create_partnership(client, name or current_name or None, exclusive=exclusive, partners=partners)
 
         def created(partnership, error):
@@ -191,6 +193,8 @@ class Application(wx.App):
                 self.partnership = partnership
                 if name:
                     self.device_details["name"] = name
+                if description is not None:
+                    self.device_details["description"] = description
                 self.frontend.on_details(announcement)
             finished(partnership, error)
 

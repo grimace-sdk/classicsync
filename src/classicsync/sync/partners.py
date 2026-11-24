@@ -20,6 +20,7 @@ LEGACY_PARTNER_KEY = "Ident"
 LEGACY_PARTNER_ID_VALUE = "PartnerId"
 DEVICE_NAME_KEY = "Ident"
 DEVICE_NAME_VALUE = "Name"
+DEVICE_DESCRIPTION_VALUE = "Desc"
 PARTNER_SLOTS = (1, 2)
 LEGACY_PARTNER_SLOTS = (1,)
 MAX_PARTNER_NAME = 15
@@ -175,6 +176,10 @@ async def rename_device(client, name):
     if not valid_device_name(name):
         raise PartnershipError(_("Enter a unique name that starts with a letter and contains the characters _, A-Z, or 0-9."))
     await write_values(client, DEVICE_NAME_KEY, [(DEVICE_NAME_VALUE, REG_SZ, name)])
+
+
+async def describe_device(client, description):
+    await write_values(client, DEVICE_NAME_KEY, [(DEVICE_DESCRIPTION_VALUE, REG_SZ, description)])
 
 
 def match_partnership(partner_ids, partnerships):

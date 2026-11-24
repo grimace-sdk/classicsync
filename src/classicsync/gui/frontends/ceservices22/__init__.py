@@ -24,8 +24,6 @@ SYNC_MANAGER_MODULE = "SyncMgr.exe"
 COMBINE_INTRO = N_("Some mobile device items already exist on your mobile device. You can keep this data, or discard and replace "
                    "it with the items on your desktop computer. Please choose one of the following options to select what you "
                    "want to do with the items currently on your mobile device.")
-PARTNERSHIP_FAILED = N_("Failed to setup the partnership between this device and the desktop computer. Establishing a Guest "
-                        "connection.")
 FRONTEND_KEY = "ceservices22"
 
 
@@ -167,7 +165,17 @@ class CeServicesFrontend(Frontend):
         finally:
             self.device_prompt_open = False
         if choice == CHOICE_PARTNERSHIP and self.service.announcement is announcement:
-            self.set_up_partnership(_("New Partnership Wizard"), _(PARTNERSHIP_FAILED))
+            from ...common.sync_runner import SYNC_MODE_CONNECT
+            from .partnership_wizard import run_partnership_wizard
+            self.device_prompt_open = True
+            try:
+                created = run_partnership_wizard(self.main_window, self)
+            finally:
+                self.device_prompt_open = False
+            if created and self.application.partnership:
+                if self.settings.sync_mode == SYNC_MODE_CONNECT:
+                    self.sync.start()
+                self.partnership_created()
         elif choice == CHOICE_RESTORE and self.service.announcement is announcement:
             from .backup import restore_guest
             restore_guest(self, self.main_window)

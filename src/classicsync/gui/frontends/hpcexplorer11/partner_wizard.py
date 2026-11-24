@@ -5,17 +5,14 @@ import wx
 from ....i18n import N_, _
 from ...common.backup import BackupSettings
 from ...common.backup_dialogs import BackupFlow, warning_bitmap
+from ...common.classic_wizard import ClassicWizard
 from ...common.layout import dialog_size, place
 from ...common.sync_runner import SYNC_MODE_CONNECT, SYNC_MODE_MANUAL
 from .artwork import EXPLORER
 from .backup import WORDING, BackupNotCompleteDialog
 
 TITLE = N_("Setup New Partner Wizard")
-PAGE_WIDTH = 276
-PAGE_HEIGHT = 140
-BUTTON_TOP = PAGE_HEIGHT + 12
 SIDE_BITMAP = "bitmap_158.bmp"
-SIDE_WIDTH = 80
 
 PAGE_SYNC_ON_CONNECT = 149
 PAGE_DEVICE_PARTNERED = 151
@@ -122,43 +119,26 @@ def sync_not_complete_dialog(parent):
     ], _("Synchronize &Now"), _("&Skip"), 75, 145, accept_width=64)
 
 
-class PartnerWizard(wx.Dialog):
+class PartnerWizard(ClassicWizard):
+    page_text = PAGE_TEXT
+    finish_pages = FINISH_PAGES
+    first_page = PAGE_INTRO
+
     def __init__(self, parent, frontend):
-        super().__init__(parent, title=_(TITLE))
-        self.frontend = frontend
-        self.application = frontend.application
-        self.history = []
         self.backed_up = False
         self.synchronized = False
-        self.creating = False
-        self.SetClientSize(dialog_size(self, PAGE_WIDTH, BUTTON_TOP + 21))
-        side = frontend.artwork.bitmap(EXPLORER, SIDE_BITMAP, transparent=False)
-        self.pages = {number: self._build(number, side) for number in PAGE_TEXT}
-        place(self, wx.StaticLine, 0, PAGE_HEIGHT + 5, PAGE_WIDTH, 1)
-        self.back = place(self, wx.Button, 113, BUTTON_TOP, 50, 14, _("< &Back"))
-        self.next = place(self, wx.Button, 163, BUTTON_TOP, 50, 14, _("&Next >"))
-        self.cancel = place(self, wx.Button, 219, BUTTON_TOP, 50, 14, _("Cancel"))
-        self.back.Bind(wx.EVT_BUTTON, self.on_back)
-        self.next.Bind(wx.EVT_BUTTON, self.on_next)
-        self.cancel.Bind(wx.EVT_BUTTON, self.on_cancel)
-        self.Bind(wx.EVT_CLOSE, self.on_cancel)
-        self.show_page(PAGE_INTRO)
-        self.CentreOnScreen()
+        self.side = frontend.artwork.bitmap(EXPLORER, SIDE_BITMAP, transparent=False)
+        super().__init__(parent, frontend, _(TITLE))
 
-    def _build(self, number, side):
-        page = wx.Panel(self, pos=(0, 0), size=dialog_size(self, PAGE_WIDTH, PAGE_HEIGHT))
-        if side.IsOk():
-            size = dialog_size(self, SIDE_WIDTH, PAGE_HEIGHT)
-            image = side.ConvertToImage().Scale(size.width, size.height, wx.IMAGE_QUALITY_HIGH)
-            wx.StaticBitmap(page, bitmap=wx.Bitmap(image), pos=(0, 0))
-        for text, x, y, width, height in PAGE_TEXT[number]:
-            place(page, wx.StaticText, x, y, width, height, _(text))
+    def side_bitmap(self, number):
+        return self.side
+
+    def build_page(self, number, page):
         if number == PAGE_AUTOMATIC_BACKUP:
-            settings = BackupSettings.load(self.application.partnership) if self.application.partnership else None
             place(page, wx.StaticLine, 92, 74, 184, 1)
             self.automatic_backup = place(page, wx.CheckBox, 92, 82, 184, 10, _("&Automatically back up upon connecting"))
             self.automatic_backup.SetValue(True)
-            self.backup_path = place(page, wx.TextCtrl, 92, 107, 184, 14, str(settings.path) if settings else "")
+            self.backup_path = place(page, wx.TextCtrl, 92, 107, 184, 14, "")
             browse = place(page, wx.Button, 230, 126, 46, 14, _("Br&owse..."))
             browse.Bind(wx.EVT_BUTTON, self.on_browse)
         elif number == PAGE_FULL_BACKUP:
@@ -169,23 +149,15 @@ class PartnerWizard(wx.Dialog):
             place(page, wx.StaticLine, 92, 72, 184, 1)
             self.sync_on_connect = place(page, wx.CheckBox, 92, 80, 184, 10, _("&Automatically synchronize upon connecting"))
             self.sync_on_connect.SetValue(True)
-        return page
 
-    def show_page(self, number):
-        for page_number, page in self.pages.items():
-            page.Show(page_number == number)
-        self.current = number
+    def page_shown(self, number):
         if number == PAGE_AUTOMATIC_BACKUP and not self.backup_path.GetValue() and self.application.partnership:
             self.backup_path.SetValue(str(BackupSettings.load(self.application.partnership).path))
-        self.next.SetLabel(_("Finish") if number in FINISH_PAGES else _("&Next >"))
-        self.back.Enable(bool(self.history) and not self.creating)
-        self.next.Enable(not self.creating)
-        self.cancel.Enable(number not in FINISH_PAGES)
-        self.Layout()
 
-    def go(self, number):
-        self.history.append(self.current)
-        self.show_page(number)
+    def can_go_back(self):
+        if not self.history:
+            return False
+        return not (self.application.partnership and self.history[-1] in (PAGE_INTRO, PAGE_DEVICE_PARTNERED))
 
     def device_has_other_partner(self):
         partners = self.application.device_partners
@@ -227,37 +199,24 @@ class PartnerWizard(wx.Dialog):
             settings.save()
             self.go(PAGE_COMPLETE)
 
-    def on_back(self, event):
-        if self.history:
-            previous = self.history.pop()
-            if previous in (PAGE_INTRO, PAGE_DEVICE_PARTNERED) and self.application.partnership:
-                self.history.append(previous)
-                return
-            self.show_page(previous)
-
-    def on_cancel(self, event):
-        if self.current in FINISH_PAGES:
-            self.EndModal(wx.ID_CANCEL)
-            return
+    def confirm_cancel(self):
         with exit_setup_dialog(self) as dialog:
-            if dialog.ShowModal() == wx.ID_CANCEL:
-                self.EndModal(wx.ID_CANCEL)
+            return dialog.ShowModal() == wx.ID_CANCEL
 
     def on_browse(self, event):
         current = self.backup_path.GetValue()
-        with wx.FileDialog(self, _("Automatic backup path and filename:"), defaultFile=current.rsplit("/", 1)[-1] if current else "",
+        with wx.FileDialog(self, _("Automatic backup path and filename:"), defaultFile=Path(current).name if current else "",
                            wildcard=_("Backup Files (*.stg)|*.stg"), style=wx.FD_SAVE) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
                 self.backup_path.SetValue(dialog.GetPath())
 
     def create_partnership(self):
-        self.creating = True
-        self.show_page(self.current)
+        self.set_busy(True)
 
         def created(partnership, error):
             if not self:
                 return
-            self.creating = False
+            self.busy = False
             if partnership is None or error:
                 self.history = []
                 self.show_page(PAGE_FAILURE)

@@ -24,7 +24,6 @@ REPLICATION_MODULE = "replui.dll"
 COMBINE_INTRO = N_("Information Manager items already exist on your H/PC. You can keep this data, or discard and replace it with "
                    "the items on your desktop computer. Please choose one of the following options to select what you want to do "
                    "with the items currently on your H/PC.")
-PARTNERSHIP_FAILED = N_("Failed to setup the primary partnership between this H/PC and desktop computer. Establishing a Guest connection.")
 HPC_COMBINE_BUTTONS = (99, 132, 164)
 
 

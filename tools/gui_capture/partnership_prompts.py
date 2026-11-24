@@ -2,7 +2,7 @@ import wx
 
 from classicsync.gui.common.new_device import CHOICE_GUEST, CHOICE_PARTNERSHIP, NewDeviceDialog
 from classicsync.gui.frontends.activesync31.partnership_wizard import PAGE_COMPLETE, NewPartnershipWizard
-from classicsync.gui.frontends.hpcexplorer11.partner_wizard import FINISH_PAGES, PartnerWizard
+from classicsync.gui.common.classic_wizard import ClassicWizard
 
 
 def answer_wizard(wizard, create):
@@ -12,7 +12,7 @@ def answer_wizard(wizard, create):
     wizard.on_next(None)
 
 
-def answer_partner_wizard(wizard, on_page=None, interval=400):
+def answer_classic_wizard(wizard, on_page=None, interval=400):
     wizard.backed_up = True
     wizard.synchronized = True
 
@@ -21,10 +21,10 @@ def answer_partner_wizard(wizard, on_page=None, interval=400):
             return
         if on_page:
             on_page(wizard)
-        if wizard.creating:
+        if wizard.busy:
             wx.CallLater(interval, step)
             return
-        finishing = wizard.current in FINISH_PAGES
+        finishing = wizard.current in wizard.finish_pages
         wizard.on_next(None)
         if not finishing:
             wx.CallLater(interval, step)
@@ -44,8 +44,8 @@ def answer_partnership_prompts(create, interval=250, skip_backup=True):
             answered.append(window)
             if isinstance(window, NewPartnershipWizard):
                 answer_wizard(window, create)
-            elif isinstance(window, PartnerWizard):
-                answer_partner_wizard(window, partner_wizard_page)
+            elif isinstance(window, ClassicWizard):
+                answer_classic_wizard(window, partner_wizard_page)
             elif isinstance(window, NewDeviceDialog):
                 window.choose(CHOICE_PARTNERSHIP if create else CHOICE_GUEST)
             elif skip_backup and type(window).__name__ == "BackupNotCompleteDialog":
