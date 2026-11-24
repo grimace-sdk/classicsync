@@ -101,9 +101,27 @@ async def rapi_session(arguments):
             client.close()
 
 
+USB_WAIT_SECONDS = 0.5
+
+
+async def start_when_attached(desktop, port):
+    waiting = False
+    while True:
+        try:
+            await desktop.start()
+            return
+        except OSError as error:
+            if not port.startswith("usb"):
+                raise
+            if not waiting:
+                print(_("waiting for a USB device ({error})").format(error=error), file=sys.stderr)
+                waiting = True
+            await asyncio.sleep(USB_WAIT_SECONDS)
+
+
 async def command_serve(arguments):
     desktop = make_desktop(arguments)
-    await desktop.start()
+    await start_when_attached(desktop, arguments.port)
     host, separator, port = arguments.listen.rpartition(":")
     server = await desktop.serve_rapi_proxy(host or "127.0.0.1", int(port))
     print(_("listening for a device on {port}; RAPI on {address}").format(port=desktop.transport.name, address=arguments.listen),

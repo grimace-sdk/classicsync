@@ -50,7 +50,7 @@ On Linux, wxPython has no prebuilt wheel on PyPI; add `--find-links https://extr
 | Cable | Port to choose |
 | --- | --- |
 | Serial cable or serial cradle | the serial port (`COM1`, `/dev/ttyUSB0`, `/dev/cu.usbserial-...`) |
-| USB cradle (iPAQ, Jornada 5xx, Cassiopeia E-series) | Linux: `/dev/ttyUSB0`. macOS and Windows: the `usb:` entry, which needs libusb (`brew install libusb` on macOS; the WinUSB driver via Zadig on Windows). USB cradles have not been tested on hardware yet. |
+| USB cradle (iPAQ, Jornada, Cassiopeia E-series) | Nothing to choose: with "Allow USB connection" ticked (the default), ClassicSync connects as soon as a known cradle appears, alongside the serial port. On Linux the cradle may instead appear as `/dev/ttyUSB0`. macOS and Windows need libusb (`brew install libusb` on macOS; the WinUSB driver via Zadig on Windows). USB cradles have not been tested on hardware yet. |
 | Infrared | an IR serial port, where your computer has one |
 | An emulator offering its serial port over TCP | `tcp:HOST:PORT` |
 

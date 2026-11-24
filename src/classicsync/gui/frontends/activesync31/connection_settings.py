@@ -69,8 +69,8 @@ class ConnectionSettingsDialog(wx.Dialog):
         place(self, wx.StaticText, 21, 98, 27, 10, _("Status:"))
         self.port_status = place(self, wx.StaticText, 50, 98, 180, 10, "")
 
-        usb = place(self, wx.CheckBox, 8, 116, 216, 13, _("Allow &USB connection with this desktop computer."))
-        usb.Enable(False)
+        self.usb_enabled = place(self, wx.CheckBox, 8, 116, 216, 13, _("Allow &USB connection with this desktop computer."))
+        self.usb_enabled.SetValue(settings.usb_enabled)
         place(self, wx.StaticText, 21, 130, 27, 10, _("Status:"))
         place(self, wx.StaticText, 50, 130, 155, 10, usb_status())
         network = place(self, wx.CheckBox, 8, 149, 216, 19,
@@ -130,7 +130,8 @@ class ConnectionSettingsDialog(wx.Dialog):
     def on_ok(self, event):
         settings = self.application.settings
         changed = (settings.serial_enabled != self.serial_enabled.GetValue() or settings.serial_port != self.port.GetValue().strip()
-                   or settings.serial_baud != SPEEDS[self.speed.GetSelection()])
+                   or settings.serial_baud != SPEEDS[self.speed.GetSelection()] or settings.usb_enabled != self.usb_enabled.GetValue())
+        settings.usb_enabled = self.usb_enabled.GetValue()
         settings.serial_enabled = self.serial_enabled.GetValue()
         settings.serial_port = self.port.GetValue().strip()
         settings.serial_baud = SPEEDS[self.speed.GetSelection()]

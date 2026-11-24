@@ -9,6 +9,7 @@ class Settings:
     serial_enabled: bool = True
     serial_port: str = ""
     serial_baud: int = 0
+    usb_enabled: bool = True
     last_baud: int = 0
     network_enabled: bool = False
     show_tray_icon: bool = True

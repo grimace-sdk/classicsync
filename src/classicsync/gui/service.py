@@ -8,6 +8,7 @@ from ..connection.desktop import Desktop
 from ..connection.scanner import AUTOBAUD_SPEEDS, DTR_DROP_SECONDS
 from ..i18n import _
 from ..link.transport import open_transport, port_has_baud
+from ..link.usb import attached_devices, usb_available
 from ..rapi.structures import datetime_to_filetime
 from ..sync import Partnership
 from ..sync.partners import match_partnership
@@ -20,6 +21,7 @@ STATE_CONNECTING = "connecting"
 STATE_CONNECTED = "connected"
 
 RESTART_SECONDS = 3.0
+USB_POLL_SECONDS = 0.5
 AUTOBAUD_ATTEMPT_SECONDS = 30.0
 
 
@@ -38,6 +40,7 @@ class DeviceService:
         self.proxy_server = None
         self.error = None
         self.request_password = None
+        self.usb_ready = None
 
     def _run_loop(self):
         asyncio.set_event_loop(self.loop)
@@ -115,30 +118,94 @@ class DeviceService:
                 pass
             self.desktop = None
 
+    def _serial_port(self):
+        return self.settings.serial_port if self.settings.serial_enabled else ""
+
+    async def _usb_enabled(self):
+        if not self.settings.usb_enabled:
+            return False
+        if self.usb_ready is None:
+            self.usb_ready = await asyncio.to_thread(usb_available)
+        return self.usb_ready
+
+    async def _attached_usb(self):
+        devices = await asyncio.to_thread(attached_devices)
+        return devices[0][0] if devices else None
+
+    async def _usb_while_waiting(self):
+        while True:
+            if self.state == STATE_WAITING:
+                spec = await self._attached_usb()
+                if spec:
+                    return spec
+            await asyncio.sleep(USB_POLL_SECONDS)
+
     async def _supervise(self):
         while True:
-            if not (self.settings.serial_enabled and self.settings.serial_port):
+            usb = await self._usb_enabled()
+            if not (self._serial_port() or usb):
                 self._set_state(STATE_DISABLED)
                 return
             try:
-                await self._run_session()
+                await self._run_next_session(usb)
             except asyncio.CancelledError:
                 raise
             except Exception as error:
                 log.info("connection ended: %s", error)
                 self._set_state(STATE_WAITING, error=str(error))
             await self._close_desktop()
+            await self._pause(usb)
+
+    async def _pause(self, usb):
+        if not usb:
             await asyncio.sleep(RESTART_SECONDS)
+            return
+        try:
+            await asyncio.wait_for(self._usb_while_waiting(), RESTART_SECONDS)
+        except asyncio.TimeoutError:
+            pass
+
+    async def _run_next_session(self, usb):
+        serial_port = self._serial_port()
+        spec = await self._attached_usb() if usb else None
+        if spec:
+            await self._run_session(spec)
+            return
+        if not usb:
+            await self._run_session(serial_port)
+            return
+        if not serial_port:
+            self._set_state(STATE_WAITING)
+            await self._run_session(await self._usb_while_waiting())
+            return
+        serial_session = asyncio.create_task(self._run_session(serial_port))
+        usb_watch = asyncio.create_task(self._usb_while_waiting())
+        try:
+            done, pending = await asyncio.wait({serial_session, usb_watch}, return_when=asyncio.FIRST_COMPLETED)
+        finally:
+            for task in (serial_session, usb_watch):
+                if not task.done():
+                    task.cancel()
+        if serial_session in done:
+            serial_session.result()
+            return
+        try:
+            await serial_session
+        except (asyncio.CancelledError, Exception):
+            pass
+        await self._close_desktop()
+        log.info("USB device %s attached; switching from %s", usb_watch.result(), serial_port)
+        await self._run_session(usb_watch.result())
 
     def _starting_baud(self):
         return self.settings.serial_baud or self.settings.last_baud or AUTOBAUD_SPEEDS[0]
 
-    async def _run_session(self):
-        transport = open_transport(self.settings.serial_port, self._starting_baud())
+    async def _run_session(self, port):
+        transport = open_transport(port, self._starting_baud())
         self.desktop = Desktop(transport, password_provider=self._password_provider, partnership_policy=self._partnership_policy)
         await self.desktop.start()
         autobaud = None
-        if port_has_baud(self.settings.serial_port) and not self.settings.serial_baud:
+        if port_has_baud(port) and not self.settings.serial_baud:
             autobaud = asyncio.create_task(self._autobaud(transport))
         try:
             await self._serve_session()

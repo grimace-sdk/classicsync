@@ -53,6 +53,16 @@ def require_pyusb():
     return usb.core, usb.util
 
 
+def usb_available():
+    try:
+        core, _ = require_pyusb()
+        list(core.find(find_all=True))
+    except Exception as error:
+        log.info("USB connections unavailable: %s", error)
+        return False
+    return True
+
+
 def attached_devices():
     try:
         core, _ = require_pyusb()
