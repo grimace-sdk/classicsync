@@ -15,7 +15,7 @@ classicsync serve usb                       # first attached ActiveSync USB crad
 
 Any device command also takes `--port PORT` to connect directly without `serve`, `--password` for a password-protected device, and `-v` for more detail.
 
-USB cradles for CE 3.0-era devices are a serial stream over bulk endpoints. On Linux the kernel `ipaq` driver exposes them as `/dev/ttyUSB0`. Elsewhere install the `usb` extra (`pyusb`, plus libusb) and use `usb` or `usb:VVVV:PPPP`; on Windows the cradle needs the WinUSB driver (for example via Zadig). The USB path follows the Linux driver but has not been tested on hardware yet.
+USB cradles for CE 3.0-era devices are a serial stream over bulk endpoints. On Linux the kernel `ipaq` driver exposes them as `/dev/ttyUSB0`. Elsewhere use `usb` or `usb:VVVV:PPPP`: the release archives include libusb, and from source the `usb` extra installs `pyusb` and `libusb-package`. On Windows the cradle needs the WinUSB driver (for example via Zadig). Tested with an HP Jornada 720 USB dock on macOS. `serve` waits for a USB device to appear.
 
 ### Casio BE-300 (PC Connect)
 

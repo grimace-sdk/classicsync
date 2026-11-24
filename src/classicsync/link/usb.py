@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import logging
 import threading
 from dataclasses import dataclass
@@ -53,10 +54,19 @@ def require_pyusb():
     return usb.core, usb.util
 
 
+@functools.cache
+def usb_backend():
+    try:
+        import libusb_package
+    except ImportError:
+        return None
+    return libusb_package.get_libusb1_backend()
+
+
 def usb_available():
     try:
         core, _ = require_pyusb()
-        list(core.find(find_all=True))
+        list(core.find(backend=usb_backend(), find_all=True))
     except Exception as error:
         log.info("USB connections unavailable: %s", error)
         return False
@@ -66,7 +76,7 @@ def usb_available():
 def attached_devices():
     try:
         core, _ = require_pyusb()
-        found = list(core.find(find_all=True))
+        found = list(core.find(backend=usb_backend(), find_all=True))
     except Exception as error:
         log.info("USB enumeration unavailable: %s", error)
         return []
@@ -141,7 +151,7 @@ class UsbSerialTransport(Transport):
         vendor_id, product_id = parse_spec(self.spec)
         self.name = f"usb:{vendor_id:04x}:{product_id:04x}"
         try:
-            device = core.find(idVendor=vendor_id, idProduct=product_id)
+            device = core.find(backend=usb_backend(), idVendor=vendor_id, idProduct=product_id)
         except core.NoBackendError as error:
             raise OSError("USB connections need libusb, which was not found (see the README)") from error
         if device is None:
@@ -229,7 +239,7 @@ class UsbSerialTransport(Transport):
     def _reset_device(self):
         core, util = require_pyusb()
         vendor_id, product_id = parse_spec(self.spec)
-        device = core.find(idVendor=vendor_id, idProduct=product_id)
+        device = core.find(backend=usb_backend(), idVendor=vendor_id, idProduct=product_id)
         if device is None:
             return False
         try:

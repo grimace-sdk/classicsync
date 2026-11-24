@@ -28,15 +28,18 @@ def platform_name():
     return f"{system}-{machine}"
 
 
-def run_pyinstaller(name, script, windowed):
+CLI_FOLDER = "classicsync-cli"
+
+
+def run_pyinstaller(name, script, windowed, stage):
     arguments = [
         str(script), "--name", name, "--noconfirm", "--clean", "--onedir",
-        "--distpath", str(BUILD / "dist"), "--workpath", str(BUILD / "work"), "--specpath", str(BUILD / "spec"),
-        "--collect-submodules", "classicsync", "--collect-data", "classicsync",
+        "--distpath", str(BUILD / stage / "dist"), "--workpath", str(BUILD / stage / "work"), "--specpath", str(BUILD / stage / "spec"),
+        "--collect-submodules", "classicsync", "--collect-data", "classicsync", "--collect-all", "libusb_package",
         "--paths", str(REPOSITORY / "src"),
     ]
     if not windowed:
-        arguments += ["--exclude-module", "wx", "--exclude-module", "classicsync.gui"]
+        arguments += ["--exclude-module", "wx"]
     if windowed:
         arguments.append("--windowed")
         if platform.system() == "Darwin":
@@ -63,24 +66,24 @@ def add_privacy_descriptions(application):
     subprocess.run(["codesign", "--force", "--deep", "--sign", "-", str(application)], check=True)
 
 
-def archive(source_directories, output):
+def archive(sources, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     if platform.system() == "Darwin":
         staging = BUILD / output.stem
         staging.mkdir(parents=True, exist_ok=True)
-        for source in source_directories:
-            subprocess.run(["ditto", str(source), str(staging / source.name)], check=True)
+        for source, folder in sources:
+            subprocess.run(["ditto", str(source), str(staging / folder)], check=True)
         subprocess.run(["ditto", "-c", "-k", "--sequesterRsrc", "--keepParent", str(staging), str(output)], check=True)
         return output
     if output.suffix == ".zip":
         with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as bundle:
-            for source in source_directories:
+            for source, folder in sources:
                 for path in sorted(source.rglob("*")):
-                    bundle.write(path, path.relative_to(source.parent))
+                    bundle.write(path, Path(folder) / path.relative_to(source))
     else:
         with tarfile.open(output, "w:gz") as bundle:
-            for source in source_directories:
-                bundle.add(source, arcname=source.name)
+            for source, folder in sources:
+                bundle.add(source, arcname=folder)
     return output
 
 
@@ -90,14 +93,17 @@ def main():
     arguments = parser.parse_args()
     if BUILD.exists():
         shutil.rmtree(BUILD)
-    run_pyinstaller("classicsync", PACKAGING / "launch_cli.py", windowed=False)
-    outputs = [BUILD / "dist" / "classicsync"]
+    run_pyinstaller("classicsync", PACKAGING / "launch_cli.py", windowed=False, stage="cli")
+    cli_output = BUILD / "cli" / "dist" / "classicsync"
+    subprocess.run([str(cli_output / ("classicsync.exe" if platform.system() == "Windows" else "classicsync")), "--help"],
+                   check=True, stdout=subprocess.DEVNULL)
+    outputs = [(cli_output, CLI_FOLDER)]
     if not arguments.skip_gui:
-        run_pyinstaller("ClassicSync", PACKAGING / "launch_gui.py", windowed=True)
-        gui_output = BUILD / "dist" / ("ClassicSync.app" if platform.system() == "Darwin" else "ClassicSync")
+        run_pyinstaller("ClassicSync", PACKAGING / "launch_gui.py", windowed=True, stage="gui")
+        gui_output = BUILD / "gui" / "dist" / ("ClassicSync.app" if platform.system() == "Darwin" else "ClassicSync")
         if platform.system() == "Darwin":
             add_privacy_descriptions(gui_output)
-        outputs.append(gui_output)
+        outputs.append((gui_output, gui_output.name))
     extension = ".tar.gz" if platform.system() == "Linux" else ".zip"
     result = archive(outputs, DIST / f"ClassicSync-{version()}-{platform_name()}{extension}")
     print(result)
