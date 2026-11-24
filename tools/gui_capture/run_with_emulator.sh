@@ -5,8 +5,8 @@ if [ $# -lt 4 ]; then
     exit 2
 fi
 ROM=$1; STATE=$2; OUTPUT=$3; DRIVER=$4; ARTWORK_PRODUCT=$5; ARTWORK_DIR=$6
-VELO_EMU=${VELO_EMU:-$(cd "$(dirname "$0")/../../.." && pwd)/velo-emu}
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
+VELO_EMU=${VELO_EMU:-$REPO/../velo-emu}
 mkdir -p "$OUTPUT"
 PORT=$(python3 -c 'import socket; s = socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')
 (cd "$VELO_EMU" && exec ./headless "$ROM" --load="$STATE" --seconds=100000 --realtime=1 --tcp=$PORT > "$OUTPUT/headless.log" 2>&1) &

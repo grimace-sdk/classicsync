@@ -14,7 +14,7 @@ from classicsync.sync.providers.notes.markdown import document_from_markdown, ma
 from classicsync.sync.providers.notes.provider import NotesProvider
 from classicsync.sync.providers.notes.pwi import is_pwi, pwi_paragraphs, pwi_text
 
-SAMPLES = Path(os.environ.get("CLASSICSYNC_PWI_SAMPLES", ""))
+SAMPLES = Path(os.environ.get("CLASSICSYNC_PWI_SAMPLES", Path(__file__).resolve().parents[2] / "sh3" / "emu" / "rom" / "nk-a51-ce1.01" / "files"))
 PROVIDERS = {"folder": FolderProvider, "notes": NotesProvider}
 
 
