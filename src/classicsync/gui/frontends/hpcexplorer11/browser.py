@@ -4,11 +4,9 @@ from pathlib import Path
 import wx
 
 from ....i18n import N_, _, format_original
-from ....rapi.client import RapiError
 from ....rapi.structures import FILE_ATTRIBUTE_INROM
 from ...common.animation import AnimationPlayer, load_clip
-from ...common.device_browser import DeviceBrowser, ReplacePrompt, join
-from ...common.transfers import REPLACE_CANCEL, REPLACE_SKIP, TransferTree, device_join, device_tree
+from ...common.device_browser import CUT, DeviceBrowser, join
 from ...common.file_icons import FileIcons
 from ...common.layout import dialog_rect, dialog_size, place
 from .artwork import ANIMATION_DEVICE_COPY, ANIMATION_DEVICE_MOVE, ANIMATION_FROM_DEVICE, ANIMATION_TO_DEVICE, EXPLORER
@@ -22,8 +20,6 @@ from .properties import EntryPropertiesSheet
 HIDDEN_EXTENSIONS = {".dll", ".cpl", ".drv"}
 HIDDEN_TYPE_LABELS = [N_(".DLL     (Application extension)"), N_(".CPL     (Control Panel extension)"), N_(".DRV     (Device driver)")]
 
-CUT = "cut"
-COPY = "copy"
 
 
 def display_name(root_label, folder):
@@ -33,15 +29,6 @@ def display_name(root_label, folder):
 def free_space_text(free_bytes):
     tenths = free_bytes * 10 // (1024 * 1024)
     return format_original(_(" (Free space: %d.%dMB)"), tenths // 10, tenths % 10)
-
-
-def copy_name(name, existing):
-    candidate = format_original(_("Copy of %s"), name)
-    counter = 2
-    while candidate.lower() in existing:
-        candidate = format_original(_("Copy (%d) of %s"), counter, name)
-        counter += 1
-    return candidate
 
 
 def append_items(menu, items):
@@ -182,6 +169,7 @@ class HpcDeviceBrowser(DeviceBrowser):
             append_items(menu, [(ID_PASTE, _("&Paste")), (ID_PASTE_SHORTCUT, _("Paste &Shortcut")), None,
                                 (ID_NEW_FOLDER, _("Ne&w Folder")), None, (ID_PROPERTIES, _("P&roperties"))])
             menu.Enable(ID_PASTE, self.window.can_paste())
+            menu.Enable(ID_PASTE_SHORTCUT, self.window.clipboard is not None)
             menu.Enable(ID_PROPERTIES, False)
             return menu
         if len(entries) == 1 and entries[0].is_directory:
@@ -193,6 +181,7 @@ class HpcDeviceBrowser(DeviceBrowser):
                                     None, (ID_PROPERTIES, _("P&roperties"))])
         in_rom = any(entry.attributes & FILE_ATTRIBUTE_INROM for entry in entries)
         menu.Enable(ID_CUT, not in_rom)
+        menu.Enable(ID_CREATE_SHORTCUT, not in_rom)
         menu.Enable(ID_DELETE, not in_rom)
         menu.Enable(ID_RENAME, len(entries) == 1 and not in_rom)
         menu.Enable(ID_PROPERTIES, len(entries) == 1)
@@ -204,84 +193,8 @@ class HpcDeviceBrowser(DeviceBrowser):
     def selection_in_rom(self):
         return any(entry.attributes & FILE_ATTRIBUTE_INROM for entry in self.selected_entries())
 
-    def paste_from_device(self, clipboard):
-        mode, source_folder, entries = clipboard
-        folders = [entry for entry in entries if entry.is_directory] if mode == COPY else []
-        if not folders:
-            return self._paste(mode, source_folder, entries, TransferTree(), set())
-        destination_folder = self.folder
-        existing = {entry.name.lower() for entry in self.entries}
-        merging = source_folder != destination_folder
-
-        async def gather(client):
-            tree = TransferTree()
-            found = set()
-            for entry in folders:
-                tree.folders.append((entry.name,))
-                below = await device_tree(client, join(source_folder, entry.name), (entry.name,))
-                tree.files += below.files
-                tree.folders += below.folders
-                if merging and entry.name.lower() in existing:
-                    there = await device_tree(client, join(destination_folder, entry.name), (entry.name,))
-                    found |= {tuple(part.lower() for part in relative) for _, relative, _ in there.files}
-            return tree, found
-
-        self.run(gather, lambda result: self._paste(mode, source_folder, entries, *result))
-        return False
-
-    def _paste(self, mode, source_folder, entries, tree, found):
-        existing = {entry.name.lower() for entry in self.entries}
-        prompt = ReplacePrompt(self, keep_both=False,
-                               message=lambda name: format_original(_("File '%s' exists already. Do you want to replace it?"), name))
-        jobs = []
-        folder_names = {}
-        for entry in entries:
-            name = entry.name
-            if source_folder == self.folder:
-                if mode == CUT:
-                    continue
-                name = copy_name(name, existing)
-                existing.add(name.lower())
-            elif name.lower() in existing and not (mode == COPY and entry.is_directory):
-                choice = prompt.ask(name)
-                if choice == REPLACE_CANCEL:
-                    return False
-                if choice == REPLACE_SKIP:
-                    continue
-            if mode == COPY and entry.is_directory:
-                folder_names[entry.name] = name
-                continue
-            jobs.append((join(source_folder, entry.name), join(self.folder, name), entry.size))
-        for source, relative, size in tree.files:
-            if tuple(part.lower() for part in relative) in found:
-                choice = prompt.ask(relative[-1])
-                if choice == REPLACE_CANCEL:
-                    return False
-                if choice == REPLACE_SKIP:
-                    continue
-            jobs.append((source, device_join(self.folder, folder_names[relative[0]], *relative[1:]), size))
-        new_folders = [device_join(self.folder, folder_names[relative[0]], *relative[1:]) for relative in tree.folders]
-        if not jobs and not new_folders:
-            return mode == CUT
-
-        async def make_folders(client):
-            for folder in new_folders:
-                try:
-                    await client.create_directory(folder)
-                except RapiError:
-                    pass
-
-        async def transfer(client, source, destination, progress):
-            if mode == CUT:
-                await client.move_file(source, destination)
-            else:
-                await client.copy_file(source, destination)
-            progress(0)
-
-        animation = ANIMATION_DEVICE_MOVE if mode == CUT else ANIMATION_DEVICE_COPY
-        caption = _("Moving...") if mode == CUT else _("Copying...")
-        self._transfer(caption, jobs, transfer, lambda _: self.refresh(), animation=animation, prepare=make_folders)
-        return mode == CUT
+    def paste_animation(self, mode):
+        return ANIMATION_DEVICE_MOVE if mode == CUT else ANIMATION_DEVICE_COPY
 
     def _transfer(self, title, jobs, operation, on_finished, animation=None, prepare=None):
         total = sum(size for source, destination, size in jobs) or 1

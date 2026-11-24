@@ -8,14 +8,16 @@ from ...convert import DESKTOP_DEFAULTS, FORMATS, ConversionError, converter, fo
 from ...i18n import N_, _, format_original, ngettext
 from ...rapi.client import RapiError
 from ...rapi.structures import (
-    FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_HIDDEN, FILE_ATTRIBUTE_INROM, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM,
-    datetime_to_filetime, filetime_to_datetime,
+    FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_DIRECTORY, FILE_ATTRIBUTE_HIDDEN, FILE_ATTRIBUTE_INROM, FILE_ATTRIBUTE_READONLY,
+    FILE_ATTRIBUTE_SYSTEM, FindData, datetime_to_filetime, filetime_to_datetime,
 )
 from .file_icons import FileIcons
 from .icon_grid import ItemListView
 from .layout import dialog_size, place
+from .replace_dialog import FileFacts, ReplacePrompt
 from .transfers import (
-    REPLACE_CANCEL, REPLACE_KEEP_BOTH, REPLACE_OVERWRITE, REPLACE_SKIP, TransferTree, device_join, device_tree, local_tree, unused_path,
+    REPLACE_CANCEL, REPLACE_OVERWRITE, TransferTree, copy_name, device_join, device_moment, device_tree, local_moment, local_tree,
+    lower_key, plan_transfer, shortcut_name, unused_path,
 )
 
 COMMAND_OPEN = wx.NewIdRef()
@@ -29,6 +31,14 @@ COMMAND_UP = wx.NewIdRef()
 COMMAND_REFRESH = wx.NewIdRef()
 COMMAND_SELECT_ALL = wx.NewIdRef()
 COMMAND_INVERT_SELECTION = wx.NewIdRef()
+COMMAND_CUT = wx.NewIdRef()
+COMMAND_COPY = wx.NewIdRef()
+COMMAND_PASTE = wx.NewIdRef()
+COMMAND_PASTE_SHORTCUT = wx.NewIdRef()
+COMMAND_CREATE_SHORTCUT = wx.NewIdRef()
+
+CUT = "cut"
+COPY = "copy"
 
 VIEW_LARGE = "large"
 VIEW_SMALL = "small"
@@ -94,6 +104,24 @@ def format_size(size):
     return format_original(_("%sKB"), f"{(size + 1023) // 1024:,}")
 
 
+def existing_entries(entries):
+    return {(entry.name.lower(),): (entry.is_directory, entry.size, device_moment(entry.last_write_time)) for entry in entries}
+
+
+def system_clipboard_files():
+    if not wx.TheClipboard.Open():
+        return None
+    try:
+        if not wx.TheClipboard.IsSupported(wx.DataFormat(wx.DF_FILENAME)):
+            return None
+        data = wx.FileDataObject()
+        if not wx.TheClipboard.GetData(data):
+            return None
+        return data.GetFilenames() or None
+    finally:
+        wx.TheClipboard.Close()
+
+
 def format_time(filetime):
     moment = filetime_to_datetime(filetime)
     if not moment:
@@ -121,36 +149,6 @@ def device_conversion(name, version=2):
     if not target:
         return None
     return source, target, os.path.splitext(name)[0] + FORMATS[target].extensions[0]
-
-
-class ReplacePrompt:
-    def __init__(self, parent, keep_both, message=None):
-        self.parent = parent
-        self.keep_both = keep_both
-        self.message = message
-        self.remembered = None
-
-    def ask(self, name):
-        if self.remembered:
-            return self.remembered
-        if self.message:
-            message = self.message(name)
-        else:
-            message = _("This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?").format(name=name)
-        with wx.RichMessageDialog(self.parent, message, _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION) as dialog:
-            if self.keep_both:
-                dialog.SetYesNoCancelLabels(_("&Replace"), _("&Keep Both"), _("&Skip"))
-                answers = {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_KEEP_BOTH}
-                fallback = REPLACE_SKIP
-            else:
-                dialog.SetYesNoCancelLabels(_("&Replace"), _("&Skip"), _("Cancel"))
-                answers = {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_SKIP}
-                fallback = REPLACE_CANCEL
-            dialog.ShowCheckBox(_("Do this for all remaining files"))
-            choice = answers.get(dialog.ShowModal(), fallback)
-            if dialog.IsCheckBoxChecked() and choice != REPLACE_CANCEL:
-                self.remembered = choice
-        return choice
 
 
 class FileDrop(wx.FileDropTarget):
@@ -422,16 +420,24 @@ class DeviceBrowser(wx.SplitterWindow):
             if len(entries) == 1 and entries[0].is_directory:
                 menu.Append(COMMAND_OPEN, _("&Open"))
                 menu.AppendSeparator()
-            menu.Append(COMMAND_COPY_TO_COMPUTER, _("&Copy to This Computer..."))
+            menu.Append(COMMAND_COPY_TO_COMPUTER, _("Copy to This Computer..."))
             menu.AppendSeparator()
-            in_rom = any(entry.attributes & FILE_ATTRIBUTE_INROM for entry in entries)
+            in_rom = self.in_rom(entries)
+            menu.Append(COMMAND_CUT, _("Cu&t")).Enable(not in_rom)
+            menu.Append(COMMAND_COPY, _("&Copy")).Enable(not in_rom)
+            menu.Append(COMMAND_PASTE, _("&Paste")).Enable(self.can_paste())
+            menu.AppendSeparator()
+            menu.Append(COMMAND_CREATE_SHORTCUT, _("Create &Shortcut")).Enable(not in_rom)
             menu.Append(COMMAND_DELETE, _("&Delete")).Enable(not in_rom)
             menu.Append(COMMAND_RENAME, _("Rena&me")).Enable(len(entries) == 1 and not in_rom)
             menu.AppendSeparator()
             menu.Append(COMMAND_PROPERTIES, _("P&roperties")).Enable(len(entries) == 1)
         else:
-            menu.Append(COMMAND_COPY_FROM_COMPUTER, _("Copy &Files Here..."))
+            menu.Append(COMMAND_PASTE, _("&Paste")).Enable(self.can_paste())
+            menu.Append(COMMAND_PASTE_SHORTCUT, _("Paste &Shortcut")).Enable(self.clipboard is not None)
+            menu.AppendSeparator()
             menu.Append(COMMAND_NEW_FOLDER, _("Ne&w Folder"))
+            menu.Append(COMMAND_COPY_FROM_COMPUTER, _("Copy &Files Here..."))
             menu.AppendSeparator()
             menu.Append(COMMAND_REFRESH, _("R&efresh"))
         return menu
@@ -468,6 +474,14 @@ class DeviceBrowser(wx.SplitterWindow):
             self.select_all()
         elif identifier == COMMAND_INVERT_SELECTION:
             self.invert_selection()
+        elif identifier in (COMMAND_CUT, COMMAND_COPY) and entries:
+            self.set_clipboard(CUT if identifier == COMMAND_CUT else COPY, entries)
+        elif identifier == COMMAND_PASTE:
+            self.paste()
+        elif identifier == COMMAND_PASTE_SHORTCUT:
+            self.paste_shortcut()
+        elif identifier == COMMAND_CREATE_SHORTCUT and entries:
+            self.create_shortcut_selected()
         else:
             event.Skip()
 
@@ -574,7 +588,7 @@ class DeviceBrowser(wx.SplitterWindow):
 
         self.run(remove, lambda _: self.refresh(), lambda error: (self.show_error(error), self.refresh()))
 
-    def _transfer(self, title, jobs, operation, on_finished, prepare=None):
+    def _transfer(self, title, jobs, operation, on_finished, prepare=None, animation=None):
         total = sum(size for _, _, size in jobs) or 1
         progress = wx.ProgressDialog(title, _("Preparing..."), maximum=1000, parent=self.GetTopLevelParent(),
                                      style=wx.PD_APP_MODAL | wx.PD_CAN_ABORT | wx.PD_AUTO_HIDE | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME)
@@ -631,6 +645,13 @@ class DeviceBrowser(wx.SplitterWindow):
         major = self.application.device_major_version(self.application.service.announcement)
         return 1 if major == 1 else 2
 
+    def entry_bitmap(self, name, is_directory=False):
+        entry = FindData(name=name, attributes=FILE_ATTRIBUTE_DIRECTORY if is_directory else 0)
+        return self.large_images.GetBitmap(self.file_icons.index_for(entry))
+
+    def replace_prompt(self, keep_both=False):
+        return ReplacePrompt(self, self.file_icons.artwork, keep_both)
+
     def copy_to_computer(self, entries=None, target=None):
         entries = entries if entries is not None else self.selected_entries()
         if not entries:
@@ -644,72 +665,75 @@ class DeviceBrowser(wx.SplitterWindow):
             self.remember_folder("last_download_folder", target)
         target = Path(target)
         source_folder = self.folder
-        files = [(join(source_folder, entry.name), (entry.name,), entry.size) for entry in entries if not entry.is_directory]
+        tree = TransferTree()
+        for entry in entries:
+            if not entry.is_directory:
+                tree.files.append((join(source_folder, entry.name), (entry.name,), entry.size))
+                tree.modified[(entry.name,)] = device_moment(entry.last_write_time)
         folders = [entry.name for entry in entries if entry.is_directory]
         if not folders:
-            self.download_tree(TransferTree(files=files), target)
+            self.download_tree(tree, target)
             return
 
         async def gather(client):
-            tree = TransferTree(files=list(files))
             for name in folders:
                 tree.folders.append((name,))
-                below = await device_tree(client, join(source_folder, name), (name,))
-                tree.files += below.files
-                tree.folders += below.folders
+                tree.add(await device_tree(client, join(source_folder, name), (name,)))
             return tree
 
         self.on_status(_("Reading folder..."), 0)
-        self.run(gather, lambda tree: self.download_tree(tree, target))
+        self.run(gather, lambda gathered: self.download_tree(gathered, target))
 
     def download_tree(self, tree, target):
         convert = self.conversion_enabled()
-        prompt = ReplacePrompt(self, keep_both=True)
-        jobs = []
-        taken = set()
-        outcomes = {"replaced": 0, "renamed": 0, "skipped": 0}
-        for source, relative, size in tree.files:
-            plan = desktop_conversion(relative[-1]) if convert else None
-            destination = target.joinpath(*relative[:-1], plan[2] if plan else relative[-1])
-            if destination.exists() or destination in taken:
-                choice = prompt.ask(destination.name)
-                if choice == REPLACE_SKIP:
-                    outcomes["skipped"] += 1
-                    continue
-                if choice == REPLACE_KEEP_BOTH:
-                    destination = unused_path(destination, taken)
-                    outcomes["renamed"] += 1
-                else:
-                    outcomes["replaced"] += 1
-            taken.add(destination)
-            jobs.append((source, destination, size))
-        if not jobs and not tree.folders:
+
+        def destination(relative):
+            plan = desktop_conversion(relative[-1]) if convert and relative in tree.modified else None
+            return relative[:-1] + (plan[2] if plan else relative[-1],)
+
+        def existing_file(relative):
+            path = target.joinpath(*relative)
+            if not path.is_file():
+                return None
+            return FileFacts(path.stat().st_size, local_moment(path), self.entry_bitmap(relative[-1]))
+
+        def incoming(source, relative, size):
+            return FileFacts(size, tree.modified.get(relative), self.entry_bitmap(relative[-1]))
+
+        def keep_both(relative, taken):
+            taken_paths = {target.joinpath(*key) for key in taken}
+            return unused_path(target.joinpath(*relative), taken_paths).relative_to(target).parts
+
+        plan = plan_transfer(tree, self.replace_prompt(keep_both=True), destination, existing_file,
+                             lambda relative: target.joinpath(*relative).is_dir(), incoming, keep_both)
+        if plan.cancelled or not (plan.jobs or plan.folders):
             self.on_status(_("No files copied"), 0)
             return
-        local_folders = [target.joinpath(*relative) for relative in tree.folders]
+        jobs = [(source, target.joinpath(*relative), size) for source, relative, size in plan.jobs]
+        local_folders = [target.joinpath(*relative) for relative in plan.folders]
         warnings = []
 
         async def make_folders(client):
             for folder in local_folders:
                 folder.mkdir(parents=True, exist_ok=True)
 
-        async def download(client, source, destination, progress):
+        async def download(client, source, destination_path, progress):
             data = await client.read_file_contents(source, progress=progress)
-            plan = desktop_conversion(source.rsplit("\\", 1)[-1]) if convert else None
-            if plan:
+            conversion_plan = desktop_conversion(source.rsplit("\\", 1)[-1]) if convert else None
+            if conversion_plan:
                 try:
-                    conversion = converter(plan[0], plan[1])(data)
+                    conversion = converter(conversion_plan[0], conversion_plan[1])(data)
                     data = conversion.data
                     warnings.extend(conversion.warnings)
                 except (ConversionError, ValueError) as error:
                     warnings.append(str(error))
-                    destination = destination.with_name(source.rsplit("\\", 1)[-1])
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_bytes(data)
+                    destination_path = destination_path.with_name(source.rsplit("\\", 1)[-1])
+            destination_path.parent.mkdir(parents=True, exist_ok=True)
+            destination_path.write_bytes(data)
 
         def finished(count):
             if count is not None:
-                self.transfer_summary(count, target, outcomes, warnings)
+                self.transfer_summary(count, target, plan.outcomes, warnings)
 
         self._transfer(_("Copying..."), jobs, download, finished, prepare=make_folders)
 
@@ -718,18 +742,20 @@ class DeviceBrowser(wx.SplitterWindow):
         if not tree.files and not tree.folders:
             return
         destination_folder = self.folder
-        existing = {(entry.name.lower(),) for entry in self.entries}
-        device_folders = {entry.name.lower() for entry in self.entries if entry.is_directory}
-        merging = [relative[0] for relative in tree.folders if len(relative) == 1 and relative[0].lower() in device_folders]
+        existing = existing_entries(self.entries)
+        merging = [relative[0] for relative in tree.folders if len(relative) == 1 and existing.get(lower_key(relative), (False,))[0]]
         if not merging:
             self.upload_tree(tree, destination_folder, existing)
             return
 
         async def gather(client):
-            found = set(existing)
+            found = dict(existing)
             for name in merging:
                 below = await device_tree(client, join(destination_folder, name), (name,))
-                found |= {tuple(part.lower() for part in relative) for _, relative, _ in below.files}
+                for source, relative, size in below.files:
+                    found[lower_key(relative)] = (False, size, below.modified.get(relative))
+                for relative in below.folders:
+                    found[lower_key(relative)] = (True, 0, None)
             return found
 
         self.on_status(_("Reading folder..."), 0)
@@ -738,24 +764,26 @@ class DeviceBrowser(wx.SplitterWindow):
     def upload_tree(self, tree, destination_folder, existing):
         convert = self.conversion_enabled()
         version = self.device_version()
-        prompt = ReplacePrompt(self, keep_both=False)
-        jobs = []
-        outcomes = {"replaced": 0, "renamed": 0, "skipped": 0}
-        for path, relative, size in tree.files:
-            plan = device_conversion(path.name, version) if convert else None
-            device_relative = relative[:-1] + (plan[2] if plan else relative[-1],)
-            if tuple(part.lower() for part in device_relative) in existing:
-                choice = prompt.ask(device_relative[-1])
-                if choice == REPLACE_CANCEL:
-                    return
-                if choice == REPLACE_SKIP:
-                    outcomes["skipped"] += 1
-                    continue
-                outcomes["replaced"] += 1
-            jobs.append((str(path), device_join(destination_folder, *device_relative), size))
-        if not jobs and not tree.folders:
+
+        def destination(relative):
+            plan = device_conversion(relative[-1], version) if convert and relative in tree.modified else None
+            return relative[:-1] + (plan[2] if plan else relative[-1],)
+
+        def existing_file(relative):
+            is_directory, size, moment = existing.get(lower_key(relative), (True, 0, None))
+            return None if is_directory else FileFacts(size, moment, self.entry_bitmap(relative[-1]))
+
+        def existing_folder(relative):
+            return existing.get(lower_key(relative), (False,))[0]
+
+        def incoming(source, relative, size):
+            return FileFacts(size, tree.modified.get(relative), self.entry_bitmap(relative[-1]))
+
+        plan = plan_transfer(tree, self.replace_prompt(), destination, existing_file, existing_folder, incoming)
+        if plan.cancelled or not (plan.jobs or plan.folders):
             return
-        device_folders = [device_join(destination_folder, *relative) for relative in tree.folders]
+        jobs = [(str(source), device_join(destination_folder, *relative), size) for source, relative, size in plan.jobs]
+        device_folders = [device_join(destination_folder, *relative) for relative in plan.folders]
         warnings = []
 
         async def make_folders(client):
@@ -765,24 +793,187 @@ class DeviceBrowser(wx.SplitterWindow):
                 except RapiError:
                     pass
 
-        async def send(client, source, destination, progress):
+        async def send(client, source, destination_path, progress):
             data = Path(source).read_bytes()
-            plan = device_conversion(Path(source).name, version) if convert else None
-            if plan:
-                conversion = converter(plan[0], plan[1])(data, version=version)
+            conversion_plan = device_conversion(Path(source).name, version) if convert else None
+            if conversion_plan:
+                conversion = converter(conversion_plan[0], conversion_plan[1])(data, version=version)
                 data = conversion.data
                 warnings.extend(conversion.warnings)
             modified = datetime_to_filetime(datetime.fromtimestamp(Path(source).stat().st_mtime, timezone.utc))
-            await client.write_file_contents(destination, data, modified=modified, progress=progress)
+            await client.write_file_contents(destination_path, data, modified=modified, progress=progress)
 
         def finished(count):
             if count is None:
                 self.refresh()
                 return
-            self.refresh(lambda: self.transfer_summary(count, self.location_label(destination_folder), outcomes, warnings))
+            self.refresh(lambda: self.transfer_summary(count, self.location_label(destination_folder), plan.outcomes, warnings))
 
         self._transfer(_("Copying..."), jobs, send, finished, prepare=make_folders)
 
+    @property
+    def clipboard(self):
+        return getattr(self.application, "device_clipboard", None)
+
+    @clipboard.setter
+    def clipboard(self, value):
+        self.application.device_clipboard = value
+
+    def in_rom(self, entries):
+        return any(entry.attributes & FILE_ATTRIBUTE_INROM for entry in entries)
+
+    def set_clipboard(self, mode, entries=None):
+        entries = entries if entries is not None else self.selected_entries()
+        if not entries or (mode == CUT and self.in_rom(entries)):
+            return
+        self.clipboard = (mode, self.folder, entries)
+
+    def can_paste(self):
+        return self.clipboard is not None or system_clipboard_files() is not None
+
+    def paste(self):
+        if self.clipboard:
+            if self.paste_from_device(self.clipboard):
+                self.clipboard = None
+            return
+        files = system_clipboard_files()
+        if files:
+            self.upload(files)
+
+    def paste_animation(self, mode):
+        return None
+
+    def paste_from_device(self, clipboard):
+        mode, source_folder, entries = clipboard
+        if mode == CUT:
+            return self.move_here(source_folder, entries)
+        destination_folder = self.folder
+        existing = existing_entries(self.entries)
+        names = {}
+        if source_folder == destination_folder:
+            taken = {entry.name.lower() for entry in self.entries}
+            for entry in entries:
+                names[entry.name] = copy_name(entry.name, taken)
+                taken.add(names[entry.name].lower())
+        tree = TransferTree()
+        for entry in entries:
+            if not entry.is_directory:
+                tree.files.append((join(source_folder, entry.name), (entry.name,), entry.size))
+                tree.modified[(entry.name,)] = device_moment(entry.last_write_time)
+        folders = [entry.name for entry in entries if entry.is_directory]
+        if not folders:
+            self.copy_here(tree, names, existing, destination_folder)
+            return False
+
+        async def gather(client):
+            for name in folders:
+                tree.folders.append((name,))
+                tree.add(await device_tree(client, join(source_folder, name), (name,)))
+                if name not in names and existing.get((name.lower(),), (False,))[0]:
+                    there = await device_tree(client, join(destination_folder, name), (name,))
+                    for source, relative, size in there.files:
+                        existing[lower_key(relative)] = (False, size, there.modified.get(relative))
+                    for relative in there.folders:
+                        existing[lower_key(relative)] = (True, 0, None)
+            return tree
+
+        self.on_status(_("Reading folder..."), 0)
+        self.run(gather, lambda gathered: self.copy_here(gathered, names, existing, destination_folder))
+        return False
+
+    def copy_here(self, tree, names, existing, destination_folder):
+        def destination(relative):
+            return (names.get(relative[0], relative[0]),) + relative[1:]
+
+        def existing_file(relative):
+            is_directory, size, moment = existing.get(lower_key(relative), (True, 0, None))
+            return None if is_directory else FileFacts(size, moment, self.entry_bitmap(relative[-1]))
+
+        def incoming(source, relative, size):
+            return FileFacts(size, tree.modified.get(relative), self.entry_bitmap(relative[-1]))
+
+        plan = plan_transfer(tree, self.replace_prompt(), destination, existing_file,
+                             lambda relative: existing.get(lower_key(relative), (False,))[0], incoming)
+        if plan.cancelled or not (plan.jobs or plan.folders):
+            return
+        jobs = [(source, device_join(destination_folder, *relative), size) for source, relative, size in plan.jobs]
+        new_folders = [device_join(destination_folder, *relative) for relative in plan.folders]
+
+        async def make_folders(client):
+            for folder in new_folders:
+                try:
+                    await client.create_directory(folder)
+                except RapiError:
+                    pass
+
+        async def copy(client, source, destination_path, progress):
+            await client.copy_file(source, destination_path)
+            progress(0)
+
+        self._transfer(_("Copying..."), jobs, copy, lambda count: self.refresh(), prepare=make_folders, animation=self.paste_animation(COPY))
+
+    def move_here(self, source_folder, entries):
+        if source_folder == self.folder:
+            return True
+        existing = existing_entries(self.entries)
+        prompt = self.replace_prompt()
+        jobs = []
+        replacing = set()
+        for entry in entries:
+            destination_path = join(self.folder, entry.name)
+            current = existing.get((entry.name.lower(),))
+            if current is not None:
+                if entry.is_directory or current[0]:
+                    wx.MessageBox(_("A folder with the name you specified already exists. Specify a different file name."), self.root_label,
+                                  wx.OK | wx.ICON_INFORMATION, self)
+                    continue
+                choice = prompt.ask_file(entry.name, FileFacts(current[1], current[2], self.entry_bitmap(entry.name)),
+                                         FileFacts(entry.size, device_moment(entry.last_write_time), self.entry_bitmap(entry.name)))
+                if choice == REPLACE_CANCEL:
+                    return False
+                if choice != REPLACE_OVERWRITE:
+                    continue
+                replacing.add(destination_path)
+            jobs.append((join(source_folder, entry.name), destination_path, entry.size))
+        if not jobs:
+            return True
+
+        async def move(client, source, destination_path, progress):
+            if destination_path in replacing:
+                await client.delete_file(destination_path)
+            await client.move_file(source, destination_path)
+            progress(0)
+
+        self._transfer(_("Moving..."), jobs, move, lambda count: self.refresh(), animation=self.paste_animation(CUT))
+        return True
+
+    def create_shortcuts(self, targets):
+        folder = self.folder
+        taken = {entry.name.lower() for entry in self.entries}
+        shortcuts = []
+        for target_folder, entry in targets:
+            name = shortcut_name(entry.name, taken)
+            taken.add(name.lower())
+            shortcuts.append((join(folder, name), join(target_folder, entry.name), entry.name))
+
+        async def create(client):
+            for shortcut, target, label in shortcuts:
+                try:
+                    await client.create_shortcut(shortcut, target)
+                except RapiError as error:
+                    raise RapiError(format_original(_("Unable to create a shortcut to '%1'."), label), error.code) from error
+
+        self.run(create, lambda _: self.refresh(), lambda error: (self.show_error(error), self.refresh()))
+
+    def create_shortcut_selected(self):
+        entries = self.selected_entries()
+        if entries and not self.in_rom(entries):
+            self.create_shortcuts([(self.folder, entry) for entry in entries])
+
+    def paste_shortcut(self):
+        if self.clipboard:
+            mode, source_folder, entries = self.clipboard
+            self.create_shortcuts([(source_folder, entry) for entry in entries])
 
     def device_disconnected(self):
         self.connected = False

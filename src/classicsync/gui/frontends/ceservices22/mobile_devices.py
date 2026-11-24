@@ -3,7 +3,7 @@ import wx
 from ....i18n import N_, _, format_original, menu_label, plain_newlines
 from ...branding import rebrand, title
 from ...common.device_browser import (
-    COMMAND_COPY_FROM_COMPUTER, COMMAND_COPY_TO_COMPUTER, COMMAND_DELETE, COMMAND_INVERT_SELECTION, COMMAND_NEW_FOLDER, COMMAND_OPEN,
+    COMMAND_COPY_FROM_COMPUTER, COMMAND_COPY_TO_COMPUTER, COMMAND_DELETE, COMMAND_INVERT_SELECTION, COMMAND_NEW_FOLDER, COMMAND_OPEN, COPY, CUT,
     COMMAND_PROPERTIES, COMMAND_REFRESH, COMMAND_RENAME, COMMAND_SELECT_ALL, COMMAND_UP, SORT_DATE, SORT_NAME, SORT_SIZE, SORT_TYPE,
     VIEW_DETAILS, VIEW_LARGE, VIEW_LIST, VIEW_SMALL, VIEW_STYLES, DeviceBrowser, root_name,
 )
@@ -103,8 +103,8 @@ HELP_TEXT = {
 }
 
 UNAVAILABLE = {
-    ID_FILE_CONVERSION, ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_CUT,
-    ID_COPY, ID_PASTE, ID_PASTE_SHORTCUT, ID_CREATE_SHORTCUT, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS, ID_EXPLORE,
+    ID_FILE_CONVERSION, ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS,
+    ID_EXPLORE,
 } | {identifier for identifier, label in filter(None, WEB_ITEMS)}
 
 CONNECTION_STATUS = {
@@ -349,11 +349,15 @@ class MobileDevicesWindow(wx.Frame):
             return
         in_device = self.location is not None
         connected = self.frontend.service.state == STATE_CONNECTED
+        can_cut = can_paste = can_paste_shortcut = False
         if in_device and self.browser:
             entries = self.browser.selected_entries()
             can_delete = bool(entries)
             can_properties = len(entries) == 1
             can_open = len(entries) == 1 and entries[0].is_directory
+            can_cut = bool(entries) and not self.browser.in_rom(entries) and connected
+            can_paste = connected and self.browser.can_paste()
+            can_paste_shortcut = connected and self.browser.clipboard is not None
         else:
             rows = self._selected_rows()
             can_delete = bool(rows) and not rows[0]["connected"]
@@ -367,14 +371,14 @@ class MobileDevicesWindow(wx.Frame):
             COMMAND_COPY_FROM_COMPUTER: in_device and connected, ID_SYNCHRONIZE_NOW: self.frontend.can_synchronize(),
             ID_ACTIVESYNC_OPTIONS: self.frontend.connected() and self.application.partnership is not None,
             ID_BACK_UP_NOW: self.frontend.can_back_up(), ID_BACKUP_RESTORE: self.frontend.can_back_up(),
+            ID_CUT: can_cut, ID_COPY: can_cut, ID_CREATE_SHORTCUT: can_cut, ID_PASTE: can_paste, ID_PASTE_SHORTCUT: can_paste_shortcut,
         }
         for identifier, enabled in states.items():
             if menu_bar.FindItemById(identifier):
                 menu_bar.Enable(identifier, enabled)
             if self.toolbar.FindById(identifier):
                 self.toolbar.EnableTool(identifier, enabled)
-        for identifier in (ID_CUT, ID_COPY, ID_PASTE, ID_UNDO):
-            self.toolbar.EnableTool(identifier, False)
+        self.toolbar.EnableTool(ID_UNDO, False)
         menu_bar.Check(ID_ENABLE_SERIAL, self.settings.serial_enabled)
         menu_bar.Check(ID_ENABLE_NETWORK, self.settings.network_enabled)
         menu_bar.Check(ID_TOOLBAR, self.toolbar.IsShown())
@@ -602,7 +606,9 @@ class MobileDevicesWindow(wx.Frame):
         append_items(menu, [None, (ID_CREATE_SHORTCUT, _("Create &Shortcut")), (COMMAND_DELETE, _("&Delete")), None,
                             (COMMAND_PROPERTIES, _("P&roperties"))])
         disable_unavailable(menu)
-        menu.Enable(COMMAND_DELETE, False)
+        rows = self._selected_rows()
+        menu.Enable(COMMAND_DELETE, bool(rows) and not rows[0]["connected"])
+        menu.Enable(ID_CREATE_SHORTCUT, False)
         menu.Enable(ID_SYNCHRONIZE_NOW, self.frontend.can_synchronize())
         menu.Enable(ID_ACTIVESYNC_OPTIONS, self.frontend.connected())
         menu.Check(ID_SHOW_ERRORS, self.frontend.sync_display.show_errors)
@@ -634,6 +640,8 @@ class MobileDevicesWindow(wx.Frame):
             append_items(new_menu, [(COMMAND_NEW_FOLDER, _("Ne&w Folder"))])
             menu.AppendSubMenu(new_menu, _("Ne&w"))
             disable_unavailable(menu)
+            menu.Enable(ID_PASTE, self.browser.can_paste())
+            menu.Enable(ID_PASTE_SHORTCUT, self.browser.clipboard is not None)
             return menu
         menu = wx.Menu()
         if len(entries) == 1 and entries[0].is_directory:
@@ -643,7 +651,10 @@ class MobileDevicesWindow(wx.Frame):
         append_items(menu, [None, (ID_CREATE_SHORTCUT, _("Create &Shortcut")), (COMMAND_DELETE, _("&Delete")),
                             (COMMAND_RENAME, _("Rena&me")), None, (COMMAND_PROPERTIES, _("P&roperties"))])
         disable_unavailable(menu)
-        menu.Enable(COMMAND_RENAME, len(entries) == 1)
+        in_rom = self.browser.in_rom(entries)
+        for identifier in (ID_CUT, ID_COPY, ID_CREATE_SHORTCUT, COMMAND_DELETE):
+            menu.Enable(identifier, not in_rom)
+        menu.Enable(COMMAND_RENAME, len(entries) == 1 and not in_rom)
         menu.Enable(COMMAND_PROPERTIES, len(entries) == 1)
         return menu
 
@@ -709,6 +720,14 @@ class MobileDevicesWindow(wx.Frame):
             self.sort_devices(DEVICE_SORTS.index(identifier))
         elif identifier in FILE_SORTS and in_device:
             self.browser.sort_by(FILE_SORTS[identifier])
+        elif identifier in (ID_CUT, ID_COPY) and in_device:
+            self.browser.set_clipboard(CUT if identifier == ID_CUT else COPY)
+        elif identifier == ID_PASTE and in_device:
+            self.browser.paste()
+        elif identifier == ID_PASTE_SHORTCUT and in_device:
+            self.browser.paste_shortcut()
+        elif identifier == ID_CREATE_SHORTCUT and in_device:
+            self.browser.create_shortcut_selected()
         elif in_device:
             self.browser.on_command(event)
         elif identifier == COMMAND_OPEN:

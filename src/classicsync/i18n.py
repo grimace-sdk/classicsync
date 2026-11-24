@@ -140,6 +140,10 @@ def format_printf(text, values):
     return PRINTF_CONVERSION.sub(convert, text)
 
 
+def format_message(text, *values):
+    return format_message_inserts(text, values)
+
+
 def format_original(text, *values):
     if FORMAT_MESSAGE_MARKER.search(text):
         return format_message_inserts(text, values)

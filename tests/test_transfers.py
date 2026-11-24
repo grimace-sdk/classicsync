@@ -1,6 +1,9 @@
 from fake_device import FakeRapiClient
 
-from classicsync.gui.common.transfers import device_join, device_tree, local_tree, unused_path
+from classicsync.gui.common.transfers import (
+    REPLACE_CANCEL, REPLACE_KEEP_BOTH, REPLACE_OVERWRITE, REPLACE_SKIP, TransferTree, copy_name, device_join, device_tree, local_tree,
+    plan_transfer, shortcut_name, unused_path,
+)
 
 
 def test_device_join_handles_the_root_and_nested_names():
@@ -46,3 +49,70 @@ def test_unused_path_numbers_existing_and_taken_names(tmp_path):
     assert unused_path(tmp_path / "romdump.txt") == tmp_path / "romdump (3).txt"
     assert unused_path(tmp_path / "romdump.txt", {tmp_path / "romdump (3).txt"}) == tmp_path / "romdump (4).txt"
     assert unused_path(tmp_path / "new.txt") == tmp_path / "new.txt"
+
+
+class ScriptedPrompt:
+    def __init__(self, folder_answers=(), file_answers=()):
+        self.folder_answers = list(folder_answers)
+        self.file_answers = list(file_answers)
+        self.asked = []
+
+    def ask_folder(self, name):
+        self.asked.append(("folder", name))
+        return self.folder_answers.pop(0)
+
+    def ask_file(self, name, existing, incoming):
+        self.asked.append(("file", name))
+        return self.file_answers.pop(0)
+
+
+def sample_tree():
+    tree = TransferTree()
+    tree.folders = [("Trip",), ("Trip", "Photos")]
+    tree.files = [("a", ("Trip", "notes.txt"), 1), ("b", ("Trip", "Photos", "beach.txt"), 2), ("c", ("loose.txt",), 3)]
+    return tree
+
+
+def plan(tree, prompt, existing_files=(), existing_folders=(), keep_both=None):
+    return plan_transfer(tree, prompt, lambda relative: relative, lambda relative: "old" if relative in existing_files else None,
+                         lambda relative: relative in existing_folders, lambda source, relative, size: "new", keep_both)
+
+
+def test_plan_without_conflicts_copies_everything():
+    result = plan(sample_tree(), ScriptedPrompt())
+    assert result.folders == [("Trip",), ("Trip", "Photos")]
+    assert [target for _, target, _ in result.jobs] == [("Trip", "notes.txt"), ("Trip", "Photos", "beach.txt"), ("loose.txt",)]
+
+
+def test_skipping_an_existing_folder_skips_its_contents():
+    prompt = ScriptedPrompt(folder_answers=[REPLACE_SKIP])
+    result = plan(sample_tree(), prompt, existing_folders={("Trip",)})
+    assert result.folders == []
+    assert [target for _, target, _ in result.jobs] == [("loose.txt",)]
+
+
+def test_merging_a_folder_still_asks_about_each_file():
+    prompt = ScriptedPrompt(folder_answers=[REPLACE_OVERWRITE], file_answers=[REPLACE_SKIP])
+    result = plan(sample_tree(), prompt, existing_files={("Trip", "notes.txt")}, existing_folders={("Trip",)})
+    assert prompt.asked == [("folder", "Trip"), ("file", "notes.txt")]
+    assert result.outcomes["skipped"] == 1
+    assert [target for _, target, _ in result.jobs] == [("Trip", "Photos", "beach.txt"), ("loose.txt",)]
+
+
+def test_cancel_stops_the_whole_transfer():
+    prompt = ScriptedPrompt(file_answers=[REPLACE_CANCEL])
+    assert plan(sample_tree(), prompt, existing_files={("Trip", "notes.txt")}).cancelled
+
+
+def test_keep_both_renames_the_incoming_file():
+    prompt = ScriptedPrompt(file_answers=[REPLACE_KEEP_BOTH])
+    result = plan(sample_tree(), prompt, existing_files={("loose.txt",)}, keep_both=lambda relative, taken: ("loose (2).txt",))
+    assert result.jobs[-1][1] == ("loose (2).txt",)
+    assert result.outcomes["renamed"] == 1
+
+
+def test_copy_and_shortcut_names_follow_the_originals():
+    assert copy_name("Trip", set()) == "Copy of Trip"
+    assert copy_name("Trip", {"copy of trip"}) == "Copy (2) of Trip"
+    assert shortcut_name("pword.exe", set()) == "Shortcut to pword.lnk"
+    assert shortcut_name("Templates", {"shortcut to templates.lnk"}) == "Shortcut (2) to Templates.lnk"

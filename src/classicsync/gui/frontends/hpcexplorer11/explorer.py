@@ -5,7 +5,8 @@ from ...branding import rebrand, title
 from ...common.device_browser import parent_folder, root_name
 from ...common.layout import dialog_size
 from ...service import STATE_CONNECTED, STATE_CONNECTING, STATE_WAITING
-from .browser import COPY, CUT, HpcDeviceBrowser, display_name
+from ...common.device_browser import COPY, CUT
+from .browser import HpcDeviceBrowser, display_name
 from .commands import (
     ARRANGE_COMMANDS, ID_ABOUT, ID_ADDRESS, ID_ARRANGE_BY_DATE, ID_ARRANGE_BY_NAME, ID_ARRANGE_BY_SIZE,
     ID_ARRANGE_BY_TYPE, ID_BACK_UP_NOW, ID_BACKUP_RESTORE, ID_BEST_OF_THE_WEB, ID_CANCEL_MODE, ID_CLOSE, ID_COMMUNICATIONS,
@@ -321,6 +322,14 @@ class ExplorerWindow(wx.Frame):
             path = display_name(self.root_label, self.folder)
         self.SetTitle(_("Exploring - ") + path if self.view_settings.show_folders else path)
 
+    @property
+    def clipboard(self):
+        return getattr(self.application, "device_clipboard", None)
+
+    @clipboard.setter
+    def clipboard(self, value):
+        self.application.device_clipboard = value
+
     def can_paste(self):
         return self.browser is not None and (self.clipboard is not None or self.system_clipboard_has_files)
 
@@ -468,6 +477,10 @@ class ExplorerWindow(wx.Frame):
             self.set_clipboard(CUT if identifier == ID_CUT else COPY)
         elif identifier == ID_PASTE:
             self.paste()
+        elif identifier == ID_PASTE_SHORTCUT:
+            browser.paste_shortcut()
+        elif identifier == ID_CREATE_SHORTCUT:
+            browser.create_shortcut_selected()
         elif identifier == ID_CONTEXT_MENU:
             browser._on_context_menu(None)
         else:
@@ -527,7 +540,9 @@ class ExplorerWindow(wx.Frame):
             event.Enable(self.browser is not None and self.folder != "\\")
         elif identifier == ID_PASTE:
             event.Enable(self.can_paste())
-        elif identifier in (ID_OPEN, ID_CUT, ID_COPY, ID_DELETE, ID_RENAME, ID_PROPERTIES):
+        elif identifier == ID_PASTE_SHORTCUT:
+            event.Enable(self.browser is not None and self.clipboard is not None)
+        elif identifier in (ID_OPEN, ID_CUT, ID_COPY, ID_CREATE_SHORTCUT, ID_DELETE, ID_RENAME, ID_PROPERTIES):
             event.Enable(self.selection_allows(identifier))
 
     def selection_allows(self, identifier):
