@@ -66,6 +66,7 @@ classicsync partnership delete Velo --on-device
 classicsync sync --dry-run                  # see what would change
 classicsync sync                            # files, contacts, calendar, tasks, mail
 classicsync sync --first-sync replace       # first sync: replace device items with this computer's
+classicsync sync --remove-duplicates        # remove contacts, appointments or tasks stored twice, here and on the device
 classicsync sync --only contacts --conflict device
 classicsync sync --only mail
 classicsync sync-status

@@ -123,3 +123,43 @@ def test_unresolved_contact_describes_both_sides(folder_sync):
     item = unresolved_items(run.partnership)[0]
     assert item.desktop == [card.name, "Name: Ada King"]
     assert item.device == ["Ada Byron", "Name: Ada Byron"]
+
+
+def contact(given, surname):
+    return [PropertyValue(0x3A06, CEVT_LPWSTR, given), PropertyValue(0x3A11, CEVT_LPWSTR, surname)]
+
+
+def test_duplicates_found_after_first_sync_are_removed_on_both_sides(folder_sync):
+    client, root, run = folder_sync
+    first = client.add_record("Contacts Database", contact("Ada", "Lovelace"))
+    second = client.add_record("Contacts Database", contact("Ada", "Lovelace"))
+    client.add_record("Contacts Database", contact("Grace", "Hopper"))
+    found = []
+
+    def remove_all(duplicates):
+        found.append(duplicates)
+        return [item_id for group in duplicates.groups for item_id, _ in group.extras]
+
+    options = SyncOptions(provider_settings={"folder": str(root)}, object_types=["contacts"])
+    report = asyncio.run(synchronize(client, run.partnership, options, duplicates=remove_all))
+    [duplicates] = found
+    assert len(duplicates.groups) == 1 and len(duplicates.groups[0].extras) == 1
+    assert len(list((root / "Contacts").glob("*.vcf"))) == 2
+    assert len(client.databases["Contacts Database"]) == 2
+    assert first in client.databases["Contacts Database"] or second in client.databases["Contacts Database"]
+    assert report.counts().get("delete to device") == 1
+    assert run(object_types=["contacts"]).counts() == {}
+
+
+def test_duplicates_are_only_searched_on_request_after_the_first_sync(folder_sync):
+    client, root, run = folder_sync
+    client.add_record("Contacts Database", contact("Ada", "Lovelace"))
+    run(object_types=["contacts"])
+    client.add_record("Contacts Database", contact("Ada", "Lovelace"))
+    asked = []
+    options = SyncOptions(provider_settings={"folder": str(root)}, object_types=["contacts"])
+    asyncio.run(synchronize(client, run.partnership, options, duplicates=lambda found: asked.append(found) or []))
+    assert asked == []
+    asyncio.run(synchronize(client, run.partnership, options, duplicates=lambda found: asked.append(found) or [], find_duplicates=True))
+    assert len(asked) == 1
+    assert len(client.databases["Contacts Database"]) == 2

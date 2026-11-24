@@ -55,8 +55,18 @@ async def command_sync(arguments):
         if arguments.save:
             partnership.save_options(options)
         options.dry_run = arguments.dry_run
+        found = []
+
+        def duplicates(groups):
+            extras = [item_id for group in groups.groups for item_id, _description in group.extras]
+            if arguments.remove_duplicates:
+                return extras
+            found.extend(extras)
+            return []
+
         report = await synchronize(client, partnership, options, print_progress,
-                                   first_sync=lambda question: arguments.first_sync)
+                                   first_sync=lambda question: arguments.first_sync, duplicates=duplicates,
+                                   find_duplicates=arguments.remove_duplicates)
     for action in report.actions:
         if action.action != "match" or arguments.verbose:
             print(_("would {action}").format(action=action) if report.dry_run else str(action))
@@ -66,6 +76,10 @@ async def command_sync(arguments):
     print(summary.format(device=report.device, summary=report.summary()))
     for key, choice in sorted(report.first_sync.items()):
         print(_("{type}: first synchronization, {choice}").format(type=key, choice=choice))
+    if found:
+        print(ngettext("{count} duplicate item found; run again with --remove-duplicates to remove it",
+                       "{count} duplicate items found; run again with --remove-duplicates to remove them", len(found)).format(
+            count=len(found)))
     if report.unresolved:
         print(ngettext("{count} unresolved conflict; run again with --conflict device or --conflict desktop",
                        "{count} unresolved conflicts; run again with --conflict device or --conflict desktop",
@@ -201,6 +215,8 @@ def add_commands(subparsers, device_command):
     sync.add_argument("--first-sync", choices=FIRST_SYNC_CHOICES, default=FIRST_SYNC_COMBINE,
                       help=_("when both sides already have items of a type never synchronized: combine them (default), "
                              "replace the device's items with this computer's, or skip the type"))
+    sync.add_argument("--remove-duplicates", action="store_true",
+                      help=_("look for items stored twice on this computer and remove the extra copies here and on the device"))
     status = subparsers.add_parser("sync-status", help=_("show partnerships and the result of their last sync"))
     status.add_argument("--device", help=_("only this device"))
     status.set_defaults(handler=command_sync_status)

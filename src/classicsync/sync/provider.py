@@ -46,6 +46,9 @@ class Store:
     def same_content(self, item_id, device_id, device_object):
         return False
 
+    def duplicate_key(self, item_id):
+        return None
+
     def device_updated(self, item_id, device_id, device_object):
         pass
 

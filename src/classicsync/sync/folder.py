@@ -16,7 +16,7 @@ from .pim.record import property_map
 from .pim.vcard import contact_fields, contact_to_vcard, display_name, vcard_to_contact
 from .provider import Provider, Store
 from .converted import DESKTOP_CHOICES, ConvertedMirror, default_formats
-from .rawjson import record_from_json, record_to_json
+from .rawjson import properties_hash, record_from_json, record_to_json
 from .settings_schema import Setting
 from .state import safe_directory_name
 
@@ -248,6 +248,12 @@ class RecordStore(Store):
 
     def describe(self, item_id):
         return item_id + self.extension
+
+    def duplicate_key(self, item_id):
+        try:
+            return properties_hash(self.from_text(self.item_path(item_id).read_text(encoding="utf-8"), []))
+        except (OSError, ValueError):
+            return None
 
     def describe_device(self, device_id, device_object):
         return self.title(device_object.properties) or None

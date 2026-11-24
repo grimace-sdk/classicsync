@@ -161,6 +161,23 @@ class SyncRunner:
         wx.CallAfter(ask)
         return await answer
 
+    async def ask_duplicates(self, duplicates):
+        loop = asyncio.get_running_loop()
+        answer = loop.create_future()
+
+        def reply(chosen):
+            loop.call_soon_threadsafe(lambda: answer.done() or answer.set_result(chosen))
+
+        def ask():
+            try:
+                reply(self.application.frontend.ask_duplicates(duplicates))
+            except Exception:
+                reply([])
+                raise
+
+        wx.CallAfter(ask)
+        return await answer
+
     def start(self):
         backup = getattr(self.application, "backup", None)
         if self.running or (backup is not None and backup.running):
@@ -176,7 +193,8 @@ class SyncRunner:
             wx.CallAfter(self._notify, EVENT_PROGRESS, update)
 
         async def run(client):
-            return await synchronize(client, partnership, options, progress, first_sync=self.ask_first_sync)
+            return await synchronize(client, partnership, options, progress, first_sync=self.ask_first_sync,
+                                     duplicates=self.ask_duplicates)
 
         self.future = service.submit(service.with_rapi(run))
         self.future.add_done_callback(lambda future: wx.CallAfter(self._finished, future))

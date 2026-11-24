@@ -126,6 +126,28 @@ class FirstSync:
     desktop_count: int
 
 
+@dataclass
+class DuplicateGroup:
+    keep: str
+    keep_description: str
+    extras: list
+
+
+@dataclass
+class Duplicates:
+    object_type: object
+    groups: list
+
+
+def duplicate_groups(store, item_ids):
+    groups = {}
+    for item_id in item_ids:
+        key = store.duplicate_key(item_id)
+        if key is not None:
+            groups.setdefault(key, []).append(item_id)
+    return [members for members in groups.values() if len(members) > 1]
+
+
 async def answer(callback, *arguments):
     result = callback(*arguments)
     if inspect.isawaitable(result):
@@ -378,7 +400,8 @@ def report_progress(progress):
     return emit
 
 
-async def synchronize(client, partnership=None, options=None, progress=None, providers=None, first_sync=None):
+async def synchronize(client, partnership=None, options=None, progress=None, providers=None, first_sync=None, duplicates=None,
+                      find_duplicates=False):
     emit = report_progress(progress)
     device = await read_device_info(client)
     if partnership is None:
@@ -410,7 +433,8 @@ async def synchronize(client, partnership=None, options=None, progress=None, pro
                     continue
                 instances[assigned_class.name] = provider
             try:
-                await synchronize_type(client, provider, object_type, options, state, report, emit, first_sync)
+                await synchronize_type(client, provider, object_type, options, state, report, emit, first_sync, duplicates,
+                                       find_duplicates)
             except ProviderError as error:
                 report.skipped_types.append(object_type.key)
                 report.errors.append(f"{object_type.display_name}: {error}")
@@ -445,7 +469,8 @@ async def first_sync_mode(sync, stored, provider, first_sync, report):
     return choice
 
 
-async def synchronize_type(client, provider, object_type, options, state, report, emit, first_sync=None):
+async def synchronize_type(client, provider, object_type, options, state, report, emit, first_sync=None, duplicates=None,
+                           find_duplicates=False):
     emit(SyncProgress("scan", object_type.key, message=_("Checking {type}").format(type=_(object_type.display_name))))
     source = device_source_for(client, object_type, options, provider)
     try:
@@ -474,6 +499,8 @@ async def synchronize_type(client, provider, object_type, options, state, report
         planned = await sync.plan(previous, mode)
         try:
             await sync.apply(planned)
+            if duplicates is not None and not options.dry_run and (find_duplicates or not same_provider):
+                await remove_duplicates(sync, duplicates)
             finish = getattr(source, "finish", None)
             if finish is not None and not options.dry_run:
                 await finish(store)
@@ -485,6 +512,32 @@ async def synchronize_type(client, provider, object_type, options, state, report
     finally:
         store.close()
         await source.close()
+
+
+async def remove_duplicates(sync, callback):
+    groups = duplicate_groups(sync.store, [entry["desktop_id"] for entry in sync.mapping if entry.get("desktop_id")])
+    if not groups:
+        return
+    describe = sync.store.describe
+    found = Duplicates(sync.object_type, [DuplicateGroup(members[0], describe(members[0]), [(item_id, describe(item_id))
+                                                                                          for item_id in members[1:]])
+                                          for members in groups])
+    removable = {item_id for members in groups for item_id in members[1:]}
+    chosen = set(await answer(callback, found) or ()) & removable
+    for entry in list(sync.mapping):
+        desktop_id, device_id = entry["desktop_id"], entry["device_id"]
+        if desktop_id not in chosen:
+            continue
+        action = SyncAction(sync.object_type.key, DELETE, TO_DEVICE, device_id, desktop_id, describe(desktop_id))
+        sync.report.actions.append(action)
+        try:
+            sync.store.delete_item(desktop_id, device_id)
+            if device_id:
+                await sync.device.delete(device_id)
+            sync.mapping.remove(entry)
+            action.applied = True
+        except (RapiError, OSError, ValueError, SyncError, ProviderError) as error:
+            action.error = str(error)
 
 
 @dataclass

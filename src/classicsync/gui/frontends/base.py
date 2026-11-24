@@ -71,6 +71,10 @@ class Frontend:
         from ...sync import FIRST_SYNC_COMBINE
         return FIRST_SYNC_COMBINE
 
+    def ask_duplicates(self, duplicates):
+        from ..common.duplicates import ask_remove_duplicates
+        return ask_remove_duplicates(None, duplicates, self.key)
+
     def set_up_partnership(self, title, failure_text, exclusive=False):
         def created(partnership, error):
             if error or partnership is None:

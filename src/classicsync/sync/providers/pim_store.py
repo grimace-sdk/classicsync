@@ -218,6 +218,12 @@ class RemotePimStore(Store):
             return False
         return properties_hash(merged) == properties_hash(device_object.properties)
 
+    def duplicate_key(self, item_id):
+        try:
+            return properties_hash(self.device_properties(item_id, []))
+        except ValueError:
+            return None
+
     def describe(self, item_id):
         try:
             return text_title(self.text(item_id), self.codec.component) or item_id
