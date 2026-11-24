@@ -2,6 +2,9 @@ from datetime import date, datetime, timezone
 
 from ...rapi.cedb import CEVT_BLOB, CEVT_LPWSTR, PropertyValue
 from ...rapi.structures import datetime_to_filetime, filetime_to_datetime
+from .properties import NOTES_BLOB, NOTES_TEXT
+
+NOTES_BLOB_ENCODING = "cp1252"
 
 
 def property_map(properties):
@@ -11,6 +14,26 @@ def property_map(properties):
 def text_value(values, key):
     value = values.get(key)
     return value if isinstance(value, str) else ""
+
+
+def blob_notes(values):
+    blob = values.get(NOTES_BLOB)
+    if not isinstance(blob, (bytes, bytearray)) or not blob:
+        return ""
+    raw = bytes(blob).split(b"\0", 1)[0]
+    if any(byte < 0x20 and byte not in (0x09, 0x0A, 0x0D) for byte in raw):
+        return ""
+    return raw.decode(NOTES_BLOB_ENCODING, "replace").replace("\r\n", "\n").replace("\r", "\n")
+
+
+def notes_value(values):
+    return text_value(values, NOTES_TEXT) or blob_notes(values)
+
+
+def notes_for_write(before, text):
+    if NOTES_TEXT not in before and text and text == blob_notes(before):
+        return None
+    return text
 
 
 def merge_properties(base, owned, values):

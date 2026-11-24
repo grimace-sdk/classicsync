@@ -1,7 +1,8 @@
 from ...rapi.cedb import CEVT_FILETIME, CEVT_LPWSTR
-from .properties import CONTACT_DATE_FIELDS, CONTACT_FILE_AS, CONTACT_TEXT_FIELDS
+from .properties import CONTACT_DATE_FIELDS, CONTACT_FILE_AS, CONTACT_TEXT_FIELDS, NOTES_TEXT
 from .record import (
-    filetime_for_local_date, format_date, local_date_from_filetime, merge_properties, parse_date, property_map, text_value,
+    filetime_for_local_date, format_date, local_date_from_filetime, merge_properties, notes_for_write, notes_value, parse_date,
+    property_map, text_value,
 )
 from .text import all_lines, escape_text, first_line, format_line, parse_components, split_escaped, unescape_text
 
@@ -33,6 +34,7 @@ RELATED_FIELDS = [("spouse", "spouse"), ("children", "child")]
 def contact_fields(properties):
     values = property_map(properties)
     fields = {name: text_value(values, key) for name, key in TEXT_KEYS.items()}
+    fields["notes"] = notes_value(values)
     for name, key in DATE_KEYS.items():
         fields[name] = values.get(key)
     return fields
@@ -190,6 +192,7 @@ def vcard_to_contact(text, base_properties=()):
     for name, key in DATE_KEYS.items():
         values[key] = filetime_for_local_date(fields[name]) if fields.get(name) else None
     base = list(base_properties)
+    values[NOTES_TEXT] = notes_for_write(property_map(base), fields.get("notes") or "") or None
     previous_file_as = property_map(base).get(FILE_AS_KEY)
     if not previous_file_as or previous_file_as == default_file_as(contact_fields(base)):
         values[FILE_AS_KEY] = default_file_as(fields) or None

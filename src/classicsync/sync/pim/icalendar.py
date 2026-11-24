@@ -11,7 +11,7 @@ from .properties import (
 )
 from .record import (
     filetime_for_local_date, filetime_from_utc, format_date, format_utc, local_date_from_filetime, merge_properties,
-    parse_date, property_map, text_value, utc_from_filetime,
+    notes_for_write, notes_value, parse_date, property_map, text_value, utc_from_filetime,
 )
 from .text import all_lines, escape_text, first_line, format_line, parse_components, split_escaped, unescape_text
 
@@ -84,8 +84,8 @@ def common_lines(values):
     lines = []
     if values.get(SENSITIVITY):
         lines.append("CLASS:PRIVATE")
-    if text_value(values, NOTES_TEXT):
-        lines.append(format_line("DESCRIPTION", escape_text(text_value(values, NOTES_TEXT))))
+    if notes_value(values):
+        lines.append(format_line("DESCRIPTION", escape_text(notes_value(values))))
     return lines + categories_lines(values)
 
 
@@ -267,7 +267,7 @@ def ical_to_appointment(text, base_properties=(), os_major=2):
         values[APPOINTMENT_DAY] = day_filetime
     values[SUBJECT] = text_of(event, "SUMMARY") or ""
     values[APPOINTMENT_LOCATION] = text_of(event, "LOCATION")
-    values[NOTES_TEXT] = text_of(event, "DESCRIPTION")
+    values[NOTES_TEXT] = notes_for_write(before, text_of(event, "DESCRIPTION"))
     values[CATEGORIES] = categories_of(event)
     if has_key(base, SENSITIVITY) or os_major > 1:
         values[SENSITIVITY] = sensitivity_of(event, before)
@@ -313,7 +313,7 @@ def ical_to_task(text, base_properties=(), os_major=2):
         values[TASK_IMPORTANCE] = importance_from_priority(priority, before.get(TASK_IMPORTANCE), os_major)
     else:
         values[TASK_IMPORTANCE] = before.get(TASK_IMPORTANCE)
-    values[NOTES_TEXT] = text_of(todo, "DESCRIPTION")
+    values[NOTES_TEXT] = notes_for_write(before, text_of(todo, "DESCRIPTION"))
     values[CATEGORIES] = categories_of(todo)
     if has_key(base, SENSITIVITY) or os_major > 1:
         values[SENSITIVITY] = sensitivity_of(todo, before)

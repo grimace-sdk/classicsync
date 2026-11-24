@@ -136,3 +136,29 @@ def test_line_folding_round_trip():
     folded = fold_line(line)
     assert all(len(part.encode("utf-8")) <= 75 for part in folded.split("\r\n"))
     assert unfold(folded) == [line]
+
+
+CE3_CONTACT = [
+    prop(0x3A09, CEVT_LPWSTR, "*See Notes"), prop(0x3A08, CEVT_LPWSTR, "(1)800-443-1254"),
+    prop(0x4013, CEVT_LPWSTR, "HP, Automated Information Service"), prop(0x3A16, CEVT_LPWSTR, "Hewlett-Packard"),
+    prop(0x3A06, CEVT_LPWSTR, "Automated Information Service"), prop(0x3A11, CEVT_LPWSTR, "HP"),
+    prop(0x0017, CEVT_BLOB, b"Country\tTelephone\rUSA\t\t+1 (970) 635-1000\r\x00"),
+]
+
+
+def test_ce3_contact_notes_come_from_the_blob():
+    card = contact_to_vcard(CE3_CONTACT)
+    assert "NOTE:Country\tTelephone\\nUSA\t\t+1 (970) 635-1000\\n" in card
+
+
+def test_unchanged_blob_notes_are_not_copied_to_text_notes():
+    card = contact_to_vcard(CE3_CONTACT)
+    values = property_map(vcard_to_contact(card, CE3_CONTACT))
+    assert (0x1000, CEVT_LPWSTR) not in values
+    assert values[(0x0017, CEVT_BLOB)] == CE3_CONTACT[-1].value
+
+
+def test_edited_blob_notes_are_written_as_text_notes():
+    card = contact_to_vcard(CE3_CONTACT).replace("NOTE:Country", "NOTE:Edited")
+    values = property_map(vcard_to_contact(card, CE3_CONTACT))
+    assert values[(0x1000, CEVT_LPWSTR)].startswith("Edited")
