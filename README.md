@@ -2,6 +2,8 @@
 
 Connect Windows CE 1.x, 2.x and 3.x devices (Handheld PC, Palm-size PC, Pocket PC 2000/2002) to a modern Linux, macOS or Windows computer. ClassicSync recreates H/PC Explorer 1.1, Windows CE Services 2.2 and ActiveSync 3.1: browse and copy files, install programs, back up and restore, and synchronize contacts, calendar, tasks and documents.
 
+<img src="docs/screenshots/activesync31-main.png" width="478" alt="ActiveSync 3.1 style window showing a synchronized Handheld PC">
+
 ClassicSync is not affiliated with Microsoft. Windows CE, Handheld PC Explorer and ActiveSync are trademarks of Microsoft Corporation.
 
 ## Install
@@ -54,6 +56,8 @@ On Linux, wxPython has no prebuilt wheel on PyPI; add `--find-links https://extr
 
 When the device connects you can browse it (Explore), copy files in both directions, and add or remove programs. Pocket Word and Pocket Excel documents are converted to Word and Excel files as they are copied, and back again.
 
+<img src="docs/screenshots/activesync31-explore.png" width="720" alt="Exploring the device in ActiveSync 3.1 style">
+
 ## Synchronize
 
 Synchronization needs a partnership. When an unknown device connects, ClassicSync offers to set one up (a device can partner with two computers); otherwise it connects as a guest, which can browse, copy and install but not synchronize.
@@ -73,6 +77,8 @@ Synchronized information is kept in a folder you can open and edit:
 
 Choose what to synchronize, when, and how conflicts are settled in Options.
 
+<img src="docs/screenshots/ceservices22-sync-status.png" width="520" alt="Windows CE Services 2.2 style ActiveSync Status window">
+
 Instead of the folder, contacts, calendar and tasks can synchronize with a CalDAV/CardDAV server (iCloud, Fastmail, Nextcloud), Outlook on Windows, or Contacts, Calendar and Reminders on macOS. Notes can be kept as Markdown files, and a list of web pages can be copied to the device for offline reading. See [docs/sync-plugins.md](docs/sync-plugins.md#built-in-providers); other providers can be added as plug-ins.
 
 ## Choose the look
@@ -82,14 +88,17 @@ ClassicSync Settings (in the tray or menu bar icon's menu) chooses which origina
 - Automatic: H/PC Explorer for Windows CE 1.x, Windows CE Services for 2.x, ActiveSync for 3.x, as you would have used at the time.
 - H/PC Explorer 1.1, Windows CE Services 2.2 or ActiveSync 3.1, whatever the device.
 
+| H/PC Explorer 1.1 | Windows CE Services 2.2 |
+| --- | --- |
+| <img src="docs/screenshots/hpcexplorer11-explorer.png" width="400" alt="H/PC Explorer 1.1 style explorer window"> | <img src="docs/screenshots/ceservices22-mobile-devices.png" width="400" alt="Windows CE Services 2.2 style Mobile Devices window"> |
+
 It also sets the language and the naming: ClassicSync, or the original product names for the full authentic experience.
 
-### Original artwork and translations
+### Translations
 
-ClassicSync ships its own stand-in icons and English text. If you have the original installers, it can use their artwork and their translations instead:
+ClassicSync ships with the original artwork and English text. If you have localized ActiveSync installers, it can use their translations:
 
 ```
-classicsync import-artwork hhpcex11.exe WCES22-2.EXE msasync.exe
 classicsync import-translations setup-async-4.5.msi async-4.5/ msasync.exe
 ```
 

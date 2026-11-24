@@ -57,6 +57,16 @@ Strings ClassicSync adds itself use whole sentences with `{name}` placeholders, 
 
 `tools/gui_capture/run_with_emulator.sh ROM STATE OUTPUT_DIR DRIVER [ARTWORK_PRODUCT ARTWORK_DIR]` starts velo-emu with its serial port on TCP, runs a driver script against it, and stops the emulator afterwards. The drivers save window captures with `wx.WindowDC(window).GetAsBitmap()`.
 
+The README screenshots come from `drive_screenshots.py` on macOS, which renders whole windows including the title bar in light appearance. Run it once per frontend:
+
+```
+CLASSICSYNC_FRONTEND=hpcexplorer11 tools/gui_capture/run_with_emulator.sh rom/nk.bin CE1_STATE OUT tools/gui_capture/drive_screenshots.py
+CLASSICSYNC_FRONTEND=ceservices22 tools/gui_capture/run_with_emulator.sh rom/nk-ce2-merged-patchsets-115k.bin CE2_STATE OUT tools/gui_capture/drive_screenshots.py
+CLASSICSYNC_FRONTEND=activesync31 tools/gui_capture/run_with_emulator.sh rom/nk-ce2-merged-patchsets-115k.bin CE2_STATE OUT tools/gui_capture/drive_screenshots.py
+```
+
+then copy the PNGs from `OUT` to `docs/screenshots/`.
+
 ## Release archives
 
 ```
