@@ -35,13 +35,13 @@ def run_pyinstaller(name, script, windowed, stage):
     arguments = [
         str(script), "--name", name, "--noconfirm", "--clean", "--onedir",
         "--distpath", str(BUILD / stage / "dist"), "--workpath", str(BUILD / stage / "work"), "--specpath", str(BUILD / stage / "spec"),
-        "--collect-submodules", "classicsync", "--collect-data", "classicsync", "--collect-all", "libusb_package", "--collect-all", "freetype",
+        "--collect-submodules", "classicsync", "--collect-data", "classicsync", "--collect-all", "libusb_package", "--exclude-module", "numpy",
         "--paths", str(REPOSITORY / "src"),
     ]
     if not windowed:
         arguments += ["--exclude-module", "wx"]
     if windowed:
-        arguments.append("--windowed")
+        arguments += ["--windowed", "--collect-all", "freetype"]
         if platform.system() == "Darwin":
             arguments += ["--osx-bundle-identifier", "org.classicsync.ClassicSync"]
     PyInstaller.__main__.run(arguments)
