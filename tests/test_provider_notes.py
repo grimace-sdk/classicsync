@@ -1,4 +1,5 @@
 import asyncio
+import os
 from pathlib import Path
 
 import pytest
@@ -13,7 +14,7 @@ from classicsync.sync.providers.notes.markdown import document_from_markdown, ma
 from classicsync.sync.providers.notes.provider import NotesProvider
 from classicsync.sync.providers.notes.pwi import is_pwi, pwi_paragraphs, pwi_text
 
-SAMPLES = Path(__file__).resolve().parents[2] / "sh3" / "emu" / "rom" / "nk-a51-ce1.01" / "files"
+SAMPLES = Path(os.environ.get("CLASSICSYNC_PWI_SAMPLES", ""))
 PROVIDERS = {"folder": FolderProvider, "notes": NotesProvider}
 
 
@@ -36,7 +37,7 @@ def test_pwi_text_is_decoded():
     assert pwi_paragraphs(data) == ["Shopping", "＜よう tea"]
 
 
-@pytest.mark.skipif(not (SAMPLES / "memo.pwi").exists(), reason="Pocket Word 1.0 .pwi samples not present")
+@pytest.mark.skipif(not (SAMPLES / "memo.pwi").exists(), reason="Pocket Word 1.0 .pwi samples not found (set CLASSICSYNC_PWI_SAMPLES)")
 def test_pwi_samples_decode():
     assert pwi_paragraphs((SAMPLES / "memo.pwi").read_bytes())[0] == "社内連絡メモ"
     assert "Microsoft(R) Pocket Word(R)" in pwi_text((SAMPLES / "welcome.pwi").read_bytes())

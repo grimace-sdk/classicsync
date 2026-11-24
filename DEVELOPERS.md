@@ -16,7 +16,7 @@ uv pip install --python .venv -e ".[gui,usb,artwork,dev]"
 VELO_EMU=../velo-emu .venv/bin/python -m pytest   # adds CE 1.0 and CE 2.0 emulator sessions
 ```
 
-Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (default `../classicsync-installers`) and skip when they are absent. Emulator tests (marked `device`) need a [velo-emu](https://github.com/Gadgetoid/velo-emu) build in `$VELO_EMU`. CalDAV tests use an in-process fake server; to also run them against Radicale, point `$CLASSICSYNC_RADICALE_PYTHON` at a Python with `radicale` installed (`uv venv radicale-env && uv pip install --python radicale-env radicale`).
+Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (default `../classicsync-installers`) and skip when they are absent. Pocket Word 1.0 `.pwi` sample tests read `$CLASSICSYNC_PWI_SAMPLES`. Emulator tests (marked `device`) need a [velo-emu](https://github.com/Gadgetoid/velo-emu) build in `$VELO_EMU`. CalDAV tests use an in-process fake server; to also run them against Radicale, point `$CLASSICSYNC_RADICALE_PYTHON` at a Python with `radicale` installed (`uv venv radicale-env && uv pip install --python radicale-env radicale`).
 
 ## Layout
 

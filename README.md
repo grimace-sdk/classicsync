@@ -6,7 +6,7 @@ ClassicSync is not affiliated with Microsoft. Windows CE, Handheld PC Explorer a
 
 ## Install
 
-Download the archive for your computer from [Releases](https://github.com/Gadgetoid/classicsync/releases). Each contains the ClassicSync app and the `classicsync` command-line tool.
+Download the archive for your computer from [Releases](https://github.com/grimace-sdk/classicsync/releases). Each contains the ClassicSync app and the `classicsync` command-line tool.
 
 ### Windows
 
@@ -33,7 +33,7 @@ Serial adapters appear as `/dev/cu.usbserial-...` or similar.
 If you have [uv](https://docs.astral.sh/uv/):
 
 ```
-uv tool install "classicsync[gui,usb] @ git+https://github.com/Gadgetoid/classicsync"
+uv tool install "classicsync[gui,usb] @ git+https://github.com/grimace-sdk/classicsync"
 classicsync-gui
 ```
 
