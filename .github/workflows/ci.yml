@@ -1,0 +1,105 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uvx ruff check src tests tools
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv venv
+      - run: uv pip install -e ".[test,artwork,usb]"
+      - run: uv run --no-project python -m pytest -q -m "not device"
+
+  wheel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-package
+          path: dist/*
+          if-no-files-found: error
+
+  bundle:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            wx_find_links: https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/
+          - os: macos-latest
+          - os: macos-15-intel
+          - os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+        with:
+          python-version: "3.13"
+      - name: Install GTK runtime
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0t64 libnotify4 libsdl2-2.0-0 libxtst6 libsm6
+      - run: uv venv
+      - name: Install
+        shell: bash
+        run: |
+          if [ -n "${{ matrix.wx_find_links }}" ]; then
+            uv pip install --find-links "${{ matrix.wx_find_links }}" -e ".[gui,usb,artwork,dev]"
+          else
+            uv pip install -e ".[gui,usb,artwork,dev]"
+          fi
+      - run: uv run --no-project python packaging/build_app.py
+      - uses: actions/upload-artifact@v7
+        with:
+          name: bundle-${{ matrix.os }}
+          path: |
+            dist/*.zip
+            dist/*.tar.gz
+          if-no-files-found: error
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [lint, test, wheel, bundle]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check the tag matches the package version
+        shell: bash
+        run: |
+          version=$(grep -m1 '^version = ' pyproject.toml | cut -d'"' -f2)
+          test "${GITHUB_REF_NAME}" = "v${version}" || { echo "tag ${GITHUB_REF_NAME} does not match version ${version}"; exit 1; }
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" artifacts/* --title "ClassicSync ${GITHUB_REF_NAME#v}" --generate-notes

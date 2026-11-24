@@ -1,0 +1,4340 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: classicsync\n"
+"POT-Creation-Date: 2026-11-24 11:28+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:155
+msgid "\r\nBaud Rate: %d"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/get_connected.py:102
+msgid "\r\nBaud Rate: 19200"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:153 classicsync/gui/frontends/ceservices22/get_connected.py:100
+msgid "\r\nStatus: "
+msgstr ""
+
+#: classicsync/cli_sync.py:125
+msgid "  slot {slot}: partner {partner} {desktop}"
+msgstr ""
+
+#: classicsync/cli_sync.py:128
+msgid "  {count} free slot"
+msgid_plural "  {count} free slots"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:34
+msgid " (Free space: %d.%dMB)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:24
+msgid " All Folders"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:25
+msgid " Contents of '%s'"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:152
+msgid "%1 (%2!d! bytes)"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:141 classicsync/gui/frontends/ceservices22/device_properties.py:83
+msgid "%1 Properties"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:65
+msgid "%1!d! items not synchronized"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:297 classicsync/gui/common/device_browser.py:341 classicsync/gui/frontends/ceservices22/mobile_devices.py:461
+msgid "%1!d! object(s)"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:339 classicsync/gui/frontends/ceservices22/mobile_devices.py:460
+msgid "%1!d! object(s) selected"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:363
+msgid "%1!s! not available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:319
+msgid "%1!s!: %2!d! of %3!d! items completed"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:317
+msgid "%1!s!: %2!d! of 1 item completed"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:23
+msgid "%d KB RAM"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/properties.py:23
+msgid "%d bytes (%d bytes)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:244
+msgid "%d database(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:243
+msgid "%d database(s) selected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:134
+msgid "%d items need updating"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:127 classicsync/gui/frontends/hpcexplorer11/synchronization.py:56
+msgid "%d items out-of-date"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:141
+msgid "%d items out-of-date."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:146
+msgid "%d object(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:154
+msgid "%d object(s) selected"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/properties.py:25
+msgid "%d.%dKB (%d bytes)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:295
+msgid "%s ActiveSync Options"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:189
+msgid "%s ActiveSync Status"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:181
+msgid "%s Advanced ActiveSync Options"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:464 classicsync/gui/frontends/ceservices22/tray.py:40
+msgid "%s Connected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:38
+msgid "%s Connected, %s"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:83
+msgid "%s File"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:14
+msgid "%s K"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:158 classicsync/gui/frontends/hpcexplorer11/properties.py:53
+msgid "%s Properties"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:88
+msgid "%s bytes"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:89
+msgid "%sKB"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:203
+msgid "&About H/PC Explorer..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:176
+msgid "&About Microsoft ActiveSync"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:115
+msgid "&About Windows CE Services"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:89
+msgid "&Action:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:68
+msgid "&ActiveSync Options..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:306
+msgid "&Application Manager..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sheet.py:15 classicsync/gui/frontends/hpcexplorer11/sheet.py:27
+msgid "&Apply"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:188
+msgid "&Arrange Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:44
+msgid "&At all times (I plan to use my COM port only for connecting to my mobile device)."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:187
+msgid "&Auto Arrange"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:295
+msgid "&Back"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:193
+msgid "&Back Up Now"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:304
+msgid "&Back Up Now..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:169
+msgid "&Backup/Restore..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:65 classicsync/gui/frontends/ceservices22/sync_status.py:36 classicsync/gui/frontends/hpcexplorer11/explorer.py:198
+msgid "&Best of the Web"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:160
+msgid "&Browse"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:192
+msgid "&Browse..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/sync_status.py:88 classicsync/gui/frontends/hpcexplorer11/explorer.py:180
+msgid "&Close"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:215
+msgid "&Combine"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:180
+msgid "&Combine the items on my device with the items on this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:311
+msgid "&Communications Troubleshooter"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:59 classicsync/gui/frontends/ceservices22/tray.py:70
+msgid "&Communications..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:149
+msgid "&Connection Settings..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:60
+msgid "&Continuously while the device is connected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:637 classicsync/gui/frontends/ceservices22/mobile_devices.py:269 classicsync/gui/frontends/hpcexplorer11/browser.py:199
+msgid "&Copy"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:182
+msgid "&Copy\tCtrl+C"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:392
+msgid "&Copy to This Computer..."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:395 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:256 classicsync/gui/frontends/ceservices22/mobile_devices.py:598 classicsync/gui/frontends/ceservices22/mobile_devices.py:639 classicsync/gui/frontends/hpcexplorer11/browser.py:200 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+msgid "&Delete"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:146
+msgid "&Delete Partnership"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:22
+msgid "&Desktop software:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:161 classicsync/gui/frontends/ceservices22/mobile_devices.py:282 classicsync/gui/frontends/ceservices22/mobile_devices.py:614 classicsync/gui/frontends/hpcexplorer11/browser.py:180 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
+msgid "&Details"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:63 classicsync/gui/frontends/ceservices22/sync_status.py:34 classicsync/gui/frontends/hpcexplorer11/explorer.py:196
+msgid "&Developer Forum"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:217
+msgid "&Discard"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:144
+msgid "&Display the tray icon in the taskbar"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:190 classicsync/gui/frontends/hpcexplorer11/synchronization.py:140
+msgid "&Don't prompt me, and always:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:273 classicsync/gui/frontends/ceservices22/sync_status.py:93 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
+msgid "&Edit"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:129
+msgid "&Enable Appointment, Contact, and Task synchronization."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:71
+msgid "&Enable Serial Connection"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:63
+msgid "&Enable mobile device connection"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:231
+msgid "&Enable synchronization"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:145 classicsync/gui/frontends/ceservices22/mobile_devices.py:249 classicsync/gui/frontends/ceservices22/mobile_devices.py:593 classicsync/gui/frontends/ceservices22/mobile_devices.py:636
+msgid "&Explore"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:152 classicsync/gui/frontends/ceservices22/mobile_devices.py:265 classicsync/gui/frontends/ceservices22/sync_status.py:89 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
+msgid "&File"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:187
+msgid "&Folders"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:296
+msgid "&Forward"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:63 classicsync/gui/frontends/ceservices22/sync_status.py:34 classicsync/gui/frontends/hpcexplorer11/explorer.py:195
+msgid "&Free Stuff"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:148 classicsync/gui/frontends/ceservices22/tray.py:76
+msgid "&Get Connected..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:298
+msgid "&Go"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:159
+msgid "&Guest"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:57 classicsync/gui/frontends/hpcexplorer11/tray.py:36
+msgid "&H/PC Explorer"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:149 classicsync/gui/common/conflicts.py:218 classicsync/gui/frontends/activesync31/main_window.py:177 classicsync/gui/frontends/ceservices22/mobile_devices.py:317 classicsync/gui/frontends/ceservices22/sync_status.py:116 classicsync/gui/frontends/hpcexplorer11/explorer.py:206
+msgid "&Help"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:84
+msgid "&Install New Port"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:48
+msgid "&Install program into the default installation folder"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:244
+msgid "&Install..."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:190
+msgid "&Install:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:272 classicsync/gui/frontends/ceservices22/sync_status.py:92 classicsync/gui/frontends/hpcexplorer11/explorer.py:184
+msgid "&Invert Selection"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:31
+msgid "&Language:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:179
+msgid "&Large Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:85
+msgid "&Leave the item unresolved. (Click \"Resolve items...\" to choose which item to keep.)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:281 classicsync/gui/frontends/ceservices22/mobile_devices.py:613 classicsync/gui/frontends/hpcexplorer11/browser.py:180 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
+msgid "&List"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:36
+msgid "&Local RAPI address:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:174
+msgid "&Microsoft ActiveSync Help"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:144
+msgid "&Mobile Device"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:26
+msgid "&Naming:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:255 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+msgid "&New Folder"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:163
+msgid "&New Partner"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:51 classicsync/gui/frontends/activesync31/get_connected.py:112 classicsync/gui/frontends/activesync31/partnership_wizard.py:82 classicsync/gui/frontends/activesync31/partnership_wizard.py:227
+msgid "&Next >"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:158
+msgid "&None"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:47
+msgid "&Only while the Mobile Devices window is open (I may need to use my COM port for another purpose)."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:390 classicsync/gui/frontends/ceservices22/mobile_devices.py:249 classicsync/gui/frontends/ceservices22/mobile_devices.py:593 classicsync/gui/frontends/ceservices22/mobile_devices.py:636 classicsync/gui/frontends/hpcexplorer11/browser.py:196 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+msgid "&Open"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:97
+msgid "&Open ActiveSync when my mobile device connects."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:147
+msgid "&Open Explorer window upon connection"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:43
+msgid "&Open Microsoft ActiveSync"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/tray.py:62
+msgid "&Open Mobile Devices"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:165 classicsync/gui/frontends/ceservices22/activesync.py:244 classicsync/gui/frontends/ceservices22/mobile_devices.py:291 classicsync/gui/frontends/ceservices22/sync_status.py:102 classicsync/gui/frontends/hpcexplorer11/explorer.py:191 classicsync/gui/frontends/hpcexplorer11/synchronization.py:196
+msgid "&Options..."
+msgstr ""
+
+#: classicsync/gui/common/password.py:19
+msgid "&Password:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:269 classicsync/gui/frontends/ceservices22/mobile_devices.py:627 classicsync/gui/frontends/hpcexplorer11/browser.py:190
+msgid "&Paste"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:182
+msgid "&Paste\tCtrl+V"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:72 classicsync/gui/frontends/hpcexplorer11/communications.py:40
+msgid "&Port:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:198 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+msgid "&Print"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:63 classicsync/gui/frontends/ceservices22/sync_status.py:34 classicsync/gui/frontends/hpcexplorer11/explorer.py:195
+msgid "&Product News"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:187
+msgid "&Prompt me with the following default action:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:137
+msgid "&Prompt me, and set the following as the default action:"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:160
+msgid "&Read-only"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:290 classicsync/gui/frontends/ceservices22/sync_status.py:102 classicsync/gui/frontends/hpcexplorer11/explorer.py:191
+msgid "&Refresh"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:245
+msgid "&Remove"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:205
+msgid "&Remove Duplicates"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:145
+msgid "&Remove..."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:182
+msgid "&Replace the items on my device with the items on this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:167
+msgid "&Resolve Items..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:162 classicsync/gui/frontends/hpcexplorer11/__init__.py:161
+msgid "&Restore"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:112 classicsync/gui/frontends/ceservices22/get_connected.py:128
+msgid "&Retry"
+msgstr ""
+
+#: classicsync/gui/common/password.py:21
+msgid "&Save password"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:246 classicsync/gui/frontends/activesync31/options.py:36 classicsync/gui/frontends/activesync31/partnership_wizard.py:182
+msgid "&Settings..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:16
+msgid "&Show all files"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:179
+msgid "&Small Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/get_connected.py:49
+msgid "&Start"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:192
+msgid "&Synchronization Manager..."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:93 classicsync/gui/frontends/activesync31/main_window.py:139 classicsync/gui/frontends/activesync31/tray.py:46 classicsync/gui/frontends/ceservices22/__init__.py:158 classicsync/gui/frontends/ceservices22/sync_status.py:265
+msgid "&Synchronize"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:268 classicsync/gui/frontends/hpcexplorer11/synchronization.py:133
+msgid "&Synchronize Now"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:239
+msgid "&Synchronize {database}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:160 classicsync/gui/frontends/ceservices22/mobile_devices.py:276 classicsync/gui/frontends/ceservices22/sync_status.py:95 classicsync/gui/frontends/hpcexplorer11/explorer.py:187
+msgid "&Toolbar"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:171 classicsync/gui/frontends/ceservices22/mobile_devices.py:307 classicsync/gui/frontends/ceservices22/sync_status.py:109 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
+msgid "&Tools"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:268
+msgid "&Undo"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:181
+msgid "&Undo\tCtrl+Z"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:297
+msgid "&Up One Level"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:292 classicsync/gui/frontends/ceservices22/mobile_devices.py:616 classicsync/gui/frontends/ceservices22/sync_status.py:103 classicsync/gui/frontends/hpcexplorer11/browser.py:182 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
+msgid "&View"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:120
+msgid "&Yes"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:145
+msgid "&Yes, I want to synchronize with only this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/get_connected.py:99
+msgid "(Retry %d)"
+msgstr ""
+
+#: classicsync/cli_plugins.py:51
+msgid "(replaced by a later plugin)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:198
+msgid "* Files (\\My Documents) is a {product} addition. H/PC Explorer 1.1 synchronized only Appointments, Contacts, and Tasks."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:85
+msgid "* Use a USB cradle that appears as a serial port, choose it in Connection Settings, and click Next."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:84
+msgid "* Use the serial cable to connect to a serial port of this desktop computer and click Next."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:20
+msgid ".CPL     (Control Panel extension)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:20
+msgid ".DLL     (Application extension)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:20
+msgid ".DRV     (Device driver)"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:88
+msgid "1 byte"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:64
+msgid "1 item not synchronized"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:127 classicsync/gui/frontends/hpcexplorer11/synchronization.py:56
+msgid "1 item out-of-date"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:141
+msgid "1 item out-of-date."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:46
+msgid "2bp Image"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:50 classicsync/gui/frontends/activesync31/partnership_wizard.py:81
+msgid "< &Back"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:69
+msgid "<--  Replace"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:41
+msgid "<unavailable>"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:215
+msgid "A Guest device does not have this service available."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:489
+msgid "A file name cannot contain any of the following characters: \\ / : * ? \" < > |"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:156
+msgid "A guest H/PC has been connected. You may proceed as a guest, restore from a previous backup file, or set up a new partnership."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:44
+msgid "A recreation of the {style} desktop software."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:65 classicsync/gui/frontends/ceservices22/properties.py:78 classicsync/gui/frontends/hpcexplorer11/communications.py:46
+msgid "A serial port, or tcp:HOST:PORT for an emulator's serial port"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:232
+msgid "A&utomatically synchronize upon connecting"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:130
+msgid "A&utomatically synchronize upon connecting."
+msgstr ""
+
+#: classicsync/cli.py:158
+msgid "AC"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/__init__.py:22
+msgid "About Microsoft ActiveSync"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:33
+msgid "About Microsoft H/PC Explorer"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:34
+msgid "About Microsoft Windows CE Services"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:316
+msgid "About Windows CE &Services"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:81
+msgid "Action"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:175 classicsync/gui/frontends/ceservices22/activesync.py:384
+msgid "ActiveSync"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:303 classicsync/gui/frontends/ceservices22/mobile_devices.py:595 classicsync/gui/frontends/ceservices22/sync_status.py:106 classicsync/gui/frontends/ceservices22/sync_status.py:265 classicsync/gui/frontends/ceservices22/sync_status.py:268
+msgid "ActiveSync &Options..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:302 classicsync/gui/frontends/ceservices22/mobile_devices.py:594 classicsync/gui/frontends/ceservices22/tray.py:66
+msgid "ActiveSync &Status..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:193
+msgid "ActiveSync Error:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:111
+msgid "ActiveSync Help &Topics"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:295
+msgid "ActiveSync Options"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:215
+msgid "ActiveSync Options:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:189
+msgid "ActiveSync Status"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:37
+msgid "ActiveSync USB Driver Not Installed"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:122
+msgid "ActiveSync USB device not attached"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:245
+msgid "Ad&vanced..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:23
+msgid "Add Files"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:170
+msgid "Add/Re&move Programs..."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:13
+msgid "Add/Remove Programs"
+msgstr ""
+
+#: classicsync/cli_install.py:43
+msgid "Added to this computer:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:234
+msgid "Address"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:182
+msgid "Advanced ActiveSync Options"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:83
+msgid "After installing batteries or plugging in the AC adapter, do one of the following:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:15
+msgid "All appointments are synchronized."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:15
+msgid "All contacts are synchronized."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:16
+msgid "All tasks are synchronized."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:72
+msgid "Allow &USB connection with this desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:77
+msgid "Allow &network (Ethernet) and Remote Access Service (RAS) server connection with this desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:58
+msgid "Allow &serial cable or infrared connection to this COM port:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:87
+msgid "Always replace the item on my &device"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:88
+msgid "Always replace the item on this &computer"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:192
+msgid "An error has occurred in synchronization. Please correct at the desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:39
+msgid "An system error has prevented Microsoft ActiveSync from setting up a partnership between your mobile device and this computer.\n\nTo set up a partnership, disconnect your device, restart Windows on this computer, and then reconnect your device."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:44
+msgid "Application"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:39
+msgid "Application Downloading Complete"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:44
+msgid "Application Extension"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:683
+msgid "Application Manager"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:29
+msgid "Application Manager can run only when a mobile device is connected."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:38
+msgid "Application Manager cannot install applications on a Handheld PC 1.0 device."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:23
+msgid "Applications installed in this session will be automatically removed if you choose to cancel Setup now.\n\nDo you want to continue with Setup?"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:14
+msgid "Appointments"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:161
+msgid "Ar&chive"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/properties.py:15
+msgid "Archive"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:507
+msgid "Are you sure you want to delete '{name}'?"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:509
+msgid "Are you sure you want to delete these items?"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:289 classicsync/gui/frontends/ceservices22/mobile_devices.py:620 classicsync/gui/frontends/ceservices22/sync_status.py:101 classicsync/gui/frontends/hpcexplorer11/explorer.py:191
+msgid "Arrange &Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:274
+msgid "Arrange by &Name"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:274
+msgid "Arrange by &Type"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:120
+msgid "Arranges the icons automatically."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:159 classicsync/gui/frontends/hpcexplorer11/properties.py:92
+msgid "Attributes:"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:29
+msgid "Authentic (original product names)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:69
+msgid "Auto &Connect..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:34
+msgid "Auto Connect Options"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:37
+msgid "Auto Connect establishes communications with your device when you connect the serial cable. You can enable Auto Connect at all times or only while a Mobile Devices window is open."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:233
+msgid "Auto&matically synchronize if data is out of date"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:9 classicsync/gui/frontends/ceservices22/properties.py:15 classicsync/gui/frontends/hpcexplorer11/communications.py:10
+msgid "Automatic"
+msgstr ""
+
+#: classicsync/gui/frontends/__init__.py:36
+msgid "Automatic (match the device)"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:150
+msgid "Available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:21 classicsync/gui/frontends/activesync31/get_connected.py:22 classicsync/gui/frontends/ceservices22/get_connected.py:20 classicsync/gui/frontends/ceservices22/get_connected.py:21
+msgid "Available, looking for device..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:214 classicsync/gui/frontends/ceservices22/mobile_devices.py:214
+msgid "Back"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:82
+msgid "Back Up Now"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:125
+msgid "Backs up all H/PC files, data, and settings."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:86
+msgid "Backs up all mobile device files, data, and settings."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:304 classicsync/gui/frontends/hpcexplorer11/explorer.py:193
+msgid "Backup/&Restore..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:79
+msgid "Baud Rate:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:118
+msgid "Before you can synchronize information between your mobile device and this computer, you must set up a partnership between them.\n\nWould you like to set up a partnership?"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:46
+msgid "Bitmap Image"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:86
+msgid "Browse..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:151
+msgid "C&lose"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:125
+msgid "COM port is available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:127
+msgid "COM port is not available"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:46
+msgid "Cabinet File"
+msgstr ""
+
+#: classicsync/sync/objects.py:21
+msgid "Calendar"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/activesync.py:360 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:66 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:247 classicsync/gui/frontends/hpcexplorer11/synchronization.py:301
+msgid "Cancel"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:22
+msgid "Cancel Application Installation"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:42
+msgid "Canceling synchronization may result in duplicate items on your H/PC the next time you synchronize. Are you sure you want to cancel?"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:32
+msgid "Canceling synchronization may result in duplicate items on your mobile device the next time you synchronize. Are you sure you want to cancel?"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:390 classicsync/gui/frontends/hpcexplorer11/synchronization.py:341
+msgid "Canceling synchronization. Please wait..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:427
+msgid "Cannot delete the partnership profile of a connected device.\r\nPlease disconnect the device and try again."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:490
+msgid "Cannot explore or open an unconnected device."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:47
+msgid "Cannot rename device to '%s'. The device name contains characters which are not valid or is an illegal device name.\r\n\r\nPlease type in another name now."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:50 classicsync/gui/frontends/hpcexplorer11/commands.py:121
+msgid "Changes the display options for the window."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:90
+msgid "Checking COM Ports"
+msgstr ""
+
+#: classicsync/sync/engine.py:396
+msgid "Checking {type}"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:201
+msgid "Choose a sync plugin"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:235
+msgid "Choose how {device} is synchronized with this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:51
+msgid "Choose the port your mobile device's cable is connected to, then click OK."
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:21
+msgid "Choose which desktop software to recreate. Automatic matches the software to the device's version of Windows CE."
+msgstr ""
+
+#: classicsync/gui/branding.py:93
+msgid "ClassicSync is not affiliated with Microsoft. Windows CE, Handheld PC Explorer and ActiveSync are trademarks of Microsoft Corporation."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:197
+msgid "Click Finish to exit this wizard."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:203
+msgid "Click Remove Duplicates to remove any duplicate items found by synchronization service providers on the desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:241
+msgid "Click the check box next to a service type and click OK to enable or disable that service.  A check indicates that the service type is enabled.  Select an enabled service and click Options to change settings for that service type."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:254 classicsync/gui/frontends/hpcexplorer11/tray.py:39
+msgid "Close"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/sync_status.py:45 classicsync/gui/frontends/hpcexplorer11/commands.py:101
+msgid "Closes the window."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:51
+msgid "Co&nnection Settings..."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:42
+msgid "Combine H/PC and desktop computer items, giving you the option to remove identical items. Note that this may not detect all duplicates, so you may need to remove some duplicate items manually."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:31
+msgid "Combine mobile device and desktop computer items, giving you the option to remove identical items. Note that this may not detect all duplicates, so you may need to remove some duplicate items manually."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:171
+msgid "Combine or Replace"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:250 classicsync/gui/frontends/ceservices22/sync_status.py:88 classicsync/gui/frontends/hpcexplorer11/explorer.py:179
+msgid "Comm&unications..."
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:38
+msgid "Command-line tools reach the connected device here."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:164 classicsync/gui/frontends/hpcexplorer11/communications.py:32
+msgid "Communications"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:37
+msgid "Communications Port"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:29
+msgid "Communications Properties"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/tray.py:17
+msgid "Communications closed"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:23 classicsync/gui/frontends/hpcexplorer11/explorer.py:289
+msgid "Communications disabled"
+msgstr ""
+
+#: classicsync/sync/folder.py:24
+msgid "Company: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:65
+msgid "Computer"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:48
+msgid "Configuration Settings"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:510
+msgid "Confirm Delete"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:510
+msgid "Confirm File Delete"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:632 classicsync/gui/frontends/hpcexplorer11/browser.py:230
+msgid "Confirm File Replace"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:48
+msgid "Confirm Partnership Deletion"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:432
+msgid "Confirm Partnership Profile(s) Delete"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:81 classicsync/gui/frontends/hpcexplorer11/synchronization.py:134
+msgid "Conflict Resolution"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:184
+msgid "Conflict resolution rules"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:136
+msgid "Connect your mobile device to change its synchronization options."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:32 classicsync/gui/frontends/activesync31/main_window.py:332 classicsync/gui/frontends/activesync31/tray.py:20 classicsync/gui/frontends/ceservices22/mobile_devices.py:111 classicsync/gui/frontends/ceservices22/mobile_devices.py:404
+msgid "Connected"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:13 classicsync/gui/frontends/hpcexplorer11/tray.py:15
+msgid "Connected to H/PC"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:40
+msgid "Connected, synchronization disabled"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:13 classicsync/gui/frontends/activesync31/tray.py:21
+msgid "Connecting"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:33
+msgid "Connecting..."
+msgstr ""
+
+#: classicsync/gui/app.py:264 classicsync/gui/frontends/activesync31/connection_settings.py:50 classicsync/gui/frontends/ceservices22/mobile_devices.py:80
+msgid "Connection"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:44
+msgid "Connection Settings"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:14 classicsync/gui/frontends/activesync31/main_window.py:35 classicsync/gui/frontends/activesync31/tray.py:22 classicsync/gui/frontends/ceservices22/mobile_devices.py:109 classicsync/gui/frontends/ceservices22/properties.py:25 classicsync/gui/frontends/ceservices22/properties.py:20 classicsync/gui/frontends/ceservices22/tray.py:19
+msgid "Connection disabled"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:68
+msgid "Connection speed. Automatic tries 19200, 57600, 115200 and 38400 in turn."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:49
+msgid "Connection speed. H/PC Explorer used 19200. Automatic tries 19200, 57600, 115200 and 38400 in turn."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:82
+msgid "Connection speed. Make sure your mobile device is set to communicate at the same baud rate. Automatic tries 19200, 57600, 115200 and 38400 in turn."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:276
+msgid "Connections are disabled. Use Connection Settings to choose a port."
+msgstr ""
+
+#: classicsync/sync/objects.py:20
+msgid "Contacts"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:95
+msgid "Conversion &Settings..."
+msgstr ""
+
+#: classicsync/sync/folder.py:317
+msgid "Convert documents"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:655
+msgid "Converted with changes: {details}"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:109
+msgid "Converts and prints the selected item."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:611
+msgid "Copied {count} file to {target}"
+msgid_plural "Copied {count} files to {target}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:91
+msgid "Copies selected items to the Clipboard. Use Paste to put them in a new location."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:219 classicsync/gui/frontends/ceservices22/mobile_devices.py:219
+msgid "Copy"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:71
+msgid "Copy  (Ctrl+C)"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:400 classicsync/gui/frontends/ceservices22/mobile_devices.py:262 classicsync/gui/frontends/ceservices22/mobile_devices.py:628
+msgid "Copy &Files Here..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:638 classicsync/gui/frontends/ceservices22/mobile_devices.py:261
+msgid "Copy &to This Computer..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:41
+msgid "Copy (%d) of %s"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:24
+msgid "Copy Out"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:23 classicsync/gui/frontends/ceservices22/mobile_devices.py:262
+msgid "Copy files from this computer"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:38
+msgid "Copy of %s"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:93
+msgid "Copy selected item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:261
+msgid "Copy selected item(s) to this computer"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:24
+msgid "Copy selected items to this computer"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:461
+msgid "Copy to Mobile Device"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:585
+msgid "Copy to which folder on this computer?"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:553
+msgid "Copying '{name}'"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:614 classicsync/gui/common/device_browser.py:657 classicsync/gui/frontends/hpcexplorer11/browser.py:247 classicsync/gui/frontends/hpcexplorer11/browser.py:257
+msgid "Copying..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:271
+msgid "Copying:  %s"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:284
+msgid "Could not load: {failures}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:256 classicsync/gui/frontends/ceservices22/mobile_devices.py:598 classicsync/gui/frontends/ceservices22/mobile_devices.py:639 classicsync/gui/frontends/hpcexplorer11/browser.py:200 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+msgid "Create &Shortcut"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:83
+msgid "Create a new folder"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:91
+msgid "Create a shortcut to selected item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:94
+msgid "Create a shortcut to the copied item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:110
+msgid "Creates a new, empty folder."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:113
+msgid "Creates shortcuts to the items you have copied or cut into the selected location."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:111
+msgid "Creates shortcuts to the selected items."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:637 classicsync/gui/frontends/ceservices22/mobile_devices.py:268 classicsync/gui/frontends/hpcexplorer11/browser.py:199
+msgid "Cu&t"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:181
+msgid "Cu&t\tCtrl+X"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:50
+msgid "Current Status"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:218 classicsync/gui/frontends/ceservices22/mobile_devices.py:218
+msgid "Cut"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:70
+msgid "Cut  (Ctrl+X)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:93
+msgid "Cut selected item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:198
+msgid "D&on't show ActiveSync progress during synchronization."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:261
+msgid "Databases"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/ceservices22/mobile_devices.py:224 classicsync/gui/frontends/ceservices22/mobile_devices.py:224
+msgid "Delete"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:73
+msgid "Delete  (Del)"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:156 classicsync/gui/frontends/activesync31/partnership_wizard.py:250
+msgid "Delete a Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:156
+msgid "Delete an existing partnership before setting up a new one."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:92
+msgid "Delete selected item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:93
+msgid "Deletes the selected items."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:49
+msgid "Deleting the selected partnership deletes all device-specific information from this computer. However, any existing backup file for this partnership will not be deleted.\n\nAre you sure you want to delete this partnership?"
+msgstr ""
+
+#: classicsync/gui/app.py:244 classicsync/gui/frontends/ceservices22/mobile_devices.py:80
+msgid "Description"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:60
+msgid "Description:"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:84 classicsync/gui/common/conflicts.py:81
+msgid "Desktop Computer"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/__init__.py:28 classicsync/gui/frontends/ceservices22/__init__.py:41
+msgid "Desktop connectivity for Windows CE 1.x, 2.x and 3.x devices on Linux, macOS and Windows."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:38
+msgid "Desktop software for Windows CE 1.0 Handheld PCs."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:41 classicsync/gui/frontends/hpcexplorer11/commands.py:80
+msgid "Details"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:86
+msgid "Device Connections via Network"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:66
+msgid "Device Connections via Serial Port"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:30
+msgid "Device Disconnected"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:34
+msgid "Device Information Unknown"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:44
+msgid "Device Name Not Unique"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:59
+msgid "Device Name:"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:28
+msgid "Device Not Connected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:56
+msgid "Device Properties"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:71
+msgid "Device Type:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:12 classicsync/gui/frontends/ceservices22/properties.py:18
+msgid "Device connected"
+msgstr ""
+
+#: classicsync/sync/folder.py:319
+msgid "Device folders"
+msgstr ""
+
+#: classicsync/sync/folder.py:320
+msgid "Device folders to synchronize."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:24 classicsync/gui/frontends/ceservices22/get_connected.py:23
+msgid "Device found, establishing connection..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:136
+msgid "Device n&ame:"
+msgstr ""
+
+#: classicsync/gui/app.py:242
+msgid "Device name"
+msgstr ""
+
+#: classicsync/cli.py:52
+msgid "Device password: "
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:38 classicsync/gui/frontends/hpcexplorer11/synchronization.py:26
+msgid "Disabled"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:661 classicsync/gui/frontends/ceservices22/mobile_devices.py:416
+msgid "Disconnected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:93
+msgid "Display Properties for selected item(s)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:19
+msgid "Display the full &path in the title bar"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:282 classicsync/gui/frontends/hpcexplorer11/commands.py:106
+msgid "Displays information about each item in the window."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:279 classicsync/gui/frontends/hpcexplorer11/commands.py:103
+msgid "Displays items by using large icons."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:280 classicsync/gui/frontends/hpcexplorer11/commands.py:104
+msgid "Displays items by using small icons."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:281 classicsync/gui/frontends/hpcexplorer11/commands.py:105
+msgid "Displays items in a list."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:90
+msgid "Displays program information, version information and copyright for Windows CE Services."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:52 classicsync/gui/frontends/hpcexplorer11/commands.py:108
+msgid "Displays program information, version number, and copyright."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:44 classicsync/gui/frontends/hpcexplorer11/commands.py:102
+msgid "Displays properties of the selected items."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:184
+msgid "Do &not synchronize this information type at this time."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:144
+msgid "Do you want your mobile device to be synchronized with only this computer?"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:199
+msgid "Do&n't show ActiveSync errors during synchronization."
+msgstr ""
+
+#: classicsync/sync/folder.py:25
+msgid "Due: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:202
+msgid "Duplicate resolution"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:67
+msgid "E&nabled"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:56 classicsync/gui/frontends/ceservices22/tray.py:78 classicsync/gui/frontends/hpcexplorer11/tray.py:42
+msgid "E&xit"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:53
+msgid "E&xplore"
+msgstr ""
+
+#: classicsync/sync/folder.py:24
+msgid "E-mail: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:251
+msgid "En&able Serial Connection"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:252 classicsync/gui/frontends/ceservices22/tray.py:72
+msgid "Ena&ble Network Connection"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:87
+msgid "Ena&bled"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:84
+msgid "Enables/disables Networking connection."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:84
+msgid "Enables/disables Serial Port connection."
+msgstr ""
+
+#: classicsync/cli_translations.py:56
+msgid "English and localized installers (.msi or .exe), or directories of them; an English installer with no localized build is matched by text and resource id"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:130
+msgid "Enter a unique name for your mobile device."
+msgstr ""
+
+#: classicsync/sync/partners.py:176
+msgid "Enter a unique name that starts with a letter and contains the characters _, A-Z, or 0-9."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:44
+msgid "Erase all synchronized database items on your H/PC, then copy items from your desktop computer to your H/PC."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:33
+msgid "Erase all synchronized database items on your mobile device, then copy items from your desktop computer to your mobile device."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:342 classicsync/gui/frontends/ceservices22/activesync.py:38 classicsync/gui/frontends/hpcexplorer11/synchronization.py:28
+msgid "Error"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:428
+msgid "Error Deleting Partnership Profile"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:163
+msgid "Establish this H/PC as the new partner. Choose this option if you have taken over this desktop computer and wish to establish a new partnership."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:55 classicsync/gui/frontends/hpcexplorer11/communications.py:14 classicsync/gui/frontends/hpcexplorer11/explorer.py:29 classicsync/gui/frontends/hpcexplorer11/tray.py:16
+msgid "Establishing connection to H/PC..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:58
+msgid "Establishing connection to a mobile device..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:19
+msgid "Establishing connection to device..."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:221
+msgid "Explains these options in more detail."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:42
+msgid "Explore"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:42
+msgid "Explore device.\nExplore Device"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:490
+msgid "Explore/Open Error:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:146
+msgid "Explorer Window"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:322
+msgid "Exploring - "
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:25
+msgid "Failed to Install Application"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:38
+msgid "Failed to Set Up Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:27
+msgid "Failed to setup the partnership between this device and the desktop computer. Establishing a Guest connection."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:27
+msgid "Failed to setup the primary partnership between this H/PC and desktop computer. Establishing a Guest connection."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:83
+msgid "File"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:305 classicsync/gui/frontends/hpcexplorer11/explorer.py:194
+msgid "File &Conversion..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:229
+msgid "File '%s' exists already. Do you want to replace it?"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:91
+msgid "File Conversion"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:79
+msgid "File Folder"
+msgstr ""
+
+#: classicsync/sync/objects.py:19
+msgid "Files"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:244
+msgid "Files in \\My Documents and one level of subfolders. A {product} addition."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:227
+msgid "Finish"
+msgstr ""
+
+#: classicsync/sync/folder.py:312
+msgid "Folder"
+msgstr ""
+
+#: classicsync/sync/folder.py:315
+msgid "Folder on this computer"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:477
+msgid "Folders can't be copied on the H/PC yet; only the selected files will be copied."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:619
+msgid "Folders can't be copied to the device yet; only the files will be copied."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:581
+msgid "Folders can't be copied to this computer yet; open the folder and select its files."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:47 classicsync/gui/common/device_browser.py:47
+msgid "Font file"
+msgstr ""
+
+#: classicsync/cli_convert.py:29
+msgid "Formats: {formats}. The input format comes from its extension or contents, the output format from the output extension."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:215 classicsync/gui/frontends/ceservices22/mobile_devices.py:215
+msgid "Forward"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:299
+msgid "Free space: {size}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:64 classicsync/gui/frontends/ceservices22/sync_status.py:34 classicsync/gui/frontends/hpcexplorer11/explorer.py:196
+msgid "Frequently Asked &Questions"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:281
+msgid "From '%s' to '%s'"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:144 classicsync/gui/frontends/ceservices22/activesync.py:306 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:260
+msgid "General"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:54
+msgid "Get &Connected..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:40 classicsync/gui/frontends/activesync31/get_connected.py:82 classicsync/gui/frontends/ceservices22/get_connected.py:33
+msgid "Get Connected"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:83
+msgid "Go to a different folder"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:88
+msgid "Goes to the folder one level up."
+msgstr ""
+
+#: classicsync/gui/app.py:265 classicsync/gui/frontends/activesync31/main_window.py:311 classicsync/gui/frontends/base.py:76 classicsync/gui/frontends/ceservices22/__init__.py:223 classicsync/gui/frontends/ceservices22/__init__.py:235 classicsync/gui/frontends/ceservices22/activesync.py:135 classicsync/gui/frontends/ceservices22/mobile_devices.py:399 classicsync/gui/frontends/ceservices22/tray.py:37
+msgid "Guest"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:155
+msgid "Guest H/PC Detected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:63
+msgid "Guided Tou&r"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:37
+msgid "H/PC"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:201
+msgid "H/PC Explorer Help &Topics"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:45 classicsync/gui/common/device_browser.py:45
+msgid "HTML Document"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:37
+msgid "Handheld PC 1.0 Device Connected"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:48
+msgid "Help File"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:160
+msgid "Hi&dden"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/properties.py:14
+msgid "Hidden"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:15
+msgid "Hidden files:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:17
+msgid "Hide files of these &types:"
+msgstr ""
+
+#: classicsync/sync/folder.py:322
+msgid "How many levels of subfolders to synchronize below each device folder."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:124
+msgid "I don't want to synchronize information. Set up my device as a guest so that I can copy or move information between my device and this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:162
+msgid "I want to restore data to my device from a backup file stored on this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:158
+msgid "I want to synchronize my device.  Create a partnership for me and save my synchronization information for future connections."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:160
+msgid "I want to view and transfer files with my device.  I do not need to synchronize."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:58
+msgid "Identification"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:185
+msgid "If an item changes on both computers:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:135
+msgid "If an item has changed on both my H/PC and my desktop computer:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:83
+msgid "If there is a conflict (an item has been changed on both the mobile device and desktop computer):"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:195
+msgid "If your device has a partnership, synchronization starts. Please wait until synchronization is complete before using your device."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:192
+msgid "If your device is a guest, click Explore on the toolbar and start exploring your device."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:20
+msgid "Include &description bar for right and left panes"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:24
+msgid "Information Manager items already exist on your H/PC. You can keep this data, or discard and replace it with the items on your desktop computer. Please choose one of the following options to select what you want to do with the items currently on your H/PC."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:81 classicsync/gui/frontends/activesync31/main_window.py:211 classicsync/gui/frontends/activesync31/options.py:32 classicsync/gui/frontends/activesync31/partnership_wizard.py:174
+msgid "Information Type"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:177
+msgid "Information Type:"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:241
+msgid "Information types"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:152 classicsync/gui/frontends/ceservices22/activesync.py:359
+msgid "Initializing ActiveSync..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:300 classicsync/gui/frontends/hpcexplorer11/synchronization.py:326
+msgid "Initializing synchronization..."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:36 classicsync/gui/frontends/ceservices22/mobile_devices.py:110
+msgid "Initializing..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:92
+msgid "Inserts the items you have copied or cut into the selected location."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:186 classicsync/gui/common/plugin_settings.py:312 classicsync/gui/common/plugin_settings.py:320 classicsync/gui/common/plugin_settings.py:315
+msgid "Install Sync Provider"
+msgstr ""
+
+#: classicsync/cli_install.py:35
+msgid "Installed on the device:"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:21
+msgid "Installing %s..."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:20
+msgid "Installing Applications"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:312
+msgid "Installing {spec}..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:46
+msgid "Invalid Character in Mobile Device Name"
+msgstr ""
+
+#: classicsync/sync/folder.py:318
+msgid "Keep Word, Excel and image copies of Pocket Word, Pocket Excel and 2bp files in a Converted folder."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:156 classicsync/gui/frontends/ceservices22/mobile_devices.py:279 classicsync/gui/frontends/ceservices22/mobile_devices.py:611 classicsync/gui/frontends/hpcexplorer11/explorer.py:189
+msgid "Lar&ge Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:77
+msgid "Large Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:69
+msgid "Last Synchronized %1!s! %2!s!"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:290 classicsync/gui/frontends/ceservices22/mobile_devices.py:621
+msgid "Line &Up Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:79
+msgid "List"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:150 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
+msgid "Location:"
+msgstr ""
+
+#: classicsync/sync/folder.py:26
+msgid "Location: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:95 classicsync/gui/frontends/activesync31/get_connected.py:133 classicsync/gui/frontends/activesync31/get_connected.py:152 classicsync/gui/frontends/activesync31/get_connected.py:142
+msgid "Looking for a mobile device..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:67
+msgid "Ma&nually"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:74
+msgid "Memory:"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:197
+msgid "Messages"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:66 classicsync/gui/frontends/ceservices22/sync_status.py:37 classicsync/gui/frontends/hpcexplorer11/explorer.py:200
+msgid "Microsoft &Home Page"
+msgstr ""
+
+#: classicsync/gui/branding.py:35
+msgid "Microsoft H/PC Explorer Version 1.1"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:64 classicsync/gui/frontends/ceservices22/sync_status.py:35 classicsync/gui/frontends/hpcexplorer11/explorer.py:197
+msgid "Microsoft Windows &CE Home Page"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:314 classicsync/gui/frontends/ceservices22/sync_status.py:114 classicsync/gui/frontends/hpcexplorer11/explorer.py:202
+msgid "Microsoft on the &Web"
+msgstr ""
+
+#: classicsync/gui/branding.py:37
+msgid "Microsoft® ActiveSync® Version 3.1"
+msgstr ""
+
+#: classicsync/gui/branding.py:36
+msgid "Microsoft® Windows® CE Services Version 2.2"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:26
+msgid "Mobile Device"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:85
+msgid "Mobile Device Properties"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:14
+msgid "Mobile Devices"
+msgstr ""
+
+#: classicsync/gui/app.py:234
+msgid "Mobile device"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:72
+msgid "Model:"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:35 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
+msgid "Modified"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:153 classicsync/gui/frontends/hpcexplorer11/properties.py:89
+msgid "Modified:"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:247 classicsync/gui/frontends/hpcexplorer11/browser.py:257
+msgid "Moving..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:271
+msgid "Moving:  {name}"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:52
+msgid "My Handheld PC"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:15
+msgid "My Palm-size PC"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:51
+msgid "My Pocket PC"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:123
+msgid "N&o"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:149
+msgid "N&o, I want to synchronize with two computers."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:129 classicsync/gui/common/device_browser.py:34 classicsync/gui/frontends/ceservices22/activesync.py:238 classicsync/gui/frontends/ceservices22/mobile_devices.py:80 classicsync/gui/frontends/ceservices22/sync_status.py:153 classicsync/gui/frontends/hpcexplorer11/explorer.py:99 classicsync/gui/frontends/hpcexplorer11/synchronization.py:194
+msgid "Name"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:130
+msgid "Name your Device"
+msgstr ""
+
+#: classicsync/sync/folder.py:24
+msgid "Name: {value}"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:60
+msgid "Naming and language changes take effect the next time {product} starts."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:631
+msgid "Ne&w"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:401 classicsync/gui/frontends/ceservices22/mobile_devices.py:630 classicsync/gui/frontends/hpcexplorer11/browser.py:191
+msgid "Ne&w Folder"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:26
+msgid "Network connections are disabled"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:80
+msgid "Network is not available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:119
+msgid "Network serial port (emulator)"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:467 classicsync/gui/frontends/activesync31/explore.py:25 classicsync/gui/frontends/activesync31/explore.py:25 classicsync/gui/frontends/hpcexplorer11/commands.py:81
+msgid "New Folder"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:154
+msgid "New Mobile Device Detected"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:33
+msgid "New Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:169
+msgid "New Partnership Wizard"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:274 classicsync/gui/frontends/activesync31/main_window.py:143 classicsync/gui/frontends/activesync31/main_window.py:253
+msgid "No partnerships"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:117 classicsync/gui/frontends/hpcexplorer11/communications.py:23
+msgid "No port selected"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:23 classicsync/gui/frontends/ceservices22/get_connected.py:22
+msgid "Not Available"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:26
+msgid "Not Enough Space On Device"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:36
+msgid "Not Installed"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/get_connected.py:71
+msgid "Not Valid"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:148 classicsync/gui/frontends/hpcexplorer11/synchronization.py:30
+msgid "Not available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:34 classicsync/gui/frontends/activesync31/tray.py:37 classicsync/gui/frontends/hpcexplorer11/synchronization.py:27
+msgid "Not connected"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:126
+msgid "Not installed"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:29
+msgid "Not synchronized"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:44
+msgid "Note:  If a program that you installed is not listed, the program was not designed to be used on your mobile device."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:55
+msgid "Note:  While waiting to connect, or connected, the selected port is not available for other applications and devices.\n\nTo free the port, switch to another or close all applications that require communications with your H/PC."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:152 classicsync/gui/frontends/ceservices22/get_connected.py:97
+msgid "Now Checking: "
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:52
+msgid "Now Connecting H/PC"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:297
+msgid "Now synchronizing H/PC data with desktop computer data."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:356
+msgid "Now synchronizing mobile device data with desktop computer data."
+msgstr ""
+
+#: classicsync/gui/app.py:262
+msgid "OEM"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:41 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:47 classicsync/gui/frontends/ceservices22/activesync.py:206 classicsync/gui/frontends/ceservices22/properties.py:49 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:46 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:246
+msgid "OK"
+msgstr ""
+
+#: classicsync/cli.py:149
+msgid "Object store: unavailable ({error})"
+msgstr ""
+
+#: classicsync/cli.py:147
+msgid "Object store: {free} free of {total}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:64 classicsync/gui/frontends/ceservices22/sync_status.py:35 classicsync/gui/frontends/hpcexplorer11/explorer.py:197
+msgid "Online &Support"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:64
+msgid "Only &upon connection"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:68
+msgid "Only synchronize information in response to clicking the Sync button on the toolbar, or clicking Synchronize on the File menu."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:91
+msgid "Open selected folder"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:86 classicsync/gui/frontends/ceservices22/sync_status.py:50
+msgid "Opens ActiveSync Options."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:85
+msgid "Opens ActiveSync Status."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:88
+msgid "Opens Application Manager."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:124
+msgid "Opens File Converter properties."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/tray.py:36
+msgid "Opens H/PC Explorer"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:98
+msgid "Opens Help for H/PC Explorer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:88
+msgid "Opens Help for Microsoft Windows CE Services."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:51
+msgid "Opens Help for Windows CE Services."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:89
+msgid "Opens Help on Communications Troubleshooter."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:123
+msgid "Opens Synchronization Manager."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:87 classicsync/gui/frontends/hpcexplorer11/commands.py:122
+msgid "Opens backup and restore properties."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:44 classicsync/gui/frontends/hpcexplorer11/commands.py:112
+msgid "Opens communications properties."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:314
+msgid "Opens links to related sites on the Internet."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:134
+msgid "Opens the Best of the Web page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:127
+msgid "Opens the Handheld PC free stuff page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:128
+msgid "Opens the Handheld PC product news page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:137
+msgid "Opens the Microsoft home page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:136
+msgid "Opens the Web Tutorial page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:130
+msgid "Opens the Windows CE FAQ page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:129
+msgid "Opens the Windows CE developers home page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:133
+msgid "Opens the Windows CE feedback page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:132
+msgid "Opens the Windows CE home page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:131
+msgid "Opens the Windows CE online support page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:135
+msgid "Opens the search page."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:96
+msgid "Opens the selected folder."
+msgstr ""
+
+#: classicsync/gui/app.py:249 classicsync/gui/app.py:251
+msgid "Operating system"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:43 classicsync/gui/frontends/activesync31/options.py:136 classicsync/gui/frontends/activesync31/options.py:114 classicsync/gui/frontends/hpcexplorer11/options.py:11
+msgid "Options"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:398 classicsync/gui/frontends/ceservices22/mobile_devices.py:259 classicsync/gui/frontends/ceservices22/mobile_devices.py:599 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/ceservices22/sync_status.py:275 classicsync/gui/frontends/hpcexplorer11/browser.py:191 classicsync/gui/frontends/hpcexplorer11/browser.py:201 classicsync/gui/frontends/hpcexplorer11/explorer.py:179 classicsync/gui/frontends/hpcexplorer11/tray.py:38
+msgid "P&roperties"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:87
+msgid "P&roperties\tAlt+Enter"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:51 classicsync/gui/common/device_browser.py:51
+msgid "Palm PC"
+msgstr ""
+
+#: classicsync/gui/app.py:265
+msgid "Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:34
+msgid "Partnership Not Set Up"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:237
+msgid "Partnership {number}"
+msgstr ""
+
+#: classicsync/gui/common/password.py:6
+msgid "Password Incorrect"
+msgstr ""
+
+#: classicsync/gui/common/password.py:8
+msgid "Password Protected"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:220 classicsync/gui/frontends/ceservices22/mobile_devices.py:220
+msgid "Paste"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:72
+msgid "Paste  (Ctrl+V)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:270 classicsync/gui/frontends/ceservices22/mobile_devices.py:627 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:183
+msgid "Paste &Shortcut"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:94
+msgid "Paste the Clipboard contents here"
+msgstr ""
+
+#: classicsync/sync/folder.py:24
+msgid "Phone: {value}"
+msgstr ""
+
+#: classicsync/gui/app.py:246
+msgid "Platform"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:40
+msgid "Please check your mobile device screen to see if additional steps are necessary to complete this installation."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:91
+msgid "Please wait while {product} locates your mobile device."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:47
+msgid "Pocket Access Database"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:44
+msgid "Pocket Excel Template"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:43
+msgid "Pocket Excel Workbook"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:43
+msgid "Pocket Word Document"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:48
+msgid "Pocket Word Ink"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:43
+msgid "Pocket Word Template"
+msgstr ""
+
+#: classicsync/cli_convert.py:36
+msgid "Pocket Word/Excel file version to write: 1 for Windows CE 1.0, 2 (default) for CE 2.x"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:102
+msgid "Port"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:24
+msgid "Port resources are not available"
+msgstr ""
+
+#: classicsync/cli.py:160
+msgid "Power: {source}, main battery {percent}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:165
+msgid "Preferences"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:150 classicsync/gui/frontends/hpcexplorer11/synchronization.py:322
+msgid "Preparing to synchronize %s ..."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:535
+msgid "Preparing..."
+msgstr ""
+
+#: classicsync/gui/app.py:254 classicsync/gui/app.py:256
+msgid "Processor"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:73
+msgid "Processor Type:"
+msgstr ""
+
+#: classicsync/cli.py:144
+msgid "Processor: {processor}, page size {page_size}"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:45
+msgid "Program description"
+msgstr ""
+
+#: classicsync/cli.py:152
+msgid "Program memory: {free} free of {total}"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:51
+msgid "Programs listed here were added to this computer from a CeAppMgr .ini or a Windows CE .cab file. Checked programs are installed on the device: check one to install it, clear one to remove it, then click OK. Drop a .ini or .cab file on the list to add a program."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:94
+msgid "Progress"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:27 classicsync/gui/frontends/activesync31/explore.py:27 classicsync/gui/frontends/ceservices22/mobile_devices.py:225 classicsync/gui/frontends/ceservices22/mobile_devices.py:225 classicsync/gui/frontends/ceservices22/sync_status.py:132 classicsync/gui/frontends/ceservices22/sync_status.py:133 classicsync/gui/frontends/hpcexplorer11/commands.py:76
+msgid "Properties"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:240
+msgid "Provider"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:403 classicsync/gui/frontends/ceservices22/mobile_devices.py:621
+msgid "R&efresh"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/properties.py:14
+msgid "Read-only"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:272
+msgid "Reading folder..."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:21 classicsync/gui/frontends/activesync31/explore.py:21
+msgid "Refresh"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:49 classicsync/gui/frontends/hpcexplorer11/commands.py:107
+msgid "Refreshes item information."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:15
+msgid "Remove Application"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:329 classicsync/gui/common/plugin_settings.py:334
+msgid "Remove Sync Provider"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:147
+msgid "Remove any existing partnerships on my device and set up a new partnership with just this computer."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:49
+msgid "Remove from both locations"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:327
+msgid "Remove {plugin}? Partnerships that synchronize with its providers will not synchronize until you choose another provider."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:90
+msgid "Removes the selected items and copies them to the Clipboard."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:19
+msgid "Removing %s..."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:18
+msgid "Removing Applications"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:396 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/hpcexplorer11/browser.py:200 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+msgid "Rena&me"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:92
+msgid "Rename selected item"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:97
+msgid "Renames the selected item."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:69
+msgid "Replace  -->"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:21
+msgid "Replace H/PC item"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:30 classicsync/gui/frontends/hpcexplorer11/synchronization.py:22
+msgid "Replace desktop computer item"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:29
+msgid "Replace mobile device item"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:40
+msgid "Replace the H/PC item with the desktop computer item."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:41
+msgid "Replace the desktop computer item with the H/PC item."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:30
+msgid "Replace the desktop computer item with the mobile device item."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:29
+msgid "Replace the mobile device item with the desktop computer item."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:49
+msgid "Resolve &items..."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:74
+msgid "Resolve Conflict"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:153
+msgid "Resolve Items"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:83
+msgid "Resolve items..."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:32
+msgid "Retrieving application data from the mobile device..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:46 classicsync/gui/frontends/hpcexplorer11/commands.py:115
+msgid "Reverses which items are selected and which are not."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:118
+msgid "Rules"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:596
+msgid "S&how ActiveSync Errors"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:157 classicsync/gui/frontends/ceservices22/mobile_devices.py:280 classicsync/gui/frontends/ceservices22/mobile_devices.py:612 classicsync/gui/frontends/hpcexplorer11/explorer.py:189
+msgid "S&mall Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:140
+msgid "S&top"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:65 classicsync/gui/frontends/ceservices22/sync_status.py:36 classicsync/gui/frontends/hpcexplorer11/explorer.py:199
+msgid "Search the &Web..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:183
+msgid "Select &All"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:271 classicsync/gui/frontends/ceservices22/sync_status.py:91
+msgid "Select &All\tCtrl+A"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:142
+msgid "Select Number of Partnerships"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:168
+msgid "Select Synchronization Settings"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:161
+msgid "Select a backup file to restore. Choose this option if you have lost your data (due to power failure) or if this is a replacement H/PC."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:42
+msgid "Select a program's check box if you want to install it on your mobile device, or clear the check box if you want to remove the program from your device."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:39
+msgid "Select the communications port that you have used to attach your H/PC to the desktop computer:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:168
+msgid "Select the type of information you want to synchronize."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:57
+msgid "Select when you want ActiveSync to synchronize information between the mobile device and desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:142
+msgid "Select whether you want to synchronize with just this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:45 classicsync/gui/frontends/hpcexplorer11/commands.py:114
+msgid "Selects all items in the window."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:65 classicsync/gui/frontends/ceservices22/sync_status.py:35 classicsync/gui/frontends/hpcexplorer11/explorer.py:198
+msgid "Send Feedbac&k..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:23
+msgid "Serial port is ready"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:117
+msgid "Set Up a Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:93
+msgid "Set how files will be converted when they are copied, moved, or synchronized between this computer and your mobile device."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:121
+msgid "Set up a partnership so that I can synchronize information between my device and this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:150
+msgid "Set up a partnership with this computer, but do not remove any existing partnerships on my device."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:126
+msgid "Settings used by {provider} for every device, unless a device has its own."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:124
+msgid "Settings used when {device} synchronizes with {provider}."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:186
+msgid "Setup Complete"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:170
+msgid "Setup New Partner Wizard"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:597
+msgid "Sho&w ActiveSync Progress"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:45
+msgid "Shortcut"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:107 classicsync/gui/frontends/ceservices22/sync_status.py:270
+msgid "Show ActiveSync &Errors"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:108 classicsync/gui/frontends/ceservices22/sync_status.py:271
+msgid "Show ActiveSync &Progress"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:87
+msgid "Show File Conversions dialog"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:83
+msgid "Show communications dialog"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:41
+msgid "Show or hide details\nOpen/Close Detail Pane"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:83
+msgid "Show status &icon in Taskbar."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:43
+msgid "Show sync. settings.\nChange Options"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:84
+msgid "Show/Hide Folder List"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:126
+msgid "Shows or hides the Folder List."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:277 classicsync/gui/frontends/ceservices22/sync_status.py:47 classicsync/gui/frontends/hpcexplorer11/commands.py:95
+msgid "Shows or hides the status bar."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:276 classicsync/gui/frontends/ceservices22/sync_status.py:46 classicsync/gui/frontends/hpcexplorer11/commands.py:94
+msgid "Shows or hides the toolbar."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:100 classicsync/gui/frontends/ceservices22/sync_status.py:53
+msgid "Shows/hides the ActiveSync error messages."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:100 classicsync/gui/frontends/ceservices22/sync_status.py:54
+msgid "Shows/hides the ActiveSync progress messages."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:130 classicsync/gui/common/device_browser.py:34 classicsync/gui/frontends/hpcexplorer11/explorer.py:99
+msgid "Size"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:152 classicsync/gui/frontends/hpcexplorer11/properties.py:84
+msgid "Size:"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:69 classicsync/gui/frontends/ceservices22/activesync.py:29 classicsync/gui/frontends/hpcexplorer11/synchronization.py:21
+msgid "Skip"
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:66
+msgid "Skip; don't replace either item."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:78
+msgid "Small Icons"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:24
+msgid "Some mobile device items already exist on your mobile device. You can keep this data, or discard and replace it with the items on your desktop computer. Please choose one of the following options to select what you want to do with the items currently on your mobile device."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:99
+msgid "Sort items by Connection status."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:97
+msgid "Sort items by Device description."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:96
+msgid "Sort items by Device name."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:96
+msgid "Sort items by Modified Time"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:95
+msgid "Sort items by Name"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:95
+msgid "Sort items by Size"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:98
+msgid "Sort items by Synchronization status."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:95
+msgid "Sort items by Type"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:99
+msgid "Sort items by total memory on the device."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:47 classicsync/gui/frontends/hpcexplorer11/commands.py:116
+msgid "Sorts items alphabetically by name."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:49 classicsync/gui/frontends/hpcexplorer11/commands.py:119
+msgid "Sorts items by date, from oldest to most recent."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:48 classicsync/gui/frontends/hpcexplorer11/commands.py:118
+msgid "Sorts items by size, from smallest to largest."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:48 classicsync/gui/frontends/hpcexplorer11/commands.py:117
+msgid "Sorts items by type."
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:242
+msgid "Source"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:47
+msgid "Space available on device:"
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:46
+msgid "Space required for selected programs:"
+msgstr ""
+
+#: classicsync/sync/folder.py:25
+msgid "Start: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:103 classicsync/gui/frontends/activesync31/main_window.py:212 classicsync/gui/frontends/activesync31/options.py:33 classicsync/gui/frontends/activesync31/partnership_wizard.py:175 classicsync/gui/frontends/ceservices22/activesync.py:239 classicsync/gui/frontends/ceservices22/properties.py:62 classicsync/gui/frontends/ceservices22/sync_status.py:153 classicsync/gui/frontends/hpcexplorer11/synchronization.py:131 classicsync/gui/frontends/hpcexplorer11/synchronization.py:195
+msgid "Status"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:277 classicsync/gui/frontends/ceservices22/sync_status.py:96 classicsync/gui/frontends/hpcexplorer11/explorer.py:188
+msgid "Status &Bar"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:82
+msgid "Status icon"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:52 classicsync/gui/frontends/activesync31/connection_settings.py:69 classicsync/gui/frontends/activesync31/connection_settings.py:74 classicsync/gui/frontends/activesync31/connection_settings.py:79 classicsync/gui/frontends/ceservices22/properties.py:70 classicsync/gui/frontends/ceservices22/properties.py:90
+msgid "Status:"
+msgstr ""
+
+#: classicsync/sync/folder.py:26
+msgid "Status: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:47
+msgid "Sto&p"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:40
+msgid "Stop"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:40
+msgid "Stop synchronization now.\nStop Synchronization"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:419
+msgid "Stopping..."
+msgstr ""
+
+#: classicsync/gui/app.py:259
+msgid "Storage free"
+msgstr ""
+
+#: classicsync/sync/folder.py:321
+msgid "Subfolder depth"
+msgstr ""
+
+#: classicsync/sync/folder.py:25
+msgid "Subject: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:39
+msgid "Sync"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:153
+msgid "Sync Copy In"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:118
+msgid "Sync Mode"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:118
+msgid "Sync Options"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:231
+msgid "Sync Provider"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:201
+msgid "Sync plugins (*.py;*.whl)|*.py;*.whl|All files (*.*)|*.*"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:237
+msgid "Sync providers installed on this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:230 classicsync/gui/frontends/ceservices22/mobile_devices.py:80
+msgid "Synchronization"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:235
+msgid "Synchronization &services"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:354 classicsync/gui/frontends/activesync31/options.py:42 classicsync/gui/frontends/ceservices22/activesync.py:35
+msgid "Synchronization Disabled"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:36 classicsync/gui/frontends/ceservices22/activesync.py:41
+msgid "Synchronization Error"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:194 classicsync/gui/frontends/hpcexplorer11/__init__.py:176 classicsync/gui/frontends/hpcexplorer11/__init__.py:216 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256 classicsync/gui/frontends/hpcexplorer11/synchronization.py:335
+msgid "Synchronization Manager"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:216
+msgid "Synchronization Manager is available once the H/PC has connected."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:142
+msgid "Synchronization Status Unknown"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:194
+msgid "Synchronization did not complete.\n\n{error}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:348 classicsync/gui/frontends/hpcexplorer11/synchronization.py:290
+msgid "Synchronization in Progress"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:119
+msgid "Synchronization: %d items out-of-date."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:118
+msgid "Synchronization: 1 item out-of-date."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:35
+msgid "Synchronization: Disabled."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:37
+msgid "Synchronization: Error"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:39
+msgid "Synchronization: Not available."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:36
+msgid "Synchronization: Not connected."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:38
+msgid "Synchronization: Not synchronized."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:33
+msgid "Synchronization: Up-to-date."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:594 classicsync/gui/frontends/ceservices22/mobile_devices.py:301 classicsync/gui/frontends/ceservices22/sync_status.py:105 classicsync/gui/frontends/ceservices22/tray.py:65
+msgid "Synchronize &Now"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:192
+msgid "Synchronize &Now\tF9"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:128
+msgid "Synchronize H/PC &time with desktop computer time upon connecting."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:130 classicsync/gui/frontends/ceservices22/sync_status.py:131 classicsync/gui/frontends/hpcexplorer11/commands.py:74
+msgid "Synchronize Now"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:75
+msgid "Synchronize Selection"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:65
+msgid "Synchronize automatically each time that the mobile device is connected to the desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:62
+msgid "Synchronize automatically whenever the information changes on either the mobile device or desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:229
+msgid "Synchronize mobile device &clock upon connecting"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:37
+msgid "Synchronize mobile device &clock upon connecting."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:39
+msgid "Synchronize your data now.\nStart Synchronization"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:59
+msgid "Synchronize:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:329 classicsync/gui/frontends/activesync31/main_window.py:367
+msgid "Synchronized"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:85 classicsync/gui/frontends/ceservices22/sync_status.py:51 classicsync/gui/frontends/hpcexplorer11/commands.py:99
+msgid "Synchronizes all the registered databases."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/sync_status.py:55 classicsync/gui/frontends/hpcexplorer11/commands.py:100
+msgid "Synchronizes the selected items."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:37
+msgid "Synchronizing"
+msgstr ""
+
+#: classicsync/sync/engine.py:367
+msgid "Synchronizing {device} with {provider}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:314 classicsync/gui/frontends/activesync31/main_window.py:356 classicsync/gui/frontends/ceservices22/activesync.py:35 classicsync/gui/frontends/ceservices22/activesync.py:38 classicsync/gui/frontends/ceservices22/activesync.py:40 classicsync/gui/frontends/hpcexplorer11/synchronization.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:34
+msgid "Synchronizing..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:324
+msgid "Synchronizing:  %d/%d %s."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:161 classicsync/gui/frontends/ceservices22/device_properties.py:69 classicsync/gui/frontends/hpcexplorer11/properties.py:15
+msgid "System"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:34
+msgid "System default"
+msgstr ""
+
+#: classicsync/cli.py:355
+msgid "Talk to Windows CE 1.x-3.x devices."
+msgstr ""
+
+#: classicsync/sync/objects.py:22
+msgid "Tasks"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:45
+msgid "Text Document"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/communications.py:35
+msgid "The H/PC is automatically connected when attached to your desktop computer. Upon connection, automatic operations (such as Synchronization and Backup) may proceed. "
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/__init__.py:155
+msgid "The connected device has not established a partnership with this computer.  Click Synchronize to establish a partnership or click one of the other connection options below."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:191
+msgid "The following databases can be synchronized with Microsoft Schedule+ or Microsoft Outlook on your desktop computer. To change the options for a database, select the database in the list below and click Options."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:175
+msgid "The following information type on your mobile device has items that have not been synchronized with this computer before."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:38
+msgid "The items below have been modified on both the H/PC and the desktop computer. To resolve the conflict, choose which item to replace."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:27
+msgid "The items below have been modified on both the mobile device and the desktop computer. To resolve the conflict, choose which item to replace."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:31
+msgid "The mobile device is no longer connected.  Please connect the device and run Application Manager again."
+msgstr ""
+
+#: classicsync/gui/common/password.py:7
+msgid "The password you typed is incorrect.\r\nPlease retype your password."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:33
+msgid "There are no device-compatible programs available."
+msgstr ""
+
+#: classicsync/gui/common/conflicts.py:153
+msgid "There are no unresolved items."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:27
+msgid "There is not enough space on the mobile device.\n\n   Required:\t%1\n   Available:\t%2\n\nDo you want to continue anyway?"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:45
+msgid "This device name is already in use.\r\n\r\nYou must enter a different name for your mobile device."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:167
+msgid "This file is in ROM."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:631
+msgid "This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?"
+msgstr ""
+
+#: classicsync/sync/partners.py:208
+msgid "This mobile device already has the maximum number of partnerships."
+msgstr ""
+
+#: classicsync/sync/partners.py:227
+msgid "This mobile device already has the maximum number of partnerships. Delete one first."
+msgstr ""
+
+#: classicsync/gui/common/password.py:9
+msgid "This mobile device is password protected. In order to connect to the device, you must enter its password."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:40
+msgid "This product is licensed to:"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:131
+msgid "This provider has no settings."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:42
+msgid "This version of Microsoft ActiveSync is not compatible with the connected mobile device. Please upgrade to the latest version of Microsoft ActiveSync and reconnect."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:493
+msgid "This version of Windows CE Services is not compatible with the connected mobile device. Please close all Windows CE Service windows and open the Explorer window that corresponds to the version of the mobile device."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:16
+msgid "This will remove the application \"%s\" from your mobile device and this desktop computer.\n\nIf you need this application in the future, you will have to reinstall it."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:160
+msgid "To delete a partnership, select it from the list and then click Delete."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:34 classicsync/gui/frontends/activesync31/partnership_wizard.py:180
+msgid "To find out more about and to customize what gets synchronized, click on that information type in the list and then click Settings."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:50
+msgid "To remove the selected program from both your device and this computer, click Remove."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/options.py:28 classicsync/gui/frontends/activesync31/partnership_wizard.py:170
+msgid "To synchronize a particular type of information, select its check box. To stop synchronization of that information, clear its check box."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:80
+msgid "Total Memory"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:143
+msgid "Tray Icon"
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:47
+msgid "TrueType Font"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/get_connected.py:15
+msgid "Turn on and connect your mobile device to the desktop computer using the serial cable.  Then click Start and Windows CE Services will automatically connect to your device."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:35 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
+msgid "Type"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:188
+msgid "Type the name of a package, a git+https:// address or the location of a project folder, or choose a .py or .whl file."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:150 classicsync/gui/frontends/hpcexplorer11/properties.py:73 classicsync/gui/frontends/hpcexplorer11/properties.py:82
+msgid "Type:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:39 classicsync/gui/frontends/activesync31/connection_settings.py:122
+msgid "USB is available"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:129
+msgid "Unable to connect.  No comm ports are available.  Please confirm your computer configuration.  Press Cancel to continue."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:176 classicsync/gui/frontends/ceservices22/get_connected.py:17
+msgid "Unable to connect.  Please confirm that your serial cable is properly connected and then press Retry.  Press Cancel to manually select the port."
+msgstr ""
+
+#: classicsync/gui/common/app_manager.py:35
+msgid "Unable to retrieve the mobile device information.  Please reconnect and try again."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:222 classicsync/gui/frontends/ceservices22/mobile_devices.py:222
+msgid "Undo"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:69
+msgid "Undo  (Ctrl+Z)"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:89
+msgid "Undoes the last Rename, Copy, or Move."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:23 classicsync/gui/frontends/ceservices22/device_properties.py:44 classicsync/gui/frontends/ceservices22/device_properties.py:71 classicsync/gui/frontends/ceservices22/device_properties.py:72
+msgid "Unknown"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:20 classicsync/gui/frontends/ceservices22/mobile_devices.py:216
+msgid "Up"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/explore.py:20 classicsync/gui/frontends/ceservices22/mobile_devices.py:216
+msgid "Up One Level"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/commands.py:68
+msgid "Up One Level  (Bksp)"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:37 classicsync/gui/frontends/ceservices22/activesync.py:39 classicsync/gui/frontends/hpcexplorer11/synchronization.py:24
+msgid "Up-to-date"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:41
+msgid "Up-to-date."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/activesync.py:148
+msgid "Updating %1!d! %2 (%3!d!%% done)"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:189
+msgid "Upon exiting this wizard, Microsoft ActiveSync will open and:"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:99 classicsync/gui/frontends/activesync31/get_connected.py:100
+msgid "Verify that the connection you are using is available."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:496
+msgid "Version Conflict Detected"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/options.py:14
+msgid "View"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:159
+msgid "View files and folders on this H/PC. Choose this option to view and transfer files with this H/PC (data synchronization disabled)."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:227 classicsync/gui/frontends/ceservices22/mobile_devices.py:227
+msgid "Views"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:113 classicsync/gui/frontends/ceservices22/sync_status.py:59
+msgid "Waiting for a mobile device to connect..."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:22 classicsync/gui/frontends/hpcexplorer11/communications.py:15
+msgid "Waiting for connection"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/main_window.py:278
+msgid "Waiting for device on {port}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/connection_settings.py:105 classicsync/gui/frontends/ceservices22/tray.py:18
+msgid "Waiting for device to connect"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/explorer.py:28 classicsync/gui/frontends/hpcexplorer11/tray.py:32
+msgid "Waiting to connect to H/PC..."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:46
+msgid "Wave Sound"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:65 classicsync/gui/frontends/ceservices22/sync_status.py:36 classicsync/gui/frontends/hpcexplorer11/explorer.py:199
+msgid "Web &Tutorial"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:42
+msgid "When would you like Auto Connect enabled?"
+msgstr ""
+
+#: classicsync/sync/folder.py:316
+msgid "Where the desktop copies are kept. Empty: a folder named after the device in the classicsync data folder."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/properties.py:40
+msgid "While Auto Connect is enabled, your COM port cannot be used for another purpose (such as an external modem or digital camera)."
+msgstr ""
+
+#: classicsync/cli.py:60
+msgid "Windows CE 1.x device at {address}"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:310
+msgid "Windows CE Services Help &Topics"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/device_properties.py:31 classicsync/gui/frontends/ceservices22/device_properties.py:34
+msgid "Windows CE Version {major}.{minor:02d} (Build {build})"
+msgstr ""
+
+#: classicsync/gui/app.py:27
+msgid "Windows CE {version} (build {build})"
+msgstr ""
+
+#: classicsync/cli.py:142
+msgid "Windows CE {version} build {build} ({platform})"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:187
+msgid "You are now ready to start exchanging information between your mobile device and this computer."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:86
+msgid "You can also connect your mobile device using infrared (IR) through an IR serial port."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:134
+msgid "Your device uses this information to identify itself to other computers. Enter a unique name that starts with a letter and contains the characters _, A-Z, or 0-9."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/get_connected.py:99
+msgid "Your device was not detected"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:35
+msgid "Your device will be set up as a guest. You will be able to copy and move information between your device and this computer, but you will not be able to synchronize information.\r\n\r\nTo synchronize information, you need to set up a partnership. Disconnect and then reconnect the device to start the New Partnership Wizard."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:131
+msgid "Your device's name is part of the partnership information stored on both your device and this computer. Microsoft ActiveSync uses this name to identify which device is currently connected."
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:157
+msgid "Your mobile device has two partnerships. You cannot set up a partnership with this computer until you delete one of the existing partnerships. Deleting a partnership results in your device losing all settings associated with that partnership."
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:430
+msgid "Your partnership profile(s) may contain settings, backup, and other device-specific information.\r\n\r\nAre you sure you want to delete these profile(s)?"
+msgstr ""
+
+#: classicsync/cli_plugins.py:177
+msgid "a PyPI requirement, git+https:// URL, project folder, wheel (.whl) or .py file"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:37
+msgid "a setting needs a key"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:58
+msgid "a settings schema entry must be a Setting or a dict, not {value!r}"
+msgstr ""
+
+#: classicsync/rapi/client.py:49
+msgid "access denied"
+msgstr ""
+
+#: classicsync/cli_plugins.py:16
+msgid "all devices"
+msgstr ""
+
+#: classicsync/rapi/client.py:52
+msgid "already exists"
+msgstr ""
+
+#: classicsync/cli_sync.py:135
+msgid "already partnered: {partnership}"
+msgstr ""
+
+#: classicsync/cli_sync.py:184
+msgid "also clear the partnership on the connected device"
+msgstr ""
+
+#: classicsync/cli_install.py:75
+msgid "also forget it on this computer"
+msgstr ""
+
+#: classicsync/cli_artwork.py:31
+msgid "artwork directory (default: <data directory>/artwork)"
+msgstr ""
+
+#: classicsync/cli.py:158
+msgid "battery"
+msgstr ""
+
+#: classicsync/rapi/client.py:51
+msgid "buffer too small"
+msgstr ""
+
+#: classicsync/cli_translations.py:54
+msgid "build translation catalogs from English and localized copies of the original installers"
+msgstr ""
+
+#: classicsync/sync/plugins.py:28
+msgid "built-in"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:73
+msgid "by &Connection"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:70 classicsync/gui/frontends/ceservices22/sync_status.py:100 classicsync/gui/frontends/hpcexplorer11/browser.py:186 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
+msgid "by &Date"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:71
+msgid "by &Description"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:69 classicsync/gui/frontends/ceservices22/mobile_devices.py:71 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:185 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
+msgid "by &Name"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:72
+msgid "by &Synchronization"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:73
+msgid "by &Total Memory"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:69 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:185 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
+msgid "by &Type"
+msgstr ""
+
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:70 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:186 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
+msgid "by Si&ze"
+msgstr ""
+
+#: classicsync/cli_convert.py:12
+msgid "cannot tell the output format from {name!r}; use --to"
+msgstr ""
+
+#: classicsync/cli_plugins.py:187
+msgid "change the settings for this partnership (default: for all devices)"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:43
+msgid "choice setting {key} has no choices"
+msgstr ""
+
+#: classicsync/cli_plugins.py:191
+msgid "choose the sync provider for a partnership"
+msgstr ""
+
+#: classicsync/cli.py:375 classicsync/cli_sync.py:164
+msgid "classicsync serve address (default {address})"
+msgstr ""
+
+#: classicsync/link/ppp.py:538
+msgid "closed locally"
+msgstr ""
+
+#: classicsync/cli_sync.py:196
+msgid "conflict policy, one of {policies}, for all types or one type"
+msgstr ""
+
+#: classicsync/cli.py:374 classicsync/cli_sync.py:162
+msgid "connect directly on this serial port or tcp:HOST:PORT instead of using 'serve'"
+msgstr ""
+
+#: classicsync/cli.py:366
+msgid "connect once and report what the device sends"
+msgstr ""
+
+#: classicsync/cli.py:337 classicsync/cli.py:75 classicsync/cli.py:108
+msgid "connected: {device}"
+msgstr ""
+
+#: classicsync/cli_convert.py:28
+msgid "convert Pocket Word, Pocket Excel and 2bp files to and from desktop formats"
+msgstr ""
+
+#: classicsync/cli_sync.py:29
+msgid "converted the existing {name} partnership (partner {partner})"
+msgstr ""
+
+#: classicsync/cli.py:382
+msgid "copy a file from the device"
+msgstr ""
+
+#: classicsync/cli.py:385
+msgid "copy a file to the device"
+msgstr ""
+
+#: classicsync/cli_install.py:10
+msgid "copying {percent}%"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:305
+msgid "could not run {tool}: {error}"
+msgstr ""
+
+#: classicsync/cli.py:389
+msgid "create a device folder"
+msgstr ""
+
+#: classicsync/cli_sync.py:37 classicsync/cli_sync.py:144
+msgid "created partnership {partnership}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:16
+msgid "default"
+msgstr ""
+
+#: classicsync/cli_sync.py:182
+msgid "delete a partnership from this computer"
+msgstr ""
+
+#: classicsync/cli.py:388
+msgid "delete device files"
+msgstr ""
+
+#: classicsync/cli_sync.py:180
+msgid "delete the device's partnership in this slot first (see 'partnership device')"
+msgstr ""
+
+#: classicsync/cli_sync.py:156
+msgid "deleted partnership {partnership}; desktop copies in the sync folder were kept"
+msgstr ""
+
+#: classicsync/connection/desktop.py:78
+msgid "device RAPI server not reachable: {error}"
+msgstr ""
+
+#: classicsync/rapi/client.py:126
+msgid "device closed the RAPI connection"
+msgstr ""
+
+#: classicsync/cli.py:351
+msgid "device password, if it has one"
+msgstr ""
+
+#: classicsync/cli.py:113
+msgid "disconnected"
+msgstr ""
+
+#: classicsync/cli.py:401
+msgid "e.g. HKCU\\ControlPanel\\Comm"
+msgstr ""
+
+#: classicsync/rapi/client.py:81
+msgid "error {code}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:136
+msgid "expected KEY=VALUE, not {text!r}"
+msgstr ""
+
+#: classicsync/cli_artwork.py:28
+msgid "extract the original artwork from H/PC Explorer, CE Services or ActiveSync installers"
+msgstr ""
+
+#: classicsync/cli_plugins.py:54 classicsync/cli_plugins.py:74
+msgid "failed to load: {error}"
+msgstr ""
+
+#: classicsync/rapi/client.py:50
+msgid "file exists"
+msgstr ""
+
+#: classicsync/rapi/client.py:50
+msgid "file in use"
+msgstr ""
+
+#: classicsync/rapi/client.py:49
+msgid "file not found"
+msgstr ""
+
+#: classicsync/rapi/client.py:52
+msgid "folder not empty"
+msgstr ""
+
+#: classicsync/cli_sync.py:194
+msgid "folder provider: where to keep the desktop copies"
+msgstr ""
+
+#: classicsync/cli_artwork.py:30
+msgid "hhpcex11.exe, WCES22-2.EXE or msasync.exe (or another copy of those installers)"
+msgstr ""
+
+#: classicsync/cli.py:359
+msgid "hold the connection to a device and offer RAPI to other commands"
+msgstr ""
+
+#: classicsync/cli_sync.py:108
+msgid "implicit, converted on next connect"
+msgstr ""
+
+#: classicsync/cli_convert.py:33
+msgid "input format"
+msgstr ""
+
+#: classicsync/cli_install.py:68
+msgid "install a .cab, CeAppMgr .ini or H/PC .load package on the device"
+msgstr ""
+
+#: classicsync/cli_plugins.py:175
+msgid "install a sync plugin"
+msgstr ""
+
+#: classicsync/cli_install.py:70
+msgid "install folder for .load scripts"
+msgstr ""
+
+#: classicsync/cli_plugins.py:172
+msgid "install, list, remove and configure sync plugins"
+msgstr ""
+
+#: classicsync/cli_install.py:45
+msgid "installed"
+msgstr ""
+
+#: classicsync/sync/plugins.py:28
+msgid "installed package"
+msgstr ""
+
+#: classicsync/cli_plugins.py:79
+msgid "installed {name} {version}, providers: {providers}"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:410
+msgid "installing {spec} needs uv or pip, and neither is available here. Install uv (https://docs.astral.sh/uv/), or install a .py file or a pure-Python wheel (.whl) of the plugin instead."
+msgstr ""
+
+#: classicsync/rapi/client.py:49
+msgid "invalid handle"
+msgstr ""
+
+#: classicsync/rapi/client.py:52
+msgid "invalid name"
+msgstr ""
+
+#: classicsync/rapi/client.py:51
+msgid "invalid parameter"
+msgstr ""
+
+#: classicsync/cli_sync.py:91
+msgid "last sync: {stamp}  {result}"
+msgstr ""
+
+#: classicsync/cli_install.py:71
+msgid "let wceload ask where to install instead of /noaskdest"
+msgstr ""
+
+#: classicsync/gui/service.py:194
+msgid "link closed"
+msgstr ""
+
+#: classicsync/connection/desktop.py:56 classicsync/link/ppp.py:386
+msgid "link closed: {reason}"
+msgstr ""
+
+#: classicsync/link/ppp.py:387
+msgid "link did not come up"
+msgstr ""
+
+#: classicsync/cli.py:334
+msgid "link up: desktop {desktop}, device {device}"
+msgstr ""
+
+#: classicsync/cli.py:381
+msgid "list a device folder"
+msgstr ""
+
+#: classicsync/cli.py:406
+msgid "list or dump object store databases"
+msgstr ""
+
+#: classicsync/cli_install.py:72
+msgid "list programs installed on the device"
+msgstr ""
+
+#: classicsync/cli_plugins.py:174
+msgid "list sync plugins and the providers they offer"
+msgstr ""
+
+#: classicsync/cli_sync.py:172
+msgid "list the partnerships on this computer"
+msgstr ""
+
+#: classicsync/cli_sync.py:170
+msgid "list, create and delete partnerships"
+msgstr ""
+
+#: classicsync/cli.py:101
+msgid "listening for a device on {port}; RAPI on {address}"
+msgstr ""
+
+#: classicsync/cli.py:361
+msgid "local RAPI address (default {address})"
+msgstr ""
+
+#: classicsync/cli_translations.py:58
+msgid "locale directory (default: <data directory>/locale)"
+msgstr ""
+
+#: classicsync/rapi/client.py:52
+msgid "more data"
+msgstr ""
+
+#: classicsync/cli_plugins.py:106
+msgid "more than one partnership; choose one with --device: {names}"
+msgstr ""
+
+#: classicsync/cli.py:391
+msgid "move or rename a device file"
+msgstr ""
+
+#: classicsync/cli_sync.py:111 classicsync/cli_sync.py:91
+msgid "never"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:117
+msgid "no"
+msgstr ""
+
+#: classicsync/cli_translations.py:48
+msgid "no English and localized builds of the same product were given"
+msgstr ""
+
+#: classicsync/cli_translations.py:43
+msgid "no English build of the same product for: {names}"
+msgstr ""
+
+#: classicsync/cli.py:88
+msgid "no classicsync server at {address} ({error}); run 'classicsync serve PORT' or pass --port"
+msgstr ""
+
+#: classicsync/connection/desktop.py:60 classicsync/gui/service.py:236
+msgid "no device connected"
+msgstr ""
+
+#: classicsync/rapi/client.py:50
+msgid "no more files"
+msgstr ""
+
+#: classicsync/rapi/client.py:53
+msgid "no more items"
+msgstr ""
+
+#: classicsync/cli_plugins.py:99 classicsync/cli_sync.py:150
+msgid "no partnership called {name!r}"
+msgstr ""
+
+#: classicsync/cli_sync.py:105
+msgid "no partnerships"
+msgstr ""
+
+#: classicsync/cli_plugins.py:105 classicsync/cli_sync.py:80
+msgid "no partnerships yet; run 'classicsync partnership create' with a device connected"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:467 classicsync/sync/plugin_install.py:484
+msgid "no plugin called {name} was installed with 'classicsync plugin install'"
+msgstr ""
+
+#: classicsync/cli_plugins.py:90
+msgid "no plugins installed"
+msgstr ""
+
+#: classicsync/cli_plugins.py:113
+msgid "no sync provider called {name!r}; have {names}"
+msgstr ""
+
+#: classicsync/cli_install.py:39 classicsync/cli_plugins.py:72
+msgid "none"
+msgstr ""
+
+#: classicsync/cli_artwork.py:23
+msgid "not a recognised H/PC Explorer 1.1, CE Services 2.2 or ActiveSync 3.1 installer: {names}"
+msgstr ""
+
+#: classicsync/cli_translations.py:46
+msgid "not a recognised installer: {names}"
+msgstr ""
+
+#: classicsync/rapi/client.py:50
+msgid "not enough memory"
+msgstr ""
+
+#: classicsync/rapi/client.py:51
+msgid "not enough storage"
+msgstr ""
+
+#: classicsync/rapi/client.py:53
+msgid "not found"
+msgstr ""
+
+#: classicsync/rapi/client.py:51
+msgid "not implemented"
+msgstr ""
+
+#: classicsync/cli_install.py:45
+msgid "not installed"
+msgstr ""
+
+#: classicsync/cli_convert.py:22
+msgid "not kept: {warning}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:150
+msgid "note: {device} synchronizes with {current}; run 'classicsync plugin use {provider} --device {device}' to switch"
+msgstr ""
+
+#: classicsync/sync/engine.py:117
+msgid "nothing to do"
+msgstr ""
+
+#: classicsync/cli_sync.py:203
+msgid "only this device"
+msgstr ""
+
+#: classicsync/cli_convert.py:34
+msgid "output format"
+msgstr ""
+
+#: classicsync/cli_sync.py:108
+msgid "partner {partner}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:193
+msgid "partnership name (needed when there is more than one)"
+msgstr ""
+
+#: classicsync/cli_sync.py:183
+msgid "partnership name or partner id"
+msgstr ""
+
+#: classicsync/rapi/client.py:49
+msgid "path not found"
+msgstr ""
+
+#: classicsync/sync/plugins.py:29
+msgid "plugin file"
+msgstr ""
+
+#: classicsync/sync/plugins.py:28
+msgid "plugin library"
+msgstr ""
+
+#: classicsync/cli_plugins.py:180
+msgid "plugin or provider name"
+msgstr ""
+
+#: classicsync/cli_plugins.py:183
+msgid "plugin or provider name (default: all)"
+msgstr ""
+
+#: classicsync/cli_plugins.py:186 classicsync/cli_plugins.py:192
+msgid "provider name"
+msgstr ""
+
+#: classicsync/cli_sync.py:90
+msgid "provider: {provider}"
+msgstr ""
+
+#: classicsync/cli_sync.py:88
+msgid "provider: {provider} ({folder})"
+msgstr ""
+
+#: classicsync/cli.py:399
+msgid "read and write the device registry"
+msgstr ""
+
+#: classicsync/link/ppp.py:405
+msgid "read failed: {error}"
+msgstr ""
+
+#: classicsync/cli.py:241
+msgid "registry path must start with HKLM, HKCU, HKCR or HKU: {path}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:182
+msgid "reinstall a sync plugin from where it came from, upgrading it"
+msgstr ""
+
+#: classicsync/cli_sync.py:197
+msgid "remember --provider, --only, --folder and --conflict for this device"
+msgstr ""
+
+#: classicsync/cli_install.py:73
+msgid "remove a program from the device with Unload.exe"
+msgstr ""
+
+#: classicsync/cli.py:390
+msgid "remove an empty device folder"
+msgstr ""
+
+#: classicsync/cli_plugins.py:179
+msgid "remove an installed sync plugin and the packages only it needed"
+msgstr ""
+
+#: classicsync/cli_sync.py:178
+msgid "remove the device's other partnerships (default: keep them; a device holds two)"
+msgstr ""
+
+#: classicsync/cli_plugins.py:84
+msgid "removed {name}"
+msgstr ""
+
+#: classicsync/cli_install.py:64
+msgid "removed {name} from this computer's list"
+msgstr ""
+
+#: classicsync/cli_sync.py:176
+msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
+msgstr ""
+
+#: classicsync/cli.py:350
+msgid "seconds to wait for a device"
+msgstr ""
+
+#: classicsync/cli.py:360
+msgid "serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1) or tcp:HOST:PORT"
+msgstr ""
+
+#: classicsync/cli.py:347
+msgid "serial speed (default 19200)"
+msgstr ""
+
+#: classicsync/cli.py:397
+msgid "set the device clock from this computer"
+msgstr ""
+
+#: classicsync/cli.py:362
+msgid "set the device clock from this computer on connect"
+msgstr ""
+
+#: classicsync/cli_sync.py:198
+msgid "set up a partnership first if the device is a guest"
+msgstr ""
+
+#: classicsync/cli_sync.py:175
+msgid "set up a partnership with the connected device"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:55
+msgid "setting {key} has unknown fields: {fields}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:39
+msgid "setting {key} has unknown type {type!r}; use one of {types}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:189
+msgid "settings to change; an empty value returns to the default; lists are separated by ';'"
+msgstr ""
+
+#: classicsync/cli_convert.py:37
+msgid "sheet number to write to CSV (from 0)"
+msgstr ""
+
+#: classicsync/cli.py:380
+msgid "show device version, memory and power"
+msgstr ""
+
+#: classicsync/cli_plugins.py:185
+msgid "show or change a sync provider's settings"
+msgstr ""
+
+#: classicsync/cli_sync.py:202
+msgid "show partnerships and the result of their last sync"
+msgstr ""
+
+#: classicsync/cli_sync.py:173
+msgid "show the connected device's partnership slots"
+msgstr ""
+
+#: classicsync/cli_sync.py:190
+msgid "show what would change without changing anything"
+msgstr ""
+
+#: classicsync/cli_sync.py:64
+msgid "skipped {error}"
+msgstr ""
+
+#: classicsync/cli_artwork.py:20
+msgid "skipped {message}"
+msgstr ""
+
+#: classicsync/cli.py:394
+msgid "start a program on the device"
+msgstr ""
+
+#: classicsync/cli_install.py:61
+msgid "started \\Windows\\Unload.exe \"{name}\"; check the device screen"
+msgstr ""
+
+#: classicsync/cli.py:228
+msgid "started process {process}"
+msgstr ""
+
+#: classicsync/cli_sync.py:191
+msgid "sync provider (default: folder, or the saved one)"
+msgstr ""
+
+#: classicsync/cli_sync.py:189
+msgid "synchronize files, contacts, calendar and tasks with this computer"
+msgstr ""
+
+#: classicsync/cli_sync.py:193
+msgid "synchronize only this type: files, contacts, calendar or tasks (repeatable)"
+msgstr ""
+
+#: classicsync/link/ppp.py:264
+msgid "terminated by peer"
+msgstr ""
+
+#: classicsync/cli_plugins.py:16
+msgid "this device"
+msgstr ""
+
+#: classicsync/cli_plugins.py:127
+msgid "this provider declares no settings"
+msgstr ""
+
+#: classicsync/link/ppp.py:398
+msgid "transport closed"
+msgstr ""
+
+#: classicsync/cli.py:63 classicsync/cli.py:158 classicsync/cli.py:159
+msgid "unknown"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:147
+msgid "unknown setting {key}; known settings: {keys}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:92
+msgid "updated {name} {version}, providers: {providers}"
+msgstr ""
+
+#: classicsync/cli.py:332 classicsync/cli.py:73
+msgid "waiting for a device on {port}"
+msgstr ""
+
+#: classicsync/cli_sync.py:200
+msgid "when both sides already have items of a type never synchronized: combine them (default), replace the device's items with this computer's, or skip the type"
+msgstr ""
+
+#: classicsync/cli_sync.py:62
+msgid "would {action}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:117
+msgid "yes"
+msgstr ""
+
+#: classicsync/sync/engine.py:37
+msgid "{count} add to desktop"
+msgstr ""
+
+#: classicsync/sync/engine.py:37
+msgid "{count} add to device"
+msgstr ""
+
+#: classicsync/sync/engine.py:40
+msgid "{count} conflict"
+msgstr ""
+
+#: classicsync/sync/engine.py:40
+msgid "{count} conflict kept both"
+msgstr ""
+
+#: classicsync/sync/engine.py:39
+msgid "{count} delete to desktop"
+msgstr ""
+
+#: classicsync/sync/engine.py:39
+msgid "{count} delete to device"
+msgstr ""
+
+#: classicsync/sync/engine.py:116
+msgid "{count} failed"
+msgstr ""
+
+#: classicsync/cli_install.py:29
+msgid "{count} step failed"
+msgid_plural "{count} steps failed"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/cli_sync.py:70
+msgid "{count} unresolved conflict; run again with --conflict device or --conflict desktop"
+msgid_plural "{count} unresolved conflicts; run again with --conflict device or --conflict desktop"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/cli_sync.py:97
+msgid "{count} unresolved: {items}"
+msgid_plural "{count} unresolved: {items}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/sync/engine.py:38
+msgid "{count} update to desktop"
+msgstr ""
+
+#: classicsync/sync/engine.py:38
+msgid "{count} update to device"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/synchronization.py:237
+msgid "{database} Options"
+msgstr ""
+
+#: classicsync/cli_sync.py:34
+msgid "{device} is connected as a guest; run 'classicsync partnership create' or pass --new-partnership"
+msgstr ""
+
+#: classicsync/sync/engine.py:351
+msgid "{device} is connected as a guest; set up a partnership before synchronizing"
+msgstr ""
+
+#: classicsync/cli_plugins.py:167
+msgid "{device} now synchronizes with {provider}"
+msgstr ""
+
+#: classicsync/cli_sync.py:123
+msgid "{device}: guest"
+msgstr ""
+
+#: classicsync/cli_sync.py:120
+msgid "{device}: partnership {partnership}"
+msgstr ""
+
+#: classicsync/cli_sync.py:65
+msgid "{device}: {summary}"
+msgstr ""
+
+#: classicsync/cli_sync.py:65
+msgid "{device}: {summary} (dry run)"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:400
+msgid "{file} defines no sync provider (a Provider subclass with a name)"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:398
+msgid "{file} failed to load: {error}"
+msgstr ""
+
+#: classicsync/gui/app.py:259
+msgid "{free} KB of {total} KB"
+msgstr ""
+
+#: classicsync/cli_artwork.py:16
+msgid "{installer}: {product}, {resources} resources from {modules} modules, {sounds} sounds -> {directory}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:155
+msgid "{keys} can only be set for one device; add --device"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:111
+msgid "{key} cannot be {value!r}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:91
+msgid "{key} must be a whole number, not {value!r}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:72
+msgid "{key} must be at least {minimum}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:74
+msgid "{key} must be at most {maximum}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:97
+msgid "{key} must be one of {choices}, not {value!r}"
+msgstr ""
+
+#: classicsync/sync/settings_schema.py:86
+msgid "{key} must be yes or no, not {value!r}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:133
+msgid "{key}: set per device (--device)"
+msgstr ""
+
+#: classicsync/cli_translations.py:16
+msgid "{kind} {translated}/{total} ({percent}%, {same} at the same id)"
+msgstr ""
+
+#: classicsync/cli_translations.py:24
+msgid "{language}: {translations} translations, {derived} without accelerators, {conflicts} conflicts -> {path}"
+msgstr ""
+
+#: classicsync/cli_sync.py:110
+msgid "{name}  ({kind})  created {created}  last sync {last_sync}"
+msgstr ""
+
+#: classicsync/cli_sync.py:22
+msgid "{name} (partner {partner})"
+msgstr ""
+
+#: classicsync/cli.py:62
+msgid "{name} ({platform}, Windows CE {version} build {build}, {processor})"
+msgstr ""
+
+#: classicsync/sync/converted.py:115
+msgid "{name} could not be converted back: {error}"
+msgstr ""
+
+#: classicsync/sync/converted.py:75 classicsync/sync/converted.py:145
+msgid "{name} could not be converted: {error}"
+msgstr ""
+
+#: classicsync/cli_install.py:59
+msgid "{name} is not installed on the device; see 'classicsync apps'"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:486
+msgid "{name} was installed from {spec}, which no longer exists; install it again from its new location"
+msgstr ""
+
+#: classicsync/cli_plugins.py:59
+msgid "{name} {version}  (installed for {library}; run 'classicsync plugin update {name}' for this Python)"
+msgstr ""
+
+#: classicsync/cli_plugins.py:62
+msgid "{name} {version}  (missing; run 'classicsync plugin update {name}' or remove it)"
+msgstr ""
+
+#: classicsync/cli_plugins.py:21
+msgid "{name}: {display_name} ({types})"
+msgstr ""
+
+#: classicsync/sync/converted.py:63
+msgid "{name}: {warning}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:44
+msgid "{origin}, from {spec}"
+msgstr ""
+
+#: classicsync/cli_plugins.py:46
+msgid "{origin}, {location}"
+msgstr ""
+
+#: classicsync/gui/frontends/activesync31/tray.py:55 classicsync/gui/frontends/ceservices22/tray.py:77 classicsync/gui/frontends/hpcexplorer11/tray.py:41
+msgid "{product} &Settings..."
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:16
+msgid "{product} Settings"
+msgstr ""
+
+#: classicsync/gui/branding.py:88
+msgid "{product} {version} ({style} style)"
+msgstr ""
+
+#: classicsync/cli_translations.py:30
+msgid "{product}, all {count} modules: {coverage}"
+msgstr ""
+
+#: classicsync/cli_translations.py:28
+msgid "{product}, {count} modules shared with the paired build: {coverage}"
+msgstr ""
+
+#: classicsync/gui/common/plugin_settings.py:115
+msgid "{provider} Settings"
+msgstr ""
+
+#: classicsync/cli_plugins.py:123
+msgid "{provider} settings for all devices"
+msgstr ""
+
+#: classicsync/cli_plugins.py:121
+msgid "{provider} settings for {device}"
+msgstr ""
+
+#: classicsync/sync/folder.py:63
+msgid "{size} byte"
+msgid_plural "{size} bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/cli.py:127
+msgid "{source} -> {destination} ({count} byte)"
+msgid_plural "{source} -> {destination} ({count} bytes)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/sync/plugin_install.py:388
+msgid "{spec} has no {group} entry points, so it is not a classicsync plugin"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:308
+msgid "{tool} could not install {spec}:\n{output}"
+msgstr ""
+
+#: classicsync/cli_sync.py:68
+msgid "{type}: first synchronization, {choice}"
+msgstr ""
+
+#: classicsync/cli_sync.py:95
+msgid "{type}: {count} item"
+msgid_plural "{type}: {count} items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/sync/plugin_install.py:331
+msgid "{wheel} contains an unsafe path: {path}"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:351
+msgid "{wheel} contains compiled code; installing it needs uv or pip"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:338
+msgid "{wheel} is built for a particular platform; installing it needs uv or pip"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:347
+msgid "{wheel} is not a wheel: it has no .dist-info/METADATA"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:342
+msgid "{wheel} is not a wheel: {error}"
+msgstr ""
+
+#: classicsync/sync/plugin_install.py:354
+msgid "{wheel} needs {requirements}, and installing those needs uv or pip"
+msgstr ""
