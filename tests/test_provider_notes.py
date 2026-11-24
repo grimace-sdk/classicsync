@@ -72,12 +72,12 @@ def test_notes_sync_both_ways(tmp_path):
     client.put_file("\\My Documents\\Picture.bmp", b"BM not a note")
 
     sync(client, partnership, root)
-    assert (root / "My Documents" / "Call.md").read_text() == "Call **Ada**\n"
-    assert (root / "My Documents" / "Ink.md").read_text() == "Shopping\n＜よう tea\n"
+    assert (root / "My Documents" / "Call.md").read_text(encoding="utf-8") == "Call **Ada**\n"
+    assert (root / "My Documents" / "Ink.md").read_text(encoding="utf-8") == "Shopping\n＜よう tea\n"
     assert not list(root.rglob("Picture*"))
 
-    (root / "My Documents" / "Call.md").write_text("Call **Ada** and *Grace*\n")
-    (root / "Todo.md").write_text("# Todo\n- write tests\n")
+    (root / "My Documents" / "Call.md").write_text("Call **Ada** and *Grace*\n", encoding="utf-8")
+    (root / "Todo.md").write_text("# Todo\n- write tests\n", encoding="utf-8")
     report = sync(client, partnership, root)
     assert report.counts() == {"update to device": 1, "add to device": 1}
     assert markdown_from_document(read_rtf(client.file("\\My Documents\\Call.pwd"), Report())) == "Call **Ada** and *Grace*\n"
@@ -93,11 +93,11 @@ def test_edited_ink_note_is_kept_as_a_new_note(tmp_path):
     client.put_file("\\My Documents\\Ink.pwi", ink)
     sync(client, partnership, root)
 
-    (root / "My Documents" / "Ink.md").write_text("Shopping\nmore tea\n")
+    (root / "My Documents" / "Ink.md").write_text("Shopping\nmore tea\n", encoding="utf-8")
     report = sync(client, partnership, root)
     assert report.counts() == {"add to device": 1}
     assert client.file("\\My Documents\\Ink.pwi") == ink
-    assert (root / "My Documents" / "Ink.md").read_text() == "Shopping\n＜よう tea\n"
+    assert (root / "My Documents" / "Ink.md").read_text(encoding="utf-8") == "Shopping\n＜よう tea\n"
     edited = client.file("\\My Documents\\Ink (edited).pwd")
     assert markdown_from_document(read_rtf(edited, Report())) == "Shopping\nmore tea\n"
 

@@ -130,7 +130,10 @@ class UsbSerialTransport(Transport):
         core, util = require_pyusb()
         vendor_id, product_id = parse_spec(self.spec)
         self.name = f"usb:{vendor_id:04x}:{product_id:04x}"
-        device = core.find(idVendor=vendor_id, idProduct=product_id)
+        try:
+            device = core.find(idVendor=vendor_id, idProduct=product_id)
+        except core.NoBackendError as error:
+            raise OSError("USB connections need libusb, which was not found (see the README)") from error
         if device is None:
             raise OSError(f"USB device {vendor_id:04x}:{product_id:04x} is not attached")
         try:

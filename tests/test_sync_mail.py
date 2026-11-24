@@ -9,6 +9,7 @@ from fake_device import FakeRapiClient
 from classicsync.rapi.cedb import CEVT_BLOB, CEVT_FILETIME, CEVT_LPWSTR, CEVT_UI2, CEVT_UI4, PropertyValue
 from classicsync.sync import Partnership, SyncOptions, synchronize
 from classicsync.sync.mail import records
+from classicsync.sync.mail.maildir import INFO_SEPARATOR
 from classicsync.sync.mail.records import (
     FOLDER_INBOX, FOLDER_OUTBOX, FOLDER_SENT, STATUS_COMPOSED, STATUS_DELETE, STATUS_READ, MailMessage, decode_headers,
     encode_headers, message_from_v1, message_from_v2, split_subject, v1_properties, v2_properties, values_by_key,
@@ -186,7 +187,7 @@ def test_device_messages_land_in_maildir_and_flags_flow_back(mail_sync):
     assert parsed["From"].addresses[0].addr_spec == "ann@example.com"
     assert run().counts() == {}
 
-    path.rename(mail_root / "Inbox" / "cur" / (path.name + ":2,S"))
+    path.rename(mail_root / "Inbox" / "cur" / (path.name + INFO_SEPARATOR + "2,S"))
     assert run().counts() == {"update to device": 1}
     flags = client.message_records()[oid][records.V1_FLAGS]
     assert flags & STATUS_READ and flags & records.FOLDER_MASK == FOLDER_INBOX

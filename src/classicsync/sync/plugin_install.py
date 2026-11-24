@@ -226,13 +226,12 @@ def remove_distribution(library, distribution):
     touched_directories = set()
     if record.is_file():
         with record.open(newline="", encoding="utf-8") as handle:
-            for row in csv.reader(handle):
-                if not row:
-                    continue
-                path = Path(os.path.normpath(library / row[0]))
-                if is_inside(path, library) and (path.is_file() or path.is_symlink()):
-                    path.unlink()
-                    touched_directories.add(path.parent)
+            rows = [row for row in csv.reader(handle) if row]
+        for row in rows:
+            path = Path(os.path.normpath(library / row[0]))
+            if is_inside(path, library) and (path.is_file() or path.is_symlink()):
+                path.unlink()
+                touched_directories.add(path.parent)
     shutil.rmtree(distribution.path, ignore_errors=True)
     for directory in sorted(touched_directories, key=lambda path: len(path.parts), reverse=True):
         cache = directory / "__pycache__"
