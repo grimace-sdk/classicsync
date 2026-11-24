@@ -2,6 +2,9 @@ import asyncio
 import threading
 
 
+DTR_SETTLE_SECONDS = 0.5
+
+
 class Transport:
     name = "transport"
 
@@ -80,9 +83,17 @@ class SerialTransport(Transport):
 
         self.loop = asyncio.get_running_loop()
         self.queue = asyncio.Queue()
-        self.port = serial.Serial(self.device, self._baud, timeout=0.05, rtscts=False, dsrdtr=False)
-        self.port.dtr = True
+        self.port = serial.Serial()
+        self.port.port = self.device
+        self.port.baudrate = self._baud
+        self.port.timeout = 0.05
+        self.port.rtscts = False
+        self.port.dsrdtr = False
+        self.port.dtr = False
         self.port.rts = True
+        self.port.open()
+        await asyncio.sleep(DTR_SETTLE_SECONDS)
+        self.port.dtr = True
         self.stopping.clear()
         self.thread = threading.Thread(target=self._read_loop, name=f"serial-{self.device}", daemon=True)
         self.thread.start()
