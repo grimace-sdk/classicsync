@@ -4,9 +4,11 @@ from pathlib import Path
 import wx
 
 from ....i18n import N_, _, format_original
+from ....rapi.client import RapiError
 from ....rapi.structures import FILE_ATTRIBUTE_INROM
 from ...common.animation import AnimationPlayer, load_clip
-from ...common.device_browser import DeviceBrowser, join
+from ...common.device_browser import DeviceBrowser, ReplacePrompt, join
+from ...common.transfers import REPLACE_CANCEL, REPLACE_SKIP, TransferTree, device_join, device_tree
 from ...common.file_icons import FileIcons
 from ...common.layout import dialog_rect, dialog_size, place
 from .artwork import ANIMATION_DEVICE_COPY, ANIMATION_DEVICE_MOVE, ANIMATION_FROM_DEVICE, ANIMATION_TO_DEVICE, EXPLORER
@@ -204,27 +206,70 @@ class HpcDeviceBrowser(DeviceBrowser):
 
     def paste_from_device(self, clipboard):
         mode, source_folder, entries = clipboard
+        folders = [entry for entry in entries if entry.is_directory] if mode == COPY else []
+        if not folders:
+            return self._paste(mode, source_folder, entries, TransferTree(), set())
+        destination_folder = self.folder
         existing = {entry.name.lower() for entry in self.entries}
+        merging = source_folder != destination_folder
+
+        async def gather(client):
+            tree = TransferTree()
+            found = set()
+            for entry in folders:
+                tree.folders.append((entry.name,))
+                below = await device_tree(client, join(source_folder, entry.name), (entry.name,))
+                tree.files += below.files
+                tree.folders += below.folders
+                if merging and entry.name.lower() in existing:
+                    there = await device_tree(client, join(destination_folder, entry.name), (entry.name,))
+                    found |= {tuple(part.lower() for part in relative) for _, relative, _ in there.files}
+            return tree, found
+
+        self.run(gather, lambda result: self._paste(mode, source_folder, entries, *result))
+        return False
+
+    def _paste(self, mode, source_folder, entries, tree, found):
+        existing = {entry.name.lower() for entry in self.entries}
+        prompt = ReplacePrompt(self, keep_both=False,
+                               message=lambda name: format_original(_("File '%s' exists already. Do you want to replace it?"), name))
         jobs = []
+        folder_names = {}
         for entry in entries:
-            if mode == COPY and entry.is_directory:
-                continue
             name = entry.name
             if source_folder == self.folder:
                 if mode == CUT:
                     continue
                 name = copy_name(name, existing)
                 existing.add(name.lower())
-            elif name.lower() in existing:
-                answer = wx.MessageBox(format_original(_("File '%s' exists already. Do you want to replace it?"), name),
-                                       _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION, self)
-                if answer == wx.CANCEL:
+            elif name.lower() in existing and not (mode == COPY and entry.is_directory):
+                choice = prompt.ask(name)
+                if choice == REPLACE_CANCEL:
                     return False
-                if answer == wx.NO:
+                if choice == REPLACE_SKIP:
                     continue
+            if mode == COPY and entry.is_directory:
+                folder_names[entry.name] = name
+                continue
             jobs.append((join(source_folder, entry.name), join(self.folder, name), entry.size))
-        if not jobs:
+        for source, relative, size in tree.files:
+            if tuple(part.lower() for part in relative) in found:
+                choice = prompt.ask(relative[-1])
+                if choice == REPLACE_CANCEL:
+                    return False
+                if choice == REPLACE_SKIP:
+                    continue
+            jobs.append((source, device_join(self.folder, folder_names[relative[0]], *relative[1:]), size))
+        new_folders = [device_join(self.folder, folder_names[relative[0]], *relative[1:]) for relative in tree.folders]
+        if not jobs and not new_folders:
             return mode == CUT
+
+        async def make_folders(client):
+            for folder in new_folders:
+                try:
+                    await client.create_directory(folder)
+                except RapiError:
+                    pass
 
         async def transfer(client, source, destination, progress):
             if mode == CUT:
@@ -235,10 +280,10 @@ class HpcDeviceBrowser(DeviceBrowser):
 
         animation = ANIMATION_DEVICE_MOVE if mode == CUT else ANIMATION_DEVICE_COPY
         caption = _("Moving...") if mode == CUT else _("Copying...")
-        self._transfer(caption, jobs, transfer, lambda _: self.refresh(), animation=animation)
+        self._transfer(caption, jobs, transfer, lambda _: self.refresh(), animation=animation, prepare=make_folders)
         return mode == CUT
 
-    def _transfer(self, title, jobs, operation, on_finished, animation=None):
+    def _transfer(self, title, jobs, operation, on_finished, animation=None, prepare=None):
         total = sum(size for source, destination, size in jobs) or 1
         to_desktop = bool(jobs) and isinstance(jobs[0][1], Path)
         moving = animation == ANIMATION_DEVICE_MOVE
@@ -265,6 +310,8 @@ class HpcDeviceBrowser(DeviceBrowser):
                 raise InterruptedError("cancelled")
 
         async def run_all(client):
+            if prepare:
+                await prepare(client)
             base = 0
             for source, destination, size in jobs:
                 name = os.path.basename(str(source).replace("\\", "/"))

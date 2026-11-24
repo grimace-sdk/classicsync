@@ -14,6 +14,9 @@ from ...rapi.structures import (
 from .file_icons import FileIcons
 from .icon_grid import ItemListView
 from .layout import dialog_size, place
+from .transfers import (
+    REPLACE_CANCEL, REPLACE_KEEP_BOTH, REPLACE_OVERWRITE, REPLACE_SKIP, TransferTree, device_join, device_tree, local_tree, unused_path,
+)
 
 COMMAND_OPEN = wx.NewIdRef()
 COMMAND_COPY_TO_COMPUTER = wx.NewIdRef()
@@ -40,10 +43,6 @@ SORT_NAME = 0
 SORT_SIZE = 1
 SORT_TYPE = 2
 SORT_DATE = 3
-
-REPLACE_OVERWRITE = "replace"
-REPLACE_KEEP_BOTH = "keep both"
-REPLACE_SKIP = "skip"
 
 FILE_TYPES = {
     ".pwd": N_("Pocket Word Document"), ".pwt": N_("Pocket Word Template"), ".pxl": N_("Pocket Excel Workbook"),
@@ -95,15 +94,6 @@ def format_size(size):
     return format_original(_("%sKB"), f"{(size + 1023) // 1024:,}")
 
 
-def unused_path(path, taken=()):
-    counter = 2
-    candidate = path
-    while candidate.exists() or candidate in taken:
-        candidate = path.with_name(f"{path.stem} ({counter}){path.suffix}")
-        counter += 1
-    return candidate
-
-
 def format_time(filetime):
     moment = filetime_to_datetime(filetime)
     if not moment:
@@ -131,6 +121,36 @@ def device_conversion(name, version=2):
     if not target:
         return None
     return source, target, os.path.splitext(name)[0] + FORMATS[target].extensions[0]
+
+
+class ReplacePrompt:
+    def __init__(self, parent, keep_both, message=None):
+        self.parent = parent
+        self.keep_both = keep_both
+        self.message = message
+        self.remembered = None
+
+    def ask(self, name):
+        if self.remembered:
+            return self.remembered
+        if self.message:
+            message = self.message(name)
+        else:
+            message = _("This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?").format(name=name)
+        with wx.RichMessageDialog(self.parent, message, _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION) as dialog:
+            if self.keep_both:
+                dialog.SetYesNoCancelLabels(_("&Replace"), _("&Keep Both"), _("&Skip"))
+                answers = {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_KEEP_BOTH}
+                fallback = REPLACE_SKIP
+            else:
+                dialog.SetYesNoCancelLabels(_("&Replace"), _("&Skip"), _("Cancel"))
+                answers = {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_SKIP}
+                fallback = REPLACE_CANCEL
+            dialog.ShowCheckBox(_("Do this for all remaining files"))
+            choice = answers.get(dialog.ShowModal(), fallback)
+            if dialog.IsCheckBoxChecked() and choice != REPLACE_CANCEL:
+                self.remembered = choice
+        return choice
 
 
 class FileDrop(wx.FileDropTarget):
@@ -273,7 +293,7 @@ class DeviceBrowser(wx.SplitterWindow):
         folder = self.folder if folder is None else folder
         return self.root_label if folder == "\\" else self.root_label + folder
 
-    def navigate(self, folder):
+    def navigate(self, folder, then=None):
         self.folder = folder
         self.on_title(self.root_label if folder == "\\" else folder.rsplit("\\", 1)[-1])
         self.on_folder(folder)
@@ -288,10 +308,15 @@ class DeviceBrowser(wx.SplitterWindow):
                 store = None
             return entries, store
 
-        self.run(read, self._show_folder)
+        def shown(result):
+            self._show_folder(result)
+            if then and self:
+                then()
 
-    def refresh(self):
-        self.navigate(self.folder)
+        self.run(read, shown)
+
+    def refresh(self, then=None):
+        self.navigate(self.folder, then)
 
     def go_up(self):
         self.navigate(parent_folder(self.folder))
@@ -549,7 +574,7 @@ class DeviceBrowser(wx.SplitterWindow):
 
         self.run(remove, lambda _: self.refresh(), lambda error: (self.show_error(error), self.refresh()))
 
-    def _transfer(self, title, jobs, operation, on_finished):
+    def _transfer(self, title, jobs, operation, on_finished, prepare=None):
         total = sum(size for _, _, size in jobs) or 1
         progress = wx.ProgressDialog(title, _("Preparing..."), maximum=1000, parent=self.GetTopLevelParent(),
                                      style=wx.PD_APP_MODAL | wx.PD_CAN_ABORT | wx.PD_AUTO_HIDE | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME)
@@ -567,6 +592,8 @@ class DeviceBrowser(wx.SplitterWindow):
                 raise InterruptedError("cancelled")
 
         async def run_all(client):
+            if prepare:
+                await prepare(client)
             base = 0
             for source, destination, size in jobs:
                 label = _("Copying '{name}'").format(name=os.path.basename(str(source).replace(chr(92), "/")))
@@ -586,6 +613,17 @@ class DeviceBrowser(wx.SplitterWindow):
 
         self.run(run_all, finish, fail)
 
+    def transfer_summary(self, count, target, outcomes, warnings):
+        message = ngettext("Copied {count} file to {target}", "Copied {count} files to {target}", count).format(count=count, target=target)
+        details = [text for text in (
+            ngettext("{count} replaced", "{count} replaced", outcomes["replaced"]).format(count=outcomes["replaced"]) if outcomes["replaced"] else "",
+            ngettext("{count} saved under a new name", "{count} saved under new names", outcomes["renamed"]).format(count=outcomes["renamed"])
+            if outcomes["renamed"] else "",
+            ngettext("{count} skipped", "{count} skipped", outcomes["skipped"]).format(count=outcomes["skipped"]) if outcomes["skipped"] else "",
+        ) if text] + warnings[:2]
+        self.on_status(message + (" (" + "; ".join(details) + ")" if details else ""), 0)
+
+
     def conversion_enabled(self):
         return getattr(self.application.settings, "convert_files", True)
 
@@ -595,10 +633,7 @@ class DeviceBrowser(wx.SplitterWindow):
 
     def copy_to_computer(self, entries=None, target=None):
         entries = entries if entries is not None else self.selected_entries()
-        files = [entry for entry in entries if not entry.is_directory]
-        if not files:
-            wx.MessageBox(_("Folders can't be copied to this computer yet; open the folder and select its files."), self.root_label,
-                          wx.OK | wx.ICON_INFORMATION, self)
+        if not entries:
             return
         if target is None:
             start = getattr(self.application.settings, "last_download_folder", "") or str(Path.home() / "Desktop")
@@ -607,15 +642,37 @@ class DeviceBrowser(wx.SplitterWindow):
                     return
                 target = Path(dialog.GetPath())
             self.remember_folder("last_download_folder", target)
+        target = Path(target)
+        source_folder = self.folder
+        files = [(join(source_folder, entry.name), (entry.name,), entry.size) for entry in entries if not entry.is_directory]
+        folders = [entry.name for entry in entries if entry.is_directory]
+        if not folders:
+            self.download_tree(TransferTree(files=files), target)
+            return
+
+        async def gather(client):
+            tree = TransferTree(files=list(files))
+            for name in folders:
+                tree.folders.append((name,))
+                below = await device_tree(client, join(source_folder, name), (name,))
+                tree.files += below.files
+                tree.folders += below.folders
+            return tree
+
+        self.on_status(_("Reading folder..."), 0)
+        self.run(gather, lambda tree: self.download_tree(tree, target))
+
+    def download_tree(self, tree, target):
         convert = self.conversion_enabled()
+        prompt = ReplacePrompt(self, keep_both=True)
         jobs = []
         taken = set()
         outcomes = {"replaced": 0, "renamed": 0, "skipped": 0}
-        for entry in files:
-            plan = desktop_conversion(entry.name) if convert else None
-            destination = Path(target) / (plan[2] if plan else entry.name)
+        for source, relative, size in tree.files:
+            plan = desktop_conversion(relative[-1]) if convert else None
+            destination = target.joinpath(*relative[:-1], plan[2] if plan else relative[-1])
             if destination.exists() or destination in taken:
-                choice = self.confirm_desktop_replace(destination.name)
+                choice = prompt.ask(destination.name)
                 if choice == REPLACE_SKIP:
                     outcomes["skipped"] += 1
                     continue
@@ -625,11 +682,16 @@ class DeviceBrowser(wx.SplitterWindow):
                 else:
                     outcomes["replaced"] += 1
             taken.add(destination)
-            jobs.append((join(self.folder, entry.name), destination, entry.size))
-        if not jobs:
+            jobs.append((source, destination, size))
+        if not jobs and not tree.folders:
             self.on_status(_("No files copied"), 0)
             return
+        local_folders = [target.joinpath(*relative) for relative in tree.folders]
         warnings = []
+
+        async def make_folders(client):
+            for folder in local_folders:
+                folder.mkdir(parents=True, exist_ok=True)
 
         async def download(client, source, destination, progress):
             data = await client.read_file_contents(source, progress=progress)
@@ -642,53 +704,66 @@ class DeviceBrowser(wx.SplitterWindow):
                 except (ConversionError, ValueError) as error:
                     warnings.append(str(error))
                     destination = destination.with_name(source.rsplit("\\", 1)[-1])
+            destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(data)
 
         def finished(count):
-            if count:
-                message = ngettext("Copied {count} file to {target}", "Copied {count} files to {target}", count).format(count=count, target=target)
-                details = [text for text in (
-                    ngettext("{count} replaced", "{count} replaced", outcomes["replaced"]).format(count=outcomes["replaced"]) if outcomes["replaced"] else "",
-                    ngettext("{count} saved under a new name", "{count} saved under new names", outcomes["renamed"]).format(count=outcomes["renamed"])
-                    if outcomes["renamed"] else "",
-                    ngettext("{count} skipped", "{count} skipped", outcomes["skipped"]).format(count=outcomes["skipped"]) if outcomes["skipped"] else "",
-                ) if text] + warnings[:2]
-                self.on_status(message + (" (" + "; ".join(details) + ")" if details else ""), 0)
+            if count is not None:
+                self.transfer_summary(count, target, outcomes, warnings)
 
-        self._transfer(_("Copying..."), jobs, download, finished)
-
-    def confirm_desktop_replace(self, name):
-        with wx.MessageDialog(self, _("This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?")
-                              .format(name=name), _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION) as dialog:
-            dialog.SetYesNoCancelLabels(_("&Replace"), _("&Keep Both"), _("&Skip"))
-            answer = dialog.ShowModal()
-        return {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_KEEP_BOTH}.get(answer, REPLACE_SKIP)
+        self._transfer(_("Copying..."), jobs, download, finished, prepare=make_folders)
 
     def upload(self, filenames):
-        paths = [Path(name) for name in filenames]
-        if any(path.is_dir() for path in paths):
-            wx.MessageBox(_("Folders can't be copied to the device yet; only the files will be copied."), self.root_label,
-                          wx.OK | wx.ICON_INFORMATION, self)
-        existing = {entry.name.lower() for entry in self.entries}
+        tree = local_tree(filenames)
+        if not tree.files and not tree.folders:
+            return
+        destination_folder = self.folder
+        existing = {(entry.name.lower(),) for entry in self.entries}
+        device_folders = {entry.name.lower() for entry in self.entries if entry.is_directory}
+        merging = [relative[0] for relative in tree.folders if len(relative) == 1 and relative[0].lower() in device_folders]
+        if not merging:
+            self.upload_tree(tree, destination_folder, existing)
+            return
+
+        async def gather(client):
+            found = set(existing)
+            for name in merging:
+                below = await device_tree(client, join(destination_folder, name), (name,))
+                found |= {tuple(part.lower() for part in relative) for _, relative, _ in below.files}
+            return found
+
+        self.on_status(_("Reading folder..."), 0)
+        self.run(gather, lambda found: self.upload_tree(tree, destination_folder, found))
+
+    def upload_tree(self, tree, destination_folder, existing):
         convert = self.conversion_enabled()
         version = self.device_version()
+        prompt = ReplacePrompt(self, keep_both=False)
         jobs = []
-        for path in paths:
-            if not path.is_file():
-                continue
+        outcomes = {"replaced": 0, "renamed": 0, "skipped": 0}
+        for path, relative, size in tree.files:
             plan = device_conversion(path.name, version) if convert else None
-            device_name = plan[2] if plan else path.name
-            if device_name.lower() in existing:
-                answer = wx.MessageBox(_("This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?")
-                                       .format(name=device_name), _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION, self)
-                if answer == wx.CANCEL:
+            device_relative = relative[:-1] + (plan[2] if plan else relative[-1],)
+            if tuple(part.lower() for part in device_relative) in existing:
+                choice = prompt.ask(device_relative[-1])
+                if choice == REPLACE_CANCEL:
                     return
-                if answer == wx.NO:
+                if choice == REPLACE_SKIP:
+                    outcomes["skipped"] += 1
                     continue
-            jobs.append((str(path), join(self.folder, device_name), path.stat().st_size))
-        if not jobs:
+                outcomes["replaced"] += 1
+            jobs.append((str(path), device_join(destination_folder, *device_relative), size))
+        if not jobs and not tree.folders:
             return
+        device_folders = [device_join(destination_folder, *relative) for relative in tree.folders]
         warnings = []
+
+        async def make_folders(client):
+            for folder in device_folders:
+                try:
+                    await client.create_directory(folder)
+                except RapiError:
+                    pass
 
         async def send(client, source, destination, progress):
             data = Path(source).read_bytes()
@@ -700,12 +775,14 @@ class DeviceBrowser(wx.SplitterWindow):
             modified = datetime_to_filetime(datetime.fromtimestamp(Path(source).stat().st_mtime, timezone.utc))
             await client.write_file_contents(destination, data, modified=modified, progress=progress)
 
-        def finished(_count):
-            self.refresh()
-            if warnings:
-                self.on_status(_("Converted with changes: {details}").format(details="; ".join(warnings[:3])), 0)
+        def finished(count):
+            if count is None:
+                self.refresh()
+                return
+            self.refresh(lambda: self.transfer_summary(count, self.location_label(destination_folder), outcomes, warnings))
 
-        self._transfer(_("Copying..."), jobs, send, finished)
+        self._transfer(_("Copying..."), jobs, send, finished, prepare=make_folders)
+
 
     def device_disconnected(self):
         self.connected = False

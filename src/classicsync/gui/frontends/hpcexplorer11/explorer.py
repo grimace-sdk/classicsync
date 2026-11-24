@@ -477,10 +477,6 @@ class ExplorerWindow(wx.Frame):
         entries = self.browser.selected_entries()
         if not entries or (mode == CUT and self.browser.selection_in_rom()):
             return
-        if mode == COPY and any(entry.is_directory for entry in entries):
-            wx.MessageBox(_("Folders can't be copied on the H/PC yet; only the selected files will be copied."), TITLE,
-                          wx.OK | wx.ICON_INFORMATION, self)
-            entries = [entry for entry in entries if not entry.is_directory]
         self.clipboard = (mode, self.folder, entries) if entries else None
 
     def paste(self):

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-24 15:21+0000\n"
+"POT-Creation-Date: 2026-11-24 15:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -37,7 +37,7 @@ msgid_plural "  {count} free slots"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:33
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:35
 msgid " (Free space: %d.%dMB)"
 msgstr ""
 
@@ -57,11 +57,11 @@ msgstr ""
 msgid " You may choose to skip these files; however, they will not be correctly restored on your device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:159
+#: classicsync/gui/common/device_browser.py:179
 msgid "%1 (%2!d! bytes)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:148 classicsync/gui/frontends/ceservices22/device_properties.py:83
+#: classicsync/gui/common/device_browser.py:168 classicsync/gui/frontends/ceservices22/device_properties.py:83
 msgid "%1 Properties"
 msgstr ""
 
@@ -69,11 +69,11 @@ msgstr ""
 msgid "%1!d! items not synchronized"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:305 classicsync/gui/common/device_browser.py:349 classicsync/gui/frontends/ceservices22/mobile_devices.py:464
+#: classicsync/gui/common/device_browser.py:330 classicsync/gui/common/device_browser.py:374 classicsync/gui/frontends/ceservices22/mobile_devices.py:464
 msgid "%1!d! object(s)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:347 classicsync/gui/frontends/ceservices22/mobile_devices.py:463
+#: classicsync/gui/common/device_browser.py:372 classicsync/gui/frontends/ceservices22/mobile_devices.py:463
 msgid "%1!d! object(s) selected"
 msgstr ""
 
@@ -117,11 +117,11 @@ msgstr ""
 msgid "%d items out-of-date."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:136
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:138
 msgid "%d object(s)"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:144
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:146
 msgid "%d object(s) selected"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "%s Connected, %s"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:89
+#: classicsync/gui/common/device_browser.py:88
 msgid "%s File"
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 msgid "%s Properties"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:94
+#: classicsync/gui/common/device_browser.py:93
 msgid "%s bytes"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:95
+#: classicsync/gui/common/device_browser.py:94
 msgid "%sKB"
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr ""
 msgid "&Apply"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:178
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:180
 msgid "&Arrange Icons"
 msgstr ""
 
@@ -217,7 +217,7 @@ msgstr ""
 msgid "&At all times (I plan to use my COM port only for connecting to my mobile device)."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:177
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:179
 msgid "&Auto Arrange"
 msgstr ""
 
@@ -285,7 +285,7 @@ msgstr ""
 msgid "&Continuously while the device is connected"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:641 classicsync/gui/frontends/ceservices22/mobile_devices.py:271 classicsync/gui/frontends/hpcexplorer11/browser.py:189
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:641 classicsync/gui/frontends/ceservices22/mobile_devices.py:271 classicsync/gui/frontends/hpcexplorer11/browser.py:191
 msgid "&Copy"
 msgstr ""
 
@@ -293,11 +293,11 @@ msgstr ""
 msgid "&Copy\tCtrl+C"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:400
+#: classicsync/gui/common/device_browser.py:425
 msgid "&Copy to This Computer..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:403 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+#: classicsync/gui/common/device_browser.py:428 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:192 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
 msgid "&Delete"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 msgid "&Desktop software:"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/main_window.py:161 classicsync/gui/frontends/ceservices22/mobile_devices.py:284 classicsync/gui/frontends/ceservices22/mobile_devices.py:618 classicsync/gui/frontends/hpcexplorer11/browser.py:170 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
+#: classicsync/gui/frontends/activesync31/main_window.py:161 classicsync/gui/frontends/ceservices22/mobile_devices.py:284 classicsync/gui/frontends/ceservices22/mobile_devices.py:618 classicsync/gui/frontends/hpcexplorer11/browser.py:172 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
 msgid "&Details"
 msgstr ""
 
@@ -421,7 +421,7 @@ msgstr ""
 msgid "&Invert Selection"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:663
+#: classicsync/gui/common/device_browser.py:142
 msgid "&Keep Both"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr ""
 msgid "&Language:"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:169
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:171
 msgid "&Large Icons"
 msgstr ""
 
@@ -437,7 +437,7 @@ msgstr ""
 msgid "&Leave the item unresolved. (Click \"Resolve items...\" to choose which item to keep.)"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:283 classicsync/gui/frontends/ceservices22/mobile_devices.py:617 classicsync/gui/frontends/hpcexplorer11/browser.py:170 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:283 classicsync/gui/frontends/ceservices22/mobile_devices.py:617 classicsync/gui/frontends/hpcexplorer11/browser.py:172 classicsync/gui/frontends/hpcexplorer11/explorer.py:190
 msgid "&List"
 msgstr ""
 
@@ -481,7 +481,7 @@ msgstr ""
 msgid "&Only while the Mobile Devices window is open (I may need to use my COM port for another purpose)."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:398 classicsync/gui/frontends/ceservices22/mobile_devices.py:251 classicsync/gui/frontends/ceservices22/mobile_devices.py:597 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/hpcexplorer11/browser.py:186 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+#: classicsync/gui/common/device_browser.py:423 classicsync/gui/frontends/ceservices22/mobile_devices.py:251 classicsync/gui/frontends/ceservices22/mobile_devices.py:597 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/hpcexplorer11/browser.py:188 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
 msgid "&Open"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgstr ""
 msgid "&Password:"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:271 classicsync/gui/frontends/ceservices22/mobile_devices.py:631 classicsync/gui/frontends/hpcexplorer11/browser.py:180
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:271 classicsync/gui/frontends/ceservices22/mobile_devices.py:631 classicsync/gui/frontends/hpcexplorer11/browser.py:182
 msgid "&Paste"
 msgstr ""
 
@@ -521,7 +521,7 @@ msgstr ""
 msgid "&Port:"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:188 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
 msgid "&Print"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgstr ""
 msgid "&Provider..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:167
+#: classicsync/gui/common/device_browser.py:187
 msgid "&Read-only"
 msgstr ""
 
@@ -561,7 +561,7 @@ msgstr ""
 msgid "&Remove..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:663
+#: classicsync/gui/common/device_browser.py:142 classicsync/gui/common/device_browser.py:146
 msgid "&Replace"
 msgstr ""
 
@@ -605,7 +605,7 @@ msgstr ""
 msgid "&Show all files"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:663 classicsync/gui/frontends/hpcexplorer11/backup.py:159
+#: classicsync/gui/common/device_browser.py:142 classicsync/gui/common/device_browser.py:146 classicsync/gui/frontends/hpcexplorer11/backup.py:159
 msgid "&Skip"
 msgstr ""
 
@@ -613,7 +613,7 @@ msgstr ""
 msgid "&Skip All"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:169
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:171
 msgid "&Small Icons"
 msgstr ""
 
@@ -657,7 +657,7 @@ msgstr ""
 msgid "&Up One Level"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/main_window.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:294 classicsync/gui/frontends/ceservices22/mobile_devices.py:620 classicsync/gui/frontends/ceservices22/sync_status.py:103 classicsync/gui/frontends/hpcexplorer11/browser.py:172 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
+#: classicsync/gui/frontends/activesync31/main_window.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:294 classicsync/gui/frontends/ceservices22/mobile_devices.py:620 classicsync/gui/frontends/ceservices22/sync_status.py:103 classicsync/gui/frontends/hpcexplorer11/browser.py:174 classicsync/gui/frontends/hpcexplorer11/explorer.py:205
 msgid "&View"
 msgstr ""
 
@@ -701,19 +701,19 @@ msgstr ""
 msgid "* Use the serial cable to connect to a serial port of this desktop computer and click Next."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:21
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:23
 msgid ".CPL     (Control Panel extension)"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:21
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:23
 msgid ".DLL     (Application extension)"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:21
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:23
 msgid ".DRV     (Device driver)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:94
+#: classicsync/gui/common/device_browser.py:93
 msgid "1 byte"
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr ""
 msgid "1 item out-of-date."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:52
+#: classicsync/gui/common/device_browser.py:51
 msgid "2bp Image"
 msgstr ""
 
@@ -757,7 +757,7 @@ msgstr ""
 msgid "A backup is in progress. Please try again later."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:508
+#: classicsync/gui/common/device_browser.py:533
 msgid "A file name cannot contain any of the following characters: \\ / : * ? \" < > |"
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "An system error has prevented Microsoft ActiveSync from setting up a partnership between your mobile device and this computer.\n\nTo set up a partnership, disconnect your device, restart Windows on this computer, and then reconnect your device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:49
 msgid "Application"
 msgstr ""
 
@@ -949,7 +949,7 @@ msgstr ""
 msgid "Application Downloading Complete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:49
 msgid "Application Extension"
 msgstr ""
 
@@ -981,7 +981,7 @@ msgstr ""
 msgid "Appointments that ended more than this many days ago are not synchronized."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:168
+#: classicsync/gui/common/device_browser.py:188
 msgid "Ar&chive"
 msgstr ""
 
@@ -989,11 +989,11 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:526
+#: classicsync/gui/common/device_browser.py:551
 msgid "Are you sure you want to delete '{name}'?"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:528
+#: classicsync/gui/common/device_browser.py:553
 msgid "Are you sure you want to delete these items?"
 msgstr ""
 
@@ -1013,7 +1013,7 @@ msgstr ""
 msgid "Arranges the icons automatically."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:166 classicsync/gui/frontends/hpcexplorer11/properties.py:92
+#: classicsync/gui/common/device_browser.py:186 classicsync/gui/frontends/hpcexplorer11/properties.py:92
 msgid "Attributes:"
 msgstr ""
 
@@ -1217,7 +1217,7 @@ msgstr ""
 msgid "Bitmap (.bmp)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:52
+#: classicsync/gui/common/device_browser.py:51
 msgid "Bitmap Image"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgstr ""
 msgid "COM port is not available"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:52
+#: classicsync/gui/common/device_browser.py:51
 msgid "Cabinet File"
 msgstr ""
 
@@ -1273,7 +1273,7 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:65 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/device_browser.py:146 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:67 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
 msgid "Cancel"
 msgstr ""
 
@@ -1453,7 +1453,7 @@ msgstr ""
 msgid "Computer"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:54
+#: classicsync/gui/common/device_browser.py:53
 msgid "Configuration Settings"
 msgstr ""
 
@@ -1465,15 +1465,15 @@ msgstr ""
 msgid "Confirm Backup Cancel"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:529
+#: classicsync/gui/common/device_browser.py:554
 msgid "Confirm Delete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:529
+#: classicsync/gui/common/device_browser.py:554
 msgid "Confirm File Delete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:662 classicsync/gui/common/device_browser.py:683 classicsync/gui/frontends/hpcexplorer11/browser.py:220
+#: classicsync/gui/common/device_browser.py:140
 msgid "Confirm File Replace"
 msgstr ""
 
@@ -1609,15 +1609,11 @@ msgstr ""
 msgid "Converted spreadsheets"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:706
-msgid "Converted with changes: {details}"
-msgstr ""
-
 #: classicsync/gui/frontends/hpcexplorer11/commands.py:108
 msgid "Converts and prints the selected item."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:649
+#: classicsync/gui/common/device_browser.py:617
 msgid "Copied {count} file to {target}"
 msgid_plural "Copied {count} files to {target}"
 msgstr[0] ""
@@ -1635,7 +1631,7 @@ msgstr ""
 msgid "Copy  (Ctrl+C)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:408 classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/mobile_devices.py:632
+#: classicsync/gui/common/device_browser.py:433 classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/mobile_devices.py:632
 msgid "Copy &Files Here..."
 msgstr ""
 
@@ -1643,7 +1639,7 @@ msgstr ""
 msgid "Copy &to This Computer..."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:40
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:42
 msgid "Copy (%d) of %s"
 msgstr ""
 
@@ -1655,7 +1651,7 @@ msgstr ""
 msgid "Copy files from this computer"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:37
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:39
 msgid "Copy of %s"
 msgstr ""
 
@@ -1671,23 +1667,23 @@ msgstr ""
 msgid "Copy selected items to this computer"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:476
+#: classicsync/gui/common/device_browser.py:501
 msgid "Copy to Mobile Device"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:605
+#: classicsync/gui/common/device_browser.py:640
 msgid "Copy to which folder on this computer?"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:572
+#: classicsync/gui/common/device_browser.py:599
 msgid "Copying '{name}'"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:658 classicsync/gui/common/device_browser.py:708 classicsync/gui/frontends/hpcexplorer11/browser.py:237 classicsync/gui/frontends/hpcexplorer11/browser.py:247
+#: classicsync/gui/common/device_browser.py:714 classicsync/gui/common/device_browser.py:784 classicsync/gui/frontends/hpcexplorer11/browser.py:282 classicsync/gui/frontends/hpcexplorer11/browser.py:292
 msgid "Copying..."
 msgstr ""
 
-#: classicsync/gui/common/backup_dialogs.py:90 classicsync/gui/frontends/hpcexplorer11/browser.py:261
+#: classicsync/gui/common/backup_dialogs.py:90 classicsync/gui/frontends/hpcexplorer11/browser.py:306
 msgid "Copying:  %s"
 msgstr ""
 
@@ -1695,7 +1691,7 @@ msgstr ""
 msgid "Could not load: {failures}"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:192 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
 msgid "Create &Shortcut"
 msgstr ""
 
@@ -1723,7 +1719,7 @@ msgstr ""
 msgid "Creates shortcuts to the selected items."
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:641 classicsync/gui/frontends/ceservices22/mobile_devices.py:270 classicsync/gui/frontends/hpcexplorer11/browser.py:189
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:641 classicsync/gui/frontends/ceservices22/mobile_devices.py:270 classicsync/gui/frontends/hpcexplorer11/browser.py:191
 msgid "Cu&t"
 msgstr ""
 
@@ -1899,7 +1895,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:712 classicsync/gui/frontends/ceservices22/mobile_devices.py:419
+#: classicsync/gui/common/device_browser.py:789 classicsync/gui/frontends/ceservices22/mobile_devices.py:419
 msgid "Disconnected"
 msgstr ""
 
@@ -1945,6 +1941,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/backup.py:139
 msgid "Do not use your device until after the restore has completed."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:149
+msgid "Do this for all remaining files"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:144
@@ -2119,7 +2119,7 @@ msgstr ""
 msgid "Favorites: {url} is not a web page ({type})"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:89
+#: classicsync/gui/common/device_browser.py:88
 msgid "File"
 msgstr ""
 
@@ -2127,7 +2127,7 @@ msgstr ""
 msgid "File &Conversion..."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:219
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:235
 msgid "File '%s' exists already. Do you want to replace it?"
 msgstr ""
 
@@ -2135,7 +2135,7 @@ msgstr ""
 msgid "File Conversion"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:85
+#: classicsync/gui/common/device_browser.py:84
 msgid "File Folder"
 msgstr ""
 
@@ -2163,19 +2163,7 @@ msgstr ""
 msgid "Folder: {value}"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/explorer.py:481
-msgid "Folders can't be copied on the H/PC yet; only the selected files will be copied."
-msgstr ""
-
-#: classicsync/gui/common/device_browser.py:670
-msgid "Folders can't be copied to the device yet; only the files will be copied."
-msgstr ""
-
-#: classicsync/gui/common/device_browser.py:600
-msgid "Folders can't be copied to this computer yet; open the folder and select its files."
-msgstr ""
-
-#: classicsync/gui/common/device_browser.py:53 classicsync/gui/common/device_browser.py:53
+#: classicsync/gui/common/device_browser.py:52 classicsync/gui/common/device_browser.py:52
 msgid "Font file"
 msgstr ""
 
@@ -2203,7 +2191,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:307
+#: classicsync/gui/common/device_browser.py:332
 msgid "Free space: {size}"
 msgstr ""
 
@@ -2211,7 +2199,7 @@ msgstr ""
 msgid "Frequently Asked &Questions"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:271
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:318
 msgid "From '%s' to '%s'"
 msgstr ""
 
@@ -2231,7 +2219,7 @@ msgstr ""
 msgid "Future appointments (days)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:151 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
+#: classicsync/gui/common/device_browser.py:171 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
 msgid "General"
 msgstr ""
 
@@ -2271,7 +2259,7 @@ msgstr ""
 msgid "H/PC Explorer Help &Topics"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:51 classicsync/gui/common/device_browser.py:51
+#: classicsync/gui/common/device_browser.py:50 classicsync/gui/common/device_browser.py:50
 msgid "HTML Document"
 msgstr ""
 
@@ -2279,11 +2267,11 @@ msgstr ""
 msgid "Handheld PC 1.0 Device Connected"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:54
+#: classicsync/gui/common/device_browser.py:53
 msgid "Help File"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:167
+#: classicsync/gui/common/device_browser.py:187
 msgid "Hi&dden"
 msgstr ""
 
@@ -2475,7 +2463,7 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:157 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
+#: classicsync/gui/common/device_browser.py:177 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
 msgid "Location:"
 msgstr ""
 
@@ -2555,23 +2543,23 @@ msgstr ""
 msgid "Model:"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:37 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
+#: classicsync/gui/common/device_browser.py:40 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
 msgid "Modified"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:160 classicsync/gui/frontends/hpcexplorer11/properties.py:89
+#: classicsync/gui/common/device_browser.py:180 classicsync/gui/frontends/hpcexplorer11/properties.py:89
 msgid "Modified:"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:237 classicsync/gui/frontends/hpcexplorer11/browser.py:247
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:282 classicsync/gui/frontends/hpcexplorer11/browser.py:292
 msgid "Moving..."
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/browser.py:261
+#: classicsync/gui/frontends/hpcexplorer11/browser.py:306
 msgid "Moving:  {name}"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:58
+#: classicsync/gui/common/device_browser.py:57
 msgid "My Handheld PC"
 msgstr ""
 
@@ -2579,7 +2567,7 @@ msgstr ""
 msgid "My Palm-size PC"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:57
+#: classicsync/gui/common/device_browser.py:56
 msgid "My Pocket PC"
 msgstr ""
 
@@ -2595,7 +2583,7 @@ msgstr ""
 msgid "NAND window {sectors} sectors of {size} bytes"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:129 classicsync/gui/common/backup_dialogs.py:275 classicsync/gui/common/device_browser.py:36 classicsync/gui/frontends/ceservices22/activesync.py:239 classicsync/gui/frontends/ceservices22/mobile_devices.py:82 classicsync/gui/frontends/ceservices22/sync_status.py:153 classicsync/gui/frontends/hpcexplorer11/explorer.py:99 classicsync/gui/frontends/hpcexplorer11/synchronization.py:195
+#: classicsync/gui/common/app_manager.py:129 classicsync/gui/common/backup_dialogs.py:275 classicsync/gui/common/device_browser.py:39 classicsync/gui/frontends/ceservices22/activesync.py:239 classicsync/gui/frontends/ceservices22/mobile_devices.py:82 classicsync/gui/frontends/ceservices22/sync_status.py:153 classicsync/gui/frontends/hpcexplorer11/explorer.py:99 classicsync/gui/frontends/hpcexplorer11/synchronization.py:195
 msgid "Name"
 msgstr ""
 
@@ -2627,7 +2615,7 @@ msgstr ""
 msgid "Ne&w"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:409 classicsync/gui/frontends/ceservices22/mobile_devices.py:634 classicsync/gui/frontends/hpcexplorer11/browser.py:181
+#: classicsync/gui/common/device_browser.py:434 classicsync/gui/frontends/ceservices22/mobile_devices.py:634 classicsync/gui/frontends/hpcexplorer11/browser.py:183
 msgid "Ne&w Folder"
 msgstr ""
 
@@ -2643,7 +2631,7 @@ msgstr ""
 msgid "Network serial port (emulator)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:486 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/hpcexplorer11/commands.py:80
+#: classicsync/gui/common/device_browser.py:511 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/hpcexplorer11/commands.py:80
 msgid "New Folder"
 msgstr ""
 
@@ -2667,7 +2655,7 @@ msgstr ""
 msgid "No answer to the request to use {name}."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:630
+#: classicsync/gui/common/device_browser.py:687
 msgid "No files copied"
 msgstr ""
 
@@ -2967,7 +2955,7 @@ msgstr ""
 msgid "Outlook item {item} could not be opened: {error}"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:406 classicsync/gui/frontends/ceservices22/mobile_devices.py:261 classicsync/gui/frontends/ceservices22/mobile_devices.py:603 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/sync_status.py:275 classicsync/gui/frontends/hpcexplorer11/browser.py:181 classicsync/gui/frontends/hpcexplorer11/browser.py:191 classicsync/gui/frontends/hpcexplorer11/explorer.py:179 classicsync/gui/frontends/hpcexplorer11/tray.py:38
+#: classicsync/gui/common/device_browser.py:431 classicsync/gui/frontends/ceservices22/mobile_devices.py:261 classicsync/gui/frontends/ceservices22/mobile_devices.py:603 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/sync_status.py:275 classicsync/gui/frontends/hpcexplorer11/browser.py:183 classicsync/gui/frontends/hpcexplorer11/browser.py:193 classicsync/gui/frontends/hpcexplorer11/explorer.py:179 classicsync/gui/frontends/hpcexplorer11/tray.py:38
 msgid "P&roperties"
 msgstr ""
 
@@ -2979,7 +2967,7 @@ msgstr ""
 msgid "PNG (.png)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:57 classicsync/gui/common/device_browser.py:57
+#: classicsync/gui/common/device_browser.py:56 classicsync/gui/common/device_browser.py:56
 msgid "Palm PC"
 msgstr ""
 
@@ -3027,7 +3015,7 @@ msgstr ""
 msgid "Paste  (Ctrl+V)"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:272 classicsync/gui/frontends/ceservices22/mobile_devices.py:631 classicsync/gui/frontends/hpcexplorer11/browser.py:180 classicsync/gui/frontends/hpcexplorer11/explorer.py:183
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:272 classicsync/gui/frontends/ceservices22/mobile_devices.py:631 classicsync/gui/frontends/hpcexplorer11/browser.py:182 classicsync/gui/frontends/hpcexplorer11/explorer.py:183
 msgid "Paste &Shortcut"
 msgstr ""
 
@@ -3063,27 +3051,27 @@ msgstr ""
 msgid "Please wait while {product} locates your mobile device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:53
+#: classicsync/gui/common/device_browser.py:52
 msgid "Pocket Access Database"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:49
 msgid "Pocket Excel Template"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:48
 msgid "Pocket Excel Workbook"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:48
 msgid "Pocket Word Document"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:54
+#: classicsync/gui/common/device_browser.py:53
 msgid "Pocket Word Ink"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:48
 msgid "Pocket Word Template"
 msgstr ""
 
@@ -3111,7 +3099,7 @@ msgstr ""
 msgid "Preparing to synchronize %s ..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:554
+#: classicsync/gui/common/device_browser.py:579
 msgid "Preparing..."
 msgstr ""
 
@@ -3167,7 +3155,7 @@ msgstr ""
 msgid "Provider"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:411 classicsync/gui/frontends/ceservices22/mobile_devices.py:625
+#: classicsync/gui/common/device_browser.py:436 classicsync/gui/frontends/ceservices22/mobile_devices.py:625
 msgid "R&efresh"
 msgstr ""
 
@@ -3179,7 +3167,7 @@ msgstr ""
 msgid "Read-only"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:280
+#: classicsync/gui/common/device_browser.py:300 classicsync/gui/common/device_browser.py:662 classicsync/gui/common/device_browser.py:735
 msgid "Reading folder..."
 msgstr ""
 
@@ -3255,7 +3243,7 @@ msgstr ""
 msgid "Removing:  %s"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:404 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/mobile_devices.py:260 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+#: classicsync/gui/common/device_browser.py:429 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/mobile_devices.py:260 classicsync/gui/frontends/hpcexplorer11/browser.py:192 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
 msgid "Rena&me"
 msgstr ""
 
@@ -3531,7 +3519,7 @@ msgstr ""
 msgid "Sho&w ActiveSync Progress"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:51
+#: classicsync/gui/common/device_browser.py:50
 msgid "Shortcut"
 msgstr ""
 
@@ -3587,11 +3575,11 @@ msgstr ""
 msgid "Shows/hides the ActiveSync progress messages."
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:130 classicsync/gui/common/device_browser.py:36 classicsync/gui/frontends/hpcexplorer11/explorer.py:99
+#: classicsync/gui/common/app_manager.py:130 classicsync/gui/common/device_browser.py:39 classicsync/gui/frontends/hpcexplorer11/explorer.py:99
 msgid "Size"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:159 classicsync/gui/frontends/hpcexplorer11/properties.py:84
+#: classicsync/gui/common/device_browser.py:179 classicsync/gui/frontends/hpcexplorer11/properties.py:84
 msgid "Size:"
 msgstr ""
 
@@ -3911,7 +3899,7 @@ msgstr ""
 msgid "Synchronizing:  %d/%d %s."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:168 classicsync/gui/frontends/ceservices22/device_properties.py:69 classicsync/gui/frontends/hpcexplorer11/properties.py:15
+#: classicsync/gui/common/device_browser.py:188 classicsync/gui/frontends/ceservices22/device_properties.py:69 classicsync/gui/frontends/hpcexplorer11/properties.py:15
 msgid "System"
 msgstr ""
 
@@ -3935,7 +3923,7 @@ msgstr ""
 msgid "Tasks folder"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:51
+#: classicsync/gui/common/device_browser.py:50
 msgid "Text Document"
 msgstr ""
 
@@ -4059,11 +4047,11 @@ msgstr ""
 msgid "This device name is already in use.\r\n\r\nYou must enter a different name for your mobile device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:174
+#: classicsync/gui/common/device_browser.py:194
 msgid "This file is in ROM."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:661 classicsync/gui/common/device_browser.py:682
+#: classicsync/gui/common/device_browser.py:139
 msgid "This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?"
 msgstr ""
 
@@ -4143,7 +4131,7 @@ msgstr ""
 msgid "Tray Icon"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:53
+#: classicsync/gui/common/device_browser.py:52
 msgid "TrueType Font"
 msgstr ""
 
@@ -4151,7 +4139,7 @@ msgstr ""
 msgid "Turn on and connect your mobile device to the desktop computer using the serial cable.  Then click Start and Windows CE Services will automatically connect to your device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:37 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
+#: classicsync/gui/common/device_browser.py:40 classicsync/gui/frontends/hpcexplorer11/explorer.py:100
 msgid "Type"
 msgstr ""
 
@@ -4159,7 +4147,7 @@ msgstr ""
 msgid "Type the name of a package, a git+https:// address or the location of a project folder, or choose a .py or .whl file."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:157 classicsync/gui/frontends/hpcexplorer11/properties.py:73 classicsync/gui/frontends/hpcexplorer11/properties.py:82
+#: classicsync/gui/common/device_browser.py:177 classicsync/gui/frontends/hpcexplorer11/properties.py:73 classicsync/gui/frontends/hpcexplorer11/properties.py:82
 msgid "Type:"
 msgstr ""
 
@@ -4287,7 +4275,7 @@ msgstr ""
 msgid "Waiting to connect to H/PC..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:52
+#: classicsync/gui/common/device_browser.py:51
 msgid "Wave Sound"
 msgstr ""
 
@@ -4455,7 +4443,7 @@ msgstr ""
 msgid "by &Connection"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:72 classicsync/gui/frontends/ceservices22/sync_status.py:100 classicsync/gui/frontends/hpcexplorer11/browser.py:176 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:72 classicsync/gui/frontends/ceservices22/sync_status.py:100 classicsync/gui/frontends/hpcexplorer11/browser.py:178 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
 msgid "by &Date"
 msgstr ""
 
@@ -4463,7 +4451,7 @@ msgstr ""
 msgid "by &Description"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:71 classicsync/gui/frontends/ceservices22/mobile_devices.py:73 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:175 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:71 classicsync/gui/frontends/ceservices22/mobile_devices.py:73 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:177 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
 msgid "by &Name"
 msgstr ""
 
@@ -4475,11 +4463,11 @@ msgstr ""
 msgid "by &Total Memory"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:71 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:175 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:71 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:177 classicsync/gui/frontends/hpcexplorer11/explorer.py:185
 msgid "by &Type"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:72 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:176 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:72 classicsync/gui/frontends/ceservices22/sync_status.py:99 classicsync/gui/frontends/hpcexplorer11/browser.py:178 classicsync/gui/frontends/hpcexplorer11/explorer.py:186
 msgid "by Si&ze"
 msgstr ""
 
@@ -5237,19 +5225,19 @@ msgid_plural "{count} files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/gui/common/device_browser.py:651
+#: classicsync/gui/common/device_browser.py:619
 msgid "{count} replaced"
 msgid_plural "{count} replaced"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/gui/common/device_browser.py:652
+#: classicsync/gui/common/device_browser.py:620
 msgid "{count} saved under a new name"
 msgid_plural "{count} saved under new names"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/gui/common/device_browser.py:654
+#: classicsync/gui/common/device_browser.py:622
 msgid "{count} skipped"
 msgid_plural "{count} skipped"
 msgstr[0] ""
