@@ -106,5 +106,10 @@ class Frontend:
         from ..common.password import ask_device_password
         return ask_device_password(None, attempt, self.password_icon())
 
+    def show_file_conversion(self, parent):
+        from ..common.file_conversion import show_file_conversion
+        major = self.application.device_major_version(self.application.service.announcement)
+        show_file_conversion(parent, self.application, self.artwork, 1 if major == 1 else 2)
+
     def quit(self):
         self.application.quit()

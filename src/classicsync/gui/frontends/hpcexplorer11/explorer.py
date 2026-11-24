@@ -417,6 +417,8 @@ class ExplorerWindow(wx.Frame):
             self.frontend.show_backup_restore(self)
         elif identifier == ID_BACK_UP_NOW:
             self.frontend.back_up_now(self)
+        elif identifier == ID_FILE_CONVERSION:
+            self.frontend.show_file_conversion(self)
         elif identifier == ID_OPTIONS:
             with OptionsSheet(self, self.view_settings, self.apply_view_settings) as sheet:
                 sheet.ShowModal()

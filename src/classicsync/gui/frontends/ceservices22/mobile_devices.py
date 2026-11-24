@@ -103,7 +103,7 @@ HELP_TEXT = {
 }
 
 UNAVAILABLE = {
-    ID_FILE_CONVERSION, ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS,
+    ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS,
     ID_EXPLORE,
 } | {identifier for identifier, label in filter(None, WEB_ITEMS)}
 
@@ -693,6 +693,8 @@ class MobileDevicesWindow(wx.Frame):
             self.frontend.show_backup_restore(self)
         elif identifier == ID_BACK_UP_NOW:
             self.frontend.back_up_now(self)
+        elif identifier == ID_FILE_CONVERSION:
+            self.frontend.show_file_conversion(self)
         elif identifier == ID_SHOW_ERRORS:
             self.frontend.toggle_show_errors()
         elif identifier == ID_SHOW_PROGRESS:

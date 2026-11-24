@@ -4,7 +4,8 @@ from pathlib import Path
 
 import wx
 
-from ...convert import DESKTOP_DEFAULTS, FORMATS, ConversionError, converter, format_for_extension
+from ...convert import ConversionError, converter
+from ...convert.rules import DESKTOP_TO_DEVICE, DEVICE_TO_DESKTOP, desktop_conversion, device_conversion
 from ...i18n import N_, _, format_original, ngettext
 from ...rapi.client import RapiError
 from ...rapi.structures import (
@@ -127,28 +128,6 @@ def format_time(filetime):
     if not moment:
         return ""
     return moment.replace(tzinfo=timezone.utc).astimezone().strftime("%d/%m/%Y %H:%M")
-
-
-def desktop_conversion(name):
-    source = format_for_extension(os.path.splitext(name)[1])
-    if source not in DESKTOP_DEFAULTS:
-        return None
-    target = DESKTOP_DEFAULTS[source]
-    return source, target, os.path.splitext(name)[0] + FORMATS[target].extensions[0]
-
-
-AUTOMATIC_DEVICE_CONVERSIONS = {"docx": "pwd", "rtf": "pwd", "xlsx": "pxl"}
-AUTOMATIC_LEGACY_DEVICE_CONVERSIONS = {"bmp": "2bp", "png": "2bp"}
-
-
-def device_conversion(name, version=2):
-    source = format_for_extension(os.path.splitext(name)[1])
-    target = AUTOMATIC_DEVICE_CONVERSIONS.get(source)
-    if not target and version == 1:
-        target = AUTOMATIC_LEGACY_DEVICE_CONVERSIONS.get(source)
-    if not target:
-        return None
-    return source, target, os.path.splitext(name)[0] + FORMATS[target].extensions[0]
 
 
 class FileDrop(wx.FileDropTarget):
@@ -641,6 +620,10 @@ class DeviceBrowser(wx.SplitterWindow):
     def conversion_enabled(self):
         return getattr(self.application.settings, "convert_files", True)
 
+    def conversion_rules(self, direction):
+        settings = self.application.settings
+        return dict(getattr(settings, "device_to_desktop" if direction == DEVICE_TO_DESKTOP else "desktop_to_device", {}) or {})
+
     def device_version(self):
         major = self.application.device_major_version(self.application.service.announcement)
         return 1 if major == 1 else 2
@@ -686,9 +669,10 @@ class DeviceBrowser(wx.SplitterWindow):
 
     def download_tree(self, tree, target):
         convert = self.conversion_enabled()
+        rules = self.conversion_rules(DEVICE_TO_DESKTOP)
 
         def destination(relative):
-            plan = desktop_conversion(relative[-1]) if convert and relative in tree.modified else None
+            plan = desktop_conversion(relative[-1], rules) if convert and relative in tree.modified else None
             return relative[:-1] + (plan[2] if plan else relative[-1],)
 
         def existing_file(relative):
@@ -719,7 +703,7 @@ class DeviceBrowser(wx.SplitterWindow):
 
         async def download(client, source, destination_path, progress):
             data = await client.read_file_contents(source, progress=progress)
-            conversion_plan = desktop_conversion(source.rsplit("\\", 1)[-1]) if convert else None
+            conversion_plan = desktop_conversion(source.rsplit("\\", 1)[-1], rules) if convert else None
             if conversion_plan:
                 try:
                     conversion = converter(conversion_plan[0], conversion_plan[1])(data)
@@ -764,9 +748,10 @@ class DeviceBrowser(wx.SplitterWindow):
     def upload_tree(self, tree, destination_folder, existing):
         convert = self.conversion_enabled()
         version = self.device_version()
+        rules = self.conversion_rules(DESKTOP_TO_DEVICE)
 
         def destination(relative):
-            plan = device_conversion(relative[-1], version) if convert and relative in tree.modified else None
+            plan = device_conversion(relative[-1], version, rules) if convert and relative in tree.modified else None
             return relative[:-1] + (plan[2] if plan else relative[-1],)
 
         def existing_file(relative):
@@ -795,7 +780,7 @@ class DeviceBrowser(wx.SplitterWindow):
 
         async def send(client, source, destination_path, progress):
             data = Path(source).read_bytes()
-            conversion_plan = device_conversion(Path(source).name, version) if convert else None
+            conversion_plan = device_conversion(Path(source).name, version, rules) if convert else None
             if conversion_plan:
                 conversion = converter(conversion_plan[0], conversion_plan[1])(data, version=version)
                 data = conversion.data

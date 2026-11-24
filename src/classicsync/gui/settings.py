@@ -23,6 +23,8 @@ class Settings:
     language: str = ""
     naming: str = "classicsync"
     convert_files: bool = True
+    device_to_desktop: dict = field(default_factory=dict)
+    desktop_to_device: dict = field(default_factory=dict)
     last_frontend: str = ""
     last_upload_folder: str = ""
     last_download_folder: str = ""

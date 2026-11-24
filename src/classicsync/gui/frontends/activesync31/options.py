@@ -124,7 +124,8 @@ class RulesPage(wx.Panel):
         page_icon(self, frontend.artwork, 6102, 12, 131)
         place(self, wx.StaticText, 45, 131, 187, 24, _("Set how files will be converted when they are copied, moved, or synchronized "
               "between this computer and your mobile device."))
-        place(self, wx.Button, 152, 157, 82, 14, _("Conversion &Settings...")).Enable(False)
+        conversion = place(self, wx.Button, 152, 157, 82, 14, _("Conversion &Settings..."))
+        conversion.Bind(wx.EVT_BUTTON, lambda event: self.frontend.show_file_conversion(self))
         self.open_on_connect = place(self, wx.CheckBox, 7, 183, 233, 12,
                                      rebrand(_("&Open ActiveSync when my mobile device connects."), "activesync31"))
         self.open_on_connect.SetValue(frontend.settings.open_on_connect)
