@@ -170,6 +170,10 @@ class Artwork:
             return [wx.Bitmap(image.GetSubImage(wx.Rect(index * size, 0, size, image.GetHeight()))) for index in range(count)]
         return fallback() if fallback else []
 
+    def sound_path(self, name):
+        path = self.path(".", name)
+        return path if path.exists() else None
+
     def icon_bundle(self, module, number):
         def load():
             path = self.path(module, f"group_icon_{number}.ico")

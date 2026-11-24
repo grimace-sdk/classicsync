@@ -1,4 +1,6 @@
 import os
+import tempfile
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -15,6 +17,7 @@ from ...rapi.structures import (
 from .file_icons import FileIcons
 from .icon_grid import ItemListView
 from .layout import dialog_size, place
+from .printing import print_file
 from .replace_dialog import FileFacts, ReplacePrompt
 from .transfers import (
     REPLACE_CANCEL, REPLACE_OVERWRITE, TransferTree, copy_name, device_join, device_moment, device_tree, local_moment, local_tree,
@@ -961,6 +964,49 @@ class DeviceBrowser(wx.SplitterWindow):
         if self.clipboard:
             mode, source_folder, entries = self.clipboard
             self.create_shortcuts([(source_folder, entry) for entry in entries])
+
+    def print_selected(self, entries=None):
+        entries = [entry for entry in (entries if entries is not None else self.selected_entries()) if not entry.is_directory]
+        if not entries:
+            return
+        folder = Path(tempfile.mkdtemp(prefix="classicsync-print-"))
+        convert = self.conversion_enabled()
+        rules = self.conversion_rules(DEVICE_TO_DESKTOP)
+        jobs = []
+        for entry in entries:
+            plan = desktop_conversion(entry.name, rules) if convert else None
+            jobs.append((join(self.folder, entry.name), folder / (plan[2] if plan else entry.name), entry.size))
+        fetched = []
+
+        async def fetch(client, source, destination_path, progress):
+            data = await client.read_file_contents(source, progress=progress)
+            plan = desktop_conversion(source.rsplit("\\", 1)[-1], rules) if convert else None
+            if plan:
+                try:
+                    data = converter(plan[0], plan[1])(data).data
+                except (ConversionError, ValueError):
+                    destination_path = destination_path.with_name(source.rsplit("\\", 1)[-1])
+            destination_path.write_bytes(data)
+            fetched.append(destination_path)
+
+        def report_failure(path):
+            if self:
+                wx.MessageBox(format_original(_("Cannot print file '%s'. Check to make sure enough Windows system resources are available "
+                                                "and that the application is installed correctly."), path.name),
+                              _("Print Failure"), wx.OK | wx.ICON_ERROR, self)
+
+        def print_all(paths):
+            for path in paths:
+                try:
+                    print_file(path)
+                except OSError:
+                    wx.CallAfter(report_failure, path)
+
+        def finished(count):
+            if count is not None and fetched:
+                threading.Thread(target=print_all, args=(list(fetched),), name="classicsync-print", daemon=True).start()
+
+        self._transfer(_("Copying..."), jobs, fetch, finished)
 
     def device_disconnected(self):
         self.connected = False

@@ -21,8 +21,6 @@ ANIMATION_FROM_DEVICE = 148
 ANIMATION_DEVICE_COPY = 303
 ANIMATION_DEVICE_MOVE = 304
 
-CONNECT_SOUND = "pegconn.wav"
-DISCONNECT_SOUND = "pegdisc.wav"
 
 VIEW_GLYPHS = ["large", "small", "list", "details"]
 
@@ -130,6 +128,3 @@ class HpcExplorerArtwork(Artwork):
     def state_bitmap(self, state, size=32):
         return icon_bitmap(self.state_icon(state, size))
 
-    def sound_path(self, name):
-        path = self.path(".", name)
-        return path if path.exists() else None

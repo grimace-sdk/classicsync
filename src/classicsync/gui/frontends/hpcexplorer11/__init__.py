@@ -11,7 +11,7 @@ from ...common.layout import dialog_size, place
 from ...common.sync_runner import EVENT_FAILED, EVENT_FINISHED, EVENT_PROGRESS, EVENT_STARTED, EVENT_STOPPED
 from ...service import STATE_CONNECTED, STATE_CONNECTING
 from ..base import Frontend
-from .artwork import CONNECT_SOUND, DISCONNECT_SOUND, HpcExplorerArtwork
+from .artwork import HpcExplorerArtwork
 from .communications import CommunicationsSheet
 from .explorer import ExplorerWindow
 from .synchronization import SynchronizationManagerSheet, SynchronizationProgressDialog, overall_status, status_bar_text
@@ -103,7 +103,7 @@ class HpcExplorerFrontend(Frontend):
 
     def on_state(self, state, announcement, error):
         self._update_connecting_dialog(state)
-        self._play_transition_sound(state)
+        self.play_transition_sound(state)
         self.previous_state = state
         if self.tray:
             self.tray.update_state(state)
@@ -259,22 +259,6 @@ class HpcExplorerFrontend(Frontend):
         if self.connecting_dialog:
             self.connecting_dialog.Destroy()
             self.connecting_dialog = None
-
-    def _play_transition_sound(self, state):
-        was_connected = self.previous_state == STATE_CONNECTED
-        if (state == STATE_CONNECTED) == was_connected:
-            return
-        path = self.artwork.sound_path(CONNECT_SOUND if state == STATE_CONNECTED else DISCONNECT_SOUND)
-        if path:
-            sounds = getattr(self, "sounds", None)
-            if sounds is None:
-                sounds = self.sounds = {}
-            sound = sounds.get(path)
-            if sound is None:
-                sound = sounds[path] = wx.adv.Sound(str(path))
-            if sound.IsOk():
-                wx.adv.Sound.Stop()
-                sound.Play(wx.adv.SOUND_ASYNC)
 
     def show_main_window(self):
         if not self.explorer_window:

@@ -2,6 +2,10 @@ import wx
 import wx.adv
 
 from ...i18n import _
+from ..service import STATE_CONNECTED
+
+CONNECT_SOUND = "pegconn.wav"
+DISCONNECT_SOUND = "pegdisc.wav"
 
 
 class Frontend:
@@ -110,6 +114,24 @@ class Frontend:
         from ..common.file_conversion import show_file_conversion
         major = self.application.device_major_version(self.application.service.announcement)
         show_file_conversion(parent, self.application, self.artwork, 1 if major == 1 else 2)
+
+    def play_transition_sound(self, state):
+        was_connected = getattr(self, "sound_state", None) == STATE_CONNECTED
+        self.sound_state = state
+        if (state == STATE_CONNECTED) == was_connected or self.artwork is None:
+            return
+        path = self.artwork.sound_path(CONNECT_SOUND if state == STATE_CONNECTED else DISCONNECT_SOUND)
+        if not path:
+            return
+        sounds = getattr(self, "sounds", None)
+        if sounds is None:
+            sounds = self.sounds = {}
+        sound = sounds.get(path)
+        if sound is None:
+            sound = sounds[path] = wx.adv.Sound(str(path))
+        if sound.IsOk():
+            wx.adv.Sound.Stop()
+            sound.Play(wx.adv.SOUND_ASYNC)
 
     def quit(self):
         self.application.quit()

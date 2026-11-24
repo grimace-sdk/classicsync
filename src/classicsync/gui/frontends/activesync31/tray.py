@@ -46,7 +46,9 @@ class TrayIcon(wx.adv.TaskBarIcon):
         menu.Append(ID_SYNCHRONIZE, _("&Synchronize")).Enable(connected and not syncing)
         menu.Append(ID_STOP, _("Sto&p")).Enable(syncing)
         menu.AppendSeparator()
-        menu.Append(ID_RESOLVE, _("Resolve &items...")).Enable(False)
+        sync = self.application.sync
+        resolvable = connected and not syncing and sync.partnership() is not None and bool(sync.unresolved_items())
+        menu.Append(ID_RESOLVE, _("Resolve &items...")).Enable(resolvable)
         menu.AppendSeparator()
         menu.Append(ID_CONNECTION_SETTINGS, _("Co&nnection Settings..."))
         menu.AppendSeparator()
@@ -64,6 +66,8 @@ class TrayIcon(wx.adv.TaskBarIcon):
             self.application.sync.start()
         elif identifier == ID_STOP:
             self.application.sync.stop()
+        elif identifier == ID_RESOLVE:
+            self.application.show_resolve_items(None)
         elif identifier == ID_CONNECTION_SETTINGS:
             self.application.show_connection_settings(None)
         elif identifier == ID_EXPLORE:

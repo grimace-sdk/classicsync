@@ -94,6 +94,7 @@ class CeServicesFrontend(Frontend):
             super().stop()
 
     def on_state(self, state, announcement, error):
+        self.play_transition_sound(state)
         if state == STATE_CONNECTED and self.settings.open_on_connect and not self.version_one_connected():
             self.show_main_window()
         if self.tray:

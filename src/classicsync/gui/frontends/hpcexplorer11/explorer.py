@@ -481,6 +481,8 @@ class ExplorerWindow(wx.Frame):
             self.paste()
         elif identifier == ID_PASTE_SHORTCUT:
             browser.paste_shortcut()
+        elif identifier == ID_PRINT:
+            browser.print_selected()
         elif identifier == ID_CREATE_SHORTCUT:
             browser.create_shortcut_selected()
         elif identifier == ID_CONTEXT_MENU:
@@ -544,6 +546,8 @@ class ExplorerWindow(wx.Frame):
             event.Enable(self.can_paste())
         elif identifier == ID_PASTE_SHORTCUT:
             event.Enable(self.browser is not None and self.clipboard is not None)
+        elif identifier == ID_PRINT:
+            event.Enable(self.browser is not None and any(not entry.is_directory for entry in self.browser.selected_entries()))
         elif identifier in (ID_OPEN, ID_CUT, ID_COPY, ID_CREATE_SHORTCUT, ID_DELETE, ID_RENAME, ID_PROPERTIES):
             event.Enable(self.selection_allows(identifier))
 

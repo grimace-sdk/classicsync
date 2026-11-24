@@ -179,8 +179,18 @@ class NewPartnershipWizard(wx.Dialog):
             self.types.CheckItem(index, enabled)
         place(body, wx.StaticText, 24, 120, 221, 18, _("To find out more about and to customize what gets synchronized, click "
               "on that information type in the list and then click Settings."))
-        place(body, wx.Button, 255, 120, 48, 14, _("&Settings...")).Enable(False)
+        self.type_settings = place(body, wx.Button, 255, 120, 48, 14, _("&Settings..."))
+        self.type_settings.Enable(False)
+        self.type_settings.Bind(wx.EVT_BUTTON, self.on_type_settings)
+        self.types.Bind(wx.EVT_LIST_ITEM_SELECTED, lambda event: self.type_settings.Enable(True))
+        self.types.Bind(wx.EVT_LIST_ITEM_DESELECTED, lambda event: self.type_settings.Enable(False))
         return page
+
+    def on_type_settings(self, event):
+        from ...common.plugin_settings import show_type_settings
+        index = self.types.GetFirstSelected()
+        if index >= 0:
+            show_type_settings(self, self.frontend.sync, self.object_types[index][0].key)
 
     def _build_complete(self):
         page = self._exterior(_("Setup Complete"))

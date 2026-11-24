@@ -71,6 +71,7 @@ class ActiveSyncFrontend(Frontend):
             super().stop()
 
     def on_state(self, state, announcement, error):
+        self.play_transition_sound(state)
         if state == STATE_CONNECTED:
             if self.settings.open_on_connect:
                 self.show_main_window()
