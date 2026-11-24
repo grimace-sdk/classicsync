@@ -24,6 +24,8 @@ class Settings:
     naming: str = "classicsync"
     convert_files: bool = True
     last_frontend: str = ""
+    last_upload_folder: str = ""
+    last_download_folder: str = ""
     window_rect: list = field(default_factory=list)
     saved_passwords: dict = field(default_factory=dict)
 

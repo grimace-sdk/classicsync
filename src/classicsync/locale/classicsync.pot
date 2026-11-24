@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-24 12:54+0000\n"
+"POT-Creation-Date: 2026-11-24 15:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -57,11 +57,11 @@ msgstr ""
 msgid " You may choose to skip these files; however, they will not be correctly restored on your device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:146
+#: classicsync/gui/common/device_browser.py:159
 msgid "%1 (%2!d! bytes)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:135 classicsync/gui/frontends/ceservices22/device_properties.py:83
+#: classicsync/gui/common/device_browser.py:148 classicsync/gui/frontends/ceservices22/device_properties.py:83
 msgid "%1 Properties"
 msgstr ""
 
@@ -69,11 +69,11 @@ msgstr ""
 msgid "%1!d! items not synchronized"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:292 classicsync/gui/common/device_browser.py:336 classicsync/gui/frontends/ceservices22/mobile_devices.py:464
+#: classicsync/gui/common/device_browser.py:305 classicsync/gui/common/device_browser.py:349 classicsync/gui/frontends/ceservices22/mobile_devices.py:464
 msgid "%1!d! object(s)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:334 classicsync/gui/frontends/ceservices22/mobile_devices.py:463
+#: classicsync/gui/common/device_browser.py:347 classicsync/gui/frontends/ceservices22/mobile_devices.py:463
 msgid "%1!d! object(s) selected"
 msgstr ""
 
@@ -161,7 +161,7 @@ msgstr ""
 msgid "%s Connected, %s"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:85
+#: classicsync/gui/common/device_browser.py:89
 msgid "%s File"
 msgstr ""
 
@@ -173,11 +173,11 @@ msgstr ""
 msgid "%s Properties"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:90
+#: classicsync/gui/common/device_browser.py:94
 msgid "%s bytes"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:91
+#: classicsync/gui/common/device_browser.py:95
 msgid "%sKB"
 msgstr ""
 
@@ -293,11 +293,11 @@ msgstr ""
 msgid "&Copy\tCtrl+C"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:387
+#: classicsync/gui/common/device_browser.py:400
 msgid "&Copy to This Computer..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:390 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+#: classicsync/gui/common/device_browser.py:403 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:643 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
 msgid "&Delete"
 msgstr ""
 
@@ -421,6 +421,10 @@ msgstr ""
 msgid "&Invert Selection"
 msgstr ""
 
+#: classicsync/gui/common/device_browser.py:663
+msgid "&Keep Both"
+msgstr ""
+
 #: classicsync/gui/common/preferences.py:31
 msgid "&Language:"
 msgstr ""
@@ -477,7 +481,7 @@ msgstr ""
 msgid "&Only while the Mobile Devices window is open (I may need to use my COM port for another purpose)."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:385 classicsync/gui/frontends/ceservices22/mobile_devices.py:251 classicsync/gui/frontends/ceservices22/mobile_devices.py:597 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/hpcexplorer11/browser.py:186 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
+#: classicsync/gui/common/device_browser.py:398 classicsync/gui/frontends/ceservices22/mobile_devices.py:251 classicsync/gui/frontends/ceservices22/mobile_devices.py:597 classicsync/gui/frontends/ceservices22/mobile_devices.py:640 classicsync/gui/frontends/hpcexplorer11/browser.py:186 classicsync/gui/frontends/hpcexplorer11/explorer.py:177
 msgid "&Open"
 msgstr ""
 
@@ -537,7 +541,7 @@ msgstr ""
 msgid "&Provider..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:154
+#: classicsync/gui/common/device_browser.py:167
 msgid "&Read-only"
 msgstr ""
 
@@ -555,6 +559,10 @@ msgstr ""
 
 #: classicsync/gui/common/app_manager.py:145
 msgid "&Remove..."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:663
+msgid "&Replace"
 msgstr ""
 
 #: classicsync/gui/common/conflicts.py:182
@@ -597,7 +605,7 @@ msgstr ""
 msgid "&Show all files"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/backup.py:159
+#: classicsync/gui/common/device_browser.py:663 classicsync/gui/frontends/hpcexplorer11/backup.py:159
 msgid "&Skip"
 msgstr ""
 
@@ -705,7 +713,7 @@ msgstr ""
 msgid ".DRV     (Device driver)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:90
+#: classicsync/gui/common/device_browser.py:94
 msgid "1 byte"
 msgstr ""
 
@@ -721,7 +729,7 @@ msgstr ""
 msgid "1 item out-of-date."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:48
+#: classicsync/gui/common/device_browser.py:52
 msgid "2bp Image"
 msgstr ""
 
@@ -749,7 +757,7 @@ msgstr ""
 msgid "A backup is in progress. Please try again later."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:484
+#: classicsync/gui/common/device_browser.py:508
 msgid "A file name cannot contain any of the following characters: \\ / : * ? \" < > |"
 msgstr ""
 
@@ -777,7 +785,7 @@ msgstr ""
 msgid "A&utomatically synchronize upon connecting."
 msgstr ""
 
-#: classicsync/cli.py:166
+#: classicsync/cli.py:184
 msgid "AC"
 msgstr ""
 
@@ -933,7 +941,7 @@ msgstr ""
 msgid "An system error has prevented Microsoft ActiveSync from setting up a partnership between your mobile device and this computer.\n\nTo set up a partnership, disconnect your device, restart Windows on this computer, and then reconnect your device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:46
+#: classicsync/gui/common/device_browser.py:50
 msgid "Application"
 msgstr ""
 
@@ -941,7 +949,7 @@ msgstr ""
 msgid "Application Downloading Complete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:46
+#: classicsync/gui/common/device_browser.py:50
 msgid "Application Extension"
 msgstr ""
 
@@ -973,7 +981,7 @@ msgstr ""
 msgid "Appointments that ended more than this many days ago are not synchronized."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:155
+#: classicsync/gui/common/device_browser.py:168
 msgid "Ar&chive"
 msgstr ""
 
@@ -981,11 +989,11 @@ msgstr ""
 msgid "Archive"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:502
+#: classicsync/gui/common/device_browser.py:526
 msgid "Are you sure you want to delete '{name}'?"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:504
+#: classicsync/gui/common/device_browser.py:528
 msgid "Are you sure you want to delete these items?"
 msgstr ""
 
@@ -1005,7 +1013,7 @@ msgstr ""
 msgid "Arranges the icons automatically."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:153 classicsync/gui/frontends/hpcexplorer11/properties.py:92
+#: classicsync/gui/common/device_browser.py:166 classicsync/gui/frontends/hpcexplorer11/properties.py:92
 msgid "Attributes:"
 msgstr ""
 
@@ -1209,7 +1217,7 @@ msgstr ""
 msgid "Bitmap (.bmp)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:48
+#: classicsync/gui/common/device_browser.py:52
 msgid "Bitmap Image"
 msgstr ""
 
@@ -1229,7 +1237,7 @@ msgstr ""
 msgid "COM port is not available"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:48
+#: classicsync/gui/common/device_browser.py:52
 msgid "Cabinet File"
 msgstr ""
 
@@ -1445,7 +1453,7 @@ msgstr ""
 msgid "Computer"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:54
 msgid "Configuration Settings"
 msgstr ""
 
@@ -1457,15 +1465,15 @@ msgstr ""
 msgid "Confirm Backup Cancel"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:505
+#: classicsync/gui/common/device_browser.py:529
 msgid "Confirm Delete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:505
+#: classicsync/gui/common/device_browser.py:529
 msgid "Confirm File Delete"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:627 classicsync/gui/frontends/hpcexplorer11/browser.py:220
+#: classicsync/gui/common/device_browser.py:662 classicsync/gui/common/device_browser.py:683 classicsync/gui/frontends/hpcexplorer11/browser.py:220
 msgid "Confirm File Replace"
 msgstr ""
 
@@ -1601,7 +1609,7 @@ msgstr ""
 msgid "Converted spreadsheets"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:650
+#: classicsync/gui/common/device_browser.py:706
 msgid "Converted with changes: {details}"
 msgstr ""
 
@@ -1609,7 +1617,7 @@ msgstr ""
 msgid "Converts and prints the selected item."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:606
+#: classicsync/gui/common/device_browser.py:649
 msgid "Copied {count} file to {target}"
 msgid_plural "Copied {count} files to {target}"
 msgstr[0] ""
@@ -1627,7 +1635,7 @@ msgstr ""
 msgid "Copy  (Ctrl+C)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:395 classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/mobile_devices.py:632
+#: classicsync/gui/common/device_browser.py:408 classicsync/gui/frontends/ceservices22/mobile_devices.py:264 classicsync/gui/frontends/ceservices22/mobile_devices.py:632
 msgid "Copy &Files Here..."
 msgstr ""
 
@@ -1663,19 +1671,19 @@ msgstr ""
 msgid "Copy selected items to this computer"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:456
+#: classicsync/gui/common/device_browser.py:476
 msgid "Copy to Mobile Device"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:580
+#: classicsync/gui/common/device_browser.py:605
 msgid "Copy to which folder on this computer?"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:548
+#: classicsync/gui/common/device_browser.py:572
 msgid "Copying '{name}'"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:609 classicsync/gui/common/device_browser.py:652 classicsync/gui/frontends/hpcexplorer11/browser.py:237 classicsync/gui/frontends/hpcexplorer11/browser.py:247
+#: classicsync/gui/common/device_browser.py:658 classicsync/gui/common/device_browser.py:708 classicsync/gui/frontends/hpcexplorer11/browser.py:237 classicsync/gui/frontends/hpcexplorer11/browser.py:247
 msgid "Copying..."
 msgstr ""
 
@@ -1891,7 +1899,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:656 classicsync/gui/frontends/ceservices22/mobile_devices.py:419
+#: classicsync/gui/common/device_browser.py:712 classicsync/gui/frontends/ceservices22/mobile_devices.py:419
 msgid "Disconnected"
 msgstr ""
 
@@ -2111,7 +2119,7 @@ msgstr ""
 msgid "Favorites: {url} is not a web page ({type})"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:85
+#: classicsync/gui/common/device_browser.py:89
 msgid "File"
 msgstr ""
 
@@ -2127,7 +2135,7 @@ msgstr ""
 msgid "File Conversion"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:81
+#: classicsync/gui/common/device_browser.py:85
 msgid "File Folder"
 msgstr ""
 
@@ -2159,15 +2167,15 @@ msgstr ""
 msgid "Folders can't be copied on the H/PC yet; only the selected files will be copied."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:614
+#: classicsync/gui/common/device_browser.py:670
 msgid "Folders can't be copied to the device yet; only the files will be copied."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:576
+#: classicsync/gui/common/device_browser.py:600
 msgid "Folders can't be copied to this computer yet; open the folder and select its files."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49 classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:53 classicsync/gui/common/device_browser.py:53
 msgid "Font file"
 msgstr ""
 
@@ -2195,7 +2203,7 @@ msgstr ""
 msgid "Forward"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:294
+#: classicsync/gui/common/device_browser.py:307
 msgid "Free space: {size}"
 msgstr ""
 
@@ -2223,7 +2231,7 @@ msgstr ""
 msgid "Future appointments (days)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:138 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
+#: classicsync/gui/common/device_browser.py:151 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
 msgid "General"
 msgstr ""
 
@@ -2263,7 +2271,7 @@ msgstr ""
 msgid "H/PC Explorer Help &Topics"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:47 classicsync/gui/common/device_browser.py:47
+#: classicsync/gui/common/device_browser.py:51 classicsync/gui/common/device_browser.py:51
 msgid "HTML Document"
 msgstr ""
 
@@ -2271,11 +2279,11 @@ msgstr ""
 msgid "Handheld PC 1.0 Device Connected"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:54
 msgid "Help File"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:154
+#: classicsync/gui/common/device_browser.py:167
 msgid "Hi&dden"
 msgstr ""
 
@@ -2467,7 +2475,7 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:144 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
+#: classicsync/gui/common/device_browser.py:157 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
 msgid "Location:"
 msgstr ""
 
@@ -2551,7 +2559,7 @@ msgstr ""
 msgid "Modified"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:147 classicsync/gui/frontends/hpcexplorer11/properties.py:89
+#: classicsync/gui/common/device_browser.py:160 classicsync/gui/frontends/hpcexplorer11/properties.py:89
 msgid "Modified:"
 msgstr ""
 
@@ -2563,7 +2571,7 @@ msgstr ""
 msgid "Moving:  {name}"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:54
+#: classicsync/gui/common/device_browser.py:58
 msgid "My Handheld PC"
 msgstr ""
 
@@ -2571,7 +2579,7 @@ msgstr ""
 msgid "My Palm-size PC"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:53
+#: classicsync/gui/common/device_browser.py:57
 msgid "My Pocket PC"
 msgstr ""
 
@@ -2583,7 +2591,7 @@ msgstr ""
 msgid "N&o, I want to synchronize with two computers."
 msgstr ""
 
-#: classicsync/cli.py:375
+#: classicsync/cli.py:393
 msgid "NAND window {sectors} sectors of {size} bytes"
 msgstr ""
 
@@ -2619,7 +2627,7 @@ msgstr ""
 msgid "Ne&w"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:396 classicsync/gui/frontends/ceservices22/mobile_devices.py:634 classicsync/gui/frontends/hpcexplorer11/browser.py:181
+#: classicsync/gui/common/device_browser.py:409 classicsync/gui/frontends/ceservices22/mobile_devices.py:634 classicsync/gui/frontends/hpcexplorer11/browser.py:181
 msgid "Ne&w Folder"
 msgstr ""
 
@@ -2635,7 +2643,7 @@ msgstr ""
 msgid "Network serial port (emulator)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:462 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/hpcexplorer11/commands.py:80
+#: classicsync/gui/common/device_browser.py:486 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/activesync31/explore.py:26 classicsync/gui/frontends/hpcexplorer11/commands.py:80
 msgid "New Folder"
 msgstr ""
 
@@ -2657,6 +2665,10 @@ msgstr ""
 
 #: classicsync/sync/providers/macos/provider.py:123
 msgid "No answer to the request to use {name}."
+msgstr ""
+
+#: classicsync/gui/common/device_browser.py:630
+msgid "No files copied"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/main_window.py:274 classicsync/gui/frontends/activesync31/main_window.py:143 classicsync/gui/frontends/activesync31/main_window.py:253
@@ -2763,11 +2775,11 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: classicsync/cli.py:157
+#: classicsync/cli.py:175
 msgid "Object store: unavailable ({error})"
 msgstr ""
 
-#: classicsync/cli.py:155
+#: classicsync/cli.py:173
 msgid "Object store: {free} free of {total}"
 msgstr ""
 
@@ -2955,7 +2967,7 @@ msgstr ""
 msgid "Outlook item {item} could not be opened: {error}"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:393 classicsync/gui/frontends/ceservices22/mobile_devices.py:261 classicsync/gui/frontends/ceservices22/mobile_devices.py:603 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/sync_status.py:275 classicsync/gui/frontends/hpcexplorer11/browser.py:181 classicsync/gui/frontends/hpcexplorer11/browser.py:191 classicsync/gui/frontends/hpcexplorer11/explorer.py:179 classicsync/gui/frontends/hpcexplorer11/tray.py:38
+#: classicsync/gui/common/device_browser.py:406 classicsync/gui/frontends/ceservices22/mobile_devices.py:261 classicsync/gui/frontends/ceservices22/mobile_devices.py:603 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/sync_status.py:275 classicsync/gui/frontends/hpcexplorer11/browser.py:181 classicsync/gui/frontends/hpcexplorer11/browser.py:191 classicsync/gui/frontends/hpcexplorer11/explorer.py:179 classicsync/gui/frontends/hpcexplorer11/tray.py:38
 msgid "P&roperties"
 msgstr ""
 
@@ -2967,7 +2979,7 @@ msgstr ""
 msgid "PNG (.png)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:53 classicsync/gui/common/device_browser.py:53
+#: classicsync/gui/common/device_browser.py:57 classicsync/gui/common/device_browser.py:57
 msgid "Palm PC"
 msgstr ""
 
@@ -3051,27 +3063,27 @@ msgstr ""
 msgid "Please wait while {product} locates your mobile device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:53
 msgid "Pocket Access Database"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:46
+#: classicsync/gui/common/device_browser.py:50
 msgid "Pocket Excel Template"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:45
+#: classicsync/gui/common/device_browser.py:49
 msgid "Pocket Excel Workbook"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:45
+#: classicsync/gui/common/device_browser.py:49
 msgid "Pocket Word Document"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:50
+#: classicsync/gui/common/device_browser.py:54
 msgid "Pocket Word Ink"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:45
+#: classicsync/gui/common/device_browser.py:49
 msgid "Pocket Word Template"
 msgstr ""
 
@@ -3087,7 +3099,7 @@ msgstr ""
 msgid "Port resources are not available"
 msgstr ""
 
-#: classicsync/cli.py:168
+#: classicsync/cli.py:186
 msgid "Power: {source}, main battery {percent}"
 msgstr ""
 
@@ -3099,7 +3111,7 @@ msgstr ""
 msgid "Preparing to synchronize %s ..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:530
+#: classicsync/gui/common/device_browser.py:554
 msgid "Preparing..."
 msgstr ""
 
@@ -3127,7 +3139,7 @@ msgstr ""
 msgid "Processor Type:"
 msgstr ""
 
-#: classicsync/cli.py:152
+#: classicsync/cli.py:170
 msgid "Processor: {processor}, page size {page_size}"
 msgstr ""
 
@@ -3135,7 +3147,7 @@ msgstr ""
 msgid "Program description"
 msgstr ""
 
-#: classicsync/cli.py:160
+#: classicsync/cli.py:178
 msgid "Program memory: {free} free of {total}"
 msgstr ""
 
@@ -3155,7 +3167,7 @@ msgstr ""
 msgid "Provider"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:398 classicsync/gui/frontends/ceservices22/mobile_devices.py:625
+#: classicsync/gui/common/device_browser.py:411 classicsync/gui/frontends/ceservices22/mobile_devices.py:625
 msgid "R&efresh"
 msgstr ""
 
@@ -3167,7 +3179,7 @@ msgstr ""
 msgid "Read-only"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:267
+#: classicsync/gui/common/device_browser.py:280
 msgid "Reading folder..."
 msgstr ""
 
@@ -3243,7 +3255,7 @@ msgstr ""
 msgid "Removing:  %s"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:391 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/mobile_devices.py:260 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
+#: classicsync/gui/common/device_browser.py:404 classicsync/gui/frontends/ceservices22/mobile_devices.py:644 classicsync/gui/frontends/ceservices22/mobile_devices.py:260 classicsync/gui/frontends/hpcexplorer11/browser.py:190 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
 msgid "Rena&me"
 msgstr ""
 
@@ -3519,7 +3531,7 @@ msgstr ""
 msgid "Sho&w ActiveSync Progress"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:47
+#: classicsync/gui/common/device_browser.py:51
 msgid "Shortcut"
 msgstr ""
 
@@ -3579,7 +3591,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:146 classicsync/gui/frontends/hpcexplorer11/properties.py:84
+#: classicsync/gui/common/device_browser.py:159 classicsync/gui/frontends/hpcexplorer11/properties.py:84
 msgid "Size:"
 msgstr ""
 
@@ -3899,7 +3911,7 @@ msgstr ""
 msgid "Synchronizing:  %d/%d %s."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:155 classicsync/gui/frontends/ceservices22/device_properties.py:69 classicsync/gui/frontends/hpcexplorer11/properties.py:15
+#: classicsync/gui/common/device_browser.py:168 classicsync/gui/frontends/ceservices22/device_properties.py:69 classicsync/gui/frontends/hpcexplorer11/properties.py:15
 msgid "System"
 msgstr ""
 
@@ -3907,7 +3919,7 @@ msgstr ""
 msgid "System default"
 msgstr ""
 
-#: classicsync/cli.py:403
+#: classicsync/cli.py:421
 msgid "Talk to Windows CE 1.x-3.x devices."
 msgstr ""
 
@@ -3923,7 +3935,7 @@ msgstr ""
 msgid "Tasks folder"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:47
+#: classicsync/gui/common/device_browser.py:51
 msgid "Text Document"
 msgstr ""
 
@@ -4047,11 +4059,11 @@ msgstr ""
 msgid "This device name is already in use.\r\n\r\nYou must enter a different name for your mobile device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:161
+#: classicsync/gui/common/device_browser.py:174
 msgid "This file is in ROM."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:626
+#: classicsync/gui/common/device_browser.py:661 classicsync/gui/common/device_browser.py:682
 msgid "This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?"
 msgstr ""
 
@@ -4131,7 +4143,7 @@ msgstr ""
 msgid "Tray Icon"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:49
+#: classicsync/gui/common/device_browser.py:53
 msgid "TrueType Font"
 msgstr ""
 
@@ -4147,7 +4159,7 @@ msgstr ""
 msgid "Type the name of a package, a git+https:// address or the location of a project folder, or choose a .py or .whl file."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:144 classicsync/gui/frontends/hpcexplorer11/properties.py:73 classicsync/gui/frontends/hpcexplorer11/properties.py:82
+#: classicsync/gui/common/device_browser.py:157 classicsync/gui/frontends/hpcexplorer11/properties.py:73 classicsync/gui/frontends/hpcexplorer11/properties.py:82
 msgid "Type:"
 msgstr ""
 
@@ -4275,7 +4287,7 @@ msgstr ""
 msgid "Waiting to connect to H/PC..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:48
+#: classicsync/gui/common/device_browser.py:52
 msgid "Wave Sound"
 msgstr ""
 
@@ -4331,7 +4343,7 @@ msgstr ""
 msgid "Windows CE {version} (build {build})"
 msgstr ""
 
-#: classicsync/cli.py:150
+#: classicsync/cli.py:168
 msgid "Windows CE {version} build {build} ({platform})"
 msgstr ""
 
@@ -4423,7 +4435,7 @@ msgstr ""
 msgid "artwork directory (default: <data directory>/artwork)"
 msgstr ""
 
-#: classicsync/cli.py:166
+#: classicsync/cli.py:184
 msgid "battery"
 msgstr ""
 
@@ -4487,7 +4499,7 @@ msgstr ""
 msgid "choose the sync provider for a partnership"
 msgstr ""
 
-#: classicsync/cli.py:423 classicsync/cli_sync.py:166
+#: classicsync/cli.py:441 classicsync/cli_sync.py:166
 msgid "classicsync serve address (default {address})"
 msgstr ""
 
@@ -4503,15 +4515,15 @@ msgstr ""
 msgid "conflict policy, one of {policies}, for all types or one type"
 msgstr ""
 
-#: classicsync/cli.py:422 classicsync/cli_sync.py:164
+#: classicsync/cli.py:440 classicsync/cli_sync.py:164
 msgid "connect directly on this serial port or tcp:HOST:PORT instead of using 'serve'"
 msgstr ""
 
-#: classicsync/cli.py:414
+#: classicsync/cli.py:432
 msgid "connect once and report what the device sends"
 msgstr ""
 
-#: classicsync/cli.py:353 classicsync/cli.py:370 classicsync/cli.py:83 classicsync/cli.py:344 classicsync/cli.py:116
+#: classicsync/cli.py:371 classicsync/cli.py:388 classicsync/cli.py:83 classicsync/cli.py:362 classicsync/cli.py:134
 msgid "connected: {device}"
 msgstr ""
 
@@ -4523,11 +4535,11 @@ msgstr ""
 msgid "converted the existing {name} partnership (partner {partner})"
 msgstr ""
 
-#: classicsync/cli.py:430
+#: classicsync/cli.py:448
 msgid "copy a file from the device"
 msgstr ""
 
-#: classicsync/cli.py:433
+#: classicsync/cli.py:451
 msgid "copy a file to the device"
 msgstr ""
 
@@ -4535,7 +4547,7 @@ msgstr ""
 msgid "copying {percent}%"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:305
+#: classicsync/sync/plugin_install.py:304
 msgid "could not run {tool}: {error}"
 msgstr ""
 
@@ -4543,7 +4555,7 @@ msgstr ""
 msgid "could not start {program}: {error}"
 msgstr ""
 
-#: classicsync/cli.py:437
+#: classicsync/cli.py:455
 msgid "create a device folder"
 msgstr ""
 
@@ -4559,7 +4571,7 @@ msgstr ""
 msgid "delete a partnership from this computer"
 msgstr ""
 
-#: classicsync/cli.py:436
+#: classicsync/cli.py:454
 msgid "delete device files"
 msgstr ""
 
@@ -4579,15 +4591,15 @@ msgstr ""
 msgid "device closed the RAPI connection"
 msgstr ""
 
-#: classicsync/cli.py:399
+#: classicsync/cli.py:417
 msgid "device password, if it has one"
 msgstr ""
 
-#: classicsync/cli.py:121
+#: classicsync/cli.py:139
 msgid "disconnected"
 msgstr ""
 
-#: classicsync/cli.py:451
+#: classicsync/cli.py:469
 msgid "e.g. HKCU\\ControlPanel\\Comm"
 msgstr ""
 
@@ -4639,7 +4651,7 @@ msgstr ""
 msgid "hhpcex11.exe, WCES22-2.EXE or msasync.exe (or another copy of those installers)"
 msgstr ""
 
-#: classicsync/cli.py:407
+#: classicsync/cli.py:425
 msgid "hold the connection to a device and offer RAPI to other commands"
 msgstr ""
 
@@ -4679,7 +4691,7 @@ msgstr ""
 msgid "installed {name} {version}, providers: {providers}"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:410
+#: classicsync/sync/plugin_install.py:409
 msgid "installing {spec} needs uv or pip, and neither is available here. Install uv (https://docs.astral.sh/uv/), or install a .py file or a pure-Python wheel (.whl) of the plugin instead."
 msgstr ""
 
@@ -4703,7 +4715,7 @@ msgstr ""
 msgid "let wceload ask where to install instead of /noaskdest"
 msgstr ""
 
-#: classicsync/gui/service.py:194
+#: classicsync/gui/service.py:261
 msgid "link closed"
 msgstr ""
 
@@ -4715,15 +4727,15 @@ msgstr ""
 msgid "link did not come up"
 msgstr ""
 
-#: classicsync/cli.py:350
+#: classicsync/cli.py:368
 msgid "link up: desktop {desktop}, device {device}"
 msgstr ""
 
-#: classicsync/cli.py:429
+#: classicsync/cli.py:447
 msgid "list a device folder"
 msgstr ""
 
-#: classicsync/cli.py:456
+#: classicsync/cli.py:474
 msgid "list or dump object store databases"
 msgstr ""
 
@@ -4743,11 +4755,11 @@ msgstr ""
 msgid "list, create and delete partnerships"
 msgstr ""
 
-#: classicsync/cli.py:109
+#: classicsync/cli.py:127
 msgid "listening for a device on {port}; RAPI on {address}"
 msgstr ""
 
-#: classicsync/cli.py:409
+#: classicsync/cli.py:427
 msgid "local RAPI address (default {address})"
 msgstr ""
 
@@ -4767,11 +4779,11 @@ msgstr ""
 msgid "more than one partnership; choose one with --device: {names}"
 msgstr ""
 
-#: classicsync/cli.py:439
+#: classicsync/cli.py:457
 msgid "move or rename a device file"
 msgstr ""
 
-#: classicsync/cli.py:364
+#: classicsync/cli.py:382
 msgid "nand-dump talks to the device directly: give --port and --pc-connect"
 msgstr ""
 
@@ -4799,7 +4811,7 @@ msgstr ""
 msgid "no collection called {wanted!r} on {server} ({key}); found: {names}"
 msgstr ""
 
-#: classicsync/connection/desktop.py:60 classicsync/gui/service.py:236 classicsync/pcconnect/session.py:152 classicsync/pcconnect/session.py:156
+#: classicsync/connection/desktop.py:60 classicsync/gui/service.py:303 classicsync/pcconnect/session.py:152 classicsync/pcconnect/session.py:156
 msgid "no device connected"
 msgstr ""
 
@@ -4827,7 +4839,7 @@ msgstr ""
 msgid "no partnerships yet; run 'classicsync partnership create' with a device connected"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:467 classicsync/sync/plugin_install.py:484
+#: classicsync/sync/plugin_install.py:466 classicsync/sync/plugin_install.py:483
 msgid "no plugin called {name} was installed with 'classicsync plugin install'"
 msgstr ""
 
@@ -4915,7 +4927,7 @@ msgstr ""
 msgid "path not found"
 msgstr ""
 
-#: classicsync/cli.py:345
+#: classicsync/cli.py:363
 msgid "platform release: {release}"
 msgstr ""
 
@@ -4947,7 +4959,7 @@ msgstr ""
 msgid "provider: {provider} ({folder})"
 msgstr ""
 
-#: classicsync/cli.py:449
+#: classicsync/cli.py:467
 msgid "read and write the device registry"
 msgstr ""
 
@@ -4955,11 +4967,11 @@ msgstr ""
 msgid "read failed: {error}"
 msgstr ""
 
-#: classicsync/cli.py:381
+#: classicsync/cli.py:399
 msgid "reading sector {sector} of {total}"
 msgstr ""
 
-#: classicsync/cli.py:249
+#: classicsync/cli.py:267
 msgid "registry path must start with HKLM, HKCU, HKCR or HKU: {path}"
 msgstr ""
 
@@ -4975,7 +4987,7 @@ msgstr ""
 msgid "remove a program from the device with Unload.exe"
 msgstr ""
 
-#: classicsync/cli.py:438
+#: classicsync/cli.py:456
 msgid "remove an empty device folder"
 msgstr ""
 
@@ -4999,31 +5011,31 @@ msgstr ""
 msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
 msgstr ""
 
-#: classicsync/cli.py:446
+#: classicsync/cli.py:464
 msgid "save the whole NAND flash of a Casio BE-300 (with --port and --pc-connect)"
 msgstr ""
 
-#: classicsync/cli.py:387
+#: classicsync/cli.py:405
 msgid "saved {path}"
 msgstr ""
 
-#: classicsync/cli.py:398
+#: classicsync/cli.py:416
 msgid "seconds to wait for a device"
 msgstr ""
 
-#: classicsync/cli.py:408
+#: classicsync/cli.py:426
 msgid "serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP or tcp:HOST:PORT"
 msgstr ""
 
-#: classicsync/cli.py:393
+#: classicsync/cli.py:411
 msgid "serial speed (default 19200, or 115200 with --pc-connect)"
 msgstr ""
 
-#: classicsync/cli.py:445
+#: classicsync/cli.py:463
 msgid "set the device clock from this computer"
 msgstr ""
 
-#: classicsync/cli.py:410
+#: classicsync/cli.py:428
 msgid "set the device clock from this computer on connect"
 msgstr ""
 
@@ -5055,7 +5067,7 @@ msgstr ""
 msgid "sheet number to write to CSV (from 0)"
 msgstr ""
 
-#: classicsync/cli.py:428
+#: classicsync/cli.py:446
 msgid "show device version, memory and power"
 msgstr ""
 
@@ -5083,7 +5095,7 @@ msgstr ""
 msgid "skipped {message}"
 msgstr ""
 
-#: classicsync/cli.py:442
+#: classicsync/cli.py:460
 msgid "start a program on the device"
 msgstr ""
 
@@ -5091,7 +5103,7 @@ msgstr ""
 msgid "started \\Windows\\Unload.exe \"{name}\"; check the device screen"
 msgstr ""
 
-#: classicsync/cli.py:236
+#: classicsync/cli.py:254
 msgid "started process {process}"
 msgstr ""
 
@@ -5107,7 +5119,7 @@ msgstr ""
 msgid "synchronize only this type: files, contacts, calendar, tasks or mail (repeatable)"
 msgstr ""
 
-#: classicsync/cli.py:395
+#: classicsync/cli.py:413
 msgid "talk Casio PC Connect (BE-300) instead of ActiveSync; PORT 'usb' means usb:07cf:2002"
 msgstr ""
 
@@ -5151,7 +5163,7 @@ msgstr ""
 msgid "transport closed"
 msgstr ""
 
-#: classicsync/cli.py:71 classicsync/cli.py:166 classicsync/cli.py:167 classicsync/cli.py:345 classicsync/pcconnect/session.py:38 classicsync/pcconnect/session.py:39 classicsync/pcconnect/session.py:39
+#: classicsync/cli.py:71 classicsync/cli.py:184 classicsync/cli.py:185 classicsync/cli.py:363 classicsync/pcconnect/session.py:38 classicsync/pcconnect/session.py:39 classicsync/pcconnect/session.py:39
 msgid "unknown"
 msgstr ""
 
@@ -5159,7 +5171,7 @@ msgstr ""
 msgid "unknown setting {key}; known settings: {keys}"
 msgstr ""
 
-#: classicsync/cli.py:478
+#: classicsync/cli.py:496
 msgid "unrecognized arguments: {arguments}"
 msgstr ""
 
@@ -5171,7 +5183,11 @@ msgstr ""
 msgid "vCard version for new contacts"
 msgstr ""
 
-#: classicsync/cli.py:340 classicsync/cli.py:368 classicsync/cli.py:81
+#: classicsync/cli.py:117
+msgid "waiting for a USB device ({error})"
+msgstr ""
+
+#: classicsync/cli.py:358 classicsync/cli.py:386 classicsync/cli.py:81
 msgid "waiting for a device on {port}"
 msgstr ""
 
@@ -5218,6 +5234,24 @@ msgstr ""
 #: classicsync/install/cbea.py:52
 msgid "{count} file"
 msgid_plural "{count} files"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/gui/common/device_browser.py:651
+msgid "{count} replaced"
+msgid_plural "{count} replaced"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/gui/common/device_browser.py:652
+msgid "{count} saved under a new name"
+msgid_plural "{count} saved under new names"
+msgstr[0] ""
+msgstr[1] ""
+
+#: classicsync/gui/common/device_browser.py:654
+msgid "{count} skipped"
+msgid_plural "{count} skipped"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -5287,11 +5321,11 @@ msgstr ""
 msgid "{error}; check caldav_username and caldav_password"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:400
+#: classicsync/sync/plugin_install.py:399
 msgid "{file} defines no sync provider (a Provider subclass with a name)"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:398
+#: classicsync/sync/plugin_install.py:397
 msgid "{file} failed to load: {error}"
 msgstr ""
 
@@ -5391,7 +5425,7 @@ msgstr ""
 msgid "{name} was changed on the server meanwhile; it will be compared again at the next sync"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:486
+#: classicsync/sync/plugin_install.py:485
 msgid "{name} was installed from {spec}, which no longer exists; install it again from its new location"
 msgstr ""
 
@@ -5481,17 +5515,17 @@ msgid_plural "{size} bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli.py:135
+#: classicsync/cli.py:153
 msgid "{source} -> {destination} ({count} byte)"
 msgid_plural "{source} -> {destination} ({count} bytes)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/sync/plugin_install.py:388
+#: classicsync/sync/plugin_install.py:387
 msgid "{spec} has no {group} entry points, so it is not a classicsync plugin"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:308
+#: classicsync/sync/plugin_install.py:307
 msgid "{tool} could not install {spec}:\n{output}"
 msgstr ""
 
@@ -5513,26 +5547,26 @@ msgid_plural "{type}: {count} items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/sync/plugin_install.py:331
+#: classicsync/sync/plugin_install.py:330
 msgid "{wheel} contains an unsafe path: {path}"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:351
+#: classicsync/sync/plugin_install.py:350
 msgid "{wheel} contains compiled code; installing it needs uv or pip"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:338
+#: classicsync/sync/plugin_install.py:337
 msgid "{wheel} is built for a particular platform; installing it needs uv or pip"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:347
+#: classicsync/sync/plugin_install.py:346
 msgid "{wheel} is not a wheel: it has no .dist-info/METADATA"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:342
+#: classicsync/sync/plugin_install.py:341
 msgid "{wheel} is not a wheel: {error}"
 msgstr ""
 
-#: classicsync/sync/plugin_install.py:354
+#: classicsync/sync/plugin_install.py:353
 msgid "{wheel} needs {requirements}, and installing those needs uv or pip"
 msgstr ""

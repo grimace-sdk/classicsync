@@ -41,6 +41,10 @@ SORT_SIZE = 1
 SORT_TYPE = 2
 SORT_DATE = 3
 
+REPLACE_OVERWRITE = "replace"
+REPLACE_KEEP_BOTH = "keep both"
+REPLACE_SKIP = "skip"
+
 FILE_TYPES = {
     ".pwd": N_("Pocket Word Document"), ".pwt": N_("Pocket Word Template"), ".pxl": N_("Pocket Excel Workbook"),
     ".pxt": N_("Pocket Excel Template"), ".exe": N_("Application"), ".dll": N_("Application Extension"),
@@ -89,6 +93,15 @@ def format_size(size):
     if size < 1024:
         return format_original(_("%s bytes"), size) if size != 1 else _("1 byte")
     return format_original(_("%sKB"), f"{(size + 1023) // 1024:,}")
+
+
+def unused_path(path, taken=()):
+    counter = 2
+    candidate = path
+    while candidate.exists() or candidate in taken:
+        candidate = path.with_name(f"{path.stem} ({counter}){path.suffix}")
+        counter += 1
+    return candidate
 
 
 def format_time(filetime):
@@ -452,10 +465,21 @@ class DeviceBrowser(wx.SplitterWindow):
         with PropertiesDialog(self, entries[0], self.location_label()) as dialog:
             dialog.ShowModal()
 
+    def remember_folder(self, name, folder):
+        settings = self.application.settings
+        if getattr(settings, name, None) != str(folder):
+            setattr(settings, name, str(folder))
+            settings.save()
+
     def add_files_dialog(self):
-        with wx.FileDialog(self, _("Copy to Mobile Device"), style=wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST) as dialog:
+        start = getattr(self.application.settings, "last_upload_folder", "")
+        with wx.FileDialog(self, _("Copy to Mobile Device"), defaultDir=start,
+                           style=wx.FD_OPEN | wx.FD_MULTIPLE | wx.FD_FILE_MUST_EXIST) as dialog:
             if dialog.ShowModal() == wx.ID_OK:
-                self.upload(dialog.GetPaths())
+                paths = dialog.GetPaths()
+                if paths:
+                    self.remember_folder("last_upload_folder", Path(paths[0]).parent)
+                self.upload(paths)
 
     def new_folder(self):
         existing = {entry.name.lower() for entry in self.entries}
@@ -577,15 +601,34 @@ class DeviceBrowser(wx.SplitterWindow):
                           wx.OK | wx.ICON_INFORMATION, self)
             return
         if target is None:
-            with wx.DirDialog(self, _("Copy to which folder on this computer?"), str(Path.home() / "Desktop")) as dialog:
+            start = getattr(self.application.settings, "last_download_folder", "") or str(Path.home() / "Desktop")
+            with wx.DirDialog(self, _("Copy to which folder on this computer?"), start) as dialog:
                 if dialog.ShowModal() != wx.ID_OK:
                     return
                 target = Path(dialog.GetPath())
+            self.remember_folder("last_download_folder", target)
         convert = self.conversion_enabled()
         jobs = []
+        taken = set()
+        outcomes = {"replaced": 0, "renamed": 0, "skipped": 0}
         for entry in files:
             plan = desktop_conversion(entry.name) if convert else None
-            jobs.append((join(self.folder, entry.name), Path(target) / (plan[2] if plan else entry.name), entry.size))
+            destination = Path(target) / (plan[2] if plan else entry.name)
+            if destination.exists() or destination in taken:
+                choice = self.confirm_desktop_replace(destination.name)
+                if choice == REPLACE_SKIP:
+                    outcomes["skipped"] += 1
+                    continue
+                if choice == REPLACE_KEEP_BOTH:
+                    destination = unused_path(destination, taken)
+                    outcomes["renamed"] += 1
+                else:
+                    outcomes["replaced"] += 1
+            taken.add(destination)
+            jobs.append((join(self.folder, entry.name), destination, entry.size))
+        if not jobs:
+            self.on_status(_("No files copied"), 0)
+            return
         warnings = []
 
         async def download(client, source, destination, progress):
@@ -604,9 +647,22 @@ class DeviceBrowser(wx.SplitterWindow):
         def finished(count):
             if count:
                 message = ngettext("Copied {count} file to {target}", "Copied {count} files to {target}", count).format(count=count, target=target)
-                self.on_status(message + (" (" + "; ".join(warnings[:2]) + ")" if warnings else ""), 0)
+                details = [text for text in (
+                    ngettext("{count} replaced", "{count} replaced", outcomes["replaced"]).format(count=outcomes["replaced"]) if outcomes["replaced"] else "",
+                    ngettext("{count} saved under a new name", "{count} saved under new names", outcomes["renamed"]).format(count=outcomes["renamed"])
+                    if outcomes["renamed"] else "",
+                    ngettext("{count} skipped", "{count} skipped", outcomes["skipped"]).format(count=outcomes["skipped"]) if outcomes["skipped"] else "",
+                ) if text] + warnings[:2]
+                self.on_status(message + (" (" + "; ".join(details) + ")" if details else ""), 0)
 
         self._transfer(_("Copying..."), jobs, download, finished)
+
+    def confirm_desktop_replace(self, name):
+        with wx.MessageDialog(self, _("This folder already contains a file named '{name}'.\n\nWould you like to replace the existing file?")
+                              .format(name=name), _("Confirm File Replace"), wx.YES_NO | wx.CANCEL | wx.ICON_QUESTION) as dialog:
+            dialog.SetYesNoCancelLabels(_("&Replace"), _("&Keep Both"), _("&Skip"))
+            answer = dialog.ShowModal()
+        return {wx.ID_YES: REPLACE_OVERWRITE, wx.ID_NO: REPLACE_KEEP_BOTH}.get(answer, REPLACE_SKIP)
 
     def upload(self, filenames):
         paths = [Path(name) for name in filenames]
