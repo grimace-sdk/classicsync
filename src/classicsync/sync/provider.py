@@ -14,6 +14,17 @@ class ProviderContext:
             self.log(text)
 
 
+class ProviderError(Exception):
+    pass
+
+
+@dataclass
+class DeviceFolders:
+    folders: list
+    depth: int = 1
+    extensions: tuple = ()
+
+
 class Store:
     object_type = None
 
@@ -62,6 +73,9 @@ class Provider:
 
     def open_store(self, object_type):
         raise NotImplementedError
+
+    def device_folders(self, object_type):
+        return None
 
     def close(self):
         pass

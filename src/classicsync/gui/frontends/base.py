@@ -37,8 +37,9 @@ class Frontend:
 
     def stop(self):
         if self.tray:
-            self.tray.RemoveIcon()
-            self.tray.Destroy()
+            tray = self.tray
+            tray.RemoveIcon()
+            wx.CallAfter(tray.Destroy)
             self.tray = None
 
     def on_state(self, state, announcement, error):
@@ -53,6 +54,15 @@ class Frontend:
     def offer_partnership(self, announcement):
         pass
 
+    def backup_state_changed(self):
+        pass
+
+    def partnership_created(self):
+        pass
+
+    def run_automatic_backup(self):
+        pass
+
     def ask_first_sync(self, question):
         from ...sync import FIRST_SYNC_COMBINE
         return FIRST_SYNC_COMBINE
@@ -63,6 +73,7 @@ class Frontend:
                 wx.MessageBox(f"{failure_text}\n\n{error}" if error else failure_text, title, wx.OK | wx.ICON_ERROR)
                 return
             self.sync.start()
+            self.partnership_created()
         self.application.create_partnership(created, exclusive=exclusive)
 
     def prompt_for_conflicts(self, parent, wording):

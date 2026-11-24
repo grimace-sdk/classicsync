@@ -10,6 +10,7 @@ from .macos import set_application_name
 from ..rapi.client import HKEY_LOCAL_MACHINE, RapiError
 from ..sync import Partnership, create_partnership, delete_partnership, find_partnership, read_device_partners
 from ..sync.partners import clear_device_partner, rename_device
+from .common.backup import BackupRunner
 from .common.sync_runner import SyncRunner
 from .frontends import AUTOMATIC, DEFAULT_IDLE, available_frontends, frontend_for_version
 from .service import STATE_CONNECTED, DeviceService
@@ -44,6 +45,7 @@ class Application(wx.App):
         self.service.request_password = lambda announcement, attempt, reply: wx.CallAfter(self._ask_password, announcement, attempt, reply)
         self.service.start()
         self.sync = SyncRunner(self)
+        self.backup = BackupRunner(self)
         self.sync.add_listener(self._sync_event)
         self.switch_frontend(self.idle_frontend_key(), initial=True)
         return True
@@ -154,6 +156,7 @@ class Application(wx.App):
         self.frontend.on_details(announcement)
         if self.partnership:
             self.sync.start_on_connect()
+            self.backup.schedule_automatic()
         else:
             self.frontend.offer_partnership(announcement)
 

@@ -8,13 +8,13 @@ from .partners import (
     read_device_partners,
 )
 from .plugins import load_providers
-from .provider import Provider, ProviderContext, Store
+from .provider import DeviceFolders, Provider, ProviderContext, ProviderError, Store
 from .state import Partnership, SyncOptions
 
 __all__ = [
-    "BUILTIN_OBJECT_TYPES", "CALENDAR", "CONFLICT_POLICIES", "CONTACTS", "DevicePartners", "DeviceFile", "DeviceRecord",
+    "BUILTIN_OBJECT_TYPES", "CALENDAR", "CONFLICT_POLICIES", "CONTACTS", "DeviceFolders", "DevicePartners", "DeviceFile", "DeviceRecord",
     "FILES", "FIRST_SYNC_CHOICES", "FIRST_SYNC_COMBINE", "FIRST_SYNC_REPLACE", "FIRST_SYNC_SKIP", "FirstSync",
-    "NoPartnership", "ObjectType", "PartnerLookup", "Partnership", "PartnershipError", "Provider", "ProviderContext",
+    "NoPartnership", "ObjectType", "PartnerLookup", "Partnership", "PartnershipError", "Provider", "ProviderContext", "ProviderError",
     "RESOLUTION_CHOICES", "Store", "SyncAction", "SyncOptions", "SyncProgress", "SyncReport", "TASKS", "UnresolvedItem",
     "create_partnership", "delete_partnership", "find_partnership", "load_providers", "read_device_partners",
     "set_resolutions", "synchronize", "unresolved_items",

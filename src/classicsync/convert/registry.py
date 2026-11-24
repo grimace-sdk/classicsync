@@ -9,6 +9,8 @@ from .csv_format import read_csv, write_csv
 from .docx import read_docx, write_docx
 from .errors import ConversionError, Report
 from .html import read_html, write_html
+from .ods import read_ods, write_ods
+from .odt import read_odt, write_odt
 from .pocket_excel import read_pocket_excel, write_pocket_excel
 from .rtf_reader import read_rtf
 from .rtf_writer import write_pocket_word, write_rtf
@@ -67,6 +69,8 @@ FORMATS = {
                    lambda document, report, **options: write_html(document, report)),
     "docx": Format("docx", DOCUMENT, (".docx",), "Word document (Office Open XML)", False, reader_only(read_docx),
                    lambda document, report, **options: write_docx(document, report)),
+    "odt": Format("odt", DOCUMENT, (".odt",), "OpenDocument text", False, reader_only(read_odt),
+                  lambda document, report, **options: write_odt(document, report)),
     "pxl": Format("pxl", SPREADSHEET, (".pxl", ".pxt"), "Pocket Excel workbook or template", True,
                   reader_only(read_pocket_excel),
                   lambda workbook, report, version=2, **options: write_pocket_excel(workbook, report, version),
@@ -75,6 +79,8 @@ FORMATS = {
                   lambda workbook, report, sheet=0, **options: write_csv(workbook, report, sheet), ("sheet",)),
     "xlsx": Format("xlsx", SPREADSHEET, (".xlsx",), "Excel workbook (Office Open XML)", False, reader_only(read_xlsx),
                    lambda workbook, report, **options: write_xlsx(workbook, report)),
+    "ods": Format("ods", SPREADSHEET, (".ods",), "OpenDocument spreadsheet", False, reader_only(read_ods),
+                  lambda workbook, report, **options: write_ods(workbook, report)),
     "2bp": Format("2bp", IMAGE, (".2bp",), "Windows CE 2-bit grayscale bitmap", True, image_reader(read_bmp),
                   lambda bitmap, report, **options: write_2bp_reporting(bitmap, report)),
     "bmp": Format("bmp", IMAGE, (".bmp", ".dib"), "Windows bitmap", False, image_reader(read_bmp),
@@ -84,7 +90,7 @@ FORMATS = {
 }
 EXTENSIONS = {extension: name for name, format in FORMATS.items() for extension in format.extensions}
 DESKTOP_DEFAULTS = {"pwd": "docx", "pxl": "xlsx", "2bp": "png"}
-DEVICE_DEFAULTS = {"rtf": "pwd", "txt": "pwd", "html": "pwd", "docx": "pwd", "csv": "pxl", "xlsx": "pxl",
+DEVICE_DEFAULTS = {"rtf": "pwd", "txt": "pwd", "html": "pwd", "docx": "pwd", "odt": "pwd", "csv": "pxl", "xlsx": "pxl", "ods": "pxl",
                    "bmp": "2bp", "png": "2bp"}
 
 
@@ -125,6 +131,10 @@ def sniff_format(data):
             return "docx"
         if "xl/workbook.xml" in names:
             return "xlsx"
+        if "mimetype" in names:
+            mimetype = zipfile.ZipFile(io.BytesIO(data)).read("mimetype").strip()
+            return {b"application/vnd.oasis.opendocument.text": "odt",
+                    b"application/vnd.oasis.opendocument.spreadsheet": "ods"}.get(mimetype)
         return None
     if len(data) >= 5 and data[0] == 0x09 and data[3:5] == b"\x05\x00":
         return "pxl"

@@ -121,6 +121,17 @@ class ActiveSyncFrontend(Frontend):
         if partnership and self.service.announcement is announcement:
             self.sync.start()
 
+    def can_synchronize(self):
+        return self.service.state == STATE_CONNECTED and not self.sync.running and self.sync.partnership() is not None
+
+    def backup_state_changed(self):
+        if self.main_window and self.service.state == STATE_CONNECTED:
+            self.main_window.update_state(self.service.state, self.service.announcement, None)
+
+    def run_automatic_backup(self):
+        from .backup import run_automatic_backup
+        run_automatic_backup(self, self.main_window)
+
     def ask_first_sync(self, question):
         from ...common.conflicts import ask_combine_or_replace
         icon = self.artwork.icon_as_bitmap("WCESMgr.exe", 88, 32)

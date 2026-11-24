@@ -8,6 +8,7 @@ import wx
 from ...sync import (
     BUILTIN_OBJECT_TYPES, FIRST_SYNC_COMBINE, SyncOptions, load_providers, set_resolutions, synchronize, unresolved_items,
 )
+from ...sync.engine import type_assignments
 
 log = logging.getLogger("classicsync.gui.sync")
 
@@ -50,14 +51,41 @@ class SyncRunner:
     def partnership(self):
         return self.application.partnership
 
+    def assignments(self, options=None, providers=None):
+        if options is None:
+            partnership = self.partnership()
+            options = partnership.load_options() if partnership else SyncOptions()
+        providers = providers if providers is not None else load_providers()
+        try:
+            return type_assignments(providers, SyncOptions.from_dict({**options.to_dict(), "object_types": None}))
+        except ValueError:
+            return [(None, object_type) for object_type in BUILTIN_OBJECT_TYPES]
+
     def object_types(self):
         partnership = self.partnership()
         options = partnership.load_options() if partnership else SyncOptions()
-        providers = load_providers()
-        provider = providers.get(options.provider)
-        available = list(getattr(provider, "object_types", None) or BUILTIN_OBJECT_TYPES)
+        available = [object_type for provider_class, object_type in self.assignments(options)]
         enabled = set(options.object_types) if options.object_types is not None else {object_type.key for object_type in available}
         return [(object_type, object_type.key in enabled) for object_type in available]
+
+    def provider_for_type(self, key):
+        return next((provider_class for provider_class, object_type in self.assignments() if object_type.key == key), None)
+
+    def available_keys(self):
+        return {object_type.key for provider_class, object_type in self.assignments()}
+
+    def provider_changed(self, previous_keys):
+        partnership = self.partnership()
+        if not partnership:
+            return
+        options = partnership.load_options()
+        if options.object_types is None:
+            return
+        available = self.available_keys()
+        kept = [key for key in options.object_types if key in available]
+        added = sorted(available - set(previous_keys) - set(kept))
+        options.object_types = kept + added
+        partnership.save_options(options)
 
     def set_enabled_types(self, keys):
         partnership = self.partnership()
@@ -134,7 +162,8 @@ class SyncRunner:
         return await answer
 
     def start(self):
-        if self.running:
+        backup = getattr(self.application, "backup", None)
+        if self.running or (backup is not None and backup.running):
             return False
         partnership = self.partnership()
         if not partnership:

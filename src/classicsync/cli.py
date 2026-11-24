@@ -419,7 +419,13 @@ def build_parser():
 
 def main(argv=None):
     set_language(Settings.load().language or None)
-    arguments = build_parser().parse_args(argv)
+    parser = build_parser()
+    arguments, leftovers = parser.parse_known_args(argv)
+    if leftovers:
+        if isinstance(getattr(arguments, "assignments", None), list) and all("=" in item and not item.startswith("-") for item in leftovers):
+            arguments.assignments += leftovers
+        else:
+            parser.error(_("unrecognized arguments: {arguments}").format(arguments=" ".join(leftovers)))
     level = logging.WARNING - 10 * arguments.verbose
     logging.basicConfig(level=max(logging.DEBUG, level), format="%(name)s: %(message)s")
     try:

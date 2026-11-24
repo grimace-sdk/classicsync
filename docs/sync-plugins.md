@@ -13,6 +13,8 @@ For each object type the engine:
 3. compares both with the mapping saved after the last sync (`<data dir>/partnerships/<partnership>/state.json`) and plans adds, updates, deletes and conflicts in both directions; on the first sync of a type with items on both sides it asks the `first_sync` callback whether to combine them, replace the device's items with the desktop's, or skip the type this time;
 4. applies the plan, calling the store for every desktop change.
 
+Each object type has one provider: the partnership's provider (`options.json` `provider`), unless `type_providers` names another for that type, for example `{"contacts": "caldav", "notes": "notes"}` to keep files with the folder provider (`classicsync plugin use caldav --types contacts`). A type that only another provider handles, such as `notes`, is synchronized once it is listed there.
+
 A change beats a delete. Items changed on both sides are conflicts, resolved by the policy for that type: `desktop` (default for contacts, calendar, tasks), `device`, `keep_both` (default for files: the device copy is kept alongside), or `skip` (leave unresolved, like ActiveSync's "Leave the item unresolved"). Unresolved items are kept in `state.json` with a description of both sides; `unresolved_items(partnership)` lists them and `set_resolutions(partnership, items)` records `desktop`, `device` or `skip` per item for the next sync.
 
 ## Device objects
@@ -37,6 +39,7 @@ from classicsync.sync.settings_schema import Setting
 | `settings_schema` | optional: the settings it takes, as `Setting`s (see [Settings](#settings)) |
 | `__init__(context)` | `context.device` (`name`, `os_major`, `os_minor`), `context.partnership_directory` (somewhere to keep your own state), `context.settings` (the settings: schema defaults, then the settings for all devices, then the partnership's `provider_settings`, `file_folders` and `file_depth`), `context.message(text)` |
 | `open_store(object_type)` | returns a `Store` |
+| `device_folders(object_type)` | optional, for your own file types: a `DeviceFolders(folders, depth, extensions)` to synchronize instead of the partnership's file folders |
 | `close()` | optional |
 
 `Store` (one per object type):
@@ -54,7 +57,7 @@ from classicsync.sync.settings_schema import Setting
 | `describe_device(device_id, device_object)` | optional: text for a device item that has no desktop copy |
 | `describe_conflict(item_id, device_id, device_object)` | optional: `(desktop_lines, device_lines)` shown when resolving a conflict |
 
-Ids and stamps must be strings. Item ids must be stable between runs.
+Ids and stamps must be strings. Item ids must be stable between runs. Raise `ProviderError` from `open_store` or `list_items` (a server that can't be reached, a refused password) to skip that type with a message, or from a write to fail just that item.
 
 Your own database type: `ObjectType("expenses", "Expense", "Expenses", database="Expense Log")`. The engine handles any CE database by name.
 
@@ -80,10 +83,11 @@ settings_schema = (
 | `type` | `string`, `path` (a folder; the dialog has Browse...), `bool`, `int` (`minimum`, `maximum`), `choice` (`choices`: values, or `(value, label)` pairs) or `list` (of strings) |
 | `default` | used when nothing is set; `None` leaves the key out of `context.settings` |
 | `per_device` | only set per partnership, never for all devices (for example a folder named after the device) |
+| `secret` | a password: `plugin configure` saves it in the system keyring when the `keyring` package is installed (`classicsync[keyring]`), otherwise in the settings file; `context.settings` holds the value itself |
 
 Plain dicts with the same fields work too, so a plugin need not import `Setting`. Settings are stored as JSON: for all devices in `<data dir>/plugins/settings.json` under the provider's name, per partnership in its `options.json` `provider_settings`, which is shared by all providers, so prefix keys that another provider might also use. A provider without a schema still gets any `key=value` given to `plugin configure`, as strings.
 
-The folder provider's settings: `folder` (per device), `convert_documents`, `file_folders` and `file_depth` (per device).
+The folder provider's settings: `folder` (per device), `convert_documents`, `converted_documents` (`rtf`, `docx`, `odt`, `html`, `txt`; default RTF on macOS, Word elsewhere), `converted_spreadsheets` (`xlsx`, `ods`, `csv`; default CSV on macOS unless Numbers or Excel is installed, else Excel), `converted_images` (`png`, `bmp`), `file_folders` and `file_depth` (per device). Changing a format regenerates the `Converted/` copies; edited copies in any of these formats are converted back.
 
 ## Installing a provider
 
@@ -94,7 +98,7 @@ classicsync plugin use NAME --device DEVICE
 
 See [CLI.md](../CLI.md#sync-plugins) for the rest. A provider is found as:
 
-- a built-in (`folder`);
+- a built-in (`folder` and the providers in [Built-in providers](#built-in-providers));
 - an entry point in the `classicsync.sync_providers` group, pointing at the class or a module (every `Provider` subclass with a `name` in it, or the classes listed in `PROVIDERS`), in a package installed into classicsync's own environment or installed with `plugin install` into `<data dir>/plugins/lib/<python>-<arch>/`:
 
   ```toml
@@ -107,6 +111,40 @@ See [CLI.md](../CLI.md#sync-plugins) for the rest. A provider is found as:
 `<data dir>` is the settings folder, `$CLASSICSYNC_HOME` if set. A later provider with the same name replaces an earlier one, in the order above.
 
 `plugin install` uses uv or pip with `--target` into the library folder, which classicsync adds to `sys.path` (after its own packages) when it looks for providers. Dependencies classicsync already has at the same version are removed from the library again, and so is classicsync itself, so a plugin may depend on `classicsync`: the installer is offered the running version even where classicsync is not on PyPI. The release apps have no pip, so without uv only `.py` files and pure-Python (`py3-none-any`) wheels whose dependencies are already present can be installed. Keep plugins pure Python where you can.
+
+## Built-in providers
+
+They ship with classicsync, in `classicsync/sync/providers/`. Those that need another package or system load only where it is available; `classicsync plugin list` shows why one is missing. Use one for some types only with `plugin use NAME --device DEVICE --types TYPES`.
+
+### CalDAV and CardDAV (`caldav`)
+
+Contacts with a CardDAV address book, appointments (`VEVENT`) and tasks (`VTODO`) with CalDAV calendars: iCloud, Fastmail, Nextcloud, Radicale and other servers that accept a user name and password. It finds the address books and calendars from the server address, notices changes by ETag (with `sync-collection` where the server offers it), and never overwrites a copy changed on the server since it was read. Server-only details (photos, attendees, repeat rules, extra fields) are kept when the device changes an item, and device properties the server doesn't hold are kept on the device. Repeating appointments reach the device as their first occurrence. Google needs OAuth, which isn't supported.
+
+Settings: `caldav_url`, `caldav_contacts_url` (if address books are on another server), `caldav_username`, `caldav_password` (secret; use an app password), `caldav_address_book`, `caldav_calendar`, `caldav_task_list` (names or addresses; empty: the first suitable one), `caldav_past_days` (0: all appointments), `caldav_vcard_version` (`3.0` or `4.0`, for new contacts).
+
+### Outlook (`outlook`, Windows)
+
+Contacts, calendar and tasks with Microsoft Outlook through COM; needs `classicsync[windows]` (pywin32). Only fields the device changed are written to Outlook, so Outlook-only fields are kept. Repeating appointments reach the device as their first occurrence.
+
+Settings: `outlook_contacts_folder`, `outlook_calendar_folder`, `outlook_tasks_folder` (empty: the default folders; `Sub` for a subfolder, `Store\Folder` for another store), `outlook_past_days` (30), `outlook_future_days` (365).
+
+### macOS Contacts, Calendar and Reminders (`macos`)
+
+Contacts with Contacts, appointments with Calendar and tasks with Reminders; needs `classicsync[macos]` (PyObjC). The first sync of each asks for permission; if it was refused, allow ClassicSync (or your terminal) in System Settings, Privacy & Security.
+
+Settings: `macos_contacts_group` (empty: all contacts; new contacts join the group, which is created if missing), `macos_calendar` and `macos_reminders_list` (empty: the defaults), `macos_past_days` (30), `macos_future_days` (365).
+
+### Offline pages (`favorites`)
+
+Fetches a list of web pages, simplifies them for Pocket Internet Explorer and copies them to the device with an `index.htm`, optionally adding Favorites shortcuts. Desktop to device only: changes made on the device are replaced at the next sync.
+
+Settings: `favorites_urls`, `favorites_device_folder` (`\My Documents\Offline Pages`), `favorites_shortcuts`, `favorites_shortcut_folder` (`\Windows\Favorites\Mobile Favorites`), `favorites_images`, `favorites_image_kb`, `favorites_page_kb`, `favorites_refresh_hours` (12; 0: every sync).
+
+### Notes as Markdown (`notes`)
+
+Keeps device notes as Markdown files. Pocket Word (`.pwd`) notes go both ways and new Markdown files become Pocket Word notes. InkWriter and Notes (`.pwi`) files are shown as text but never changed on the device, so their ink is kept; edits to them are saved as a new note. If the folder provider also synchronizes the same device folder, notes appear in both.
+
+Settings: `notes_folder` (per device), `notes_device_folders` (`\My Documents`), `notes_depth`, `notes_word_documents`.
 
 ## Example: contacts to a CSV file
 

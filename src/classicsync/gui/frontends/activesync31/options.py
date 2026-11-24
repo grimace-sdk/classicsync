@@ -3,6 +3,7 @@ import wx
 from ....i18n import _
 from ...branding import rebrand
 from ...common.layout import dialog_size, place
+from ...common.plugin_settings import change_partnership_provider, show_type_settings
 from ...common.sync_runner import SYNC_MODE_CONNECT, SYNC_MODE_MANUAL
 from .artwork import MANAGER
 
@@ -33,14 +34,45 @@ class SyncOptionsPage(wx.Panel):
         self.types.InsertColumn(1, _("Status"), width=dialog_size(self, 110, 0).width)
         place(self, wx.StaticText, 7, 153, 172, 28, _("To find out more about and to customize what gets synchronized, click on that "
               "information type in the list and then click Settings."))
-        place(self, wx.Button, 189, 153, 50, 14, _("&Settings...")).Enable(False)
+        self.settings_button = place(self, wx.Button, 189, 153, 50, 14, _("&Settings..."))
+        self.provider_button = place(self, wx.Button, 189, 170, 50, 14, _("&Provider..."))
         self.clock = place(self, wx.CheckBox, 9, 186, 232, 10, _("Synchronize mobile device &clock upon connecting."))
         self.clock.SetValue(frontend.settings.sync_clock_on_connect)
-        self.object_types = frontend.sync.object_types()
-        for index, (object_type, enabled) in enumerate(self.object_types):
+        self.fill_types(frontend.sync.object_types())
+        self.settings_button.Bind(wx.EVT_BUTTON, self.on_settings)
+        self.provider_button.Bind(wx.EVT_BUTTON, self.on_provider)
+        self.types.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_selection)
+        self.types.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_selection)
+
+    def fill_types(self, object_types, checked=None):
+        self.object_types = object_types
+        self.types.DeleteAllItems()
+        for index, (object_type, enabled) in enumerate(object_types):
+            enabled = checked.get(object_type.key, enabled) if checked else enabled
             self.types.InsertItem(index, _(object_type.display_name))
             self.types.SetItem(index, 1, "" if enabled else _("Synchronization Disabled"))
             self.types.CheckItem(index, enabled)
+        self.on_selection(None)
+
+    def checked_states(self):
+        return {object_type.key: self.types.IsItemChecked(index) for index, (object_type, enabled) in enumerate(self.object_types)}
+
+    def selected_type(self):
+        index = self.types.GetFirstSelected()
+        return self.object_types[index][0] if 0 <= index < len(self.object_types) else None
+
+    def on_selection(self, event):
+        self.settings_button.Enable(self.selected_type() is not None)
+
+    def on_settings(self, event):
+        object_type = self.selected_type()
+        if object_type is not None:
+            show_type_settings(self.GetTopLevelParent(), self.frontend.sync, object_type.key)
+
+    def on_provider(self, event):
+        checked = self.checked_states()
+        if change_partnership_provider(self.GetTopLevelParent(), self.frontend.sync):
+            self.fill_types(self.frontend.sync.object_types(), checked)
 
     def apply(self):
         enabled = [object_type.key for index, (object_type, _) in enumerate(self.object_types) if self.types.IsItemChecked(index)]

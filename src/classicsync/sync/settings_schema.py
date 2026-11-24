@@ -2,6 +2,7 @@ from dataclasses import dataclass, fields
 
 from ..i18n import _
 from ..paths import plugins_directory
+from .secrets import forget_secret, is_stored_secret, resolve_secret, store_secret
 from .state import read_json, write_json_atomically
 
 SETTING_TYPES = ("string", "path", "bool", "int", "choice", "list")
@@ -31,6 +32,7 @@ class Setting:
     minimum: int = None
     maximum: int = None
     per_device: bool = False
+    secret: bool = False
 
     def __post_init__(self):
         if not self.key or not isinstance(self.key, str):
@@ -98,6 +100,8 @@ class Setting:
             key=self.key, choices=", ".join(str(value) for value in self.choice_values()), value=text))
 
     def coerce(self, value):
+        if self.secret and is_stored_secret(value):
+            return value
         if self.type == "bool" and isinstance(value, bool):
             return value
         if self.type == "int" and isinstance(value, int) and not isinstance(value, bool):
@@ -113,6 +117,10 @@ class Setting:
     def format(self, value):
         if value is None:
             return ""
+        if self.secret:
+            if is_stored_secret(value):
+                return _("(saved in the keyring)")
+            return _("(saved)") if value else ""
         if self.type == "bool":
             return _("yes") if value else _("no")
         if self.type == "list":
@@ -193,7 +201,20 @@ def effective_settings(provider_class, options, plugin_directory=None):
         defaults = schema_defaults(provider_schema(provider_class))
     except SettingError:
         defaults = {}
-    return {**defaults, **load_global_settings(provider_class.name, plugin_directory), **partnership_values(options)}
+    values = {**defaults, **load_global_settings(provider_class.name, plugin_directory), **partnership_values(options)}
+    return {key: resolve_secret(value) for key, value in values.items()}
+
+
+def protect_secrets(schema, changes, provider_name, scope):
+    protected = dict(changes)
+    for setting in schema:
+        if not setting.secret or setting.key not in changes:
+            continue
+        if changes[setting.key] is None:
+            forget_secret(provider_name, scope, setting.key)
+        else:
+            protected[setting.key] = store_secret(provider_name, scope, setting.key, changes[setting.key])
+    return protected
 
 
 def setting_sources(schema, global_values, options=None):

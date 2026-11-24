@@ -4,6 +4,7 @@ from ..i18n import N_
 
 KIND_DATABASE = "database"
 KIND_FILES = "files"
+KIND_MAIL = "mail"
 
 
 @dataclass(frozen=True)
@@ -20,6 +21,7 @@ FILES = ObjectType("files", "File", N_("Files"), KIND_FILES, conflict_default="k
 CONTACTS = ObjectType("contacts", "Contact", N_("Contacts"), database="Contacts Database")
 CALENDAR = ObjectType("calendar", "Appointment", N_("Calendar"), database="Appointments Database")
 TASKS = ObjectType("tasks", "Task", N_("Tasks"), database="Tasks Database")
+MAIL = ObjectType("mail", "Inbox", N_("Inbox"), KIND_MAIL, database="\\PMAILDB", conflict_default="device")
 
 BUILTIN_OBJECT_TYPES = {object_type.key: object_type for object_type in (FILES, CONTACTS, CALENDAR, TASKS)}
 

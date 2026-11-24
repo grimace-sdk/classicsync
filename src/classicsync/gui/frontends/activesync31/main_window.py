@@ -43,7 +43,7 @@ TOOLBAR_BUTTONS = [
     (ID_OPTIONS, N_("Options"), N_("Show sync. settings.\nChange Options")),
 ]
 
-UNAVAILABLE = {ID_BACKUP_RESTORE, ID_HELP}
+UNAVAILABLE = {ID_HELP}
 ID_PARTNERSHIP_FIRST = 8001
 CONFIRM_DELETE_TITLE = N_("Confirm Partnership Deletion")
 CONFIRM_DELETE_TEXT = N_("Deleting the selected partnership deletes all device-specific information from this computer. However, "
@@ -296,10 +296,12 @@ class MainWindow(wx.Frame):
         sync = self.application.sync
         running = sync.running
         partnered = connected and sync.partnership() is not None
-        states = {ID_EXPLORE: connected, ID_SYNCHRONIZE: partnered and not running, ID_STOP: running, ID_OPTIONS: partnered}
+        backing_up = self.application.application.backup.running
+        states = {ID_EXPLORE: connected, ID_SYNCHRONIZE: partnered and not running and not backing_up, ID_STOP: running,
+                  ID_OPTIONS: partnered, ID_BACKUP_RESTORE: connected and not running and not backing_up}
         for identifier, enabled in states.items():
             self.GetMenuBar().Enable(identifier, enabled)
-            if self.toolbar:
+            if self.toolbar and self.toolbar.FindById(identifier):
                 self.toolbar.EnableTool(identifier, enabled)
         self.GetMenuBar().Enable(ID_RESOLVE, partnered and not running and bool(sync.unresolved_items()))
         self.GetMenuBar().Enable(ID_DELETE_PARTNERSHIP, not running and self.shown_partnership() is not None)
@@ -421,6 +423,9 @@ class MainWindow(wx.Frame):
             from .options import show_options
             show_options(self, self.application)
             self.update_state(self.application.service.state, self.application.service.announcement, None)
+        elif identifier == ID_BACKUP_RESTORE:
+            from .backup import show_backup_restore
+            show_backup_restore(self, self.application)
         elif identifier == ID_ADD_REMOVE_PROGRAMS:
             from ...common.app_manager import show_app_manager
             show_app_manager(self, self.application)

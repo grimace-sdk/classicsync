@@ -11,6 +11,8 @@ from ...rapi.structures import (
     FILE_ATTRIBUTE_ARCHIVE, FILE_ATTRIBUTE_HIDDEN, FILE_ATTRIBUTE_INROM, FILE_ATTRIBUTE_READONLY, FILE_ATTRIBUTE_SYSTEM,
     datetime_to_filetime, filetime_to_datetime,
 )
+from .file_icons import FileIcons
+from .icon_grid import ItemListView
 from .layout import dialog_size, place
 
 COMMAND_OPEN = wx.NewIdRef()
@@ -118,14 +120,6 @@ def device_conversion(name, version=2):
     return source, target, os.path.splitext(name)[0] + FORMATS[target].extensions[0]
 
 
-def make_image_list(size):
-    images = wx.ImageList(size, size)
-    art_size = wx.Size(size, size)
-    for art in (wx.ART_FOLDER, wx.ART_FOLDER_OPEN, wx.ART_NORMAL_FILE, wx.ART_HARDDISK):
-        images.Add(wx.ArtProvider.GetBitmap(art, wx.ART_OTHER, art_size))
-    return images
-
-
 class FileDrop(wx.FileDropTarget):
     def __init__(self, browser):
         super().__init__()
@@ -173,7 +167,7 @@ class PropertiesDialog(wx.Dialog):
 
 
 class DeviceBrowser(wx.SplitterWindow):
-    def __init__(self, parent, application, root_label, on_status=None, on_title=None, on_folder=None):
+    def __init__(self, parent, application, root_label, on_status=None, on_title=None, on_folder=None, file_icons=None):
         super().__init__(parent, style=wx.SP_LIVE_UPDATE)
         self.application = application
         self.root_label = root_label
@@ -190,15 +184,16 @@ class DeviceBrowser(wx.SplitterWindow):
         self.context_menu_factory = None
         self.connected = True
 
-        self.small_images = make_image_list(16)
-        self.large_images = make_image_list(32)
+        self.file_icons = file_icons or FileIcons()
+        self.small_images = self.file_icons.image_list(16)
+        self.large_images = self.file_icons.image_list(32)
         self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE)
         self.tree.SetImageList(self.small_images)
         self.tree_root = self.tree.AddRoot(root_label, IMAGE_DEVICE)
         self.tree.SetItemData(self.tree_root, "\\")
         self.tree.SetItemHasChildren(self.tree_root, True)
 
-        self.list = wx.ListCtrl(self, style=wx.LC_REPORT | wx.LC_EDIT_LABELS)
+        self.list = ItemListView(self, style=wx.LC_REPORT | wx.LC_EDIT_LABELS)
         self.list.SetImageList(self.small_images, wx.IMAGE_LIST_SMALL)
         self.list.SetImageList(self.large_images, wx.IMAGE_LIST_NORMAL)
         self._add_columns()
@@ -306,7 +301,7 @@ class DeviceBrowser(wx.SplitterWindow):
         self.entries_view = sorted(ordered, key=lambda entry: not entry.is_directory)
         self.list.DeleteAllItems()
         for index, entry in enumerate(self.entries_view):
-            self.list.InsertItem(index, entry.name, IMAGE_FOLDER if entry.is_directory else IMAGE_FILE)
+            self.list.InsertItem(index, entry.name, self.file_icons.index_for(entry))
             if self.view == VIEW_DETAILS:
                 self.list.SetItem(index, 1, "" if entry.is_directory else format_size(entry.size))
                 self.list.SetItem(index, 2, describe_type(entry))

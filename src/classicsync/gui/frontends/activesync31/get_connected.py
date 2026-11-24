@@ -136,10 +136,12 @@ class GetConnectedWizard(wx.Dialog):
             wx.CallAfter(self._report, port, baud, status)
 
         def run():
+            if not self or not self.IsModal() or self.page_index != 1:
+                return
             self.scan_future = self.service.submit(scan_ports(ports, speeds, report, LISTEN_SECONDS))
             self.scan_future.add_done_callback(lambda future: wx.CallAfter(self._scan_finished, future))
 
-        self.service.suspend(_("Looking for a mobile device...")).add_done_callback(lambda future: run())
+        self.service.suspend(_("Looking for a mobile device...")).add_done_callback(lambda future: wx.CallAfter(run))
 
     def _report(self, port, baud, status):
         if not self:

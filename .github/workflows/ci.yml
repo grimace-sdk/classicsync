@@ -69,9 +69,9 @@ jobs:
         shell: bash
         run: |
           if [ -n "${{ matrix.wx_find_links }}" ]; then
-            uv pip install --find-links "${{ matrix.wx_find_links }}" -e ".[gui,usb,artwork,dev]"
+            uv pip install --find-links "${{ matrix.wx_find_links }}" -e ".[gui,usb,artwork,dev,keyring,windows,macos]"
           else
-            uv pip install -e ".[gui,usb,artwork,dev]"
+            uv pip install -e ".[gui,usb,artwork,dev,keyring,windows,macos]"
           fi
       - run: uv run --no-project python packaging/build_app.py
       - uses: actions/upload-artifact@v7

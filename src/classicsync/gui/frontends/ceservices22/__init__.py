@@ -160,13 +160,16 @@ class CeServicesFrontend(Frontend):
                     DeviceChoice(CHOICE_GUEST, _("&Browse"), _("I want to view and transfer files with my device.  I do not need "
                                  "to synchronize."), 83),
                     DeviceChoice(CHOICE_RESTORE, _("&Restore"), _("I want to restore data to my device from a backup file stored "
-                                 "on this computer."), 113, enabled=False),
+                                 "on this computer."), 113),
                 ],
                 button_width=62, icon=self.artwork.mobile_devices_bitmap(32))
         finally:
             self.device_prompt_open = False
         if choice == CHOICE_PARTNERSHIP and self.service.announcement is announcement:
             self.set_up_partnership(_("New Partnership Wizard"), _(PARTNERSHIP_FAILED))
+        elif choice == CHOICE_RESTORE and self.service.announcement is announcement:
+            from .backup import restore_guest
+            restore_guest(self, self.main_window)
 
     def ask_first_sync(self, question):
         from ...common.conflicts import DEVICE_MOBILE, ask_combine_or_discard
@@ -204,7 +207,27 @@ class CeServicesFrontend(Frontend):
         return self.service.state == STATE_CONNECTED and not self.version_one_connected()
 
     def can_synchronize(self):
-        return self.connected() and not self.sync.running and self.sync.partnership() is not None
+        return (self.connected() and not self.sync.running and not self.application.backup.running
+                and self.sync.partnership() is not None)
+
+    def can_back_up(self):
+        return self.connected() and not self.application.backup.busy
+
+    def show_backup_restore(self, parent):
+        from .backup import show_backup_restore
+        if self.can_back_up():
+            show_backup_restore(parent, self)
+
+    def back_up_now(self, parent):
+        from .backup import back_up_now
+        back_up_now(self, parent)
+
+    def run_automatic_backup(self):
+        from .backup import run_automatic_backup
+        run_automatic_backup(self, self.main_window)
+
+    def backup_state_changed(self):
+        self.sync_settings_changed()
 
     def synchronize_now(self):
         if self.can_synchronize():

@@ -1,3 +1,4 @@
+import getpass
 from pathlib import Path
 
 from .i18n import N_, _
@@ -9,7 +10,7 @@ from .sync.plugins import (
 )
 from .sync.settings_schema import (
     SOURCE_DEFAULT, SOURCE_DEVICE, SOURCE_GLOBAL, SettingError, apply_changes, apply_to_options, load_global_settings,
-    parse_assignments, provider_schema, save_global_settings, setting_sources,
+    parse_assignments, protect_secrets, provider_schema, save_global_settings, setting_sources,
 )
 from .sync.state import Partnership
 
@@ -136,13 +137,21 @@ def print_settings(provider_class, partnership, options):
         print(f"      {_(setting.label)}" + (f": {_(setting.help)}" if setting.help else ""))
 
 
+def prompt_for_secrets(schema, changes):
+    for setting in schema:
+        if setting.secret and changes.get(setting.key) == "-":
+            changes[setting.key] = getpass.getpass(_("{label}: ").format(label=_(setting.label))) or None
+    return changes
+
+
 async def command_plugin_configure(arguments):
     provider_class = find_provider(arguments.provider)
     partnership = chosen_partnership(arguments.device) if arguments.device else None
     options = partnership.load_options() if partnership else None
     if arguments.assignments:
         schema = provider_schema(provider_class)
-        changes = parse_assignments(schema, arguments.assignments)
+        changes = prompt_for_secrets(schema, parse_assignments(schema, arguments.assignments))
+        changes = protect_secrets(schema, changes, provider_class.name, partnership.name if partnership else "all")
         if partnership:
             apply_to_options(options, changes)
             partnership.save_options(options)
@@ -158,14 +167,39 @@ async def command_plugin_configure(arguments):
     print_settings(provider_class, partnership, options)
 
 
+def use_for_types(options, provider_class, keys, primary_class):
+    handled = [object_type.key for object_type in provider_class.object_types]
+    unknown = [key for key in keys if key not in handled]
+    if unknown:
+        raise ValueError(_("{provider} does not handle {types}; it handles {handled}").format(
+            provider=provider_class.name, types=", ".join(unknown), handled=", ".join(handled)))
+    primary_types = {object_type.key for object_type in getattr(primary_class, "object_types", ())}
+    for key in keys:
+        if provider_class.name == options.provider and key in primary_types:
+            options.type_providers.pop(key, None)
+        else:
+            options.type_providers[key] = provider_class.name
+        if options.object_types is not None and key not in options.object_types:
+            options.object_types.append(key)
+    return options
+
+
 async def command_plugin_use(arguments):
     provider_class = find_provider(arguments.provider)
     partnership = chosen_partnership(arguments.device)
     options = partnership.load_options()
+    display_name = provider_class.display_name or provider_class.name
+    if arguments.types:
+        keys = [key.strip() for key in arguments.types.split(",") if key.strip()]
+        providers = providers_from_sources(discover_plugins())
+        use_for_types(options, provider_class, keys, providers.get(options.provider))
+        partnership.save_options(options)
+        print(_("{device} now synchronizes {types} with {provider}").format(device=partnership.name, types=", ".join(keys),
+                                                                            provider=display_name))
+        return
     options.provider = provider_class.name
     partnership.save_options(options)
-    print(_("{device} now synchronizes with {provider}").format(device=partnership.name,
-                                                                provider=provider_class.display_name or provider_class.name))
+    print(_("{device} now synchronizes with {provider}").format(device=partnership.name, provider=display_name))
 
 
 def add_commands(subparsers):
@@ -191,4 +225,7 @@ def add_commands(subparsers):
     use = actions.add_parser("use", help=_("choose the sync provider for a partnership"))
     use.add_argument("provider", help=_("provider name"))
     use.add_argument("--device", help=_("partnership name (needed when there is more than one)"))
+    use.add_argument("--types", metavar="TYPES",
+                     help=_("only for these information types, separated by commas (for example contacts,calendar); "
+                            "the rest stay with the current provider"))
     use.set_defaults(handler=command_plugin_use)

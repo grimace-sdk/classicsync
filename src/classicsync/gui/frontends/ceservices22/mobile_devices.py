@@ -7,6 +7,8 @@ from ...common.device_browser import (
     COMMAND_PROPERTIES, COMMAND_REFRESH, COMMAND_RENAME, COMMAND_SELECT_ALL, COMMAND_UP, SORT_DATE, SORT_NAME, SORT_SIZE, SORT_TYPE,
     VIEW_DETAILS, VIEW_LARGE, VIEW_LIST, VIEW_SMALL, VIEW_STYLES, DeviceBrowser, root_name,
 )
+from ...common.file_icons import KIND_FOLDER, FileIcons
+from ...common.icon_grid import ItemListView
 from ...service import STATE_CONNECTED, STATE_CONNECTING, STATE_DISABLED
 from .device_properties import is_palm_size, memory_text
 
@@ -101,7 +103,7 @@ HELP_TEXT = {
 }
 
 UNAVAILABLE = {
-    ID_BACK_UP_NOW, ID_BACKUP_RESTORE, ID_FILE_CONVERSION, ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_CUT,
+    ID_FILE_CONVERSION, ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_CUT,
     ID_COPY, ID_PASTE, ID_PASTE_SHORTCUT, ID_CREATE_SHORTCUT, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS, ID_EXPLORE,
 } | {identifier for identifier, label in filter(None, WEB_ITEMS)}
 
@@ -164,7 +166,7 @@ class MobileDevicesWindow(wx.Frame):
         self.SetStatusWidths([-1, 220])
         self.body = wx.Panel(self)
         self.address = self._build_address_bar(self.body)
-        self.device_list = wx.ListCtrl(self.body, style=VIEW_STYLES[self.device_view] | wx.LC_SINGLE_SEL | wx.LC_AUTOARRANGE)
+        self.device_list = ItemListView(self.body, style=VIEW_STYLES[self.device_view] | wx.LC_SINGLE_SEL | wx.LC_AUTOARRANGE)
         self.large_images = wx.ImageList(32, 32)
         self.small_images = wx.ImageList(16, 16)
         for palm_size, connected in ((False, True), (False, False), (True, True), (True, False)):
@@ -364,6 +366,7 @@ class MobileDevicesWindow(wx.Frame):
             COMMAND_COPY_TO_COMPUTER: in_device and can_delete, COMMAND_NEW_FOLDER: in_device and connected,
             COMMAND_COPY_FROM_COMPUTER: in_device and connected, ID_SYNCHRONIZE_NOW: self.frontend.can_synchronize(),
             ID_ACTIVESYNC_OPTIONS: self.frontend.connected() and self.application.partnership is not None,
+            ID_BACK_UP_NOW: self.frontend.can_back_up(), ID_BACKUP_RESTORE: self.frontend.can_back_up(),
         }
         for identifier, enabled in states.items():
             if menu_bar.FindItemById(identifier):
@@ -527,7 +530,8 @@ class MobileDevicesWindow(wx.Frame):
         if not self.browser:
             self.location = location
             self.browser = DeviceBrowser(self.body, self.application, device_root_name(self.announcement),
-                                         on_status=self.SetStatusText, on_title=self.SetTitle, on_folder=self._record_folder)
+                                         on_status=self.SetStatusText, on_title=self.SetTitle, on_folder=self._record_folder,
+                                         file_icons=FileIcons(self.artwork))
             self.browser.set_tree_visible(False)
             self.browser.set_view(self.file_view)
             self.browser.context_menu_factory = self._file_context_menu
@@ -579,7 +583,7 @@ class MobileDevicesWindow(wx.Frame):
                 path += "\\" + part
                 self.address_locations.append(path)
                 self.address_box.Append(root + path)
-                bitmap = wx.ArtProvider.GetBitmap(wx.ART_FOLDER, wx.ART_OTHER, wx.Size(16, 16))
+                bitmap = FileIcons(self.artwork).base_bitmap(KIND_FOLDER, 16)
         self.address_box.SetSelection(len(self.address_locations) - 1)
         self.address_icon.SetBitmap(bitmap)
 
@@ -674,6 +678,10 @@ class MobileDevicesWindow(wx.Frame):
             self.frontend.synchronize_now()
         elif identifier == ID_ACTIVESYNC_OPTIONS:
             self.frontend.show_activesync_options(self)
+        elif identifier == ID_BACKUP_RESTORE:
+            self.frontend.show_backup_restore(self)
+        elif identifier == ID_BACK_UP_NOW:
+            self.frontend.back_up_now(self)
         elif identifier == ID_SHOW_ERRORS:
             self.frontend.toggle_show_errors()
         elif identifier == ID_SHOW_PROGRESS:

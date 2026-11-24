@@ -6,10 +6,12 @@ from datetime import datetime, timezone
 from ..i18n import N_, _
 from ..rapi.client import RapiError
 from .device import DeviceDatabase, DeviceFolder, read_device_info
-from .objects import KIND_FILES
+from .mail.device import DeviceMailbox
+from .objects import KIND_FILES, KIND_MAIL
 from .plugins import load_providers
-from .provider import ProviderContext
+from .provider import ProviderContext, ProviderError
 from .settings_schema import effective_settings
+from .state import SyncOptions
 from .partners import NoPartnership, find_partnership
 
 log = logging.getLogger("classicsync.sync")
@@ -310,7 +312,7 @@ class TypeSync:
             except ConnectionError:
                 self.mapping.extend(pending for _, pending in planned[index:] if pending)
                 raise
-            except (RapiError, OSError, ValueError, SyncError) as error:
+            except (RapiError, OSError, ValueError, SyncError, ProviderError) as error:
                 log.info("%s failed: %s", action, error)
                 action.error = str(error)
                 if entry:
@@ -318,9 +320,14 @@ class TypeSync:
         self.progress(SyncProgress("apply", self.object_type.key, total, total, ""))
 
 
-def device_source_for(client, object_type, options):
+def device_source_for(client, object_type, options, provider=None):
     if object_type.kind == KIND_FILES:
+        folders = provider.device_folders(object_type) if provider is not None else None
+        if folders is not None:
+            return DeviceFolder(client, folders.folders, folders.depth, folders.extensions)
         return DeviceFolder(client, options.file_folders, options.file_depth)
+    if object_type.kind == KIND_MAIL:
+        return DeviceMailbox(client)
     return DeviceDatabase(client, object_type.database)
 
 
@@ -333,6 +340,35 @@ def selected_types(provider_class, options):
     if unknown:
         raise ValueError(f"provider {provider_class.name} does not handle {', '.join(unknown)}")
     return [object_type for object_type in available if object_type.key in wanted]
+
+
+def type_assignments(providers, options):
+    if options.provider not in providers:
+        raise ValueError(f"no sync provider called {options.provider!r}; have {', '.join(sorted(providers))}")
+    primary = providers[options.provider]
+    assignments = {object_type.key: (primary, object_type) for object_type in primary.object_types}
+    for key, name in (options.type_providers or {}).items():
+        if name not in providers:
+            raise ValueError(f"no sync provider called {name!r} for {key}; have {', '.join(sorted(providers))}")
+        provider_class = providers[name]
+        object_type = next((candidate for candidate in provider_class.object_types if candidate.key == key), None)
+        if object_type is None:
+            raise ValueError(f"provider {name} does not handle {key}")
+        assignments[key] = (provider_class, object_type)
+    if options.object_types is None:
+        return list(assignments.values())
+    unknown = [key for key in options.object_types if key not in assignments]
+    if unknown:
+        raise ValueError(f"provider {primary.name} does not handle {', '.join(unknown)}")
+    return [assignment for key, assignment in assignments.items() if key in options.object_types]
+
+
+def available_object_types(providers, options):
+    try:
+        return [object_type for _, object_type in type_assignments(providers, SyncOptions.from_dict(
+            {**options.to_dict(), "object_types": None}))]
+    except ValueError:
+        return []
 
 
 def report_progress(progress):
@@ -355,22 +391,32 @@ async def synchronize(client, partnership=None, options=None, progress=None, pro
         if policy not in CONFLICT_POLICIES:
             raise ValueError(f"conflict policy for {key} must be one of {', '.join(CONFLICT_POLICIES)}")
     providers = providers or load_providers()
-    if options.provider not in providers:
-        raise ValueError(f"no sync provider called {options.provider!r}; have {', '.join(sorted(providers))}")
+    assignments = type_assignments(providers, options)
     provider_class = providers[options.provider]
     report = SyncReport(device=device.name, provider=options.provider, dry_run=options.dry_run)
-    settings = effective_settings(provider_class, options)
-    context = ProviderContext(device, partnership.directory, settings,
-                              lambda text: emit(SyncProgress("message", message=text)))
-    provider = provider_class(context)
+    instances = {}
     state = partnership.load_state()
     emit(SyncProgress("start", message=_("Synchronizing {device} with {provider}").format(
         device=device.name, provider=_(provider_class.display_name or provider_class.name))))
     try:
-        for object_type in selected_types(provider_class, options):
-            await synchronize_type(client, provider, object_type, options, state, report, emit, first_sync)
+        for assigned_class, object_type in assignments:
+            provider = instances.get(assigned_class.name)
+            if provider is None:
+                try:
+                    provider = open_provider(assigned_class, device, partnership, options, emit)
+                except (OSError, ValueError, ProviderError) as error:
+                    report.skipped_types.append(object_type.key)
+                    report.errors.append(f"{object_type.display_name}: {error}")
+                    continue
+                instances[assigned_class.name] = provider
+            try:
+                await synchronize_type(client, provider, object_type, options, state, report, emit, first_sync)
+            except ProviderError as error:
+                report.skipped_types.append(object_type.key)
+                report.errors.append(f"{object_type.display_name}: {error}")
     finally:
-        provider.close()
+        for provider in instances.values():
+            provider.close()
         if not options.dry_run:
             state["device"] = device.name
             state["last_sync"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -378,6 +424,13 @@ async def synchronize(client, partnership=None, options=None, progress=None, pro
             partnership.save_state(state)
     emit(SyncProgress("done", message=report.summary()))
     return report
+
+
+def open_provider(provider_class, device, partnership, options, emit):
+    settings = effective_settings(provider_class, options)
+    context = ProviderContext(device, partnership.directory, settings,
+                              lambda text: emit(SyncProgress("message", message=text)))
+    return provider_class(context)
 
 
 async def first_sync_mode(sync, stored, provider, first_sync, report):
@@ -394,14 +447,18 @@ async def first_sync_mode(sync, stored, provider, first_sync, report):
 
 async def synchronize_type(client, provider, object_type, options, state, report, emit, first_sync=None):
     emit(SyncProgress("scan", object_type.key, message=_("Checking {type}").format(type=_(object_type.display_name))))
-    source = device_source_for(client, object_type, options)
+    source = device_source_for(client, object_type, options, provider)
     try:
         await source.open()
     except RapiError as error:
         report.skipped_types.append(object_type.key)
         report.errors.append(f"{object_type.display_name}: {error}")
         return
-    store = provider.open_store(object_type)
+    try:
+        store = provider.open_store(object_type)
+    except BaseException:
+        await source.close()
+        raise
     stored = state["types"].get(object_type.key, {})
     same_provider = stored.get("provider") == provider.name
     previous = stored.get("items", []) if same_provider else []
@@ -417,6 +474,9 @@ async def synchronize_type(client, provider, object_type, options, state, report
         planned = await sync.plan(previous, mode)
         try:
             await sync.apply(planned)
+            finish = getattr(source, "finish", None)
+            if finish is not None and not options.dry_run:
+                await finish(store)
         finally:
             if not options.dry_run:
                 state["types"][object_type.key] = {

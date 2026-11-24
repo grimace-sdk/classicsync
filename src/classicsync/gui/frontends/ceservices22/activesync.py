@@ -7,6 +7,7 @@ from ....i18n import N_, _, format_original
 from ....sync import load_providers
 from ...common.animation import AnimationPlayer
 from ...common.layout import dialog_rect, dialog_size, place
+from ...common.plugin_settings import change_partnership_provider, show_type_settings
 from ...common.sync_runner import SYNC_MODE_CONNECT, SYNC_MODE_MANUAL
 from ...settings import data_directory
 from .artwork import SYNC_MANAGER
@@ -241,22 +242,49 @@ class GeneralPage(wx.Panel):
               _("Click the check box next to a service type and click OK to enable or disable that service.  A check indicates "
                 "that the service type is enabled.  Select an enabled service and click Options to change settings for that "
                 "service type."))
-        place(self, wx.Button, 120, 199, 50, 14, _("&Options...")).Enable(False)
+        self.options = place(self, wx.Button, 120, 199, 50, 14, _("&Options..."))
         self.advanced = place(self, wx.Button, 180, 199, 50, 14, _("Ad&vanced..."))
+        self.provider = place(self, wx.Button, 180, 26, 50, 14, _("&Provider..."))
 
-        self.object_types = [object_type for object_type, _ in frontend.sync.object_types()]
         enabled = {object_type.key: state for object_type, state in frontend.sync.object_types()}
         self.clock.SetValue(frontend.settings.sync_clock_on_connect)
         self.on_connect.SetValue(frontend.settings.sync_mode == SYNC_MODE_CONNECT)
         self.enable.SetValue(any(enabled.values()))
-        for index, object_type in enumerate(self.object_types):
-            self.services.InsertItem(index, _(object_type.display_name))
-            self.services.CheckItem(index, enabled[object_type.key])
-        self.refresh()
+        self.fill_services(frontend.sync.object_types())
         self.enable.Bind(wx.EVT_CHECKBOX, self.on_enable)
         self.services.Bind(wx.EVT_LIST_ITEM_CHECKED, self.on_service_checked)
         self.services.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.on_service_checked)
+        self.services.Bind(wx.EVT_LIST_ITEM_SELECTED, lambda event: self.update_options_button())
+        self.services.Bind(wx.EVT_LIST_ITEM_DESELECTED, lambda event: self.update_options_button())
+        self.options.Bind(wx.EVT_BUTTON, self.on_options)
         self.advanced.Bind(wx.EVT_BUTTON, lambda event: sheet.show_advanced())
+        self.provider.Bind(wx.EVT_BUTTON, self.on_provider)
+
+    def fill_services(self, object_types, checked=None):
+        self.object_types = [object_type for object_type, state in object_types]
+        self.services.DeleteAllItems()
+        for index, (object_type, state) in enumerate(object_types):
+            self.services.InsertItem(index, _(object_type.display_name))
+            self.services.CheckItem(index, checked.get(object_type.key, state) if checked else state)
+        self.refresh()
+
+    def selected_index(self):
+        index = self.services.GetFirstSelected()
+        return index if 0 <= index < len(self.object_types) else None
+
+    def update_options_button(self):
+        index = self.selected_index()
+        self.options.Enable(self.enable.GetValue() and index is not None and self.services.IsItemChecked(index))
+
+    def on_options(self, event):
+        index = self.selected_index()
+        if index is not None:
+            show_type_settings(self.GetTopLevelParent(), self.sheet.frontend.sync, self.object_types[index].key)
+
+    def on_provider(self, event):
+        checked = {object_type.key: self.services.IsItemChecked(index) for index, object_type in enumerate(self.object_types)}
+        if change_partnership_provider(self.GetTopLevelParent(), self.sheet.frontend.sync):
+            self.fill_services(self.sheet.frontend.sync.object_types(), checked)
 
     def checked_keys(self):
         return [object_type.key for index, object_type in enumerate(self.object_types) if self.services.IsItemChecked(index)]
@@ -281,6 +309,7 @@ class GeneralPage(wx.Panel):
             status = service_status(frontend.sync, object_type, enabled and object_type.key in checked, frontend.sync_failed,
                                     frontend.sync.last_progress)
             self.services.SetItem(index, 1, service_status_text(status))
+        self.update_options_button()
 
     def apply(self):
         settings = self.sheet.frontend.settings

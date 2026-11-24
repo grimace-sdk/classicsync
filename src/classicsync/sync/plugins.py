@@ -62,9 +62,15 @@ def activate_library(plugin_directory=None):
     return library
 
 
-def builtin_providers():
+def builtin_plugins():
     from .folder import FolderProvider
-    return [FolderProvider]
+    from .providers import load_builtin_plugins
+    providers, errors = load_builtin_plugins()
+    return [FolderProvider, *providers], errors
+
+
+def builtin_providers():
+    return builtin_plugins()[0]
 
 
 def providers_in_module(module):
@@ -173,7 +179,8 @@ def classicsync_version():
 
 def discover_plugins(plugin_directory=None):
     library = activate_library(plugin_directory)
-    builtin = PluginSource("classicsync", ORIGIN_BUILTIN, version=classicsync_version(), providers=builtin_providers())
+    providers, errors = builtin_plugins()
+    builtin = PluginSource("classicsync", ORIGIN_BUILTIN, version=classicsync_version(), providers=providers, errors=errors)
     legacy_directory = None if plugin_directory else sync_plugins_directory()
     plugin_directory = Path(plugin_directory or plugins_directory())
     return [builtin, *environment_sources(library), *library_sources(library), *file_sources(legacy_directory),

@@ -24,6 +24,7 @@ class SyncOptions:
     file_folders: list = field(default_factory=lambda: ["\\My Documents"])
     file_depth: int = 1
     provider_settings: dict = field(default_factory=dict)
+    type_providers: dict = field(default_factory=dict)
     conflict_prompt: str = "skip"
     dry_run: bool = False
 

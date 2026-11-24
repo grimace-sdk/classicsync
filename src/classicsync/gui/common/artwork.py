@@ -1,4 +1,6 @@
+import io
 import math
+import struct
 from pathlib import Path
 
 import wx
@@ -34,6 +36,57 @@ def icon_bitmap(icon):
 
 def bitmap_from_icon_bundle(bundle, size):
     return icon_bitmap(bundle.GetIcon(wx.Size(size, size)))
+
+
+ICON_DIRECTORY_HEADER = "<HHH"
+ICON_DIRECTORY_ENTRY = "<BBBBHHII"
+ICON_HEADER_SIZE = struct.calcsize(ICON_DIRECTORY_HEADER)
+ICON_ENTRY_SIZE = struct.calcsize(ICON_DIRECTORY_ENTRY)
+LOADABLE_ICON_DEPTHS = (0, 1, 4, 8, 24, 32)
+
+
+def icon_entries(data):
+    if len(data) < ICON_HEADER_SIZE:
+        return []
+    reserved, kind, count = struct.unpack_from(ICON_DIRECTORY_HEADER, data)
+    entries = []
+    for index in range(count):
+        offset = ICON_HEADER_SIZE + index * ICON_ENTRY_SIZE
+        if offset + ICON_ENTRY_SIZE > len(data):
+            break
+        width, height, colours, _reserved, planes, depth, size, start = struct.unpack_from(ICON_DIRECTORY_ENTRY, data, offset)
+        if start + size > len(data) or depth not in LOADABLE_ICON_DEPTHS:
+            continue
+        entries.append((width or 256, height or 256, colours, planes, depth, size, start))
+    return entries
+
+
+def single_icon_image(data, entry):
+    width, height, colours, planes, depth, size, start = entry
+    header = struct.pack(ICON_DIRECTORY_HEADER, 0, 1, 1)
+    directory = struct.pack(ICON_DIRECTORY_ENTRY, width % 256, height % 256, colours, 0, planes, depth, size,
+                            ICON_HEADER_SIZE + ICON_ENTRY_SIZE)
+    with wx.LogNull():
+        image = wx.Image(io.BytesIO(header + directory + data[start:start + size]), wx.BITMAP_TYPE_ICO)
+    return image if image.IsOk() else None
+
+
+def icon_file_bitmap(path, size):
+    try:
+        data = Path(path).read_bytes()
+    except OSError:
+        return None
+    entries = icon_entries(data)
+    exact = sorted((entry for entry in entries if entry[0] == size), key=lambda entry: -entry[4])
+    others = sorted((entry for entry in entries if entry[0] != size), key=lambda entry: (entry[0] < size, abs(entry[0] - size), -entry[4]))
+    for entry in exact + others:
+        image = single_icon_image(data, entry)
+        if image is None:
+            continue
+        if image.GetWidth() != size:
+            image = image.Scale(size, size, wx.IMAGE_QUALITY_NORMAL)
+        return wx.Bitmap(image)
+    return None
 
 
 def draw_sync_badge(size, colour, mark=None, angle=0.0):
@@ -137,6 +190,9 @@ class Artwork:
         if bundle:
             return bitmap_from_icon_bundle(bundle, size)
         return fallback() if fallback else wx.NullBitmap
+
+    def icon_file_bitmap(self, module, number, size):
+        return self.cached(("icon-file", module, number, size), lambda: icon_file_bitmap(self.path(module, f"group_icon_{number}.ico"), size))
 
     def application_icons(self, module, number):
         bundle = self.icon_bundle(module, number)

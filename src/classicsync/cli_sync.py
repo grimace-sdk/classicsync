@@ -88,6 +88,8 @@ async def command_sync_status(arguments):
             print("  " + _("provider: {provider} ({folder})").format(provider=options.provider, folder=folder))
         else:
             print("  " + _("provider: {provider}").format(provider=options.provider))
+        for key, provider_name in sorted(options.type_providers.items()):
+            print("  " + _("{type}: provider {provider}").format(type=key, provider=provider_name))
         print("  " + _("last sync: {stamp}  {result}").format(stamp=state.get("last_sync", _("never")), result=state.get("last_result", "")))
         for key, stored in sorted(state.get("types", {}).items()):
             unresolved = stored.get("unresolved", [])
@@ -190,7 +192,7 @@ def add_commands(subparsers, device_command):
     sync.add_argument("--dry-run", action="store_true", help=_("show what would change without changing anything"))
     sync.add_argument("--provider", help=_("sync provider (default: folder, or the saved one)"))
     sync.add_argument("--only", action="append", metavar="TYPE",
-                      help=_("synchronize only this type: files, contacts, calendar or tasks (repeatable)"))
+                      help=_("synchronize only this type: files, contacts, calendar, tasks or mail (repeatable)"))
     sync.add_argument("--folder", help=_("folder provider: where to keep the desktop copies"))
     sync.add_argument("--conflict", action="append", metavar="[TYPE=]POLICY",
                       help=_("conflict policy, one of {policies}, for all types or one type").format(policies=", ".join(CONFLICT_POLICIES)))

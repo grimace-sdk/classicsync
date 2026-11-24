@@ -5,7 +5,7 @@ from ...branding import rebrand, title
 from ...common.device_browser import parent_folder, root_name
 from ...common.layout import dialog_size
 from ...service import STATE_CONNECTED, STATE_CONNECTING, STATE_WAITING
-from .browser import COPY, CUT, ICON_ROWS, HpcDeviceBrowser, display_name
+from .browser import COPY, CUT, HpcDeviceBrowser, display_name
 from .commands import (
     ARRANGE_COMMANDS, ID_ABOUT, ID_ADDRESS, ID_ARRANGE_BY_DATE, ID_ARRANGE_BY_NAME, ID_ARRANGE_BY_SIZE,
     ID_ARRANGE_BY_TYPE, ID_BACK_UP_NOW, ID_BACKUP_RESTORE, ID_BEST_OF_THE_WEB, ID_CANCEL_MODE, ID_CLOSE, ID_COMMUNICATIONS,
@@ -94,7 +94,7 @@ class WaitingView(wx.SplitterWindow):
         self.tree = wx.TreeCtrl(self, style=wx.TR_HAS_BUTTONS | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE)
         self.tree.SetImageList(self.small_images)
         self.tree.AddRoot(root_label, IMAGE_DEVICE)
-        self.list = wx.ListCtrl(self, style=ICON_ROWS | (wx.LC_REPORT if settings.view == "details" else wx.LC_ICON))
+        self.list = wx.ListCtrl(self, style=wx.LC_REPORT if settings.view == "details" else wx.LC_ICON)
         if settings.view == "details":
             for index, (label, width, align) in enumerate([(_("Name"), 220, wx.LIST_FORMAT_LEFT), (_("Size"), 80, wx.LIST_FORMAT_RIGHT),
                                                            (_("Type"), 160, wx.LIST_FORMAT_LEFT), (_("Modified"), 130, wx.LIST_FORMAT_LEFT)]):
@@ -404,6 +404,10 @@ class ExplorerWindow(wx.Frame):
             self.frontend.synchronize_now()
         elif identifier == ID_SYNCHRONIZATION_MANAGER:
             self.frontend.show_synchronization_manager(self)
+        elif identifier == ID_BACKUP_RESTORE:
+            self.frontend.show_backup_restore(self)
+        elif identifier == ID_BACK_UP_NOW:
+            self.frontend.back_up_now(self)
         elif identifier == ID_OPTIONS:
             with OptionsSheet(self, self.view_settings, self.apply_view_settings) as sheet:
                 sheet.ShowModal()
@@ -521,6 +525,8 @@ class ExplorerWindow(wx.Frame):
             event.Enable(self.frontend.can_synchronize())
         elif identifier == ID_SYNCHRONIZATION_MANAGER:
             event.Enable(self.frontend.connected())
+        elif identifier in (ID_BACKUP_RESTORE, ID_BACK_UP_NOW):
+            event.Enable(self.frontend.can_back_up())
         elif identifier == ID_UP:
             event.Enable(self.browser is not None and self.folder != "\\")
         elif identifier == ID_PASTE:

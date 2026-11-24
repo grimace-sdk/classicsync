@@ -159,7 +159,7 @@ class HpcExplorerFrontend(Frontend):
                     DeviceChoice(CHOICE_GUEST, _("&Guest"), _("View files and folders on this H/PC. Choose this option to view and "
                                  "transfer files with this H/PC (data synchronization disabled)."), 45),
                     DeviceChoice(CHOICE_RESTORE, _("&Restore"), _("Select a backup file to restore. Choose this option if you have "
-                                 "lost your data (due to power failure) or if this is a replacement H/PC."), 82, enabled=False),
+                                 "lost your data (due to power failure) or if this is a replacement H/PC."), 82),
                     DeviceChoice(CHOICE_PARTNERSHIP, _("&New Partner"), _("Establish this H/PC as the new partner. Choose this option "
                                  "if you have taken over this desktop computer and wish to establish a new partnership."), 119),
                 ],
@@ -168,6 +168,33 @@ class HpcExplorerFrontend(Frontend):
             self.device_prompt_open = False
         if choice == CHOICE_PARTNERSHIP and self.service.announcement is announcement:
             self.set_up_partnership(_("Setup New Partner Wizard"), _(PARTNERSHIP_FAILED), exclusive=True)
+        elif choice == CHOICE_RESTORE and self.service.announcement is announcement:
+            from .backup import restore_guest
+            restore_guest(self, self.explorer_window)
+
+    def partnership_created(self):
+        from .backup import offer_full_backup
+        self.application.backup.after_sync(lambda: self.connected() and offer_full_backup(self, self.explorer_window))
+
+    def can_back_up(self):
+        return self.connected() and not self.application.backup.busy
+
+    def show_backup_restore(self, parent):
+        from .backup import show_backup_restore
+        if self.connected():
+            show_backup_restore(parent, self)
+
+    def back_up_now(self, parent):
+        from .backup import back_up_now
+        back_up_now(self, parent)
+
+    def run_automatic_backup(self):
+        from .backup import run_automatic_backup
+        run_automatic_backup(self, self.explorer_window)
+
+    def backup_state_changed(self):
+        if self.explorer_window:
+            self.explorer_window.update_sync_status()
 
     def ask_first_sync(self, question):
         from ...common.conflicts import DEVICE_HPC, ask_combine_or_discard
@@ -198,7 +225,8 @@ class HpcExplorerFrontend(Frontend):
         return self.service.state == STATE_CONNECTED
 
     def can_synchronize(self):
-        return self.connected() and not self.sync.running and self.sync.partnership() is not None
+        return (self.connected() and not self.sync.running and not self.application.backup.running
+                and self.sync.partnership() is not None)
 
     def synchronize_now(self):
         if self.can_synchronize():
@@ -238,9 +266,15 @@ class HpcExplorerFrontend(Frontend):
             return
         path = self.artwork.sound_path(CONNECT_SOUND if state == STATE_CONNECTED else DISCONNECT_SOUND)
         if path:
-            self.sound = wx.adv.Sound(str(path))
-            if self.sound.IsOk():
-                self.sound.Play(wx.adv.SOUND_ASYNC)
+            sounds = getattr(self, "sounds", None)
+            if sounds is None:
+                sounds = self.sounds = {}
+            sound = sounds.get(path)
+            if sound is None:
+                sound = sounds[path] = wx.adv.Sound(str(path))
+            if sound.IsOk():
+                wx.adv.Sound.Stop()
+                sound.Play(wx.adv.SOUND_ASYNC)
 
     def show_main_window(self):
         if not self.explorer_window:

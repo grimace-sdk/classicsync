@@ -83,13 +83,13 @@ class GetConnectedDialog(wx.Dialog):
         def report(port, speed, status):
             wx.CallAfter(self.show_progress, port, speed, status)
 
-        def suspended(future):
-            if self.finished:
+        def suspended():
+            if not self or self.finished:
                 return
             self.scan = service.submit(scan_ports(ports, speeds, report))
             self.scan.add_done_callback(lambda scan: wx.CallAfter(self.scan_finished, scan))
 
-        service.suspend("Get Connected").add_done_callback(suspended)
+        service.suspend("Get Connected").add_done_callback(lambda future: wx.CallAfter(suspended))
 
     def show_progress(self, port, speed, status):
         if not self or self.finished or status == STATUS_NOT_FOUND:

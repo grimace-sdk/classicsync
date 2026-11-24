@@ -7,6 +7,7 @@ from ....i18n import N_, _, format_original
 from ....rapi.structures import FILE_ATTRIBUTE_INROM
 from ...common.animation import AnimationPlayer, load_clip
 from ...common.device_browser import DeviceBrowser, join
+from ...common.file_icons import FileIcons
 from ...common.layout import dialog_rect, dialog_size, place
 from .artwork import ANIMATION_DEVICE_COPY, ANIMATION_DEVICE_MOVE, ANIMATION_FROM_DEVICE, ANIMATION_TO_DEVICE, EXPLORER
 from .commands import (
@@ -18,8 +19,6 @@ from .properties import EntryPropertiesSheet
 
 HIDDEN_EXTENSIONS = {".dll", ".cpl", ".drv"}
 HIDDEN_TYPE_LABELS = [N_(".DLL     (Application extension)"), N_(".CPL     (Control Panel extension)"), N_(".DRV     (Device driver)")]
-
-ICON_ROWS = wx.LC_ALIGN_TOP if wx.Platform == "__WXMSW__" else wx.LC_ALIGN_LEFT
 
 CUT = "cut"
 COPY = "copy"
@@ -96,22 +95,13 @@ class HpcDeviceBrowser(DeviceBrowser):
         self.artwork = window.artwork
         self.view_settings = window.view_settings
         self.store = None
-        super().__init__(parent, window.application, root_label, on_status=window.set_status, on_folder=window.folder_changed)
-        self.small_images = self.artwork.image_list(16)
-        self.large_images = self.artwork.image_list(32)
-        self.tree.SetImageList(self.small_images)
-        self.list.SetImageList(self.small_images, wx.IMAGE_LIST_SMALL)
-        self.list.SetImageList(self.large_images, wx.IMAGE_LIST_NORMAL)
+        super().__init__(parent, window.application, root_label, on_status=window.set_status, on_folder=window.folder_changed,
+                         file_icons=FileIcons(self.artwork))
         self.context_menu_factory = self.explorer_context_menu
         self.tree_width = self.view_settings.sash_position
         self.SetSashPosition(self.tree_width)
         self.set_view(self.view_settings.view)
         self.set_tree_visible(self.view_settings.show_folders)
-
-    def set_view(self, view):
-        style = self.list.GetWindowStyleFlag() & ~(wx.LC_ALIGN_TOP | wx.LC_ALIGN_LEFT)
-        self.list.SetWindowStyleFlag(style | ICON_ROWS if view == "large" else style)
-        super().set_view(view)
 
     def _on_item_activated(self, event):
         entry = self.entries_view[event.GetIndex()]

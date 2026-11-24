@@ -49,15 +49,18 @@ classicsync partnership create              # partner the connected device (a de
 classicsync partnership list
 classicsync partnership delete Velo --on-device
 classicsync sync --dry-run                  # see what would change
-classicsync sync                            # files, contacts, calendar, tasks
+classicsync sync                            # files, contacts, calendar, tasks, mail
 classicsync sync --first-sync replace       # first sync: replace device items with this computer's
 classicsync sync --only contacts --conflict device
+classicsync sync --only mail
 classicsync sync-status
 ```
 
 `sync` keeps the desktop copies in the folder described in [README.md](README.md#synchronize) (`$CLASSICSYNC_HOME/data` if that is set). `--folder`, `--provider` and `--conflict` with `--save` are remembered per device.
 
 Only partnered devices synchronize. A partnership is a random 32-bit partner ID kept on this computer (`<settings folder>/partnerships/<name>/partnership.json`) and on the device: `HKLM\Software\Microsoft\Windows CE Services\Partners\P1` or `P2` (`PId`, `PName`) on CE 2.x and later, which the device announces when it connects, and `HKLM\Ident\PartnerId` on CE 1.0. When both sides already hold items of a type that has never been synchronized, `sync` combines them unless `--first-sync replace` or `skip` is given. Items left unresolved (`--conflict skip`) stay listed in `sync-status` until resolved.
+
+Mail is the device Inbox store (Inbox on CE 1.0 and H/PC 2.0). The folder provider keeps it as Maildir folders, `Mail/<folder>/{cur,new,tmp}`, one per device folder, plus `Deleted Items` (CE 1.0) or `Deleted` for messages deleted on the device. Read flags (`S`), moves between folders and deletes go both ways; a message added to `Mail/Outbox` goes to the device Outbox and is sent from the device. Messages carry their text body only: attachments are not copied. Open Inbox on the device once before the first sync, and restart it on the device to see folders added from this computer.
 
 ## Sync plugins
 
@@ -77,7 +80,27 @@ classicsync plugin configure csv                         # show settings for all
 classicsync plugin configure csv folder=~/Contacts       # change them
 classicsync plugin configure folder --device Velo file_depth=2 "file_folders=\My Documents;\Notes"
 classicsync plugin configure folder --device Velo file_depth=   # back to the default
+classicsync plugin configure folder converted_documents=odt converted_spreadsheets=ods
 ```
+
+`plugin use --types` picks a provider for some information types only; the rest stay with the partnership's provider. The built-in providers are described in [docs/sync-plugins.md](docs/sync-plugins.md#built-in-providers).
+
+```
+classicsync plugin use caldav --device Velo --types contacts,calendar,tasks
+classicsync plugin configure caldav --device Velo caldav_url=https://caldav.fastmail.com \
+    caldav_contacts_url=https://carddav.fastmail.com caldav_username=me@fastmail.com caldav_password=-
+classicsync plugin configure caldav --device Velo caldav_calendar=Work "caldav_task_list=To Do"
+classicsync plugin use outlook --device Velo --types contacts,calendar,tasks
+classicsync plugin configure outlook --device Velo outlook_contacts_folder=Handheld outlook_future_days=90
+classicsync plugin use macos --device Velo --types contacts,calendar,tasks
+classicsync plugin configure macos --device Velo macos_contacts_group=Velo macos_calendar=Velo macos_reminders_list=Velo
+classicsync plugin use favorites --device Velo --types favorites
+classicsync plugin configure favorites --device Velo "favorites_urls=https://example.com/news;https://example.org/"
+classicsync plugin use notes --device Velo --types notes
+classicsync plugin configure notes --device Velo notes_folder=~/Velo/Notes
+```
+
+A password given as `-` is asked for instead. Passwords are saved in the system keyring when the `keyring` package is installed (`classicsync[keyring]`), otherwise in the settings file.
 
 Plugins live in `<settings folder>/plugins/`: `.py` files directly, packages in `lib/<python>-<arch>/`, a `manifest.json` of what was installed and from where, and `settings.json` with the settings for all devices. A device's own settings, kept with its partnership, take precedence. Some settings, like the folder provider's folders, are per device only. List settings are separated by `;`.
 

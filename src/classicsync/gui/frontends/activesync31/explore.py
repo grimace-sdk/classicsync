@@ -5,6 +5,7 @@ from ...common.device_browser import (
     COMMAND_COPY_FROM_COMPUTER, COMMAND_COPY_TO_COMPUTER, COMMAND_DELETE, COMMAND_NEW_FOLDER, COMMAND_PROPERTIES, COMMAND_REFRESH,
     COMMAND_RENAME, COMMAND_UP, DeviceBrowser, root_name,
 )
+from ...common.file_icons import FileIcons
 
 
 def art(name):
@@ -29,7 +30,8 @@ class ExploreWindow(wx.Frame):
         self.CreateStatusBar(2)
         self.SetStatusWidths([-1, 220])
         self.browser = DeviceBrowser(self, frontend.application, root_name(frontend.service.announcement),
-                                     on_status=self.SetStatusText, on_title=self.SetTitle)
+                                     on_status=self.SetStatusText, on_title=self.SetTitle,
+                                     file_icons=FileIcons(frontend.artwork))
         self.Bind(wx.EVT_TOOL, lambda event: self.browser.on_command(event))
         self.SetAcceleratorTable(wx.AcceleratorTable([
             (wx.ACCEL_NORMAL, wx.WXK_F5, COMMAND_REFRESH),

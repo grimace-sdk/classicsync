@@ -114,7 +114,8 @@ def test_setting_parsing_and_validation():
 
 def test_assignments_against_a_schema():
     schema = provider_schema(FolderProvider)
-    assert [setting.key for setting in schema] == ["folder", "convert_documents", "file_folders", "file_depth"]
+    assert [setting.key for setting in schema] == ["folder", "convert_documents", "converted_documents", "converted_spreadsheets",
+                                                  "converted_images", "file_folders", "file_depth"]
     parsed = parse_assignments(schema, ["convert_documents=no", "file_depth=2", "folder="])
     assert parsed == {"convert_documents": False, "file_depth": 2, "folder": None}
     with pytest.raises(SettingError):

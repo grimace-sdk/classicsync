@@ -67,10 +67,13 @@ Synchronized information is kept in a folder you can open and edit:
 | Windows | `%LOCALAPPDATA%\classicsync\<device name>\` |
 
 - `My Documents/`: the device's My Documents, file for file.
-- `Converted/`: Word, Excel and PNG copies of Pocket Word, Pocket Excel and 2bp files. Edit them and the next sync sends the changes to the device; new `.docx` and `.xlsx` files there become device documents.
+- `Converted/`: desktop copies of Pocket Word, Pocket Excel and 2bp files. Edit them and the next sync sends the changes to the device; new documents and spreadsheets there become device files.
+  Copies are RTF and CSV on macOS (Excel workbooks if Numbers or Excel is installed), Word and Excel elsewhere. Choose RTF, Word, OpenDocument, HTML or text for documents and Excel, OpenDocument or CSV for spreadsheets in the folder provider's settings (`classicsync plugin configure folder converted_documents=odt`).
 - `Contacts/*.vcf`, `Calendar/*.ics`, `Tasks/*.ics`: open them in any contacts or calendar app; edits go back to the device.
 
-Choose what to synchronize, when, and how conflicts are settled in Options. Other sync providers can be added as plug-ins; see [docs/sync-plugins.md](docs/sync-plugins.md).
+Choose what to synchronize, when, and how conflicts are settled in Options.
+
+Instead of the folder, contacts, calendar and tasks can synchronize with a CalDAV/CardDAV server (iCloud, Fastmail, Nextcloud), Outlook on Windows, or Contacts, Calendar and Reminders on macOS. Notes can be kept as Markdown files, and a list of web pages can be copied to the device for offline reading. See [docs/sync-plugins.md](docs/sync-plugins.md#built-in-providers); other providers can be added as plug-ins.
 
 ## Choose the look
 

@@ -16,7 +16,7 @@ uv pip install --python .venv -e ".[gui,usb,artwork,dev]"
 VELO_EMU=../velo-emu .venv/bin/python -m pytest   # adds CE 1.0 and CE 2.0 emulator sessions
 ```
 
-Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (default `../classicsync-installers`) and skip when they are absent. Emulator tests (marked `device`) need a [velo-emu](https://github.com/Gadgetoid/velo-emu) build in `$VELO_EMU`.
+Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (default `../classicsync-installers`) and skip when they are absent. Emulator tests (marked `device`) need a [velo-emu](https://github.com/Gadgetoid/velo-emu) build in `$VELO_EMU`. CalDAV tests use an in-process fake server; to also run them against Radicale, point `$CLASSICSYNC_RADICALE_PYTHON` at a Python with `radicale` installed (`uv venv radicale-env && uv pip install --python radicale-env radicale`).
 
 ## Layout
 
@@ -25,7 +25,7 @@ Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (defau
 - `src/classicsync/connection`: connection manager (TCP 5679), the `Desktop` session, port scanning for Get Connected.
 - `src/classicsync/rapi`: RAPI client (TCP 990), commands 0x00-0x55.
 - `src/classicsync/install`: CE 2.x/3.x CABs and CeAppMgr INIs via wceload, CE 1.0 `.load` scripts.
-- `src/classicsync/sync`: two-way sync engine over RAPI, partnerships, the provider plugin API, plugin installer (`plugin_install.py`), provider settings schema and the default `folder` provider. See [docs/sync-plugins.md](docs/sync-plugins.md).
+- `src/classicsync/sync`: two-way sync engine over RAPI, partnerships, the provider plugin API, plugin installer (`plugin_install.py`), provider settings schema and the default `folder` provider. `sync/providers/` holds the other built-in providers (CalDAV/CardDAV, Outlook, macOS, offline pages, notes). See [docs/sync-plugins.md](docs/sync-plugins.md).
 - `src/classicsync/convert`: Pocket Word, Pocket Excel and 2bp converters.
 - `src/classicsync/backup`: `.stg` backup and restore.
 - `src/classicsync/formats`: cabinet (MSZIP, LZX), InstallShield 3, MSI, compound file and Windows resource readers.

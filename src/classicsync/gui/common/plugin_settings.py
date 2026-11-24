@@ -363,3 +363,22 @@ def show_partnership_settings(parent, partnership):
     if provider_class is None:
         return choose_sync_provider(parent, partnership) is not None
     return show_provider_settings(parent, provider_class, partnership)
+
+
+def change_partnership_provider(parent, sync):
+    partnership = sync.partnership()
+    if partnership is None:
+        return False
+    previous_keys = sync.available_keys()
+    if choose_sync_provider(parent, partnership) is None:
+        return False
+    sync.provider_changed(previous_keys)
+    return True
+
+
+def show_type_settings(parent, sync, key):
+    partnership = sync.partnership()
+    provider_class = sync.provider_for_type(key)
+    if provider_class is None:
+        return show_partnership_settings(parent, partnership) if partnership else False
+    return show_provider_settings(parent, provider_class, partnership)

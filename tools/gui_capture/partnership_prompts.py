@@ -11,7 +11,7 @@ def answer_wizard(wizard, create):
     wizard.on_next(None)
 
 
-def answer_partnership_prompts(create, interval=250):
+def answer_partnership_prompts(create, interval=250, skip_backup=True):
     answered = []
 
     def poll():
@@ -23,5 +23,7 @@ def answer_partnership_prompts(create, interval=250):
                 answer_wizard(window, create)
             elif isinstance(window, NewDeviceDialog):
                 window.choose(CHOICE_PARTNERSHIP if create else CHOICE_GUEST)
+            elif skip_backup and type(window).__name__ == "BackupNotCompleteDialog":
+                window.EndModal(wx.ID_CANCEL)
         wx.CallLater(interval, poll)
     wx.CallLater(interval, poll)

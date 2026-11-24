@@ -89,10 +89,11 @@ class DeviceDatabase:
 
 
 class DeviceFolder:
-    def __init__(self, client, roots, depth=1):
+    def __init__(self, client, roots, depth=1, extensions=()):
         self.client = client
         self.roots = {root.strip("\\").split("\\")[-1]: "\\" + root.strip("\\") for root in roots}
         self.depth = depth
+        self.extensions = tuple(extension.lower() for extension in extensions)
         self.entries = {}
         self.free_space = None
 
@@ -120,8 +121,11 @@ class DeviceFolder:
             if entry.is_directory:
                 if depth < self.depth:
                     await self._scan(child, depth + 1)
-            else:
+            elif self.wanted(entry.name):
                 self.entries[child] = entry
+
+    def wanted(self, name):
+        return not self.extensions or name.lower().endswith(self.extensions)
 
     async def list(self):
         self.entries = {}
@@ -131,7 +135,7 @@ class DeviceFolder:
 
     def valid_id(self, device_id):
         root, *rest = device_id.split("/")
-        return root in self.roots and 0 < len(rest) <= self.depth + 1 and not any(
+        return root in self.roots and 0 < len(rest) <= self.depth + 1 and self.wanted(rest[-1] if rest else "") and not any(
             character in INVALID_DEVICE_NAME_CHARACTERS for part in rest for character in part)
 
     async def read(self, device_id):

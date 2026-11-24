@@ -238,8 +238,8 @@ def test_sniffing_and_targets():
     assert sniff_format(POCKET_WORD_1) == "pwd"
     assert sniff_format(write_pocket_excel(sample_workbook(), Report(), 1)) == "pxl"
     assert sniff_format(write_2bp(picture_bitmap())) == "2bp"
-    assert set(formats_for(".pwt")) == {"rtf", "txt", "html", "docx"}
-    assert set(formats_for("pxl")) == {"csv", "xlsx"}
+    assert set(formats_for(".pwt")) == {"rtf", "txt", "html", "docx", "odt"}
+    assert set(formats_for("pxl")) == {"csv", "xlsx", "ods"}
     with pytest.raises(ConversionError):
         convert(b"plain", "txt", "xlsx")
 

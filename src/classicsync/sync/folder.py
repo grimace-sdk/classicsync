@@ -5,15 +5,17 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from ..i18n import N_, _, ngettext
+from ..convert.registry import DOCUMENT, IMAGE, SPREADSHEET
 from ..paths import user_data_directory
 from ..rapi.structures import datetime_to_filetime, filetime_to_datetime
-from .objects import CALENDAR, CONTACTS, FILES, TASKS, DeviceFile, DeviceRecord
+from .mail.maildir import MaildirStore
+from .objects import CALENDAR, CONTACTS, FILES, MAIL, TASKS, DeviceFile, DeviceRecord
 from .pim.icalendar import appointment_to_ical, ical_to_appointment, ical_to_task, task_to_ical
 from .pim.properties import SUBJECT
 from .pim.record import property_map
 from .pim.vcard import contact_fields, contact_to_vcard, display_name, vcard_to_contact
 from .provider import Provider, Store
-from .converted import ConvertedMirror
+from .converted import DESKTOP_CHOICES, ConvertedMirror, default_formats
 from .rawjson import record_from_json, record_to_json
 from .settings_schema import Setting
 from .state import safe_directory_name
@@ -303,6 +305,10 @@ class TaskStore(RecordStore):
         return ical_to_task(text, base_properties, self.os_major)
 
 
+DEFAULT_FORMATS = default_formats()
+CONVERTED_FORMAT_KEYS = {DOCUMENT: "converted_documents", SPREADSHEET: "converted_spreadsheets", IMAGE: "converted_images"}
+
+
 def default_folder(device_name):
     return user_data_directory() / safe_directory_name(device_name)
 
@@ -310,12 +316,21 @@ def default_folder(device_name):
 class FolderProvider(Provider):
     name = "folder"
     display_name = N_("Folder")
-    object_types = (FILES, CONTACTS, CALENDAR, TASKS)
+    object_types = (FILES, CONTACTS, CALENDAR, TASKS, MAIL)
     settings_schema = (
         Setting("folder", N_("Folder on this computer"), "path", per_device=True,
                 help=N_("Where the desktop copies are kept. Empty: a folder named after the device in the classicsync data folder.")),
         Setting("convert_documents", N_("Convert documents"), "bool", True,
                 help=N_("Keep Word, Excel and image copies of Pocket Word, Pocket Excel and 2bp files in a Converted folder.")),
+        Setting("converted_documents", N_("Converted documents"), "choice", DEFAULT_FORMATS[DOCUMENT],
+                choices=DESKTOP_CHOICES[DOCUMENT],
+                help=N_("Format of the Converted copies of Pocket Word documents. Changing it replaces the copies.")),
+        Setting("converted_spreadsheets", N_("Converted spreadsheets"), "choice", DEFAULT_FORMATS[SPREADSHEET],
+                choices=DESKTOP_CHOICES[SPREADSHEET],
+                help=N_("Format of the Converted copies of Pocket Excel workbooks. CSV holds the first sheet only; "
+                        "edits to it keep the other sheets and formulas whose values did not change.")),
+        Setting("converted_images", N_("Converted images"), "choice", DEFAULT_FORMATS[IMAGE],
+                choices=DESKTOP_CHOICES[IMAGE], help=N_("Format of the Converted copies of 2bp images.")),
         Setting("file_folders", N_("Device folders"), "list", ["\\My Documents"], per_device=True,
                 help=N_("Device folders to synchronize.")),
         Setting("file_depth", N_("Subfolder depth"), "int", 1, minimum=0, per_device=True,
@@ -337,7 +352,8 @@ class FolderProvider(Provider):
             mirror = None
             if settings.get("convert_documents", True):
                 names = [folder.strip("\\").split("\\")[-1] for folder in folders]
-                mirror = ConvertedMirror(self.root, names, os_major, self.context.message)
+                formats = {kind: settings.get(key) for kind, key in CONVERTED_FORMAT_KEYS.items() if settings.get(key)}
+                mirror = ConvertedMirror(self.root, names, os_major, self.context.message, formats, self.trash)
             return FileStore(self.root, folders, settings.get("file_depth", 1), self.context.device.name, self.trash, mirror)
         if object_type.key == CONTACTS.key:
             return ContactStore(self.root, os_major, self.trash)
@@ -345,4 +361,6 @@ class FolderProvider(Provider):
             return CalendarStore(self.root, os_major, self.trash)
         if object_type.key == TASKS.key:
             return TaskStore(self.root, os_major, self.trash)
+        if object_type.key == MAIL.key:
+            return MaildirStore(self.root, self.trash, self.context.device.name)
         raise ValueError(f"folder provider does not handle {object_type.key}")

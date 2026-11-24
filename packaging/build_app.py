@@ -1,5 +1,6 @@
 import argparse
 import platform
+import plistlib
 import shutil
 import subprocess
 import sys
@@ -43,6 +44,25 @@ def run_pyinstaller(name, script, windowed):
     PyInstaller.__main__.run(arguments)
 
 
+PRIVACY_DESCRIPTIONS = {
+    "NSContactsUsageDescription": "ClassicSync synchronizes your contacts with your handheld.",
+    "NSCalendarsUsageDescription": "ClassicSync synchronizes your calendar with your handheld.",
+    "NSCalendarsFullAccessUsageDescription": "ClassicSync synchronizes your calendar with your handheld.",
+    "NSRemindersUsageDescription": "ClassicSync synchronizes your reminders with your handheld's tasks.",
+    "NSRemindersFullAccessUsageDescription": "ClassicSync synchronizes your reminders with your handheld's tasks.",
+}
+
+
+def add_privacy_descriptions(application):
+    info_path = application / "Contents" / "Info.plist"
+    with info_path.open("rb") as file:
+        info = plistlib.load(file)
+    info.update(PRIVACY_DESCRIPTIONS)
+    with info_path.open("wb") as file:
+        plistlib.dump(info, file)
+    subprocess.run(["codesign", "--force", "--deep", "--sign", "-", str(application)], check=True)
+
+
 def archive(source_directories, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     if platform.system() == "Darwin":
@@ -75,6 +95,8 @@ def main():
     if not arguments.skip_gui:
         run_pyinstaller("ClassicSync", PACKAGING / "launch_gui.py", windowed=True)
         gui_output = BUILD / "dist" / ("ClassicSync.app" if platform.system() == "Darwin" else "ClassicSync")
+        if platform.system() == "Darwin":
+            add_privacy_descriptions(gui_output)
         outputs.append(gui_output)
     extension = ".tar.gz" if platform.system() == "Linux" else ".zip"
     result = archive(outputs, DIST / f"ClassicSync-{version()}-{platform_name()}{extension}")

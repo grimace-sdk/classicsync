@@ -4,6 +4,7 @@ from ....i18n import N_, _, format_original
 from ...branding import PRODUCT_NAME
 from ...common.animation import AnimationPlayer, load_clip
 from ...common.layout import dialog_rect, place
+from ...common.plugin_settings import change_partnership_provider, show_type_settings
 from ...common.sync_runner import SYNC_MODE_CONNECT, SYNC_MODE_MANUAL
 from .sheet import PropertySheet
 
@@ -194,11 +195,13 @@ class DatabasesPage:
         self.list.InsertColumn(0, _("Name"), width=page.ConvertDialogToPixels(wx.Size(68, 0)).width)
         self.list.InsertColumn(1, _("Status"), width=page.ConvertDialogToPixels(wx.Size(84, 0)).width)
         self.options = place(page, wx.Button, 173, 48, 50, 14, _("&Options..."))
+        self.provider = place(page, wx.Button, 173, 66, 50, 14, _("&Provider..."))
         self.note = place(page, wx.StaticText, 7, 120, 216, 26,
                           _("* Files (\\My Documents) is a {product} addition. H/PC Explorer 1.1 synchronized only "
                             "Appointments, Contacts, and Tasks.").format(product=PRODUCT_NAME))
         self.note.Show(any(object_type.key not in PIM_TYPES for object_type in sheet.object_types))
         self.options.Bind(wx.EVT_BUTTON, self.on_options)
+        self.provider.Bind(wx.EVT_BUTTON, self.on_provider)
         self.list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_options)
         self.list.Bind(wx.EVT_LIST_ITEM_SELECTED, lambda event: self.options.Enable(True))
         self.list.Bind(wx.EVT_LIST_ITEM_DESELECTED, lambda event: self.options.Enable(False))
@@ -222,18 +225,23 @@ class DatabasesPage:
         if index < 0:
             return
         object_type = self.sheet.object_types[index]
-        with DatabaseOptionsDialog(self.page, object_type, self.sheet.enabled[object_type.key]) as dialog:
+        with DatabaseOptionsDialog(self.page, object_type, self.sheet.enabled[object_type.key], self.sheet.frontend.sync) as dialog:
             if dialog.ShowModal() == wx.ID_OK and dialog.enabled() != self.sheet.enabled[object_type.key]:
                 self.sheet.enabled[object_type.key] = dialog.enabled()
                 self.sheet.changed()
                 self.sheet.refresh()
+
+    def on_provider(self, event):
+        if change_partnership_provider(self.page.GetTopLevelParent(), self.sheet.frontend.sync):
+            self.sheet.reload_object_types()
+            self.sheet.refresh()
 
     def apply(self):
         pass
 
 
 class DatabaseOptionsDialog(wx.Dialog):
-    def __init__(self, parent, object_type, enabled):
+    def __init__(self, parent, object_type, enabled, sync):
         super().__init__(parent, title=_("{database} Options").format(database=database_name(object_type)))
         self.SetClientSize(parent.ConvertDialogToPixels(wx.Size(200, 64)))
         self.synchronize = place(self, wx.CheckBox, 7, 9, 186, 10, _("&Synchronize {database}").format(database=database_name(object_type)))
@@ -243,6 +251,8 @@ class DatabaseOptionsDialog(wx.Dialog):
         else:
             detail = _("Files in \\My Documents and one level of subfolders. A {product} addition.").format(product=PRODUCT_NAME)
         place(self, wx.StaticText, 18, 23, 175, 18, detail)
+        settings = place(self, wx.Button, 7, 44, 50, 14, _("&Settings..."))
+        settings.Bind(wx.EVT_BUTTON, lambda event: show_type_settings(self, sync, object_type.key))
         place(self, wx.Button, 89, 44, 50, 14, _("OK"), id=wx.ID_OK).SetDefault()
         place(self, wx.Button, 143, 44, 50, 14, _("Cancel"), id=wx.ID_CANCEL)
         self.CentreOnParent()
@@ -255,14 +265,19 @@ class SynchronizationManagerSheet(PropertySheet):
     def __init__(self, parent, frontend):
         super().__init__(parent, _("Synchronization Manager"))
         self.frontend = frontend
-        self.object_types = [object_type for object_type, enabled in frontend.sync.object_types()]
-        self.enabled = {object_type.key: enabled for object_type, enabled in frontend.sync.object_types()}
+        self.enabled = {}
+        self.reload_object_types()
         self.general = GeneralPage(self, self.add_page(_("General"), 250, 203))
         self.databases = DatabasesPage(self, self.add_page(_("Databases"), 250, 203))
         self.finish()
         self.refresh()
         frontend.sync.add_listener(self.on_sync_event)
         self.Bind(wx.EVT_WINDOW_DESTROY, self.on_destroy)
+
+    def reload_object_types(self):
+        object_types = self.frontend.sync.object_types()
+        self.object_types = [object_type for object_type, enabled in object_types]
+        self.enabled = {object_type.key: self.enabled.get(object_type.key, enabled) for object_type, enabled in object_types}
 
     def refresh(self):
         self.general.refresh()
