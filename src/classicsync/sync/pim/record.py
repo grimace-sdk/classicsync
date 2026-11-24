@@ -67,12 +67,24 @@ def filetime_from_utc(moment):
     return datetime_to_filetime(moment.astimezone(timezone.utc))
 
 
+LOCAL_TIME_ERRORS = (OSError, OverflowError, ValueError)
+
+
 def local_date_from_filetime(filetime):
-    return filetime_to_datetime(filetime).astimezone().date()
+    moment = filetime_to_datetime(filetime)
+    try:
+        return moment.astimezone().date()
+    except LOCAL_TIME_ERRORS:
+        return (moment + moment.replace(year=2000).astimezone().utcoffset()).date()
 
 
 def filetime_for_local_date(day):
-    return datetime_to_filetime(datetime(day.year, day.month, day.day).astimezone(timezone.utc))
+    midnight = datetime(day.year, day.month, day.day)
+    try:
+        return datetime_to_filetime(midnight.astimezone(timezone.utc))
+    except LOCAL_TIME_ERRORS:
+        offset = midnight.replace(year=2000).astimezone().utcoffset()
+        return datetime_to_filetime((midnight - offset).replace(tzinfo=timezone.utc))
 
 
 def format_utc(moment):

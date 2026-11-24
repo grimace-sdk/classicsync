@@ -52,6 +52,7 @@ jobs:
         include:
           - os: ubuntu-24.04
             wx_find_links: https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/
+            wx_pin: wxpython==4.2.2
           - os: macos-latest
           - os: macos-15-intel
           - os: windows-latest
@@ -69,7 +70,7 @@ jobs:
         shell: bash
         run: |
           if [ -n "${{ matrix.wx_find_links }}" ]; then
-            uv pip install --find-links "${{ matrix.wx_find_links }}" -e ".[gui,usb,artwork,dev,keyring,windows,macos]"
+            uv pip install --find-links "${{ matrix.wx_find_links }}" -e ".[gui,usb,artwork,dev,keyring,windows,macos]" "${{ matrix.wx_pin }}"
           else
             uv pip install -e ".[gui,usb,artwork,dev,keyring,windows,macos]"
           fi
