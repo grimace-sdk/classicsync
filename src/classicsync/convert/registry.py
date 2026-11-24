@@ -20,6 +20,7 @@ from .xlsx import read_xlsx, write_xlsx
 DOCUMENT = "document"
 SPREADSHEET = "spreadsheet"
 IMAGE = "image"
+FONT = "font"
 
 
 @dataclass(frozen=True)
@@ -87,6 +88,9 @@ FORMATS = {
                   lambda bitmap, report, **options: write_bmp(bitmap)),
     "png": Format("png", IMAGE, (".png",), "PNG image", False, image_reader(read_png),
                   lambda bitmap, report, **options: write_png(bitmap)),
+    "ttf": Format("ttf", FONT, (".ttf", ".otf", ".ttc"), "TrueType font", False, None, None),
+    "fon": Format("fon", FONT, (".fon",), "Windows raster font", False, None, None),
+    "fnt": Format("fnt", FONT, (".fnt",), "Mobile Device Raster Font", True, None, None),
 }
 EXTENSIONS = {extension: name for name, format in FORMATS.items() for extension in format.extensions}
 DESKTOP_DEFAULTS = {"pwd": "docx", "pxl": "xlsx", "2bp": "png"}
@@ -173,6 +177,8 @@ def converter(source_format, target_format):
     target = FORMATS[normalise_name(target_format)]
     if source.kind != target.kind:
         raise ConversionError(f"cannot convert {source.description} to {target.description}")
+    if source.reader is None or target.writer is None:
+        raise ConversionError(f"{source.description} files are converted with the font converter when copied to the device")
 
     def run(data, **options):
         report = Report()

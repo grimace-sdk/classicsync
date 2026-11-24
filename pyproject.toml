@@ -7,13 +7,13 @@ requires-python = ">=3.10"
 dependencies = ["pyserial>=3.5", "tzdata; sys_platform == 'win32'"]
 
 [project.optional-dependencies]
-gui = ["wxPython>=4.2"]
+gui = ["wxPython>=4.2", "freetype-py>=2.4"]
 usb = ["pyusb>=1.2", "libusb-package>=1.0.26"]
 artwork = ["pefile>=2023"]
 keyring = ["keyring>=24"]
 windows = ["pywin32>=306; sys_platform == 'win32'", "keyring>=24"]
 macos = ["pyobjc-framework-Contacts>=10; sys_platform == 'darwin'", "pyobjc-framework-EventKit>=10; sys_platform == 'darwin'", "keyring>=24"]
-test = ["pytest>=8"]
+test = ["pytest>=8", "freetype-py>=2.4"]
 dev = ["pytest>=8", "ruff>=0.6", "pyinstaller>=6"]
 
 [project.scripts]

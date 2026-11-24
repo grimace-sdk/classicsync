@@ -726,8 +726,33 @@ class DeviceBrowser(wx.SplitterWindow):
 
         self._transfer(_("Copying..."), jobs, download, finished, prepare=make_folders)
 
+    def convert_fonts(self, tree):
+        if not self.conversion_enabled():
+            return tree
+        from .font_conversion import ask_font_conversion
+        rules = self.conversion_rules(DESKTOP_TO_DEVICE)
+        version = self.device_version()
+        converted = TransferTree(folders=list(tree.folders), modified=dict(tree.modified))
+        folder = None
+        for path, relative, size in tree.files:
+            plan = device_conversion(relative[-1], version, rules)
+            if not plan or plan[1] != "fnt":
+                converted.files.append((path, relative, size))
+                continue
+            files = ask_font_conversion(self, str(path))
+            if not files:
+                continue
+            folder = folder or Path(tempfile.mkdtemp(prefix="classicsync-fonts-"))
+            for name, data in files:
+                output = folder / name
+                output.write_bytes(data)
+                output_relative = relative[:-1] + (name,)
+                converted.files.append((output, output_relative, len(data)))
+                converted.modified[output_relative] = tree.modified.get(relative)
+        return converted
+
     def upload(self, filenames):
-        tree = local_tree(filenames)
+        tree = self.convert_fonts(local_tree(filenames))
         if not tree.files and not tree.folders:
             return
         destination_folder = self.folder

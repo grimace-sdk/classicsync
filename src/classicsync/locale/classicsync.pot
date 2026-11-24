@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-24 16:50+0000\n"
+"POT-Creation-Date: 2026-11-24 17:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -145,6 +145,14 @@ msgstr ""
 msgid "%d object(s) selected"
 msgstr ""
 
+#: classicsync/gui/common/font_conversion.py:77
+msgid "%d point sizes selected for a total of %d KB."
+msgstr ""
+
+#: classicsync/gui/common/font_conversion.py:65
+msgid "%d points (%d KB)"
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/properties.py:25
 msgid "%d.%dKB (%d bytes)"
 msgstr ""
@@ -283,6 +291,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:162
 msgid "&Change..."
+msgstr ""
+
+#: classicsync/gui/common/font_conversion.py:44
+msgid "&Choose the point sizes to convert:"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:266 classicsync/gui/frontends/ceservices22/sync_status.py:88 classicsync/gui/frontends/hpcexplorer11/explorer.py:181
@@ -829,7 +841,7 @@ msgstr ""
 msgid "A file name cannot contain any of the following characters: \\ / : * ? \" < > |"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:917
+#: classicsync/gui/common/device_browser.py:942
 msgid "A folder with the name you specified already exists. Specify a different file name."
 msgstr ""
 
@@ -1293,6 +1305,10 @@ msgstr ""
 msgid "Backup: Unrecoverable Error"
 msgstr ""
 
+#: classicsync/convert/fonts.py:31
+msgid "Baltic"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/properties.py:79
 msgid "Baud Rate:"
 msgstr ""
@@ -1365,7 +1381,7 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/font_conversion.py:39 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
 msgid "Cancel"
 msgstr ""
 
@@ -1405,7 +1421,7 @@ msgstr ""
 msgid "Cannot explore or open an unconnected device."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:994
+#: classicsync/gui/common/device_browser.py:1019
 msgid "Cannot print file '%s'. Check to make sure enough Windows system resources are available and that the application is installed correctly."
 msgstr ""
 
@@ -1425,8 +1441,16 @@ msgstr ""
 msgid "Casio PC Connect device"
 msgstr ""
 
+#: classicsync/convert/fonts.py:27
+msgid "Central European"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/sync_status.py:50 classicsync/gui/frontends/hpcexplorer11/commands.py:120
 msgid "Changes the display options for the window."
+msgstr ""
+
+#: classicsync/gui/common/font_conversion.py:40
+msgid "Character set to convert:"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:90
@@ -1713,6 +1737,10 @@ msgstr ""
 msgid "Conversion &Settings..."
 msgstr ""
 
+#: classicsync/gui/common/font_conversion.py:31 classicsync/gui/common/font_conversion.py:92
+msgid "Convert Font to Mobile Device Format"
+msgstr ""
+
 #: classicsync/sync/folder.py:329
 msgid "Convert documents"
 msgstr ""
@@ -1811,7 +1839,7 @@ msgstr ""
 msgid "Copying '{name}'"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:727 classicsync/gui/common/device_browser.py:802 classicsync/gui/common/device_browser.py:903 classicsync/gui/common/device_browser.py:1009 classicsync/gui/frontends/hpcexplorer11/browser.py:205
+#: classicsync/gui/common/device_browser.py:727 classicsync/gui/common/device_browser.py:827 classicsync/gui/common/device_browser.py:928 classicsync/gui/common/device_browser.py:1034 classicsync/gui/frontends/hpcexplorer11/browser.py:205
 msgid "Copying..."
 msgstr ""
 
@@ -1873,6 +1901,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:95
 msgid "Cut selected item(s)"
+msgstr ""
+
+#: classicsync/convert/fonts.py:28
+msgid "Cyrillic"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/partnership_wizard.py:42
@@ -2055,7 +2087,7 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:1014 classicsync/gui/frontends/ceservices22/mobile_devices.py:423
+#: classicsync/gui/common/device_browser.py:1039 classicsync/gui/frontends/ceservices22/mobile_devices.py:423
 msgid "Disconnected"
 msgstr ""
 
@@ -2419,6 +2451,10 @@ msgstr ""
 msgid "Goes to the folder one level up."
 msgstr ""
 
+#: classicsync/convert/fonts.py:29
+msgid "Greek"
+msgstr ""
+
 #: classicsync/gui/app.py:272 classicsync/gui/frontends/activesync31/main_window.py:313 classicsync/gui/frontends/base.py:95 classicsync/gui/frontends/ceservices22/__init__.py:255 classicsync/gui/frontends/ceservices22/__init__.py:267 classicsync/gui/frontends/ceservices22/activesync.py:136 classicsync/gui/frontends/ceservices22/mobile_devices.py:406 classicsync/gui/frontends/ceservices22/tray.py:37
 msgid "Guest"
 msgstr ""
@@ -2751,7 +2787,7 @@ msgstr ""
 msgid "Modified:"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:937 classicsync/gui/frontends/hpcexplorer11/browser.py:205
+#: classicsync/gui/common/device_browser.py:962 classicsync/gui/frontends/hpcexplorer11/browser.py:205
 msgid "Moving..."
 msgstr ""
 
@@ -2987,7 +3023,7 @@ msgstr ""
 msgid "OEM"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:41 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:49 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256
+#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/font_conversion.py:38 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:41 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:49 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256
 msgid "OK"
 msgstr ""
 
@@ -3359,7 +3395,7 @@ msgstr ""
 msgid "Preparing..."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:996
+#: classicsync/gui/common/device_browser.py:1021
 msgid "Print Failure"
 msgstr ""
 
@@ -3427,7 +3463,7 @@ msgstr ""
 msgid "Read-only"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:282 classicsync/gui/common/device_browser.py:672 classicsync/gui/common/device_browser.py:750 classicsync/gui/common/device_browser.py:870
+#: classicsync/gui/common/device_browser.py:282 classicsync/gui/common/device_browser.py:672 classicsync/gui/common/device_browser.py:775 classicsync/gui/common/device_browser.py:895
 msgid "Reading folder..."
 msgstr ""
 
@@ -4563,6 +4599,10 @@ msgstr ""
 msgid "TrueType Font"
 msgstr ""
 
+#: classicsync/convert/fonts.py:30
+msgid "Turkish"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/get_connected.py:15
 msgid "Turn on and connect your mobile device to the desktop computer using the serial cable.  Then click Start and Windows CE Services will automatically connect to your device."
 msgstr ""
@@ -4591,7 +4631,7 @@ msgstr ""
 msgid "Unable to connect.  Please confirm that your serial cable is properly connected and then press Retry.  Press Cancel to manually select the port."
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:954
+#: classicsync/gui/common/device_browser.py:979
 msgid "Unable to create a shortcut to '%1'."
 msgstr ""
 
@@ -4729,6 +4769,10 @@ msgstr ""
 
 #: classicsync/sync/providers/favorites/provider.py:323
 msgid "Web pages"
+msgstr ""
+
+#: classicsync/convert/fonts.py:26
+msgid "Western"
 msgstr ""
 
 #: classicsync/gui/common/file_conversion.py:24

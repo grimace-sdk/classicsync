@@ -7,15 +7,15 @@ DEVICE_TO_DESKTOP = "device to desktop"
 DESKTOP_TO_DEVICE = "desktop to device"
 
 DESKTOP_TO_DEVICE_DEFAULTS = {"docx": "pwd", "rtf": "pwd", "xlsx": "pxl"}
-LEGACY_DESKTOP_TO_DEVICE_DEFAULTS = {"bmp": "2bp", "png": "2bp"}
+LEGACY_DESKTOP_TO_DEVICE_DEFAULTS = {"bmp": "2bp", "png": "2bp", "ttf": "fnt", "fon": "fnt"}
 
 
 def device_sources():
-    return sorted(name for name, format in FORMATS.items() if format.device)
+    return sorted(name for name, format in FORMATS.items() if format.device and format.reader is not None)
 
 
 def desktop_sources():
-    device_kinds = {FORMATS[name].kind for name in device_sources()}
+    device_kinds = {format.kind for format in FORMATS.values() if format.device}
     return sorted(name for name, format in FORMATS.items() if not format.device and format.kind in device_kinds)
 
 

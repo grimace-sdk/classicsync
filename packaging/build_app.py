@@ -35,7 +35,7 @@ def run_pyinstaller(name, script, windowed, stage):
     arguments = [
         str(script), "--name", name, "--noconfirm", "--clean", "--onedir",
         "--distpath", str(BUILD / stage / "dist"), "--workpath", str(BUILD / stage / "work"), "--specpath", str(BUILD / stage / "spec"),
-        "--collect-submodules", "classicsync", "--collect-data", "classicsync", "--collect-all", "libusb_package",
+        "--collect-submodules", "classicsync", "--collect-data", "classicsync", "--collect-all", "libusb_package", "--collect-all", "freetype",
         "--paths", str(REPOSITORY / "src"),
     ]
     if not windowed:
