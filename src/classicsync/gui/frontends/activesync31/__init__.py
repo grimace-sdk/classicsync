@@ -74,6 +74,12 @@ class ActiveSyncFrontend(Frontend):
         if state == STATE_CONNECTED:
             if self.settings.open_on_connect:
                 self.show_main_window()
+            if self.explore_window:
+                try:
+                    if not self.explore_window.browser.connected:
+                        self.explore_window.device_connected()
+                except RuntimeError:
+                    self.explore_window = None
         elif self.explore_window:
             try:
                 self.explore_window.device_disconnected()

@@ -271,6 +271,8 @@ class DeviceBrowser(wx.SplitterWindow):
         return self.root_label if folder == "\\" else self.root_label + folder
 
     def navigate(self, folder, then=None):
+        if not self.connected:
+            return
         self.folder = folder
         self.on_title(self.root_label if folder == "\\" else folder.rsplit("\\", 1)[-1])
         self.on_folder(folder)
@@ -962,7 +964,21 @@ class DeviceBrowser(wx.SplitterWindow):
 
     def device_disconnected(self):
         self.connected = False
+        self.clipboard = None
         self.on_status(_("Disconnected"), 0)
         self.list.DeleteAllItems()
         self.list.Enable(False)
         self.tree.Enable(False)
+
+    def device_connected(self, root_label):
+        self.connected = True
+        self.root_label = root_label
+        self.folder = "\\"
+        self.tree.DeleteChildren(self.tree_root)
+        self.tree.SetItemText(self.tree_root, root_label)
+        self.tree.SetItemHasChildren(self.tree_root, True)
+        self.tree.SelectItem(self.tree_root)
+        self.list.Enable(True)
+        self.tree.Enable(True)
+        self.navigate("\\")
+        wx.CallAfter(self.tree.Expand, self.tree_root)

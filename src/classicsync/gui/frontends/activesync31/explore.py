@@ -51,6 +51,17 @@ class ExploreWindow(wx.Frame):
         self.browser.navigate("\\")
         self.Centre()
 
+    def enable_tools(self, enabled):
+        toolbar = self.GetToolBar()
+        for index in range(toolbar.GetToolsCount()):
+            tool = toolbar.GetToolByPos(index)
+            if not tool.IsSeparator():
+                toolbar.EnableTool(tool.GetId(), enabled)
+
     def device_disconnected(self):
         self.browser.device_disconnected()
-        self.GetToolBar().Enable(False)
+        self.enable_tools(False)
+
+    def device_connected(self):
+        self.enable_tools(True)
+        self.browser.device_connected(root_name(self.frontend.service.announcement))
