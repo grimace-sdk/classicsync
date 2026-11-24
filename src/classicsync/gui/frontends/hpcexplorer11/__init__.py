@@ -167,7 +167,12 @@ class HpcExplorerFrontend(Frontend):
         finally:
             self.device_prompt_open = False
         if choice == CHOICE_PARTNERSHIP and self.service.announcement is announcement:
-            self.set_up_partnership(_("Setup New Partner Wizard"), _(PARTNERSHIP_FAILED), exclusive=True)
+            from .partner_wizard import run_partner_wizard
+            self.device_prompt_open = True
+            try:
+                run_partner_wizard(self.explorer_window, self)
+            finally:
+                self.device_prompt_open = False
         elif choice == CHOICE_RESTORE and self.service.announcement is announcement:
             from .backup import restore_guest
             restore_guest(self, self.explorer_window)

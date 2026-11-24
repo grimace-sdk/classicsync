@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-24 16:29+0000\n"
+"POT-Creation-Date: 2026-11-24 16:33+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -241,6 +241,14 @@ msgstr ""
 msgid "&Auto Arrange"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:159
+msgid "&Automatically back up upon connecting"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:170
+msgid "&Automatically synchronize upon connecting"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:297
 msgid "&Back"
 msgstr ""
@@ -373,6 +381,10 @@ msgstr ""
 msgid "&Enable synchronization"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:113
+msgid "&Exit Setup"
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/main_window.py:145 classicsync/gui/frontends/ceservices22/mobile_devices.py:251 classicsync/gui/frontends/ceservices22/mobile_devices.py:601 classicsync/gui/frontends/ceservices22/mobile_devices.py:648
 msgid "&Explore"
 msgstr ""
@@ -489,7 +501,7 @@ msgstr ""
 msgid "&New Partner"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/get_connected.py:51 classicsync/gui/frontends/activesync31/get_connected.py:112 classicsync/gui/frontends/activesync31/partnership_wizard.py:82 classicsync/gui/frontends/activesync31/partnership_wizard.py:237
+#: classicsync/gui/frontends/activesync31/get_connected.py:51 classicsync/gui/frontends/activesync31/get_connected.py:112 classicsync/gui/frontends/activesync31/partnership_wizard.py:82 classicsync/gui/frontends/activesync31/partnership_wizard.py:237 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:139 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:180
 msgid "&Next >"
 msgstr ""
 
@@ -601,7 +613,7 @@ msgstr ""
 msgid "&Restore from:"
 msgstr ""
 
-#: classicsync/gui/common/backup_dialogs.py:246
+#: classicsync/gui/common/backup_dialogs.py:246 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:113
 msgid "&Resume"
 msgstr ""
 
@@ -625,7 +637,7 @@ msgstr ""
 msgid "&Show all files"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/backup.py:159
+#: classicsync/gui/frontends/hpcexplorer11/backup.py:159 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:122
 msgid "&Skip"
 msgstr ""
 
@@ -649,7 +661,7 @@ msgstr ""
 msgid "&Synchronize"
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/sync_status.py:268 classicsync/gui/frontends/hpcexplorer11/synchronization.py:134
+#: classicsync/gui/frontends/ceservices22/sync_status.py:268 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:167 classicsync/gui/frontends/hpcexplorer11/synchronization.py:134
 msgid "&Synchronize Now"
 msgstr ""
 
@@ -765,7 +777,7 @@ msgstr ""
 msgid "3.0 suits iCloud and most servers. Existing contacts keep their version."
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/get_connected.py:50 classicsync/gui/frontends/activesync31/partnership_wizard.py:81
+#: classicsync/gui/frontends/activesync31/get_connected.py:50 classicsync/gui/frontends/activesync31/partnership_wizard.py:81 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:138
 msgid "< &Back"
 msgstr ""
 
@@ -1101,12 +1113,20 @@ msgstr ""
 msgid "Automatic backup (incremental only)"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:69 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:248
+msgid "Automatic backup path and filename:"
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/get_connected.py:152
 msgid "Available"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:21 classicsync/gui/frontends/activesync31/get_connected.py:22 classicsync/gui/frontends/ceservices22/get_connected.py:20 classicsync/gui/frontends/ceservices22/get_connected.py:21
 msgid "Available, looking for device..."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:165
+msgid "B&ack Up Now"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:216 classicsync/gui/frontends/ceservices22/mobile_devices.py:216
@@ -1155,6 +1175,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:51 classicsync/gui/frontends/ceservices22/backup.py:44 classicsync/gui/frontends/hpcexplorer11/backup.py:46
 msgid "Backup Complete"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:249
+msgid "Backup Files (*.stg)|*.stg"
 msgstr ""
 
 #: classicsync/gui/common/backup_dialogs.py:87 classicsync/gui/frontends/activesync31/backup.py:122
@@ -1253,6 +1277,10 @@ msgstr ""
 msgid "Bitmap Image"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:162
+msgid "Br&owse..."
+msgstr ""
+
 #: classicsync/gui/common/backup_dialogs.py:304 classicsync/gui/common/plugin_settings.py:86
 msgid "Browse..."
 msgstr ""
@@ -1305,7 +1333,7 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:42 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:50 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:140 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
 msgid "Cancel"
 msgstr ""
 
@@ -1405,12 +1433,20 @@ msgstr ""
 msgid "Click Finish to exit this wizard."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:54
+msgid "Click Next to proceed with initial backup and database synchronization setup."
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/activesync.py:204
 msgid "Click Remove Duplicates to remove any duplicate items found by synchronization service providers on the desktop computer."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:195
 msgid "Click Restore Now to begin restoring your mobile device."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:80
+msgid "Click the Synchronize Now button below to set up synchronization and add your desktop data to your H/PC."
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/activesync.py:242
@@ -2119,6 +2155,10 @@ msgstr ""
 msgid "Excel (.xlsx)"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:110
+msgid "Exit Setup"
+msgstr ""
+
 #: classicsync/gui/common/conflicts.py:221
 msgid "Explains these options in more detail."
 msgstr ""
@@ -2161,6 +2201,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:38
 msgid "Failed to Set Up Partnership"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:57
+msgid "Failed to establish partnership."
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/__init__.py:27
@@ -2227,7 +2271,7 @@ msgstr ""
 msgid "Files in \\My Documents and one level of subfolders. A {product} addition."
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/partnership_wizard.py:237
+#: classicsync/gui/frontends/activesync31/partnership_wizard.py:237 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:180
 msgid "Finish"
 msgstr ""
 
@@ -2285,6 +2329,10 @@ msgstr ""
 
 #: classicsync/sync/mail/maildir.py:164
 msgid "From: {value}"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:72
+msgid "Full Backup"
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:31
@@ -2409,6 +2457,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/options.py:115
 msgid "If there is a conflict (an item has been changed on both the mobile device and desktop computer):"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:120
+msgid "If you choose to skip this step, you can set up synchronization in the future via the Tools->Synchronization Manager menu."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:205
@@ -2795,6 +2847,18 @@ msgstr ""
 msgid "Note:  While waiting to connect, or connected, the selected port is not available for other applications and devices.\n\nTo free the port, switch to another or close all applications that require communications with your H/PC."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:66
+msgid "Note: Automatic backup copies only the data that has changed since the last backup and generally completes very quickly."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:75
+msgid "Note: Full backup copies all data on your H/PC and may take a few minutes to complete."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:34
+msgid "Note: This desktop computer may have only one partner H/PC. In addition, each H/PC may only have one partner desktop computer."
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/backup.py:43 classicsync/gui/frontends/ceservices22/backup.py:36
 msgid "Note: You cannot cancel restore after it has been started."
 msgstr ""
@@ -3059,6 +3123,10 @@ msgstr ""
 msgid "Palm PC"
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:111
+msgid "Partner H/PC Setup is not complete. If you quit Setup, you may not have access to some partner H/PC features."
+msgstr ""
+
 #: classicsync/gui/app.py:268
 msgid "Partnership"
 msgstr ""
@@ -3073,6 +3141,18 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:128
 msgid "Partnership Selection"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:47
+msgid "Partnership already established."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:53
+msgid "Partnership has been successfully established between this desktop computer and the connected H/PC."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:52
+msgid "Partnership successfully established."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:247
@@ -3395,6 +3475,10 @@ msgstr ""
 msgid "Resolve items..."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:61
+msgid "Restart Windows and reset the H/PC and run the Setup New Partner Wizard again."
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/backup.py:209 classicsync/gui/frontends/ceservices22/backup.py:155 classicsync/gui/frontends/hpcexplorer11/backup.py:134
 msgid "Restore"
 msgstr ""
@@ -3603,8 +3687,24 @@ msgstr ""
 msgid "Setup Complete"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/__init__.py:170
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:13
 msgid "Setup New Partner Wizard"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:90
+msgid "Setup completed successfully!"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:58
+msgid "Setup has encountered an unknown error while attempting to establish partnership between this desktop computer and the connected H/PC."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:60
+msgid "Setup of partner H/PC has failed."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:91
+msgid "Setup of partner H/PC is complete. To finish, select the Finish button."
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:605
@@ -3855,19 +3955,27 @@ msgstr ""
 msgid "Synchronization Error"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/__init__.py:221 classicsync/gui/frontends/hpcexplorer11/__init__.py:203 classicsync/gui/frontends/hpcexplorer11/__init__.py:244 classicsync/gui/frontends/hpcexplorer11/backup.py:104 classicsync/gui/frontends/hpcexplorer11/synchronization.py:266 classicsync/gui/frontends/hpcexplorer11/synchronization.py:350
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:226 classicsync/gui/frontends/hpcexplorer11/__init__.py:208 classicsync/gui/frontends/hpcexplorer11/__init__.py:249 classicsync/gui/frontends/hpcexplorer11/backup.py:104 classicsync/gui/frontends/hpcexplorer11/synchronization.py:266 classicsync/gui/frontends/hpcexplorer11/synchronization.py:350
 msgid "Synchronization Manager"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/__init__.py:244
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:84
+msgid "Synchronization Manager can automatically synchronize your Appointments, Contacts, and Tasks each time you connect your H/PC to your desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:249
 msgid "Synchronization Manager is available once the H/PC has connected."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:117
+msgid "Synchronization Not Complete"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/activesync.py:143
 msgid "Synchronization Status Unknown"
 msgstr ""
 
-#: classicsync/gui/frontends/hpcexplorer11/__init__.py:221
+#: classicsync/gui/frontends/hpcexplorer11/__init__.py:226
 msgid "Synchronization did not complete.\n\n{error}"
 msgstr ""
 
@@ -3919,7 +4027,7 @@ msgstr ""
 msgid "Synchronization: Up-to-date."
 msgstr ""
 
-#: classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:303 classicsync/gui/frontends/ceservices22/sync_status.py:105 classicsync/gui/frontends/ceservices22/tray.py:65
+#: classicsync/gui/frontends/ceservices22/mobile_devices.py:602 classicsync/gui/frontends/ceservices22/mobile_devices.py:303 classicsync/gui/frontends/ceservices22/sync_status.py:105 classicsync/gui/frontends/ceservices22/tray.py:65 classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:122
 msgid "Synchronize &Now"
 msgstr ""
 
@@ -4023,8 +4131,20 @@ msgstr ""
 msgid "The H/PC is automatically connected when attached to your desktop computer. Upon connection, automatic operations (such as Synchronization and Backup) may proceed. "
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:48
+msgid "The H/PC you have connected has already been established as the partner H/PC for this desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:40
+msgid "The H/PC you have connected has already established another computer as its partner desktop computer. Proceeding with this wizard will remove the other computer as the partner, replacing it with this desktop computer."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:117
 msgid "The Restore operation allows you to return your H/PC to the state it was in at the time you last backed up.  This operation should be used only as a last resort as it removes all current files and data from your H/PC."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:78
+msgid "The Synchronization Manager keeps your Appointment, Contact, and Task data current between the H/PC and your desktop computer."
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:102
@@ -4187,12 +4307,52 @@ msgstr ""
 msgid "This will remove the application \"%s\" from your mobile device and this desktop computer.\n\nIf you need this application in the future, you will have to reinstall it."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:33
+msgid "This wizard will help you set up a partner H/PC for this desktop computer."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:36
+msgid "To begin setup, click Next."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:74
+msgid "To complete backup now (recommended) select the Back Up Now button."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:49
+msgid "To complete setup, click Finish."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:112
+msgid "To continue (recommended), choose Resume. To quit, choose Exit Setup."
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:160
 msgid "To delete a partnership, select it from the list and then click Delete."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:87
+msgid "To disable synchronization upon connecting, clear the check box, and then click Next."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:68
+msgid "To enable automatic backup (recommended), click Next."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:86
+msgid "To enable synchronization upon connecting, click Next."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:119
 msgid "To ensure a successful restore, quit all programs on your H/PC. Then click Restore Now."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:73
+msgid "To ensure the safety of your current data you should complete a full backup of your H/PC."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:64
+msgid "To ensure the safety of your future data, H/PC Explorer can automatically back up each time you connect your H/PC."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/options.py:35 classicsync/gui/frontends/activesync31/partnership_wizard.py:180
@@ -4201,6 +4361,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:46 classicsync/gui/frontends/ceservices22/backup.py:39 classicsync/gui/frontends/hpcexplorer11/backup.py:41
 msgid "To minimize the possibility of database losses or duplicates, Backup strongly recommends that you Synchronize Now before proceeding.\r\n\r\nSynchronize Now (recommended)?"
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:44
+msgid "To proceed, click Next. To abort, click Cancel."
 msgstr ""
 
 #: classicsync/gui/common/app_manager.py:50
@@ -4375,6 +4539,10 @@ msgstr ""
 msgid "Waiting to connect to H/PC..."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:39
+msgid "Warning: Partner desktop computer already established."
+msgstr ""
+
 #: classicsync/gui/common/device_browser.py:65
 msgid "Wave Sound"
 msgstr ""
@@ -4475,12 +4643,20 @@ msgstr ""
 msgid "You have not completed a full backup. Setup recommends you complete a full backup before proceeding."
 msgstr ""
 
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:118
+msgid "You have not synchronized your Appointment, Contact, and Task data. Setup recommends you perform this synchronization before proceeding."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:66
 msgid "You may choose to Skip these files; backup will retain any previous backup copies in the storage file."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:71 classicsync/gui/frontends/ceservices22/backup.py:64
 msgid "You may choose to skip these files; backup will retain any previous backup copies in the storage file."
+msgstr ""
+
+#: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:42
+msgid "You will no longer be able to synchronize or automatically back up this H/PC with the other desktop computer."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:134
