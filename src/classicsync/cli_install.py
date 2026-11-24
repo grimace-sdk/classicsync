@@ -65,7 +65,7 @@ async def command_uninstall(arguments):
 
 
 def add_commands(subparsers, device_command):
-    install = device_command("install", command_install, _("install a .cab, CeAppMgr .ini or H/PC .load package on the device"))
+    install = device_command("install", command_install, _("install a .cab, CeAppMgr .ini, H/PC .load or Casio .cbea package on the device"))
     install.add_argument("file")
     install.add_argument("--dest", dest="destination", help=_("install folder for .load scripts"))
     install.add_argument("--ask-destination", action="store_true", help=_("let wceload ask where to install instead of /noaskdest"))

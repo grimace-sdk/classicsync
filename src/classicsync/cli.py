@@ -12,6 +12,7 @@ from .connection.desktop import DESKTOP_IP, DEVICE_IP, Desktop
 from .gui.settings import Settings
 from .i18n import _, ngettext, set_language
 from .link.transport import open_transport
+from .pcconnect import PcConnectSession, open_pc_connect_transport
 from .rapi import cedb
 from .rapi.client import (
     REG_BINARY, REG_DWORD, REG_EXPAND_SZ, REG_MULTI_SZ, REG_SZ, ROOT_KEYS, RapiClient, RapiError,
@@ -20,6 +21,9 @@ from .rapi.structures import FILE_ATTRIBUTE_DIRECTORY, PLATFORM_NAMES, datetime_
 from .sync.partners import PartnershipError
 
 DEFAULT_PROXY = "127.0.0.1:9990"
+DEFAULT_BAUD = 19200
+NAND_SECTORS_PER_READ = 32
+NAND_TOTAL_SECTORS = 32768
 REGISTRY_TYPE_NAMES = {REG_SZ: "string", REG_EXPAND_SZ: "expand", REG_BINARY: "binary", REG_DWORD: "dword", REG_MULTI_SZ: "multi"}
 REGISTRY_TYPES = {name: value for value, name in REGISTRY_TYPE_NAMES.items()}
 
@@ -51,11 +55,15 @@ def make_desktop(arguments):
             return None
         return await asyncio.to_thread(getpass.getpass, _("Device password: "))
 
-    transport = open_transport(arguments.port, arguments.baud)
+    if arguments.pc_connect:
+        return PcConnectSession(open_pc_connect_transport(arguments.port, arguments.baud))
+    transport = open_transport(arguments.port, arguments.baud or DEFAULT_BAUD)
     return Desktop(transport, arguments.desktop_ip, arguments.device_ip, password_provider=ask_password)
 
 
 def describe_device(announcement):
+    if getattr(announcement, "pc_connect", False):
+        return announcement.describe()
     if announcement.legacy:
         return _("Windows CE 1.x device at {address}").format(address=announcement.address)
     info = announcement.info
@@ -330,6 +338,14 @@ async def command_probe(arguments):
     desktop = make_desktop(arguments)
     await desktop.start()
     print(_("waiting for a device on {port}").format(port=desktop.transport.name), file=sys.stderr)
+    if arguments.pc_connect:
+        try:
+            device = await desktop.wait_for_device(arguments.timeout)
+            print(_("connected: {device}").format(device=describe_device(device)))
+            print(_("platform release: {release}").format(release=device.platform_release or _("unknown")))
+        finally:
+            await desktop.close()
+        return
     await desktop.link.wait_up(timeout=arguments.timeout)
     print(_("link up: desktop {desktop}, device {device}").format(desktop=desktop.link.local_ip, device=desktop.link.peer_ip), file=sys.stderr)
     try:
@@ -343,8 +359,40 @@ async def command_probe(arguments):
         await desktop.close()
 
 
+async def command_nand_dump(arguments):
+    if not arguments.port or not arguments.pc_connect:
+        raise ValueError(_("nand-dump talks to the device directly: give --port and --pc-connect"))
+    session = make_desktop(arguments)
+    await session.start()
+    try:
+        print(_("waiting for a device on {port}").format(port=session.transport.name), file=sys.stderr)
+        device = await session.wait_for_device(arguments.timeout)
+        print(_("connected: {device}").format(device=describe_device(device)), file=sys.stderr)
+        wil = session.wil
+        handle = await wil.nand_open()
+        try:
+            geometry = await wil.nand_get_info(handle)
+            print(_("NAND window {sectors} sectors of {size} bytes").format(sectors=geometry.sectors, size=geometry.sector_size), file=sys.stderr)
+            with open(arguments.output, "wb") as output:
+                for sector in range(0, NAND_TOTAL_SECTORS, NAND_SECTORS_PER_READ):
+                    count = min(NAND_SECTORS_PER_READ, NAND_TOTAL_SECTORS - sector)
+                    output.write(await wil.nand_read_sectors(handle, sector, count))
+                    if sys.stderr.isatty():
+                        print("\r" + _("reading sector {sector} of {total}").format(sector=sector + count, total=NAND_TOTAL_SECTORS),
+                              end="", file=sys.stderr)
+            if sys.stderr.isatty():
+                print(file=sys.stderr)
+        finally:
+            await wil.nand_close(handle)
+        print(_("saved {path}").format(path=arguments.output), file=sys.stderr)
+    finally:
+        await session.close()
+
+
 def add_link_arguments(parser):
-    parser.add_argument("--baud", type=int, default=19200, help=_("serial speed (default 19200)"))
+    parser.add_argument("--baud", type=int, help=_("serial speed (default 19200, or 115200 with --pc-connect)"))
+    parser.add_argument("--pc-connect", action="store_true",
+                        help=_("talk Casio PC Connect (BE-300) instead of ActiveSync; PORT 'usb' means usb:07cf:2002"))
     parser.add_argument("--desktop-ip", default=DESKTOP_IP)
     parser.add_argument("--device-ip", default=DEVICE_IP)
     parser.add_argument("--timeout", type=float, default=60, help=_("seconds to wait for a device"))
@@ -357,7 +405,7 @@ def build_parser():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     serve = subparsers.add_parser("serve", help=_("hold the connection to a device and offer RAPI to other commands"))
-    serve.add_argument("port", help=_("serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1) or tcp:HOST:PORT"))
+    serve.add_argument("port", help=_("serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP or tcp:HOST:PORT"))
     serve.add_argument("--listen", default=DEFAULT_PROXY, help=_("local RAPI address (default {address})").format(address=DEFAULT_PROXY))
     serve.add_argument("--sync-time", action="store_true", help=_("set the device clock from this computer on connect"))
     add_link_arguments(serve)
@@ -395,6 +443,8 @@ def build_parser():
     run.add_argument("program")
     run.add_argument("arguments", nargs="*")
     device_command("time", command_time, _("set the device clock from this computer"))
+    nand_dump = device_command("nand-dump", command_nand_dump, _("save the whole NAND flash of a Casio BE-300 (with --port and --pc-connect)"))
+    nand_dump.add_argument("output")
 
     registry = device_command("reg", command_reg, _("read and write the device registry"))
     registry.add_argument("action", choices=["list", "get", "set", "delete"])

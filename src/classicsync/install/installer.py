@@ -1,8 +1,10 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from ..i18n import _
 from ..rapi.client import HKEY_LOCAL_MACHINE, RapiError
 from .appmgr import read_appmgr_ini, select_component_package
+from .cbea import INSTALL_PROGRAM, MAIN_MEMORY_SWITCH, STAGING_DIRECTORY, STAGING_PATH, read_cbea
 from .load_script import APPS_KEY, UNLOAD_PROGRAM, LoadScriptInstaller
 from .package import DeviceProfile, InstallError, compatibility_problem, read_cab_package
 from .records import DesktopAppRecords
@@ -123,6 +125,23 @@ async def install_components(client, components, profile=None, default_folder=Tr
     return outcomes
 
 
+async def install_cbea(client, package, progress=None):
+    await ensure_directory(client, STAGING_DIRECTORY)
+    reporter = (lambda written: progress(written, len(package.data))) if progress else None
+    await client.write_file_contents(STAGING_PATH, package.data, progress=reporter)
+    arguments = f"{MAIN_MEMORY_SWITCH} {STAGING_PATH}"
+    outcome = InstallOutcome(package.program, "", STAGING_PATH)
+    try:
+        await client.create_process(INSTALL_PROGRAM, arguments)
+    except RapiError as error:
+        outcome.message = _("{package}: copied to {path}").format(package=package.describe(), path=STAGING_PATH)
+        outcome.errors.append(_("could not start {program}: {error}").format(program=INSTALL_PROGRAM, error=error))
+        return outcome
+    outcome.message = _("{package}: copied to {path}, started {program} {arguments}; check the device screen").format(
+        package=package.describe(), path=STAGING_PATH, program=INSTALL_PROGRAM, arguments=arguments)
+    return outcome
+
+
 async def install_load(client, script_path, destination=None, profile=None, log=None):
     profile = profile or await read_device_profile(client)
     installer = LoadScriptInstaller(client, script_path, destination, profile.processor_type, log)
@@ -134,6 +153,8 @@ async def install_load(client, script_path, destination=None, profile=None, log=
 async def install_file(client, path, destination=None, default_folder=True, progress=None, log=None, records=None):
     path = Path(path)
     suffix = path.suffix.lower()
+    if suffix == ".cbea":
+        return [await install_cbea(client, read_cbea(path), progress)]
     profile = await read_device_profile(client)
     if suffix == ".load":
         return [await install_load(client, path, destination, profile, log)]
@@ -145,7 +166,7 @@ async def install_file(client, path, destination=None, default_folder=True, prog
         for component in components:
             records.add_component(component)
         return await install_components(client, components, profile, default_folder, progress)
-    raise InstallError(f"{path.name}: expected a .cab, .ini or .load file")
+    raise InstallError(f"{path.name}: expected a .cab, .cbea, .ini or .load file")
 
 
 async def list_installed_apps(client, include_uninstalled=False):

@@ -11,6 +11,7 @@ log = logging.getLogger("classicsync.usb")
 REQUEST_TYPE_CLASS_INTERFACE_OUT = 0x21
 REQUEST_SET_CONTROL_LINE_STATE = 0x22
 LINE_STATE_DTR = 0x01
+LINE_STATE_DTR_RTS = 0x03
 READY_ATTEMPTS = 100
 CONTROL_TIMEOUT_MS = 100
 READ_TIMEOUT_MS = 200
@@ -96,8 +97,10 @@ def _bulk_interface(configuration, preferred_number, util):
 
 
 class UsbSerialTransport(Transport):
-    def __init__(self, spec):
+    def __init__(self, spec, line_state=LINE_STATE_DTR, coalesce_writes=True):
         self.spec = spec
+        self.line_state = line_state
+        self.coalesce_writes = coalesce_writes
         self.name = spec
         self.device = None
         self.interface_number = None
@@ -151,7 +154,7 @@ class UsbSerialTransport(Transport):
     def _signal_ready(self, core):
         for _ in range(READY_ATTEMPTS):
             try:
-                self._set_line_state(LINE_STATE_DTR)
+                self._set_line_state(self.line_state)
                 return
             except core.USBError:
                 continue
@@ -185,10 +188,11 @@ class UsbSerialTransport(Transport):
                     self.outgoing_ready.wait(0.5)
                 if self.stopping.is_set():
                     return
-                data = b"".join(self.outgoing)
+                transfers = [b"".join(self.outgoing)] if self.coalesce_writes else list(self.outgoing)
                 self.outgoing.clear()
             try:
-                self.endpoint_out.write(data, WRITE_TIMEOUT_MS)
+                for data in transfers:
+                    self.endpoint_out.write(data, WRITE_TIMEOUT_MS)
             except core.USBError as error:
                 log.info("%s write failed: %s", self.name, error)
                 self.loop.call_soon_threadsafe(self.queue.put_nowait, b"")
@@ -204,7 +208,23 @@ class UsbSerialTransport(Transport):
 
     async def set_dtr(self, active):
         if self.device:
-            await asyncio.to_thread(self._set_line_state, LINE_STATE_DTR if active else 0)
+            await asyncio.to_thread(self._set_line_state, self.line_state if active else 0)
+
+    async def reset_device(self):
+        await asyncio.to_thread(self._reset_device)
+
+    def _reset_device(self):
+        core, util = require_pyusb()
+        vendor_id, product_id = parse_spec(self.spec)
+        device = core.find(idVendor=vendor_id, idProduct=product_id)
+        if device is None:
+            return False
+        try:
+            device.reset()
+        except core.USBError as error:
+            log.info("%s reset failed: %s", self.name, error)
+        util.dispose_resources(device)
+        return True
 
     async def close(self):
         self.stopping.set()

@@ -24,7 +24,8 @@ Tests that need the original installers look in `$CLASSICSYNC_INSTALLERS` (defau
 - `src/classicsync/net`: userspace IPv4, TCP, UDP and ICMP over the PPP link. No root, no pppd.
 - `src/classicsync/connection`: connection manager (TCP 5679), the `Desktop` session, port scanning for Get Connected.
 - `src/classicsync/rapi`: RAPI client (TCP 990), commands 0x00-0x55.
-- `src/classicsync/install`: CE 2.x/3.x CABs and CeAppMgr INIs via wceload, CE 1.0 `.load` scripts.
+- `src/classicsync/link/pcconnect.py`, `src/classicsync/pcconnect`: Casio PC Connect for the BE-300: the `0x55` handshake and big-endian frame link, the `Wil*` command client, a bridge that answers RAPI requests with `Wil*` calls (so `RapiClient`, `serve` and the CLI work unchanged), and the session. Tests run against `tests/fake_pcconnect.py`.
+- `src/classicsync/install`: CE 2.x/3.x CABs and CeAppMgr INIs via wceload, CE 1.0 `.load` scripts, Casio `.cbea` packages via CoInstall.
 - `src/classicsync/sync`: two-way sync engine over RAPI, partnerships, the provider plugin API, plugin installer (`plugin_install.py`), provider settings schema and the default `folder` provider. `sync/providers/` holds the other built-in providers (CalDAV/CardDAV, Outlook, macOS, offline pages, notes). See [docs/sync-plugins.md](docs/sync-plugins.md).
 - `src/classicsync/convert`: Pocket Word, Pocket Excel and 2bp converters.
 - `src/classicsync/backup`: `.stg` backup and restore.

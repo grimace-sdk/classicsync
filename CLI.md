@@ -17,6 +17,21 @@ Any device command also takes `--port PORT` to connect directly without `serve`,
 
 USB cradles for CE 3.0-era devices are a serial stream over bulk endpoints. On Linux the kernel `ipaq` driver exposes them as `/dev/ttyUSB0`. Elsewhere install the `usb` extra (`pyusb`, plus libusb) and use `usb` or `usb:VVVV:PPPP`; on Windows the cradle needs the WinUSB driver (for example via Zadig). The USB path follows the Linux driver but has not been tested on hardware yet.
 
+### Casio BE-300 (PC Connect)
+
+The BE-300 runs Windows CE 3.0 under Casio's own shell and talks Casio PC Connect over USB instead of ActiveSync. Add `--pc-connect`; `usb` then means the BE-300's `usb:07cf:2002`, and a serial cable runs at 115200.
+
+```
+classicsync serve usb --pc-connect
+classicsync info
+classicsync ls "/Nand Disk"
+classicsync put notes.txt "/Nand Disk/My Documents/notes.txt"
+classicsync install Solitaire.BE-300.cbea   # copied to \Temp\install.cbea, then CoInstall.exe _M
+classicsync nand-dump be300.bin --port usb --pc-connect   # the whole 16 MB NAND, about a minute
+```
+
+`serve` handshakes as soon as the BE-300 is docked and turned on. If it does not answer, ClassicSync resets the USB port, which makes the BE-300 start a connection by itself; choosing Connect Now on the device also works. Files, folders, the registry, `run`, `time` and `.cbea` installs work; synchronization, `.stg` backup and `db` need ActiveSync's object store calls and do not. On Linux, keep the kernel `ipaq` driver off the BE-300 (it claims `07cf:2002` and asserts only DTR, which makes the device drop the link): ClassicSync detaches it while connected, but a udev rule that unbinds it is more reliable.
+
 ## Files, registry and databases
 
 ```
@@ -37,7 +52,7 @@ classicsync db dump "Contacts Database"
 ## Programs
 
 ```
-classicsync install App.mips.cab            # also a CeAppMgr .ini, or a CE 1.0 .load script
+classicsync install App.mips.cab            # also a CeAppMgr .ini, a CE 1.0 .load script, or a Casio .cbea
 classicsync apps
 classicsync uninstall "Microsoft Mute"
 ```
