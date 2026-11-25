@@ -1,4 +1,5 @@
 import asyncio
+import errno
 import logging
 import threading
 from datetime import datetime, timezone
@@ -152,7 +153,8 @@ class DeviceService:
                 raise
             except Exception as error:
                 log.info("connection ended: %s", error)
-                self._set_state(STATE_WAITING, error=str(error))
+                missing_port = usb and getattr(error, "errno", None) == errno.ENOENT
+                self._set_state(STATE_WAITING, error=None if missing_port else str(error))
             await self._close_desktop()
             await self._pause(usb)
 

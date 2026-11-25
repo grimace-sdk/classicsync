@@ -101,3 +101,19 @@ def test_missing_libusb_falls_back_to_serial(run, fake_usb):
         supervisor.cancel()
         assert fake_usb.scans == 0
     run(scenario)
+
+
+def test_missing_serial_adapter_is_not_an_error_while_usb_is_enabled(run, fake_usb):
+    async def scenario():
+        device_service = make_service(serial_port="/dev/cu.usbserial-110")
+        states = []
+        device_service.notify = lambda state, announcement, error: states.append((state, error))
+
+        async def missing_port(port):
+            raise OSError(2, f"could not open port {port}: [Errno 2]")
+        device_service._run_session = missing_port
+        supervisor = asyncio.create_task(device_service._supervise())
+        await wait_until(lambda: len(states) >= 2)
+        supervisor.cancel()
+        assert all(error is None for state, error in states)
+    run(scenario)
