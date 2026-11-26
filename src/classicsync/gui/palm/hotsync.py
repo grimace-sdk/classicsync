@@ -180,6 +180,7 @@ class LogDialog(wx.Dialog):
         self.text = place(self, wx.TextCtrl, 10, 25, 354, 171, "", style=wx.TE_MULTILINE | wx.TE_READONLY)
         place(self, wx.Button, 162, 202, 50, 14, _("OK"), id=wx.ID_OK).SetDefault()
         self.users.Bind(wx.EVT_CHOICE, self.on_user)
+        self.Bind(wx.EVT_ACTIVATE, lambda event: (self.on_user(None), event.Skip()))
         if self.partnerships:
             self.users.SetSelection(0)
             self.on_user(None)
@@ -299,13 +300,18 @@ class HotSyncManager:
         elif kind == EVENT_FINISHED:
             self.progress.close()
             self.progress = None
-            succeeded, message, problems = payload
-            if problems:
-                self.show_problem(message)
+            succeeded, message, logged = payload
+            if succeeded and logged:
+                self.show_problem(_("Synchronization generated one or more messages. Please see the HotSync Log for details."))
+            elif not succeeded and logged:
+                self.show_problem(_("The HotSync operation was interrupted. Some of your data was NOT backed up.\n\n"
+                                    "For details, click 'View Log' below."))
+            elif not succeeded and message:
+                wx.MessageBox(_("The HotSync operation was interrupted. Some of your data was NOT backed up.\n\n{error}").format(
+                    error=message), _("HotSync Problem"), wx.OK | wx.ICON_WARNING)
 
-    def show_problem(self, message):
-        text = _("Synchronization generated one or more messages. Please see the HotSync Log for details.")
-        with wx.MessageDialog(None, f"{text}\n\n{message}", _("HotSync Problem"), wx.YES_NO | wx.ICON_WARNING) as dialog:
+    def show_problem(self, text):
+        with wx.MessageDialog(None, text, _("HotSync Problem"), wx.YES_NO | wx.ICON_WARNING) as dialog:
             dialog.SetYesNoLabels(_("OK"), _("&View Log"))
             if dialog.ShowModal() == wx.ID_NO:
                 self.show_log()

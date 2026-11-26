@@ -24,18 +24,18 @@ def conduit_line(name, failed, messages):
     return line
 
 
-def session_text(lines, completed):
+def session_text(lines, completed, started):
     end = _("HotSync operation complete") if completed else _("HotSync operation canceled.")
-    return "\n".join([f"{SESSION_START} {stamp()}", *lines, f"{end} {stamp()}"]) + "\n"
+    return "\n".join([f"{SESSION_START} {started}", *lines, f"{end} {stamp()}"]) + "\n"
 
 
-def append_session(partnership, lines, completed=True):
+def append_session(partnership, lines, completed=True, started=None):
     path = log_path(partnership)
     existing = path.read_text(encoding="utf-8") if path.exists() else ""
     sessions = [part for part in existing.split(SESSION_START) if part.strip()]
     sessions = [SESSION_START + part for part in sessions][-(KEPT_SESSIONS - 1):]
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("".join(sessions) + session_text(lines, completed), encoding="utf-8")
+    path.write_text("".join(sessions) + session_text(lines, completed, started or stamp()), encoding="utf-8")
 
 
 def read_log(partnership):

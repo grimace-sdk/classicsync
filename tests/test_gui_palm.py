@@ -26,6 +26,8 @@ def test_hotsync_session_reports_progress_and_writes_the_log(run, tmp_path, monk
     assert events[-1][0] == EVENT_FINISHED and succeeded and not problems
     log = read_log(palm_partnerships()[0])
     assert log.startswith("HotSync operation started") and "OK Address Book" in log and "OK Memo Pad" in log
+    lines = log.splitlines()
+    assert lines[1:6] == ["OK Address Book", "OK Date Book", "OK To Do List", "OK Memo Pad", "OK Backup"]
 
 
 def test_first_hotsync_asks_for_a_user(run, tmp_path, monkeypatch):
@@ -56,3 +58,17 @@ def test_log_keeps_the_last_sessions(tmp_path):
         append_session(partnership, [f"OK session {index}"])
     log = read_log(partnership)
     assert log.count("HotSync operation started") == KEPT_SESSIONS and "OK session 0\n" not in log
+
+
+def test_a_failure_before_the_user_is_known_is_reported(run, tmp_path, monkeypatch):
+    monkeypatch.setenv("CLASSICSYNC_HOME", str(tmp_path))
+    events = []
+
+    class BrokenPalm(FakePalm):
+        async def read(self):
+            return b""
+
+    service = service_for(BrokenPalm(handheld_databases()), events)
+    run(lambda: service._hotsync(None))
+    succeeded, message, logged = events[-1][1]
+    assert not succeeded and message and not logged

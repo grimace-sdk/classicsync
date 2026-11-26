@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-26 23:37+0000\n"
+"POT-Creation-Date: 2026-11-26 23:46+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,7 +69,7 @@ msgstr ""
 msgid " You may choose to skip these files; however, they will not be correctly restored on your device."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:132
+#: classicsync/gui/palm/hotsync.py:133
 msgid " is already in use as a user or profile name."
 msgstr ""
 
@@ -241,7 +241,7 @@ msgstr ""
 msgid "&About Windows CE Services"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:228
+#: classicsync/gui/palm/hotsync.py:230
 msgid "&About..."
 msgstr ""
 
@@ -365,7 +365,7 @@ msgstr ""
 msgid "&Copy\tCtrl+C"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:224
+#: classicsync/gui/palm/hotsync.py:226
 msgid "&Custom..."
 msgstr ""
 
@@ -437,7 +437,7 @@ msgstr ""
 msgid "&File"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:225
+#: classicsync/gui/palm/hotsync.py:227
 msgid "&File Link..."
 msgstr ""
 
@@ -473,7 +473,7 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:229
+#: classicsync/gui/palm/hotsync.py:231
 msgid "&Help..."
 msgstr ""
 
@@ -489,7 +489,7 @@ msgstr ""
 msgid "&Incremental: back up only data that has changed since the last backup"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:220
+#: classicsync/gui/palm/hotsync.py:222
 msgid "&InfraRed"
 msgstr ""
 
@@ -541,7 +541,7 @@ msgstr ""
 msgid "&Local RAPI address:"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:216
+#: classicsync/gui/palm/hotsync.py:218
 msgid "&Local Serial"
 msgstr ""
 
@@ -557,7 +557,7 @@ msgstr ""
 msgid "&Mobile Device"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:218
+#: classicsync/gui/palm/hotsync.py:220
 msgid "&Modem"
 msgstr ""
 
@@ -569,7 +569,7 @@ msgstr ""
 msgid "&Naming:"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:219
+#: classicsync/gui/palm/hotsync.py:221
 msgid "&Network"
 msgstr ""
 
@@ -581,7 +581,7 @@ msgstr ""
 msgid "&New Partner"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:149
+#: classicsync/gui/palm/hotsync.py:150
 msgid "&New..."
 msgstr ""
 
@@ -721,7 +721,7 @@ msgstr ""
 msgid "&Settings..."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:222
+#: classicsync/gui/palm/hotsync.py:224
 msgid "&Setup..."
 msgstr ""
 
@@ -797,11 +797,11 @@ msgstr ""
 msgid "&View"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:308
+#: classicsync/gui/palm/hotsync.py:315
 msgid "&View Log"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:226
+#: classicsync/gui/palm/hotsync.py:228
 msgid "&View Log..."
 msgstr ""
 
@@ -941,7 +941,7 @@ msgstr ""
 msgid "AC"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:195
+#: classicsync/gui/palm/hotsync.py:197
 msgid "About HotSync Manager"
 msgstr ""
 
@@ -1277,7 +1277,7 @@ msgstr ""
 msgid "Backed up {count} databases"
 msgstr ""
 
-#: classicsync/gui/palm/service.py:182
+#: classicsync/gui/palm/service.py:184
 msgid "Backing up handheld databases"
 msgstr ""
 
@@ -1469,7 +1469,7 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/font_conversion.py:39 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:80 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:52 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316 classicsync/gui/palm/hotsync.py:81 classicsync/gui/palm/hotsync.py:122 classicsync/gui/palm/hotsync.py:150
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/font_conversion.py:39 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:80 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:52 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316 classicsync/gui/palm/hotsync.py:82 classicsync/gui/palm/hotsync.py:123 classicsync/gui/palm/hotsync.py:151
 msgid "Cancel"
 msgstr ""
 
@@ -1477,7 +1477,7 @@ msgstr ""
 msgid "Cancel Application Installation"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:104
+#: classicsync/gui/palm/hotsync.py:105
 msgid "Cancel HotSync operation"
 msgstr ""
 
@@ -1485,7 +1485,7 @@ msgstr ""
 msgid "Cancel backup?"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:105
+#: classicsync/gui/palm/hotsync.py:106
 msgid "Canceling - this may take 1 minute"
 msgstr ""
 
@@ -1951,7 +1951,7 @@ msgstr ""
 msgid "Copying:  %s"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:133
+#: classicsync/gui/palm/hotsync.py:134
 msgid "Could not add user '{name}'. '{name}' is an illegal user name."
 msgstr ""
 
@@ -2279,7 +2279,7 @@ msgstr ""
 msgid "E&nabled"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/tray.py:58 classicsync/gui/frontends/ceservices22/tray.py:76 classicsync/gui/frontends/hpcexplorer11/tray.py:42 classicsync/gui/palm/hotsync.py:231
+#: classicsync/gui/frontends/activesync31/tray.py:58 classicsync/gui/frontends/ceservices22/tray.py:76 classicsync/gui/frontends/hpcexplorer11/tray.py:42 classicsync/gui/palm/hotsync.py:233
 msgid "E&xit"
 msgstr ""
 
@@ -2319,7 +2319,7 @@ msgstr ""
 msgid "English and localized installers (.msi or .exe), or directories of them; an English installer with no localized build is matched by text and resource id"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:158
+#: classicsync/gui/palm/hotsync.py:159
 msgid "Enter a new user name:"
 msgstr ""
 
@@ -2627,31 +2627,31 @@ msgstr ""
 msgid "Hide files of these &types:"
 msgstr ""
 
-#: classicsync/gui/palm/service.py:201
+#: classicsync/gui/palm/service.py:203
 msgid "HotSync Error: {error}"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:175
+#: classicsync/gui/palm/hotsync.py:176
 msgid "HotSync Log"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:307
+#: classicsync/gui/palm/hotsync.py:314 classicsync/gui/palm/hotsync.py:311
 msgid "HotSync Problem"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:60
+#: classicsync/gui/palm/hotsync.py:61
 msgid "HotSync Progress"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:199
+#: classicsync/gui/palm/hotsync.py:201
 msgid "HotSync for Palm OS handhelds on Linux, macOS and Windows."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync_log.py:28 classicsync/gui/palm/service.py:195
+#: classicsync/gui/palm/hotsync_log.py:28
 msgid "HotSync operation canceled."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync_log.py:28 classicsync/gui/palm/service.py:191
+#: classicsync/gui/palm/hotsync_log.py:28 classicsync/gui/palm/service.py:193
 msgid "HotSync operation complete"
 msgstr ""
 
@@ -2699,7 +2699,7 @@ msgstr ""
 msgid "Identification"
 msgstr ""
 
-#: classicsync/gui/palm/service.py:173
+#: classicsync/gui/palm/service.py:175
 msgid "Identifying user"
 msgstr ""
 
@@ -2715,7 +2715,7 @@ msgstr ""
 msgid "If there is a conflict (an item has been changed on both the mobile device and desktop computer):"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:101
+#: classicsync/gui/palm/hotsync.py:102
 msgid "If you cancel this HotSync operation now, some of your data will not be synchronized. You will need to perform a complete HotSync operation later to insure all your data is safely backed up.\n\nCancel this HotSync operation?"
 msgstr ""
 
@@ -2871,7 +2871,7 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:217
+#: classicsync/gui/palm/hotsync.py:219
 msgid "Local &USB"
 msgstr ""
 
@@ -3091,7 +3091,7 @@ msgstr ""
 msgid "New Partnership Wizard"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:158
+#: classicsync/gui/palm/hotsync.py:159
 msgid "New User"
 msgstr ""
 
@@ -3235,7 +3235,7 @@ msgstr ""
 msgid "OEM"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/font_conversion.py:38 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:79 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:51 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256 classicsync/gui/palm/hotsync.py:308 classicsync/gui/palm/hotsync.py:121 classicsync/gui/palm/hotsync.py:148 classicsync/gui/palm/hotsync.py:180 classicsync/gui/palm/hotsync.py:202
+#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/font_conversion.py:38 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:79 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:51 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256 classicsync/gui/palm/hotsync.py:315 classicsync/gui/palm/hotsync.py:122 classicsync/gui/palm/hotsync.py:149 classicsync/gui/palm/hotsync.py:181 classicsync/gui/palm/hotsync.py:204
 msgid "OK"
 msgstr ""
 
@@ -3563,11 +3563,11 @@ msgstr ""
 msgid "Please enter a name containing no spaces or any of the following characters: \\ / : * ? \" < > | &&.\n\nYou may also enter a device description at this time."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:129
+#: classicsync/gui/palm/hotsync.py:130
 msgid "Please enter a user name."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:166
+#: classicsync/gui/palm/hotsync.py:167
 msgid "Please select a user name."
 msgstr ""
 
@@ -3999,7 +3999,7 @@ msgstr ""
 msgid "Select a program's check box if you want to install it on your mobile device, or clear the check box if you want to remove the program from your device."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:143
+#: classicsync/gui/palm/hotsync.py:144
 msgid "Select a user:"
 msgstr ""
 
@@ -4263,7 +4263,7 @@ msgstr ""
 msgid "Status icon"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/connection_settings.py:52 classicsync/gui/frontends/activesync31/connection_settings.py:69 classicsync/gui/frontends/activesync31/connection_settings.py:74 classicsync/gui/frontends/activesync31/connection_settings.py:79 classicsync/gui/frontends/ceservices22/properties.py:72 classicsync/gui/frontends/ceservices22/properties.py:91 classicsync/gui/palm/hotsync.py:64
+#: classicsync/gui/frontends/activesync31/connection_settings.py:52 classicsync/gui/frontends/activesync31/connection_settings.py:69 classicsync/gui/frontends/activesync31/connection_settings.py:74 classicsync/gui/frontends/activesync31/connection_settings.py:79 classicsync/gui/frontends/ceservices22/properties.py:72 classicsync/gui/frontends/ceservices22/properties.py:91 classicsync/gui/palm/hotsync.py:65
 msgid "Status:"
 msgstr ""
 
@@ -4371,7 +4371,7 @@ msgstr ""
 msgid "Synchronization did not complete.\n\n{error}"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:306
+#: classicsync/gui/palm/hotsync.py:305
 msgid "Synchronization generated one or more messages. Please see the HotSync Log for details."
 msgstr ""
 
@@ -4499,7 +4499,7 @@ msgstr ""
 msgid "Synchronizing"
 msgstr ""
 
-#: classicsync/gui/palm/service.py:184
+#: classicsync/gui/palm/service.py:186
 msgid "Synchronizing {conduit}"
 msgstr ""
 
@@ -4553,6 +4553,14 @@ msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:37
 msgid "The H/PC you have connected has already established another computer as its partner desktop computer. Proceeding with this wizard will remove the other computer as the partner, replacing it with this desktop computer."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:307
+msgid "The HotSync operation was interrupted. Some of your data was NOT backed up.\n\nFor details, click 'View Log' below."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:310
+msgid "The HotSync operation was interrupted. Some of your data was NOT backed up.\n\n{error}"
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:117
@@ -4959,7 +4967,7 @@ msgstr ""
 msgid "Use an app password where the service offers one. Saved in the system keyring when the keyring package is installed; otherwise saved unencrypted in the settings file."
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:134
+#: classicsync/gui/palm/hotsync.py:135
 msgid "User Name Exists"
 msgstr ""
 
@@ -4967,7 +4975,7 @@ msgstr ""
 msgid "User name"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:66
+#: classicsync/gui/palm/hotsync.py:67
 msgid "User:"
 msgstr ""
 
@@ -4975,7 +4983,7 @@ msgstr ""
 msgid "User: {user}"
 msgstr ""
 
-#: classicsync/gui/palm/hotsync.py:141
+#: classicsync/gui/palm/hotsync.py:142
 msgid "Users"
 msgstr ""
 

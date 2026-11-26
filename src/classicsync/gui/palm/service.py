@@ -12,7 +12,7 @@ from ...palm.install import InstallError, install_files, load_installables
 from ...palm.sync import create_palm_partnership, find_palm_partnership, synchronize_handheld
 from ...palm.usb import attached_palm
 from ...palm.users import new_identifier, set_user
-from .hotsync_log import append_session, conduit_line
+from .hotsync_log import append_session, conduit_line, stamp
 
 log = logging.getLogger("classicsync.gui.palm")
 
@@ -164,7 +164,9 @@ class PalmService:
         client = None
         partnership = None
         lines = []
+        messages = []
         completed = False
+        started = stamp()
         try:
             await transport.open()
             link = NetSyncLink(transport)
@@ -184,26 +186,26 @@ class PalmService:
                     self.emit(EVENT_STATUS, _("Synchronizing {conduit}").format(conduit=_(conduit.display_name)))
 
             report = await synchronize_handheld(client, partnership, self.pc_identifier(), on_conduit=conduit_started,
-                                                log=lines.append)
-            lines += self.conduit_lines(report)
+                                                log=messages.append)
+            lines += self.conduit_lines(report) + messages
             await client.end_of_sync()
             completed = True
             self.emit(EVENT_STATUS, _("HotSync operation complete"))
             self.emit(EVENT_FINISHED, (True, report.summary(), bool(report.errors)))
         except asyncio.CancelledError:
             await self._end_quietly(client, END_OF_SYNC_CANCELLED)
-            self.emit(EVENT_FINISHED, (False, _("HotSync operation canceled."), False))
+            self.emit(EVENT_FINISHED, (False, "", False))
             raise
-        except HotSyncCancelled as error:
+        except HotSyncCancelled:
             await self._end_quietly(client, END_OF_SYNC_CANCELLED)
-            self.emit(EVENT_FINISHED, (False, str(error), False))
+            self.emit(EVENT_FINISHED, (False, "", False))
         except Exception as error:
             lines.append(_("HotSync Error: {error}").format(error=error))
-            self.emit(EVENT_FINISHED, (False, str(error), True))
+            self.emit(EVENT_FINISHED, (False, str(error), partnership is not None))
         finally:
             self.syncing = False
             if partnership is not None:
-                append_session(partnership, lines, completed)
+                append_session(partnership, lines, completed, started)
             await transport.close()
 
     @staticmethod
@@ -214,6 +216,8 @@ class PalmService:
         for key, name in names.items():
             messages = sum(1 for action in report.actions if action.object_type == key and action.error)
             lines.append(conduit_line(_(name), key in report.skipped_types, messages))
+        backup_failed = any(error.startswith(BackupConduit.display_name + ":") for error in report.errors)
+        lines.append(conduit_line(_(BackupConduit.display_name), backup_failed, 0))
         return lines
 
     async def _end_quietly(self, client, status):
