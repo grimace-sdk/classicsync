@@ -53,6 +53,7 @@ On Linux, wxPython has no prebuilt wheel on PyPI; add `--find-links https://extr
 | USB cradle (iPAQ, Jornada, Cassiopeia E-series) | Nothing to choose: with "Allow USB connection" ticked (the default), ClassicSync connects as soon as a known cradle appears, alongside the serial port. On Windows the cradle first needs the WinUSB driver (install it with Zadig). On Linux the cradle may instead appear as `/dev/ttyUSB0`; choose that port. Tested with an HP Jornada 720 USB dock on macOS. |
 | Infrared | an IR serial port, where your computer has one |
 | An emulator offering its serial port over TCP | `tcp:HOST:PORT` |
+| Network card, Wi-Fi or dial-in (CE 2.x and 3.x, after a first sync by cable) | Tick "Allow network" in Connection Settings. See [docs/network-sync.md](docs/network-sync.md). |
 
 When the device connects you can browse it (Explore), copy files in both directions, and add or remove programs. Pocket Word and Pocket Excel documents are converted to Word and Excel files as they are copied, and back again.
 

@@ -11,6 +11,7 @@ classicsync serve /dev/cu.usbserial-10 --baud 19200
 classicsync serve COM1
 classicsync serve tcp:127.0.0.1:9991        # an emulator's serial port over TCP
 classicsync serve usb                       # first attached ActiveSync USB cradle (usb extra)
+classicsync serve network                   # devices syncing over the network, see docs/network-sync.md
 ```
 
 Any device command also takes `--port PORT` to connect directly without `serve`, `--password` for a password-protected device, and `-v` for more detail.
