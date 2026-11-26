@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-26 21:27+0000\n"
+"POT-Creation-Date: 2026-11-26 21:31+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,6 +25,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:155 classicsync/gui/frontends/ceservices22/get_connected.py:100
 msgid "\r\nStatus: "
+msgstr ""
+
+#: classicsync/cli_palm.py:42
+msgid "  reading {name}"
 msgstr ""
 
 #: classicsync/cli_sync.py:197
@@ -3255,7 +3259,7 @@ msgstr ""
 msgid "PNG (.png)"
 msgstr ""
 
-#: classicsync/cli_palm.py:29
+#: classicsync/cli_palm.py:30
 msgid "Palm OS {version}, desktop link protocol {major}.{minor}"
 msgstr ""
 
@@ -4731,7 +4735,7 @@ msgstr ""
 msgid "User name"
 msgstr ""
 
-#: classicsync/cli_palm.py:31
+#: classicsync/cli_palm.py:32
 msgid "User: {user}"
 msgstr ""
 
@@ -4759,7 +4763,7 @@ msgstr ""
 msgid "Views"
 msgstr ""
 
-#: classicsync/cli_palm.py:23
+#: classicsync/cli_palm.py:24 classicsync/cli_palm.py:39
 msgid "Waiting for a Palm handheld: press the HotSync button on the cradle."
 msgstr ""
 
@@ -4983,6 +4987,10 @@ msgstr ""
 msgid "artwork directory (default: <data directory>/artwork)"
 msgstr ""
 
+#: classicsync/cli_palm.py:45
+msgid "backed up {name} ({count} entries)"
+msgstr ""
+
 #: classicsync/cli.py:205
 msgid "battery"
 msgstr ""
@@ -5093,6 +5101,10 @@ msgstr ""
 
 #: classicsync/cli.py:482
 msgid "copy a file to the device"
+msgstr ""
+
+#: classicsync/cli_palm.py:57
+msgid "copy the handheld's databases to .pdb and .prc files"
 msgstr ""
 
 #: classicsync/cli_install.py:10
@@ -5215,7 +5227,11 @@ msgstr ""
 msgid "implicit, converted on next connect"
 msgstr ""
 
-#: classicsync/cli_palm.py:42
+#: classicsync/cli_palm.py:59
+msgid "include databases HotSync would leave out"
+msgstr ""
+
+#: classicsync/cli_palm.py:55
 msgid "include databases in ROM"
 msgstr ""
 
@@ -5363,7 +5379,7 @@ msgstr ""
 msgid "network sync failed: {error}"
 msgstr ""
 
-#: classicsync/cli_palm.py:10 classicsync/cli_sync.py:183 classicsync/cli_sync.py:163
+#: classicsync/cli_palm.py:11 classicsync/cli_sync.py:183 classicsync/cli_sync.py:163
 msgid "never"
 msgstr ""
 
@@ -5435,7 +5451,7 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: classicsync/cli_palm.py:9
+#: classicsync/cli_palm.py:10
 msgid "none (this handheld has never been synchronized)"
 msgstr ""
 
@@ -5551,7 +5567,7 @@ msgstr ""
 msgid "reading sector {sector} of {total}"
 msgstr ""
 
-#: classicsync/cli_palm.py:15
+#: classicsync/cli_palm.py:16
 msgid "records"
 msgstr ""
 
@@ -5595,7 +5611,7 @@ msgstr ""
 msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
 msgstr ""
 
-#: classicsync/cli_palm.py:15
+#: classicsync/cli_palm.py:16
 msgid "resource"
 msgstr ""
 
@@ -5611,7 +5627,7 @@ msgstr ""
 msgid "seconds to wait for a device"
 msgstr ""
 
-#: classicsync/cli_palm.py:41
+#: classicsync/cli_palm.py:54 classicsync/cli_palm.py:60
 msgid "seconds to wait for the handheld"
 msgstr ""
 
@@ -5675,7 +5691,7 @@ msgstr ""
 msgid "show the connected device's partnership slots"
 msgstr ""
 
-#: classicsync/cli_palm.py:40
+#: classicsync/cli_palm.py:53
 msgid "show the handheld's OS, HotSync user and databases"
 msgstr ""
 
@@ -5723,7 +5739,7 @@ msgstr ""
 msgid "talk Casio PC Connect (BE-300) instead of ActiveSync; PORT 'usb' means usb:07cf:2002"
 msgstr ""
 
-#: classicsync/cli_palm.py:38
+#: classicsync/cli_palm.py:51
 msgid "talk to a Palm OS handheld over HotSync"
 msgstr ""
 
@@ -5847,7 +5863,7 @@ msgstr ""
 msgid "{count} conflict kept both"
 msgstr ""
 
-#: classicsync/cli_palm.py:32
+#: classicsync/cli_palm.py:33
 msgid "{count} databases:"
 msgstr ""
 
@@ -6027,7 +6043,7 @@ msgstr ""
 msgid "{name}  ({kind})  created {created}  last sync {last_sync}"
 msgstr ""
 
-#: classicsync/cli_palm.py:11
+#: classicsync/cli_palm.py:12
 msgid "{name} (ID {user_id:#x}, last synchronized {last})"
 msgstr ""
 
@@ -6215,4 +6231,8 @@ msgstr ""
 
 #: classicsync/sync/plugin_install.py:353
 msgid "{wheel} needs {requirements}, and installing those needs uv or pip"
+msgstr ""
+
+#: classicsync/cli_palm.py:46
+msgid "{written} written, {unchanged} unchanged, {skipped} not backed up"
 msgstr ""

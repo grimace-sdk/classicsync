@@ -8,6 +8,8 @@ from classicsync.link.transport import Transport
 from classicsync.palm import DlpClient, DlpError, DlpStatus, NetSyncError, NetSyncLink
 from classicsync.palm.dlp import DlpCommand, decode_response, encode_request, parse_database_list
 from classicsync.palm.netsync import HEADER, desktop_confirm, desktop_options
+from classicsync.formats.pdb import PalmDatabase, PdbRecord, PdbResource, read_pdb, write_pdb
+from classicsync.palm.backup import backup_file_name, backup_handheld
 from classicsync.palm.usb import hotsync_port
 
 M500_HELLO = bytes.fromhex("90010000000000000020000000080000010000000000")
@@ -50,6 +52,7 @@ class FakeHandheld(Transport):
             self.sent.append(payload)
             reply = self.replies[payload[0]]
             reply = reply.pop(0) if isinstance(reply, list) else reply
+            reply = reply(payload) if callable(reply) else reply
             self.incoming.put_nowait(HEADER.pack(1, xid, len(reply)) + reply)
 
 
@@ -132,3 +135,80 @@ def test_dlp_errors_and_argument_forms():
 def test_hotsync_port_from_m500_connection_info():
     assert hotsync_port(M500_CONNECTION_INFO) == (0x82, 0x02)
     assert hotsync_port(bytes(20)) == (0x82, 0x02)
+
+
+def test_pdb_round_trip():
+    records = PalmDatabase("MemoDB", "DATA", "memo", attributes=0x0008, version=1, created=datetime(2001, 2, 22, 18, 24, 12),
+                           modified=datetime(2026, 11, 26, 21, 0), app_info=bytes(276), records=[
+                               PdbRecord(b"Shopping\0", 0x10 | 1, 0x123456), PdbRecord(b"", 0, 0x123457), PdbRecord(b"x\0", 0, 9)])
+    data = write_pdb(records)
+    assert len(data) == 78 + 3 * 8 + 2 + 276 + 9 + 0 + 2
+    assert data[78:86] == struct.pack(">IB3s", 78 + 24 + 2 + 276, 0x11, bytes.fromhex("123456"))
+    assert read_pdb(data) == records
+    resources = PalmDatabase("Giraffe", "appl", "Gira", attributes=0x0001, resources=[
+        PdbResource("code", 1, b"\x4e\x75"), PdbResource("tAIN", 1000, b"Giraffe\0")])
+    data = write_pdb(resources)
+    assert data[78:88] == struct.pack(">4sHI", b"code", 1, 78 + 20 + 2)
+    assert read_pdb(data) == resources
+
+
+def test_backup_file_names_follow_the_backup_conduit():
+    database = PalmDatabase("Graffiti ShortCuts", "macr", "graf")
+    assert backup_file_name(database) == "Graffiti_ShortCuts.PDB"
+    assert backup_file_name(PalmDatabase("a/b:c", "appl", "Xxxx", attributes=1)) == "a_b_c.PRC"
+
+
+def database_entry(name, kind, creator, attributes, index):
+    date = struct.pack(">HBBBBBx", 2026, 11, 21, 8, 1, 54)
+    fixed = struct.pack(">BBH4s4sHI8s8s8sH", 0, 0x40, attributes, kind.encode(), creator.encode(), 0, 1, date, date,
+                        bytes(8), index)
+    entry = fixed + name.encode() + b"\0"
+    return bytes([len(entry)]) + entry[1:]
+
+
+def test_backup_reads_each_database(run, tmp_path):
+    memo = [(0x111111, 0x40, 1, b"First memo\0"), (0x111112, 0x10, 0, b"Private\0")]
+    entries = (database_entry("MemoDB", "DATA", "memo", 0x0008, 0) + database_entry("Saved Preferences", "sprf", "psys", 0x0001, 1)
+               + database_entry("Giraffe", "appl", "Gira", 0x0001, 2))
+
+    def open_database(payload):
+        name = payload[6:-1].decode()
+        return bytes.fromhex("970100002001") + bytes([{"MemoDB": 1, "Giraffe": 2}[name]])
+
+    def record_count(payload):
+        return bytes.fromhex("ab0100002002") + struct.pack(">H", {1: len(memo), 2: 1}[payload[4]])
+
+    def read_record(payload):
+        index = struct.unpack(">H", payload[6:8])[0]
+        record_id, attributes, category, data = memo[index]
+        body = struct.pack(">IHHBB", record_id, index, len(data), attributes, category) + data
+        return bytes.fromhex("a0010000") + bytes([0x20, len(body)]) + body
+
+    def read_resource(payload):
+        body = struct.pack(">4sHHH", b"code", 0, 0, 2) + b"\x4e\x75"
+        return bytes.fromhex("a3010000") + bytes([0x20, len(body)]) + body
+
+    handheld = FakeHandheld(m500_replies())
+    handheld.replies.update({
+        0x16: database_list_reply(entries, 3, 2, False),
+        0x17: open_database,
+        0x2B: record_count,
+        0x1B: bytes.fromhex("9b0100002004") + b"\0\x02AB",
+        0x1D: bytes.fromhex("9d000005"),
+        0x20: read_record,
+        0x23: read_resource,
+        0x19: bytes.fromhex("99000000"),
+    })
+
+    async def scenario():
+        link = NetSyncLink(handheld)
+        await link.accept()
+        return await backup_handheld(DlpClient(link), tmp_path)
+
+    result = run(scenario)
+    assert result.written == [("MemoDB.PDB", 2), ("Giraffe.PRC", 1)] and result.skipped == ["Saved Preferences"]
+    memo_file = read_pdb((tmp_path / "MemoDB.PDB").read_bytes())
+    assert memo_file.app_info == b"AB" and memo_file.sort_info == b""
+    assert [(record.unique_id, record.attributes, record.data) for record in memo_file.records] == [
+        (0x111111, 0x41, b"First memo\0"), (0x111112, 0x10, b"Private\0")]
+    assert read_pdb((tmp_path / "Giraffe.PRC").read_bytes()).resources == [PdbResource("code", 0, b"\x4e\x75")]

@@ -33,6 +33,15 @@ END_OF_SYNC_OUT_OF_MEMORY = 1
 END_OF_SYNC_CANCELLED = 2
 END_OF_SYNC_OTHER = 3
 
+OPEN_READ = 0x80
+OPEN_WRITE = 0x40
+OPEN_EXCLUSIVE = 0x20
+OPEN_SECRET = 0x10
+CLOSE_UPDATE_BACKUP_DATE = 0x80
+READ_ALL = 0xFFFF
+RECORD_HEADER = struct.Struct(">IHHBB")
+RESOURCE_HEADER = struct.Struct(">4sHHH")
+
 
 class DlpCommand(IntEnum):
     READ_USER_INFO = 0x10
@@ -121,8 +130,8 @@ def encode_argument(index, data):
     return struct.pack(">BBI", identifier | LONG_ARGUMENT, 0, len(data)) + data
 
 
-def encode_request(command, arguments):
-    return bytes([command, len(arguments)]) + b"".join(encode_argument(index, data) for index, data in enumerate(arguments))
+def encode_request(command, arguments, first=0):
+    return bytes([command, len(arguments)]) + b"".join(encode_argument(first + index, data) for index, data in enumerate(arguments))
 
 
 def decode_response(command, payload):
@@ -264,8 +273,8 @@ class DlpClient:
     def __init__(self, link):
         self.link = link
 
-    async def call(self, command, *arguments):
-        payload = await self.link.request(encode_request(command, arguments))
+    async def call(self, command, *arguments, first=0):
+        payload = await self.link.request(encode_request(command, arguments, first))
         return decode_response(command, payload)
 
     async def read_sys_info(self, host_version=HOST_DLP_VERSION):
@@ -294,3 +303,45 @@ class DlpClient:
 
     async def end_of_sync(self, status=END_OF_SYNC_NORMAL):
         await self.call(DlpCommand.END_OF_SYNC, struct.pack(">H", status))
+
+    async def open_database(self, name, mode=OPEN_READ | OPEN_SECRET, card=0):
+        arguments = await self.call(DlpCommand.OPEN_DB, struct.pack(">BB", card, mode) + name.encode("latin-1") + b"\0")
+        return arguments[FIRST_ARGUMENT][0]
+
+    async def close_database(self, handle, update_backup_date=False):
+        if update_backup_date:
+            await self.call(DlpCommand.CLOSE_DB, struct.pack(">BB", handle, CLOSE_UPDATE_BACKUP_DATE), first=2)
+        else:
+            await self.call(DlpCommand.CLOSE_DB, bytes([handle]))
+
+    async def record_count(self, handle):
+        return struct.unpack_from(">H", (await self.call(DlpCommand.READ_OPEN_DB_INFO, bytes([handle])))[FIRST_ARGUMENT])[0]
+
+    async def _read_block(self, command, handle):
+        try:
+            arguments = await self.call(command, struct.pack(">BBHH", handle, 0, 0, READ_ALL))
+        except DlpError as error:
+            if error.status == DlpStatus.NOT_FOUND:
+                return b""
+            raise
+        data = arguments[FIRST_ARGUMENT]
+        size = struct.unpack_from(">H", data)[0]
+        return data[2:2 + size]
+
+    async def read_app_block(self, handle):
+        return await self._read_block(DlpCommand.READ_APP_BLOCK, handle)
+
+    async def read_sort_block(self, handle):
+        return await self._read_block(DlpCommand.READ_SORT_BLOCK, handle)
+
+    async def read_record_by_index(self, handle, index):
+        arguments = await self.call(DlpCommand.READ_RECORD, struct.pack(">BBHHH", handle, 0, index, 0, READ_ALL), first=1)
+        data = arguments[FIRST_ARGUMENT]
+        record_id, _index, size, attributes, category = RECORD_HEADER.unpack_from(data)
+        return record_id, attributes, category, data[RECORD_HEADER.size:RECORD_HEADER.size + size]
+
+    async def read_resource_by_index(self, handle, index):
+        arguments = await self.call(DlpCommand.READ_RESOURCE, struct.pack(">BBHHH", handle, 0, index, 0, READ_ALL))
+        data = arguments[FIRST_ARGUMENT]
+        kind, resource_id, _index, size = RESOURCE_HEADER.unpack_from(data)
+        return kind.decode("latin-1"), resource_id, data[RESOURCE_HEADER.size:RESOURCE_HEADER.size + size]
