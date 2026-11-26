@@ -135,17 +135,19 @@ class PasswordRejected(Exception):
 
 
 class ConnectionManager:
-    def __init__(self, stack, password_provider=None, partnership_policy=None):
+    def __init__(self, stack, password_provider=None, partnership_policy=None, port=CONNECTION_PORT, on_lost=None):
         self.stack = stack
         self.password_provider = password_provider
         self.partnership_policy = partnership_policy
+        self.port = port
+        self.on_lost = on_lost
         self.listener = None
         self.sessions = asyncio.Queue()
         self.accept_task = None
         self.keepalive_tasks = set()
 
     def start(self):
-        self.listener = self.stack.listen(CONNECTION_PORT)
+        self.listener = self.stack.listen(self.port)
         self.accept_task = asyncio.create_task(self._accept_loop())
 
     async def stop(self):
@@ -249,3 +251,5 @@ class ConnectionManager:
             log.info("device stopped answering keepalives: %s", error or type(error).__name__)
             connection.abort()
             announcement.lost = True
+            if self.on_lost:
+                self.on_lost(announcement)

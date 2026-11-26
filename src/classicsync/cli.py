@@ -9,6 +9,8 @@ from pathlib import Path
 
 from . import cli_artwork, cli_backup, cli_convert, cli_install, cli_plugins, cli_sync, cli_translations
 from .connection.desktop import DESKTOP_IP, DEVICE_IP, Desktop
+from .connection.dccm import CONNECTION_PORT
+from .connection.network import DEFAULT_LISTEN, NetworkDesktop
 from .gui.settings import Settings
 from .i18n import _, ngettext, set_language
 from .link.transport import open_transport
@@ -47,6 +49,9 @@ def hexdump(data, width=16):
     return "\n".join(lines)
 
 
+NETWORK_PORT = "network"
+
+
 def make_desktop(arguments):
     async def ask_password(announcement, attempt):
         if arguments.password is not None and attempt == 0:
@@ -57,6 +62,10 @@ def make_desktop(arguments):
 
     if arguments.pc_connect:
         return PcConnectSession(open_pc_connect_transport(arguments.port, arguments.baud))
+    if arguments.port == NETWORK_PORT:
+        host, _separator, port = getattr(arguments, "network_listen", "").rpartition(":")
+        return NetworkDesktop(host or DEFAULT_LISTEN, int(port or CONNECTION_PORT), getattr(arguments, "device_rapi", None),
+                              password_provider=ask_password)
     transport = open_transport(arguments.port, arguments.baud or DEFAULT_BAUD)
     return Desktop(transport, arguments.desktop_ip, arguments.device_ip, password_provider=ask_password)
 
@@ -423,7 +432,14 @@ def build_parser():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     serve = subparsers.add_parser("serve", help=_("hold the connection to a device and offer RAPI to other commands"))
-    serve.add_argument("port", help=_("serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP or tcp:HOST:PORT"))
+    serve.add_argument("port", help=_("serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP, tcp:HOST:PORT, "
+                                      "or network to wait for devices syncing over the network"))
+    serve.add_argument("--network-listen", default=f"{DEFAULT_LISTEN}:{CONNECTION_PORT}",
+                       help=_("with network: address and port to accept devices on (default {address})").format(
+                           address=f"{DEFAULT_LISTEN}:{CONNECTION_PORT}"))
+    serve.add_argument("--device-rapi", metavar="HOST:PORT",
+                       help=_("with network: reach the device's RAPI here instead of at its own address, for example through an "
+                              "SSH tunnel"))
     serve.add_argument("--listen", default=DEFAULT_PROXY, help=_("local RAPI address (default {address})").format(address=DEFAULT_PROXY))
     serve.add_argument("--sync-time", action="store_true", help=_("set the device clock from this computer on connect"))
     add_link_arguments(serve)
