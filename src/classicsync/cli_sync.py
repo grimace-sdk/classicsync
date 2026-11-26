@@ -2,6 +2,9 @@ import asyncio
 import sys
 
 from . import cli
+from .connection.status_channel import (
+    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, UP_TO_DATE,
+)
 from .i18n import _, ngettext
 from .sync import (
     CONFLICT_POLICIES, FIRST_SYNC_CHOICES, FIRST_SYNC_COMBINE, Partnership, PartnershipError, create_partnership,
@@ -42,10 +45,7 @@ async def partnership_for_sync(client, arguments):
 REMOTE_STATUS_WAIT = 30.0
 
 
-async def remote_sync(desktop):
-    status = desktop.status
-    if status is not None and not await status.wait_for_device(REMOTE_STATUS_WAIT):
-        print(_("the device did not open its sync status connection"), file=sys.stderr)
+async def sync_once(desktop, status):
     if status is not None:
         await status.started()
     pending = set()
@@ -66,19 +66,43 @@ async def remote_sync(desktop):
     try:
         lookup = await find_partnership(client)
         failed = lookup.partnership is None
+        clean = False
         if failed:
             summary = _("{device} is connected as a guest").format(device=lookup.device_name)
         else:
             report = await synchronize(client, lookup.partnership, progress=progress)
             summary = report.summary()
             failed = bool(report.errors) or any(action.error for action in report.actions)
+            clean = not failed and not report.unresolved
         print(_("{device}: {summary}").format(device=lookup.device_name, summary=summary), file=sys.stderr)
     finally:
         client.close()
     if pending:
         await asyncio.gather(*pending, return_exceptions=True)
+    result = UP_TO_DATE if clean else summary
     if status is not None:
-        await status.finished(summary, error=failed)
+        await status.finished(result, error=failed)
+    return result
+
+
+async def remote_sync(desktop):
+    status = desktop.status
+    if status is not None and not await status.wait_for_device(REMOTE_STATUS_WAIT):
+        print(_("the device did not open its sync status connection"), file=sys.stderr)
+        status = None
+    result = await sync_once(desktop, status)
+    if status is None:
+        return
+    while desktop.device is not None:
+        request = await status.next_request()
+        if request == REQUEST_STATUS:
+            await status.text(result)
+        elif request == REQUEST_SYNC:
+            result = await sync_once(desktop, status)
+        elif request == REQUEST_SYNC_CANCEL:
+            print(_("the device asked to cancel; this synchronization can't be stopped part way yet"), file=sys.stderr)
+        elif request == REQUEST_CLOSED:
+            break
 
 
 async def command_sync(arguments):

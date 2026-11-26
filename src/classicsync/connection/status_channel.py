@@ -12,6 +12,11 @@ MESSAGE_DESTROY_PROGRESS = 0x005B
 MESSAGE_PROGRESS_RANGE = 0x005C
 MESSAGE_PROGRESS_POSITION = 0x005D
 MAX_FIELD = 0xFFFF
+UP_TO_DATE = "Up-to-date."
+REQUEST_CLOSED = 0
+REQUEST_STATUS = 1
+REQUEST_SYNC = 2
+REQUEST_SYNC_CANCEL = 3
 
 
 def header(message_type, value=0):
@@ -30,6 +35,8 @@ class StatusChannel:
         self.server = None
         self.writer = None
         self.connected = asyncio.Event()
+        self.requests = asyncio.Queue()
+        self.reader_task = None
 
     async def start(self):
         self.server = await asyncio.start_server(self._accepted, self.host, self.port)
@@ -40,9 +47,29 @@ class StatusChannel:
     async def _accepted(self, reader, writer):
         if self.writer is not None:
             self.writer.close()
+        if self.reader_task is not None:
+            self.reader_task.cancel()
         log.info("device status channel from %s", writer.get_extra_info("peername"))
         self.writer = writer
+        self.requests = asyncio.Queue()
+        self.reader_task = asyncio.create_task(self._read_requests(reader, writer))
         self.connected.set()
+
+    async def _read_requests(self, reader, writer):
+        try:
+            while True:
+                request = struct.unpack("<I", await reader.readexactly(4))[0]
+                log.info("device status request %d", request)
+                await self.requests.put(request)
+                if request == REQUEST_CLOSED:
+                    break
+        except (asyncio.IncompleteReadError, ConnectionError):
+            await self.requests.put(REQUEST_CLOSED)
+        if self.writer is writer:
+            self.forget()
+
+    async def next_request(self):
+        return await self.requests.get()
 
     async def wait_for_device(self, timeout):
         try:
@@ -79,13 +106,12 @@ class StatusChannel:
     async def finished(self, text, error=False):
         await self.send(header(MESSAGE_DESTROY_PROGRESS))
         await self.send(text_message(MESSAGE_ERROR if error else MESSAGE_STATUS, text))
-        if self.writer is not None:
-            self.writer.close()
-        self.forget()
 
     def close(self):
         if self.writer is not None:
             self.writer.close()
+        if self.reader_task is not None:
+            self.reader_task.cancel()
         self.forget()
         if self.server:
             self.server.close()

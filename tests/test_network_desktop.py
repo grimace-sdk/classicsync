@@ -71,14 +71,12 @@ def test_status_channel_sends_the_original_message_sequence(run):
         assert await channel.wait_for_device(5)
         await channel.started()
         await channel.text("Checking Contacts...")
-        await channel.finished("nothing to do")
-        data = await reader.read()
-        assert data[:4] == struct.pack("<I", 0x005A0000)
+        await channel.finished("Up-to-date.")
         text = "Checking Contacts...\0".encode("utf-16-le")
-        assert data[4:8] == struct.pack("<I", 0x00010000 | len(text)) and data[8:8 + len(text)] == text
-        rest = data[8 + len(text):]
-        final = "nothing to do\0".encode("utf-16-le")
-        assert rest == struct.pack("<I", 0x005B0000) + struct.pack("<I", 0x00010000 | len(final)) + final
+        final = "Up-to-date.\0".encode("utf-16-le")
+        expected = (struct.pack("<I", 0x005A0000) + struct.pack("<I", 0x00010000 | len(text)) + text + struct.pack("<I", 0x005B0000)
+                    + struct.pack("<I", 0x00010000 | len(final)) + final)
+        assert await asyncio.wait_for(reader.readexactly(len(expected)), 5) == expected
         writer.close()
         channel.close()
     run(scenario)
@@ -94,6 +92,23 @@ def test_status_channel_progress_sets_range_then_position(run):
         assert await channel.wait_for_device(5)
         await channel.progress(3, 10)
         assert await reader.readexactly(12) == struct.pack("<III", 0x005C0000, 10 << 16, 0x005D0003)
+        writer.close()
+        channel.close()
+    run(scenario)
+
+
+def test_status_channel_passes_on_the_device_requests(run):
+    from classicsync.connection.status_channel import REQUEST_CLOSED, REQUEST_SYNC, StatusChannel
+
+    async def scenario():
+        channel = StatusChannel("127.0.0.1", 0)
+        await channel.start()
+        reader, writer = await asyncio.open_connection("127.0.0.1", channel.listening_port())
+        assert await channel.wait_for_device(5)
+        writer.write(struct.pack("<II", REQUEST_SYNC, REQUEST_CLOSED))
+        await writer.drain()
+        assert await asyncio.wait_for(channel.next_request(), 5) == REQUEST_SYNC
+        assert await asyncio.wait_for(channel.next_request(), 5) == REQUEST_CLOSED
         writer.close()
         channel.close()
     run(scenario)
