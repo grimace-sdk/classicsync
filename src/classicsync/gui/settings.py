@@ -32,6 +32,8 @@ class Settings:
     window_rect: list = field(default_factory=list)
     saved_passwords: dict = field(default_factory=dict)
     palm_pc_id: int = 0
+    palm_usb_enabled: bool = True
+    show_hotsync_tray: bool = True
 
     @classmethod
     def path(cls):

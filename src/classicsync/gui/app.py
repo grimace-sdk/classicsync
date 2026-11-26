@@ -13,6 +13,8 @@ from ..sync.partners import clear_device_partner, describe_device, rename_device
 from .common.backup import BackupRunner
 from .common.sync_runner import SyncRunner
 from .frontends import AUTOMATIC, DEFAULT_IDLE, available_frontends, frontend_for_version
+from .palm.hotsync import HotSyncManager
+from .palm.service import PalmService
 from .service import STATE_CONNECTED, DeviceService
 from .settings import Settings
 
@@ -50,7 +52,15 @@ class Application(wx.App):
         self.backup = BackupRunner(self)
         self.sync.add_listener(self._sync_event)
         self.switch_frontend(self.idle_frontend_key(), initial=True)
+        self.palm_service = PalmService(self.settings, lambda *event: wx.CallAfter(self.hotsync.on_event, *event))
+        self.hotsync = HotSyncManager(self, self.palm_service)
+        self.hotsync.start()
+        self.palm_service.start()
         return True
+
+    def apply_palm_settings(self):
+        self.palm_service.restart()
+        self.hotsync.apply_tray_setting()
 
     def idle_frontend_key(self):
         choice = self.settings.frontend
@@ -281,6 +291,8 @@ class Application(wx.App):
             self.dock_icon = None
         self.sync.stop()
         self.service.stop()
+        self.hotsync.stop()
+        self.palm_service.stop()
         if self.frontend:
             self.frontend.stop()
         for window in wx.GetTopLevelWindows():

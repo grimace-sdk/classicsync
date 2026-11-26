@@ -47,7 +47,7 @@ def palm_options(options, providers, by_type):
 
 
 async def synchronize_handheld(client, partnership, pc_id, options=None, progress=None, providers=None, first_sync=None,
-                               conduits=None, log=None):
+                               conduits=None, log=None, on_conduit=None):
     if providers is None or conduits is None:
         sources = discover_plugins()
         providers = providers if providers is not None else providers_from_sources(sources)
@@ -61,12 +61,16 @@ async def synchronize_handheld(client, partnership, pc_id, options=None, progres
     options = palm_options(options or partnership.load_options(), providers, by_type)
 
     def palm_source(source_client, object_type, source_options, provider=None):
+        if on_conduit:
+            on_conduit(by_type[object_type.key])
         return by_type[object_type.key].source(source_client)
 
     report = await synchronize(client, partnership, options, progress, providers, first_sync, device=device, source_for=palm_source)
     context = ConduitContext(client, partnership, user, partnership.directory, log or (lambda text: None), options.dry_run)
     for conduit in active:
         if isinstance(conduit, FreeformConduit):
+            if on_conduit:
+                on_conduit(conduit)
             try:
                 await conduit.run(context)
             except (OSError, ValueError, ConnectionError) as error:

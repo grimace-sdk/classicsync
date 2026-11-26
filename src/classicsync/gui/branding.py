@@ -11,30 +11,35 @@ PRODUCT_TITLES = {
     "hpcexplorer11": "H/PC Explorer",
     "ceservices22": "Windows CE Services",
     "activesync31": "ActiveSync",
+    "hotsync40": "HotSync Manager",
 }
 
 AUTHENTIC_TITLES = {
     "hpcexplorer11": "Microsoft H/PC Explorer",
     "ceservices22": "Microsoft Windows CE Services",
     "activesync31": "Microsoft ActiveSync",
+    "hotsync40": "HotSync Manager",
 }
 
 FRONTEND_STYLES = {
     "hpcexplorer11": "H/PC Explorer 1.1",
     "ceservices22": "Windows CE Services 2.2",
     "activesync31": "ActiveSync 3.1",
+    "hotsync40": "HotSync Manager 4.0",
 }
 
 ORIGINAL_PRODUCT_NAMES = {
     "hpcexplorer11": ("Microsoft H/PC Explorer", "Handheld PC Explorer", "H/PC Explorer"),
     "ceservices22": ("Microsoft Windows CE Services", "Windows CE Services"),
     "activesync31": ("Microsoft ActiveSync", "ActiveSync"),
+    "hotsync40": ("HotSync Manager",),
 }
 
 ORIGINAL_VERSION_LINES = {
     "hpcexplorer11": N_("Microsoft H/PC Explorer Version 1.1"),
     "ceservices22": N_("Microsoft\u00ae Windows\u00ae CE Services Version 2.2"),
     "activesync31": N_("Microsoft\u00ae ActiveSync\u00ae Version 3.1"),
+    "hotsync40": N_("HotSync\u00ae Manager Version 4.0.1"),
 }
 
 REGISTERED_MARK = "\u00ae"
@@ -92,5 +97,9 @@ def about_headline(frontend_key, version):
 def disclaimer():
     return _("ClassicSync is not affiliated with Microsoft. Windows CE, Handheld PC Explorer and ActiveSync are trademarks of "
              "Microsoft Corporation.")
+
+
+def palm_disclaimer():
+    return _("ClassicSync is not affiliated with Palm. Palm, Palm OS and HotSync are trademarks of their respective owners.")
 
 

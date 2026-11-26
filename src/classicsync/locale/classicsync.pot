@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-26 23:18+0000\n"
+"POT-Creation-Date: 2026-11-26 23:37+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -67,6 +67,14 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/backup.py:76 classicsync/gui/frontends/ceservices22/backup.py:69
 msgid " You may choose to skip these files; however, they will not be correctly restored on your device."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:132
+msgid " is already in use as a user or profile name."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync_log.py:23
+msgid " with {count} message(s)"
 msgstr ""
 
 #: classicsync/gui/common/device_browser.py:159
@@ -233,6 +241,10 @@ msgstr ""
 msgid "&About Windows CE Services"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:228
+msgid "&About..."
+msgstr ""
+
 #: classicsync/gui/common/conflicts.py:89
 msgid "&Action:"
 msgstr ""
@@ -353,6 +365,10 @@ msgstr ""
 msgid "&Copy\tCtrl+C"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:224
+msgid "&Custom..."
+msgstr ""
+
 #: classicsync/gui/common/device_browser.py:415 classicsync/gui/frontends/activesync31/partnership_wizard.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:258 classicsync/gui/frontends/ceservices22/mobile_devices.py:606 classicsync/gui/frontends/ceservices22/mobile_devices.py:651 classicsync/gui/frontends/ceservices22/partnership_wizard.py:161 classicsync/gui/frontends/hpcexplorer11/browser.py:180 classicsync/gui/frontends/hpcexplorer11/explorer.py:179
 msgid "&Delete"
 msgstr ""
@@ -361,7 +377,7 @@ msgstr ""
 msgid "&Delete Partnership"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:22
+#: classicsync/gui/common/preferences.py:42
 msgid "&Desktop software:"
 msgstr ""
 
@@ -421,6 +437,10 @@ msgstr ""
 msgid "&File"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:225
+msgid "&File Link..."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/explorer.py:188
 msgid "&Folders"
 msgstr ""
@@ -453,6 +473,10 @@ msgstr ""
 msgid "&Help"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:229
+msgid "&Help..."
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/backup.py:157
 msgid "&Incremental backup\r\nBack up only the information that has changed since the last backup."
 msgstr ""
@@ -463,6 +487,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/backup.py:112
 msgid "&Incremental: back up only data that has changed since the last backup"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:220
+msgid "&InfraRed"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/properties.py:86
@@ -493,7 +521,7 @@ msgstr ""
 msgid "&Keep Both"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:31
+#: classicsync/gui/common/preferences.py:26
 msgid "&Language:"
 msgstr ""
 
@@ -509,8 +537,12 @@ msgstr ""
 msgid "&List"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:36
+#: classicsync/gui/common/preferences.py:46
 msgid "&Local RAPI address:"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:216
+msgid "&Local Serial"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/partnership_wizard.py:165
@@ -525,12 +557,20 @@ msgstr ""
 msgid "&Mobile Device"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:218
+msgid "&Modem"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/partnership_wizard.py:111
 msgid "&Multiple"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:26
+#: classicsync/gui/common/preferences.py:22
 msgid "&Naming:"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:219
+msgid "&Network"
 msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/mobile_devices.py:257 classicsync/gui/frontends/hpcexplorer11/explorer.py:178
@@ -539,6 +579,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/__init__.py:162
 msgid "&New Partner"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:149
+msgid "&New..."
 msgstr ""
 
 #: classicsync/gui/common/classic_wizard.py:34 classicsync/gui/common/classic_wizard.py:75 classicsync/gui/frontends/activesync31/get_connected.py:51 classicsync/gui/frontends/activesync31/get_connected.py:112 classicsync/gui/frontends/activesync31/partnership_wizard.py:82 classicsync/gui/frontends/activesync31/partnership_wizard.py:237
@@ -677,6 +721,10 @@ msgstr ""
 msgid "&Settings..."
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:222
+msgid "&Setup..."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/options.py:16
 msgid "&Show all files"
 msgstr ""
@@ -747,6 +795,14 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/main_window.py:162 classicsync/gui/frontends/ceservices22/mobile_devices.py:294 classicsync/gui/frontends/ceservices22/mobile_devices.py:626 classicsync/gui/frontends/ceservices22/sync_status.py:103 classicsync/gui/frontends/hpcexplorer11/browser.py:161 classicsync/gui/frontends/hpcexplorer11/explorer.py:206
 msgid "&View"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:308
+msgid "&View Log"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:226
+msgid "&View Log..."
 msgstr ""
 
 #: classicsync/gui/common/backup_dialogs.py:118 classicsync/gui/common/replace_dialog.py:102 classicsync/gui/common/replace_dialog.py:76 classicsync/gui/common/replace_dialog.py:80 classicsync/gui/frontends/activesync31/partnership_wizard.py:120
@@ -885,6 +941,10 @@ msgstr ""
 msgid "AC"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:195
+msgid "About HotSync Manager"
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/__init__.py:22
 msgid "About Microsoft ActiveSync"
 msgstr ""
@@ -1021,6 +1081,10 @@ msgstr ""
 msgid "Allow &serial cable or infrared connection to this COM port:"
 msgstr ""
 
+#: classicsync/gui/common/preferences.py:59
+msgid "Allow HotSync over &USB"
+msgstr ""
+
 #: classicsync/sync/providers/favorites/provider.py:328
 msgid "Also put a shortcut to each page in Pocket Internet Explorer's Favorites."
 msgstr ""
@@ -1125,7 +1189,7 @@ msgstr ""
 msgid "Au&tomatically back up each time the device connects."
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:29
+#: classicsync/gui/common/preferences.py:24
 msgid "Authentic (original product names)"
 msgstr ""
 
@@ -1211,6 +1275,10 @@ msgstr ""
 
 #: classicsync/palm/conduits.py:103
 msgid "Backed up {count} databases"
+msgstr ""
+
+#: classicsync/gui/palm/service.py:182
+msgid "Backing up handheld databases"
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/commands.py:124
@@ -1401,7 +1469,7 @@ msgstr ""
 msgid "Calendars"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/font_conversion.py:39 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:45 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:52 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316
+#: classicsync/gui/common/app_manager.py:85 classicsync/gui/common/app_manager.py:148 classicsync/gui/common/backup_dialogs.py:214 classicsync/gui/common/backup_dialogs.py:247 classicsync/gui/common/backup_dialogs.py:261 classicsync/gui/common/backup_dialogs.py:163 classicsync/gui/common/backup_dialogs.py:307 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/classic_wizard.py:35 classicsync/gui/common/conflicts.py:94 classicsync/gui/common/conflicts.py:187 classicsync/gui/common/file_conversion.py:85 classicsync/gui/common/font_conversion.py:39 classicsync/gui/common/plugin_settings.py:144 classicsync/gui/common/plugin_settings.py:195 classicsync/gui/common/plugin_settings.py:251 classicsync/gui/common/preferences.py:80 classicsync/gui/common/replace_dialog.py:103 classicsync/gui/common/replace_dialog.py:77 classicsync/gui/common/replace_dialog.py:81 classicsync/gui/frontends/activesync31/connection_settings.py:87 classicsync/gui/frontends/activesync31/get_connected.py:52 classicsync/gui/frontends/activesync31/partnership_wizard.py:83 classicsync/gui/frontends/ceservices22/activesync.py:208 classicsync/gui/frontends/ceservices22/activesync.py:389 classicsync/gui/frontends/ceservices22/get_connected.py:51 classicsync/gui/frontends/ceservices22/properties.py:52 classicsync/gui/frontends/ceservices22/sheet.py:14 classicsync/gui/frontends/hpcexplorer11/browser.py:54 classicsync/gui/frontends/hpcexplorer11/sheet.py:25 classicsync/gui/frontends/hpcexplorer11/synchronization.py:257 classicsync/gui/frontends/hpcexplorer11/synchronization.py:316 classicsync/gui/palm/hotsync.py:81 classicsync/gui/palm/hotsync.py:122 classicsync/gui/palm/hotsync.py:150
 msgid "Cancel"
 msgstr ""
 
@@ -1409,8 +1477,16 @@ msgstr ""
 msgid "Cancel Application Installation"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:104
+msgid "Cancel HotSync operation"
+msgstr ""
+
 #: classicsync/gui/common/backup_dialogs.py:32
 msgid "Cancel backup?"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:105
+msgid "Canceling - this may take 1 minute"
 msgstr ""
 
 #: classicsync/gui/common/backup_dialogs.py:31
@@ -1493,12 +1569,16 @@ msgstr ""
 msgid "Choose the port your mobile device's cable is connected to, then click OK."
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:21
+#: classicsync/gui/common/preferences.py:41
 msgid "Choose which desktop software to recreate. Automatic matches the software to the device's version of Windows CE."
 msgstr ""
 
-#: classicsync/gui/branding.py:93
+#: classicsync/gui/branding.py:98
 msgid "ClassicSync is not affiliated with Microsoft. Windows CE, Handheld PC Explorer and ActiveSync are trademarks of Microsoft Corporation."
+msgstr ""
+
+#: classicsync/gui/branding.py:103
+msgid "ClassicSync is not affiliated with Palm. Palm, Palm OS and HotSync are trademarks of their respective owners."
 msgstr ""
 
 #: classicsync/sync/providers/macos/provider.py:99 classicsync/sync/providers/macos/provider.py:104
@@ -1573,7 +1653,7 @@ msgstr ""
 msgid "Comma-separated values (.csv, first sheet only)"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:38
+#: classicsync/gui/common/preferences.py:48
 msgid "Command-line tools reach the connected device here."
 msgstr ""
 
@@ -1681,11 +1761,15 @@ msgstr ""
 msgid "Connecting"
 msgstr ""
 
+#: classicsync/gui/palm/service.py:161
+msgid "Connecting with handheld"
+msgstr ""
+
 #: classicsync/gui/frontends/activesync31/main_window.py:33
 msgid "Connecting..."
 msgstr ""
 
-#: classicsync/gui/app.py:274 classicsync/gui/frontends/activesync31/connection_settings.py:50 classicsync/gui/frontends/ceservices22/mobile_devices.py:82
+#: classicsync/gui/app.py:284 classicsync/gui/frontends/activesync31/connection_settings.py:50 classicsync/gui/frontends/ceservices22/mobile_devices.py:82
 msgid "Connection"
 msgstr ""
 
@@ -1867,6 +1951,10 @@ msgstr ""
 msgid "Copying:  %s"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:133
+msgid "Could not add user '{name}'. '{name}' is an illegal user name."
+msgstr ""
+
 #: classicsync/gui/common/plugin_settings.py:284
 msgid "Could not load: {failures}"
 msgstr ""
@@ -1931,7 +2019,7 @@ msgstr ""
 msgid "D&evice Name:"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:39
+#: classicsync/gui/common/preferences.py:49
 msgid "D&evice RAPI:"
 msgstr ""
 
@@ -1979,7 +2067,7 @@ msgstr ""
 msgid "Deleting the selected partnership deletes all device-specific information from this computer. However, any existing backup file for this partnership will not be deleted.\n\nAre you sure you want to delete this partnership?"
 msgstr ""
 
-#: classicsync/gui/app.py:253 classicsync/gui/frontends/ceservices22/mobile_devices.py:82
+#: classicsync/gui/app.py:263 classicsync/gui/frontends/ceservices22/mobile_devices.py:82
 msgid "Description"
 msgstr ""
 
@@ -2099,7 +2187,7 @@ msgstr ""
 msgid "Device n&ame:"
 msgstr ""
 
-#: classicsync/gui/app.py:251
+#: classicsync/gui/app.py:261
 msgid "Device name"
 msgstr ""
 
@@ -2191,7 +2279,7 @@ msgstr ""
 msgid "E&nabled"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/tray.py:58 classicsync/gui/frontends/ceservices22/tray.py:76 classicsync/gui/frontends/hpcexplorer11/tray.py:42
+#: classicsync/gui/frontends/activesync31/tray.py:58 classicsync/gui/frontends/ceservices22/tray.py:76 classicsync/gui/frontends/hpcexplorer11/tray.py:42 classicsync/gui/palm/hotsync.py:231
 msgid "E&xit"
 msgstr ""
 
@@ -2229,6 +2317,10 @@ msgstr ""
 
 #: classicsync/cli_translations.py:56
 msgid "English and localized installers (.msi or .exe), or directories of them; an English installer with no localized build is matched by text and resource id"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:158
+msgid "Enter a new user name:"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/partnership_wizard.py:130
@@ -2407,7 +2499,7 @@ msgstr ""
 msgid "For example https://caldav.icloud.com, https://caldav.fastmail.com, https://cloud.example.com/remote.php/dav or http://localhost:5232. A calendar's own address works too."
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:41
+#: classicsync/gui/common/preferences.py:51
 msgid "For network devices reached through a tunnel. Leave empty to use the device's own address."
 msgstr ""
 
@@ -2463,7 +2555,7 @@ msgstr ""
 msgid "Future appointments (days)"
 msgstr ""
 
-#: classicsync/gui/common/device_browser.py:151 classicsync/gui/common/file_conversion.py:164 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
+#: classicsync/gui/common/device_browser.py:151 classicsync/gui/common/file_conversion.py:164 classicsync/gui/common/preferences.py:75 classicsync/gui/frontends/ceservices22/activesync.py:335 classicsync/gui/frontends/hpcexplorer11/properties.py:58 classicsync/gui/frontends/hpcexplorer11/properties.py:62 classicsync/gui/frontends/hpcexplorer11/synchronization.py:270
 msgid "General"
 msgstr ""
 
@@ -2487,7 +2579,7 @@ msgstr ""
 msgid "Greek"
 msgstr ""
 
-#: classicsync/gui/app.py:275 classicsync/gui/frontends/activesync31/main_window.py:313 classicsync/gui/frontends/base.py:95 classicsync/gui/frontends/ceservices22/__init__.py:255 classicsync/gui/frontends/ceservices22/__init__.py:267 classicsync/gui/frontends/ceservices22/activesync.py:136 classicsync/gui/frontends/ceservices22/mobile_devices.py:406 classicsync/gui/frontends/ceservices22/tray.py:37
+#: classicsync/gui/app.py:285 classicsync/gui/frontends/activesync31/main_window.py:313 classicsync/gui/frontends/base.py:95 classicsync/gui/frontends/ceservices22/__init__.py:255 classicsync/gui/frontends/ceservices22/__init__.py:267 classicsync/gui/frontends/ceservices22/activesync.py:136 classicsync/gui/frontends/ceservices22/mobile_devices.py:406 classicsync/gui/frontends/ceservices22/tray.py:37
 msgid "Guest"
 msgstr ""
 
@@ -2535,8 +2627,40 @@ msgstr ""
 msgid "Hide files of these &types:"
 msgstr ""
 
+#: classicsync/gui/palm/service.py:201
+msgid "HotSync Error: {error}"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:175
+msgid "HotSync Log"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:307
+msgid "HotSync Problem"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:60
+msgid "HotSync Progress"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:199
+msgid "HotSync for Palm OS handhelds on Linux, macOS and Windows."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync_log.py:28 classicsync/gui/palm/service.py:195
+msgid "HotSync operation canceled."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync_log.py:28 classicsync/gui/palm/service.py:191
+msgid "HotSync operation complete"
+msgstr ""
+
 #: classicsync/cli_palm.py:89
 msgid "HotSync user set to {name} (ID {user_id:#x})"
+msgstr ""
+
+#: classicsync/gui/branding.py:42
+msgid "HotSync® Manager Version 4.0.1"
 msgstr ""
 
 #: classicsync/sync/providers/notes/provider.py:238
@@ -2575,6 +2699,10 @@ msgstr ""
 msgid "Identification"
 msgstr ""
 
+#: classicsync/gui/palm/service.py:173
+msgid "Identifying user"
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/activesync.py:186
 msgid "If an item changes on both computers:"
 msgstr ""
@@ -2585,6 +2713,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/options.py:115
 msgid "If there is a conflict (an item has been changed on both the mobile device and desktop computer):"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:101
+msgid "If you cancel this HotSync operation now, some of your data will not be synchronized. You will need to perform a complete HotSync operation later to insure all your data is safely backed up.\n\nCancel this HotSync operation?"
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/partner_wizard.py:117
@@ -2663,6 +2795,14 @@ msgstr ""
 msgid "Install Sync Provider"
 msgstr ""
 
+#: classicsync/gui/palm/service.py:150
+msgid "Install failed: {name} ({error})"
+msgstr ""
+
+#: classicsync/gui/palm/service.py:153
+msgid "Installed file: {name}"
+msgstr ""
+
 #: classicsync/cli_install.py:35
 msgid "Installed on the device:"
 msgstr ""
@@ -2673,6 +2813,10 @@ msgstr ""
 
 #: classicsync/gui/common/app_manager.py:20
 msgid "Installing Applications"
+msgstr ""
+
+#: classicsync/gui/palm/service.py:144
+msgid "Installing handheld applications"
 msgstr ""
 
 #: classicsync/gui/common/plugin_settings.py:312
@@ -2727,6 +2871,10 @@ msgstr ""
 msgid "List"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:217
+msgid "Local &USB"
+msgstr ""
+
 #: classicsync/gui/common/device_browser.py:157 classicsync/gui/frontends/hpcexplorer11/properties.py:74 classicsync/gui/frontends/hpcexplorer11/properties.py:83
 msgid "Location:"
 msgstr ""
@@ -2767,7 +2915,7 @@ msgstr ""
 msgid "Microsoft &Home Page"
 msgstr ""
 
-#: classicsync/gui/branding.py:35
+#: classicsync/gui/branding.py:39
 msgid "Microsoft H/PC Explorer Version 1.1"
 msgstr ""
 
@@ -2783,11 +2931,11 @@ msgstr ""
 msgid "Microsoft on the &Web"
 msgstr ""
 
-#: classicsync/gui/branding.py:37
+#: classicsync/gui/branding.py:41
 msgid "Microsoft® ActiveSync® Version 3.1"
 msgstr ""
 
-#: classicsync/gui/branding.py:36
+#: classicsync/gui/branding.py:40
 msgid "Microsoft® Windows® CE Services Version 2.2"
 msgstr ""
 
@@ -2803,7 +2951,7 @@ msgstr ""
 msgid "Mobile Devices"
 msgstr ""
 
-#: classicsync/gui/app.py:243
+#: classicsync/gui/app.py:253
 msgid "Mobile device"
 msgstr ""
 
@@ -2887,7 +3035,7 @@ msgstr ""
 msgid "Name: {value}"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:65
+#: classicsync/gui/common/preferences.py:104
 msgid "Naming and language changes take effect the next time {product} starts."
 msgstr ""
 
@@ -2899,7 +3047,7 @@ msgstr ""
 msgid "Ne&w Folder"
 msgstr ""
 
-#: classicsync/gui/app.py:273
+#: classicsync/gui/app.py:283
 msgid "Network"
 msgstr ""
 
@@ -2943,6 +3091,10 @@ msgstr ""
 msgid "New Partnership Wizard"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:158
+msgid "New User"
+msgstr ""
+
 #: classicsync/sync/providers/macos/provider.py:102
 msgid "No answer to the request to use Contacts."
 msgstr ""
@@ -2961,6 +3113,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/connection_settings.py:128 classicsync/gui/frontends/hpcexplorer11/communications.py:23
 msgid "No port selected"
+msgstr ""
+
+#: classicsync/gui/palm/service.py:129
+msgid "No user name was chosen"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:23 classicsync/gui/frontends/ceservices22/get_connected.py:22
@@ -3075,12 +3231,16 @@ msgstr ""
 msgid "Now synchronizing mobile device data with desktop computer data."
 msgstr ""
 
-#: classicsync/gui/app.py:271
+#: classicsync/gui/app.py:281
 msgid "OEM"
 msgstr ""
 
-#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/font_conversion.py:38 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:44 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:51 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256
+#: classicsync/gui/common/app_manager.py:146 classicsync/gui/common/backup_dialogs.py:305 classicsync/gui/common/backup_dialogs.py:213 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/backup_dialogs.py:117 classicsync/gui/common/conflicts.py:186 classicsync/gui/common/file_conversion.py:84 classicsync/gui/common/font_conversion.py:38 classicsync/gui/common/password.py:22 classicsync/gui/common/plugin_settings.py:143 classicsync/gui/common/plugin_settings.py:194 classicsync/gui/common/plugin_settings.py:250 classicsync/gui/common/preferences.py:79 classicsync/gui/frontends/activesync31/__init__.py:31 classicsync/gui/frontends/activesync31/connection_settings.py:86 classicsync/gui/frontends/ceservices22/__init__.py:45 classicsync/gui/frontends/ceservices22/activesync.py:207 classicsync/gui/frontends/ceservices22/properties.py:51 classicsync/gui/frontends/ceservices22/sheet.py:11 classicsync/gui/frontends/hpcexplorer11/__init__.py:45 classicsync/gui/frontends/hpcexplorer11/sheet.py:22 classicsync/gui/frontends/hpcexplorer11/synchronization.py:256 classicsync/gui/palm/hotsync.py:308 classicsync/gui/palm/hotsync.py:121 classicsync/gui/palm/hotsync.py:148 classicsync/gui/palm/hotsync.py:180 classicsync/gui/palm/hotsync.py:202
 msgid "OK"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync_log.py:21
+msgid "OK {conduit}"
 msgstr ""
 
 #: classicsync/cli.py:196
@@ -3231,7 +3391,7 @@ msgstr ""
 msgid "Opens the selected folder."
 msgstr ""
 
-#: classicsync/gui/app.py:258 classicsync/gui/app.py:260
+#: classicsync/gui/app.py:268 classicsync/gui/app.py:270
 msgid "Operating system"
 msgstr ""
 
@@ -3287,6 +3447,10 @@ msgstr ""
 msgid "PNG (.png)"
 msgstr ""
 
+#: classicsync/gui/common/preferences.py:77
+msgid "Palm"
+msgstr ""
+
 #: classicsync/cli_palm.py:39
 msgid "Palm OS {version}, desktop link protocol {major}.{minor}"
 msgstr ""
@@ -3299,7 +3463,7 @@ msgstr ""
 msgid "Partner H/PC Setup is not complete. If you quit Setup, you may not have access to some partner H/PC features."
 msgstr ""
 
-#: classicsync/gui/app.py:275
+#: classicsync/gui/app.py:285
 msgid "Partnership"
 msgstr ""
 
@@ -3383,7 +3547,7 @@ msgstr ""
 msgid "Plain text (.txt)"
 msgstr ""
 
-#: classicsync/gui/app.py:255
+#: classicsync/gui/app.py:265
 msgid "Platform"
 msgstr ""
 
@@ -3397,6 +3561,14 @@ msgstr ""
 
 #: classicsync/gui/frontends/ceservices22/partnership_wizard.py:40
 msgid "Please enter a name containing no spaces or any of the following characters: \\ / : * ? \" < > | &&.\n\nYou may also enter a device description at this time."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:129
+msgid "Please enter a user name."
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:166
+msgid "Please select a user name."
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:91
@@ -3471,7 +3643,7 @@ msgstr ""
 msgid "Proceed with Restore?"
 msgstr ""
 
-#: classicsync/gui/app.py:263 classicsync/gui/app.py:265
+#: classicsync/gui/app.py:273 classicsync/gui/app.py:275
 msgid "Processor"
 msgstr ""
 
@@ -3827,6 +3999,10 @@ msgstr ""
 msgid "Select a program's check box if you want to install it on your mobile device, or clear the check box if you want to remove the program from your device."
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:143
+msgid "Select a user:"
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/communications.py:39
 msgid "Select the communications port that you have used to attach your H/PC to the desktop computer:"
 msgstr ""
@@ -3953,6 +4129,10 @@ msgstr ""
 
 #: classicsync/gui/frontends/activesync31/main_window.py:43
 msgid "Show sync. settings.\nChange Options"
+msgstr ""
+
+#: classicsync/gui/common/preferences.py:61
+msgid "Show the HotSync Manager &icon in the taskbar"
 msgstr ""
 
 #: classicsync/gui/frontends/hpcexplorer11/commands.py:83
@@ -4083,7 +4263,7 @@ msgstr ""
 msgid "Status icon"
 msgstr ""
 
-#: classicsync/gui/frontends/activesync31/connection_settings.py:52 classicsync/gui/frontends/activesync31/connection_settings.py:69 classicsync/gui/frontends/activesync31/connection_settings.py:74 classicsync/gui/frontends/activesync31/connection_settings.py:79 classicsync/gui/frontends/ceservices22/properties.py:72 classicsync/gui/frontends/ceservices22/properties.py:91
+#: classicsync/gui/frontends/activesync31/connection_settings.py:52 classicsync/gui/frontends/activesync31/connection_settings.py:69 classicsync/gui/frontends/activesync31/connection_settings.py:74 classicsync/gui/frontends/activesync31/connection_settings.py:79 classicsync/gui/frontends/ceservices22/properties.py:72 classicsync/gui/frontends/ceservices22/properties.py:91 classicsync/gui/palm/hotsync.py:64
 msgid "Status:"
 msgstr ""
 
@@ -4111,7 +4291,7 @@ msgstr ""
 msgid "Storage (*.STG)|*.STG|All Files (*.*)|*.*|"
 msgstr ""
 
-#: classicsync/gui/app.py:268
+#: classicsync/gui/app.py:278
 msgid "Storage free"
 msgstr ""
 
@@ -4191,6 +4371,10 @@ msgstr ""
 msgid "Synchronization did not complete.\n\n{error}"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:306
+msgid "Synchronization generated one or more messages. Please see the HotSync Log for details."
+msgstr ""
+
 #: classicsync/gui/frontends/ceservices22/activesync.py:377 classicsync/gui/frontends/hpcexplorer11/synchronization.py:305
 msgid "Synchronization in Progress"
 msgstr ""
@@ -4255,6 +4439,10 @@ msgstr ""
 msgid "Synchronize Now"
 msgstr ""
 
+#: classicsync/gui/common/preferences.py:58
+msgid "Synchronize Palm OS handhelds with HotSync. Press the HotSync button on the cradle to start."
+msgstr ""
+
 #: classicsync/gui/frontends/hpcexplorer11/commands.py:74
 msgid "Synchronize Selection"
 msgstr ""
@@ -4311,6 +4499,10 @@ msgstr ""
 msgid "Synchronizing"
 msgstr ""
 
+#: classicsync/gui/palm/service.py:184
+msgid "Synchronizing {conduit}"
+msgstr ""
+
 #: classicsync/sync/engine.py:424
 msgid "Synchronizing {device} with {provider}"
 msgstr ""
@@ -4327,7 +4519,7 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:34
+#: classicsync/gui/common/preferences.py:29
 msgid "System default"
 msgstr ""
 
@@ -4767,12 +4959,24 @@ msgstr ""
 msgid "Use an app password where the service offers one. Saved in the system keyring when the keyring package is installed; otherwise saved unencrypted in the settings file."
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:134
+msgid "User Name Exists"
+msgstr ""
+
 #: classicsync/sync/providers/caldav/provider.py:214
 msgid "User name"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync.py:66
+msgid "User:"
+msgstr ""
+
 #: classicsync/cli_palm.py:41
 msgid "User: {user}"
+msgstr ""
+
+#: classicsync/gui/palm/hotsync.py:141
+msgid "Users"
 msgstr ""
 
 #: classicsync/gui/frontends/activesync31/get_connected.py:99 classicsync/gui/frontends/activesync31/get_connected.py:100
@@ -4883,6 +5087,10 @@ msgstr ""
 msgid "While Auto Connect is enabled, your COM port cannot be used for another purpose (such as an external modem or digital camera)."
 msgstr ""
 
+#: classicsync/gui/common/preferences.py:76
+msgid "Windows CE"
+msgstr ""
+
 #: classicsync/cli.py:79
 msgid "Windows CE 1.x device at {address}"
 msgstr ""
@@ -4899,7 +5107,7 @@ msgstr ""
 msgid "Windows CE Version {major}.{minor:02d} (Build {build})"
 msgstr ""
 
-#: classicsync/gui/app.py:28
+#: classicsync/gui/app.py:30
 msgid "Windows CE {version} (build {build})"
 msgstr ""
 
@@ -5951,6 +6159,10 @@ msgstr ""
 msgid "yes"
 msgstr ""
 
+#: classicsync/gui/palm/hotsync_log.py:20
+msgid "{conduit} synchronization failed"
+msgstr ""
+
 #: classicsync/sync/engine.py:39
 msgid "{count} add to desktop"
 msgstr ""
@@ -6091,7 +6303,7 @@ msgstr ""
 msgid "{file} failed to load: {error}"
 msgstr ""
 
-#: classicsync/gui/app.py:268
+#: classicsync/gui/app.py:278
 msgid "{free} KB of {total} KB"
 msgstr ""
 
@@ -6247,11 +6459,11 @@ msgstr ""
 msgid "{product} &Settings..."
 msgstr ""
 
-#: classicsync/gui/common/preferences.py:16
+#: classicsync/gui/common/preferences.py:67
 msgid "{product} Settings"
 msgstr ""
 
-#: classicsync/gui/branding.py:88
+#: classicsync/gui/branding.py:93
 msgid "{product} {version} ({style} style)"
 msgstr ""
 
