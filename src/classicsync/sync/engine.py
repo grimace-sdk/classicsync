@@ -182,6 +182,8 @@ class TypeSync:
     def describe(self, device_id, desktop_id):
         if desktop_id:
             return self.store.describe(desktop_id)
+        if device_id in self.read_ahead:
+            return self.describe_device(device_id, self.read_ahead[device_id])
         return device_id or ""
 
     def action(self, kind, direction, device_id, desktop_id, resolution=""):
