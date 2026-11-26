@@ -1,3 +1,4 @@
+from .cli_sync import print_progress
 from .gui.settings import Settings
 from .i18n import _
 from .palm import palm_usb_session
@@ -83,11 +84,6 @@ async def command_palm_user(arguments):
         user_id = await set_user(client, arguments.name, pc_identifier())
         await client.end_of_sync()
     print(_("HotSync user set to {name} (ID {user_id:#x})").format(name=arguments.name, user_id=user_id))
-
-
-def print_progress(update):
-    if update.message:
-        print(update.message)
 
 
 async def command_palm_sync(arguments):

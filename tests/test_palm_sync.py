@@ -218,3 +218,16 @@ def test_palm_sync_copies_handheld_records_and_back(run, tmp_path):
     assert record_id == 0x400003 and records.parse_todo(data).description == "Buy AA batteries"
     assert records.parse_categories(databases["ToDoDB"]["app_info"]).name_of(category) == "Errands"
     assert palm.user["pc"] == 0x0BEE and palm.user["id"] == 0x1234
+
+
+def test_extra_phones_overflow_into_free_fields():
+    address = records.Address()
+    address.fields[records.ADDRESS_LAST_NAME] = "Accessories"
+    address.phone_labels = [records.PHONE_MAIN] * 3 + [records.PHONE_OTHER, records.PHONE_OTHER]
+    for slot, value in enumerate(["800-881-7256", "800-618-6719", "Int'l", "www.palm.com"]):
+        address.fields[records.ADDRESS_PHONE_FIRST + slot] = value
+    properties = convert.address_to_properties(address)
+    values = sorted(prop.value for prop in properties if isinstance(prop.value, str))
+    assert {"800-881-7256", "800-618-6719", "Int'l", "www.palm.com"} <= set(values)
+    back = convert.properties_to_address(properties, address)
+    assert records.build_address(back) == records.build_address(address)

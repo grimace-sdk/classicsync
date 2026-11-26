@@ -48,6 +48,8 @@ PHONE_TARGETS = {
     PHONE_PAGER: ("pager",),
     PHONE_MOBILE: ("mobile_phone", "car_phone"),
 }
+PHONE_OVERFLOW = ("work_phone2", "home_phone2", "car_phone", "assistant_phone", "home_phone", "work_phone", "mobile_phone",
+                  "pager", "home_fax", "work_fax")
 PHONE_SOURCES = [
     ("work_phone", PHONE_WORK), ("home_phone", PHONE_HOME), ("mobile_phone", PHONE_MOBILE), ("email1", PHONE_EMAIL),
     ("work_fax", PHONE_FAX), ("pager", PHONE_PAGER), ("work_phone2", PHONE_WORK), ("home_phone2", PHONE_HOME),
@@ -76,10 +78,11 @@ def address_to_properties(address, category="", secret=False):
         if address.fields[index]:
             fields[f"other_{part}"] = address.fields[index]
     for label, value in address.phones():
-        for target in PHONE_TARGETS.get(label, ("work_phone2",)):
-            if target not in fields:
-                fields[target] = value
-                break
+        targets = PHONE_TARGETS.get(label, ())
+        overflow = () if label == PHONE_EMAIL else PHONE_OVERFLOW
+        target = next((name for name in (*targets, *overflow) if name not in fields), None)
+        if target:
+            fields[target] = value
     return [text_property(name, value) for name, value in fields.items()] + common_properties(category, secret)
 
 
