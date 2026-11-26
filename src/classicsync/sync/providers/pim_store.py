@@ -7,7 +7,7 @@ from ..folder import text_summary, write_file_atomically
 from ..objects import CALENDAR, CONTACTS, TASKS, DeviceRecord
 from ..pim.icalendar import appointment_to_ical, ical_to_appointment, ical_to_task, task_to_ical
 from ..pim.merge import merge_component
-from ..pim.properties import APPOINTMENT_START, SUBJECT
+from ..pim.properties import APPOINTMENT_START, RECURRENCE_RULE, SUBJECT
 from ..pim.record import property_map
 from ..pim.text import parse_line, unescape_text, unfold
 from ..pim.vcard import contact_fields, contact_to_vcard, display_name, vcard_to_contact
@@ -37,6 +37,9 @@ class PimCodec:
     def match_key(self, properties):
         return self.title(properties).strip().lower()
 
+    def managed_for(self, properties):
+        return self.managed
+
 
 class ContactCodec(PimCodec):
     def to_text(self, properties, uid):
@@ -59,6 +62,11 @@ class AppointmentCodec(PimCodec):
     def match_key(self, properties):
         return (self.title(properties).strip().lower(), property_map(properties).get(APPOINTMENT_START))
 
+    def managed_for(self, properties):
+        if RECURRENCE_RULE in property_map(properties):
+            return self.managed | RECURRENCE_MANAGED
+        return self.managed
+
 
 class TaskCodec(PimCodec):
     def to_text(self, properties, uid):
@@ -76,6 +84,7 @@ EVENT_MANAGED = frozenset({
     "DTSTAMP", "DTSTART", "DTEND", "DURATION", "SUMMARY", "LOCATION", "DESCRIPTION", "CLASS", "CATEGORIES", "TRANSP",
     "X-MICROSOFT-CDO-BUSYSTATUS",
 })
+RECURRENCE_MANAGED = frozenset({"RRULE", "EXDATE", "X-CLASSICSYNC-RECURRING"})
 TASK_MANAGED = frozenset({
     "DTSTAMP", "SUMMARY", "DTSTART", "DUE", "STATUS", "COMPLETED", "PERCENT-COMPLETE", "PRIORITY", "CLASS", "DESCRIPTION",
     "CATEGORIES",
@@ -178,7 +187,8 @@ class RemotePimStore(Store):
         existing = self.text(item_id) if item_id else ""
         if self.codec.component == "VCARD":
             generated = vcard_in_version(generated, card_version(existing) or self.vcard_version)
-        merged = merge_component(existing, generated, self.codec.component, self.codec.managed, self.codec.managed_children,
+        merged = merge_component(existing, generated, self.codec.component, self.codec.managed_for(device_object.properties),
+                                 self.codec.managed_children,
                                  date_only_names=self.codec.date_only)
         return merged, text_uid(merged, self.codec.component) or uid
 

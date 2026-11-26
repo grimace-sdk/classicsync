@@ -69,6 +69,7 @@ class Partnership:
     partner_id: int = None
     created: str = ""
     desktop_name: str = ""
+    platform: str = ""
 
     @classmethod
     def for_device(cls, name, base=None):
@@ -79,7 +80,7 @@ class Partnership:
         info = read_json(directory / PARTNERSHIP_FILE, None)
         if info:
             return cls(info.get("name") or directory.name, directory, info.get("partner_id"), info.get("created", ""),
-                       info.get("desktop_name", ""))
+                       info.get("desktop_name", ""), info.get("platform", ""))
         state = read_json(directory / "state.json", {})
         return cls(state.get("device", directory.name), directory)
 
@@ -123,7 +124,7 @@ class Partnership:
     def save_info(self):
         write_json_atomically(self.info_path, {
             "version": PARTNERSHIP_VERSION, "name": self.name, "partner_id": self.partner_id, "created": self.created,
-            "desktop_name": self.desktop_name,
+            "desktop_name": self.desktop_name, "platform": self.platform,
         })
 
     def load_state(self):

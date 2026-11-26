@@ -1,11 +1,16 @@
 from ..rapi import cedb
 from ..rapi.client import HKEY_LOCAL_MACHINE, RapiError
 from .objects import DeviceFile, DeviceInfo, DeviceRecord
+from .pim.properties import PRIVATE_IDENTIFIERS
 from .rawjson import properties_hash
 
 INVALID_DEVICE_NAME_CHARACTERS = set('\\:*?"<>|')
 ERROR_ALREADY_EXISTS = 183
 FREE_MARGIN = 64 * 1024
+
+
+class DeviceSourceError(Exception):
+    pass
 
 
 def device_id_for_oid(oid):
@@ -71,7 +76,8 @@ class DeviceDatabase:
         return [prop for prop in record[1] if not prop.missing]
 
     async def write(self, device_id, device_object):
-        properties = [prop for prop in device_object.properties if prop.value is not None and not prop.flags]
+        properties = [prop for prop in device_object.properties
+                      if prop.value is not None and not prop.flags and prop.identifier not in PRIVATE_IDENTIFIERS]
         oid = oid_for_device_id(device_id) if device_id else 0
         if device_id and device_id in self.records:
             wanted = {prop.propid for prop in properties}

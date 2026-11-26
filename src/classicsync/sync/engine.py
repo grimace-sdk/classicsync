@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from ..i18n import N_, _
 from ..rapi.client import RapiError
-from .device import DeviceDatabase, DeviceFolder, read_device_info
+from .device import DeviceDatabase, DeviceFolder, DeviceSourceError, read_device_info
 from .mail.device import DeviceMailbox
 from .objects import KIND_FILES, KIND_MAIL
 from .plugins import load_providers
@@ -334,7 +334,7 @@ class TypeSync:
             except ConnectionError:
                 self.mapping.extend(pending for _, pending in planned[index:] if pending)
                 raise
-            except (RapiError, OSError, ValueError, SyncError, ProviderError) as error:
+            except (RapiError, DeviceSourceError, OSError, ValueError, SyncError, ProviderError) as error:
                 log.info("%s failed: %s", action, error)
                 action.error = str(error)
                 if entry:
@@ -401,9 +401,9 @@ def report_progress(progress):
 
 
 async def synchronize(client, partnership=None, options=None, progress=None, providers=None, first_sync=None, duplicates=None,
-                      find_duplicates=False):
+                      find_duplicates=False, device=None, source_for=None):
     emit = report_progress(progress)
-    device = await read_device_info(client)
+    device = device or await read_device_info(client)
     if partnership is None:
         partnership = (await find_partnership(client)).partnership
         if partnership is None:
@@ -434,7 +434,7 @@ async def synchronize(client, partnership=None, options=None, progress=None, pro
                 instances[assigned_class.name] = provider
             try:
                 await synchronize_type(client, provider, object_type, options, state, report, emit, first_sync, duplicates,
-                                       find_duplicates)
+                                       find_duplicates, source_for)
             except ProviderError as error:
                 report.skipped_types.append(object_type.key)
                 report.errors.append(f"{object_type.display_name}: {error}")
@@ -470,12 +470,12 @@ async def first_sync_mode(sync, stored, provider, first_sync, report):
 
 
 async def synchronize_type(client, provider, object_type, options, state, report, emit, first_sync=None, duplicates=None,
-                           find_duplicates=False):
+                           find_duplicates=False, source_for=None):
     emit(SyncProgress("scan", object_type.key, message=_("Checking {type}").format(type=_(object_type.display_name))))
-    source = device_source_for(client, object_type, options, provider)
+    source = (source_for or device_source_for)(client, object_type, options, provider)
     try:
         await source.open()
-    except RapiError as error:
+    except (RapiError, DeviceSourceError) as error:
         report.skipped_types.append(object_type.key)
         report.errors.append(f"{object_type.display_name}: {error}")
         return
@@ -536,7 +536,7 @@ async def remove_duplicates(sync, callback):
                 await sync.device.delete(device_id)
             sync.mapping.remove(entry)
             action.applied = True
-        except (RapiError, OSError, ValueError, SyncError, ProviderError) as error:
+        except (RapiError, DeviceSourceError, OSError, ValueError, SyncError, ProviderError) as error:
             action.error = str(error)
 
 

@@ -3,7 +3,9 @@ from .i18n import _
 from .palm import palm_usb_session
 from .palm.backup import backup_handheld
 from .palm.install import InstallError, install_files, load_installables
+from .palm.sync import create_palm_partnership, find_palm_partnership, synchronize_handheld
 from .palm.users import new_identifier, set_user
+from .sync import FIRST_SYNC_CHOICES, FIRST_SYNC_COMBINE
 
 DEFAULT_WAIT = 60.0
 
@@ -83,6 +85,44 @@ async def command_palm_user(arguments):
     print(_("HotSync user set to {name} (ID {user_id:#x})").format(name=arguments.name, user_id=user_id))
 
 
+def print_progress(update):
+    if update.message:
+        print(update.message)
+
+
+async def command_palm_sync(arguments):
+    print(_("Waiting for a Palm handheld: press the HotSync button on the cradle."))
+    async with palm_usb_session(arguments.wait) as client:
+        user = await client.read_user_info()
+        if not user.name:
+            await client.end_of_sync()
+            raise ValueError(_("this handheld has no HotSync user yet; set one with 'classicsync palm user NAME'"))
+        if not user.synced:
+            await set_user(client, user.name, pc_identifier())
+            user = await client.read_user_info()
+        partnership = find_palm_partnership(user) or create_palm_partnership(user.name, user.user_id)
+        options = partnership.load_options()
+        if arguments.provider:
+            options.provider = arguments.provider
+        if arguments.only:
+            options.object_types = arguments.only
+        if arguments.folder:
+            options.provider_settings["folder"] = arguments.folder
+        if arguments.save:
+            partnership.save_options(options)
+        options.dry_run = arguments.dry_run
+        report = await synchronize_handheld(client, partnership, pc_identifier(), options, print_progress,
+                                            first_sync=lambda question: arguments.first_sync)
+        await client.end_of_sync()
+    for action in report.actions:
+        if action.action != "match" or arguments.verbose:
+            print(_("would {action}").format(action=action) if report.dry_run else str(action))
+    for error in report.errors:
+        print(_("skipped {error}").format(error=error))
+    summary = _("{device}: {summary} (dry run)") if report.dry_run else _("{device}: {summary}")
+    print(summary.format(device=report.device, summary=report.summary()))
+
+
 def add_commands(subparsers):
     palm = subparsers.add_parser("palm", help=_("talk to a Palm OS handheld over HotSync"))
     palm_commands = palm.add_subparsers(dest="palm_command", required=True)
@@ -103,3 +143,14 @@ def add_commands(subparsers):
     user.add_argument("name")
     user.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
     user.set_defaults(handler=command_palm_user)
+    sync = palm_commands.add_parser("sync", help=_("synchronize addresses, the date book and to do items"))
+    sync.add_argument("--dry-run", action="store_true", help=_("show what would change without changing anything"))
+    sync.add_argument("--provider", help=_("sync provider (default: folder, or the saved one)"))
+    sync.add_argument("--only", action="append", metavar="TYPE", choices=["contacts", "calendar", "tasks"],
+                      help=_("only this type (repeatable)"))
+    sync.add_argument("--folder", help=_("folder provider: where to keep the desktop copies"))
+    sync.add_argument("--save", action="store_true", help=_("remember --provider, --only and --folder for this handheld"))
+    sync.add_argument("--first-sync", choices=FIRST_SYNC_CHOICES, default=FIRST_SYNC_COMBINE,
+                      help=_("what to do when both sides already have items"))
+    sync.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
+    sync.set_defaults(handler=command_palm_sync)

@@ -5,9 +5,9 @@ from ...rapi.cedb import PropertyValue
 from .properties import (
     APPOINTMENT_BUSY_STATUS, APPOINTMENT_DAY, APPOINTMENT_DURATION, APPOINTMENT_LOCATION, APPOINTMENT_RECURRENCE,
     APPOINTMENT_START, APPOINTMENT_TYPE, APPOINTMENT_TYPE_ALL_DAY, APPOINTMENT_TYPE_NORMAL, BUSY_STATUS_NAMES, CATEGORIES,
-    NO_DATE, NOTES_BLOB, NOTES_INK, NOTES_TEXT, REMINDER_ENABLED, REMINDER_MINUTES, REMINDER_OPTIONS, REMINDER_SOUND,
-    SENSITIVITY, SUBJECT, TASK_COMPLETED, TASK_COMPLETED_DATE, TASK_DUE, TASK_IMPORTANCE, TASK_PROJECT, TASK_START,
-    TASK_UNKNOWN_0003, TASK_UNKNOWN_4126, UNIQUE_ID, UNKNOWN_0002,
+    NO_DATE, NOTES_BLOB, NOTES_INK, NOTES_TEXT, RECURRENCE_EXCEPTIONS, RECURRENCE_RULE, REMINDER_ENABLED, REMINDER_MINUTES,
+    REMINDER_OPTIONS, REMINDER_SOUND, SENSITIVITY, SUBJECT, TASK_COMPLETED, TASK_COMPLETED_DATE, TASK_DUE, TASK_IMPORTANCE,
+    TASK_PRIORITY, TASK_PROJECT, TASK_START, TASK_UNKNOWN_0003, TASK_UNKNOWN_4126, UNIQUE_ID, UNKNOWN_0002,
 )
 from .record import (
     filetime_for_local_date, filetime_from_utc, format_date, format_utc, local_date_from_filetime, merge_properties,
@@ -21,9 +21,15 @@ DURATION_PATTERN = re.compile(r"([+-]?)P(?:(\d+)W)?(?:(\d+)D)?(?:T(?:(\d+)H)?(?:
 
 APPOINTMENT_OWNED = {
     APPOINTMENT_START, APPOINTMENT_DAY, APPOINTMENT_DURATION, APPOINTMENT_TYPE, SUBJECT, APPOINTMENT_LOCATION,
-    NOTES_TEXT, SENSITIVITY, APPOINTMENT_BUSY_STATUS, CATEGORIES, REMINDER_ENABLED, REMINDER_MINUTES,
+    NOTES_TEXT, SENSITIVITY, APPOINTMENT_BUSY_STATUS, CATEGORIES, REMINDER_ENABLED, REMINDER_MINUTES, RECURRENCE_RULE,
+    RECURRENCE_EXCEPTIONS,
 }
-TASK_OWNED = {SUBJECT, TASK_START, TASK_DUE, TASK_COMPLETED, TASK_COMPLETED_DATE, NOTES_TEXT, CATEGORIES, SENSITIVITY, TASK_IMPORTANCE}
+TASK_OWNED = {
+    SUBJECT, TASK_START, TASK_DUE, TASK_COMPLETED, TASK_COMPLETED_DATE, NOTES_TEXT, CATEGORIES, SENSITIVITY, TASK_IMPORTANCE,
+    TASK_PRIORITY,
+}
+PRIORITY_STEPS = 2
+LOWEST_PALM_PRIORITY = 5
 
 
 def template(entries):
@@ -89,6 +95,34 @@ def common_lines(values):
     return lines + categories_lines(values)
 
 
+def exception_days(values):
+    return [parse_date(item) for item in text_value(values, RECURRENCE_EXCEPTIONS).split(",") if item.strip()]
+
+
+def recurrence_lines(values, start, all_day):
+    rule = text_value(values, RECURRENCE_RULE)
+    if not rule:
+        return []
+    lines = [f"RRULE:{rule}"]
+    days = exception_days(values)
+    if days and all_day:
+        lines.append("EXDATE;VALUE=DATE:" + ",".join(format_date(day) for day in days))
+    elif days:
+        local_start = start.astimezone()
+        moments = [local_start.replace(year=day.year, month=day.month, day=day.day).astimezone(timezone.utc) for day in days]
+        lines.append("EXDATE:" + ",".join(format_utc(moment) for moment in moments))
+    return lines
+
+
+def exceptions_of(event):
+    days = []
+    for line in all_lines(event, "EXDATE"):
+        for item in split_escaped(line.value, ","):
+            moment = parse_moment(type(line)(line.name, item.strip(), line.parameters))
+            days.append(moment.astimezone().date() if isinstance(moment, datetime) else moment)
+    return ",".join(format_date(day) for day in sorted(set(days))) or None
+
+
 def appointment_to_ical(properties, uid=None):
     values = property_map(properties)
     start_filetime = values.get(APPOINTMENT_START)
@@ -113,7 +147,9 @@ def appointment_to_ical(properties, uid=None):
     if busy is not None:
         lines.append("TRANSP:TRANSPARENT" if busy == 0 else "TRANSP:OPAQUE")
         lines.append(f"X-MICROSOFT-CDO-BUSYSTATUS:{BUSY_STATUS_NAMES.get(busy, 'BUSY')}")
-    if values.get(APPOINTMENT_RECURRENCE):
+    if text_value(values, RECURRENCE_RULE):
+        lines.extend(recurrence_lines(values, start, values.get(APPOINTMENT_TYPE) == APPOINTMENT_TYPE_ALL_DAY))
+    elif values.get(APPOINTMENT_RECURRENCE):
         lines.append("X-CLASSICSYNC-RECURRING:TRUE")
     lines.extend(alarm_lines(values))
     lines.append("END:VEVENT")
@@ -136,6 +172,8 @@ def task_to_ical(properties, uid=None):
     else:
         lines.append("STATUS:NEEDS-ACTION")
     priority = priority_from_importance(values.get(TASK_IMPORTANCE))
+    if values.get(TASK_PRIORITY):
+        priority = values[TASK_PRIORITY] * PRIORITY_STEPS - 1
     if priority:
         lines.append(f"PRIORITY:{priority}")
     lines.extend(common_lines(values))
@@ -279,6 +317,9 @@ def ical_to_appointment(text, base_properties=(), os_major=2):
         else:
             transparent = (text_of(event, "TRANSP") or "").upper() == "TRANSPARENT"
             values[APPOINTMENT_BUSY_STATUS] = 0 if transparent else (before.get(APPOINTMENT_BUSY_STATUS) or 2)
+    rule = first_line(event, "RRULE")
+    values[RECURRENCE_RULE] = rule.value.strip() if rule else None
+    values[RECURRENCE_EXCEPTIONS] = exceptions_of(event) if rule else None
     reminder = reminder_of(event)
     values[REMINDER_ENABLED] = 1 if reminder is not None else 0
     values[REMINDER_MINUTES] = reminder if reminder is not None else before.get(REMINDER_MINUTES, 15)
@@ -311,6 +352,8 @@ def ical_to_task(text, base_properties=(), os_major=2):
     priority = int(priority_line.value) if priority_line and priority_line.value.strip().isdigit() else 0
     if priority:
         values[TASK_IMPORTANCE] = importance_from_priority(priority, before.get(TASK_IMPORTANCE), os_major)
+        if has_key(base, TASK_PRIORITY):
+            values[TASK_PRIORITY] = min(LOWEST_PALM_PRIORITY, (priority + 1) // PRIORITY_STEPS)
     else:
         values[TASK_IMPORTANCE] = before.get(TASK_IMPORTANCE)
     values[NOTES_TEXT] = notes_for_write(before, text_of(todo, "DESCRIPTION"))

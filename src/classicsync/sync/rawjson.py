@@ -4,6 +4,7 @@ import json
 
 from ..rapi import cedb
 from ..rapi.structures import filetime_to_datetime
+from .pim.properties import PRIVATE_IDENTIFIERS
 
 TYPE_NAMES = {
     cedb.CEVT_I2: "I2",
@@ -78,6 +79,8 @@ def sorted_properties(properties):
     return sorted(properties, key=lambda prop: (prop.identifier, prop.value_type))
 
 
-def properties_hash(properties):
+def properties_hash(properties, include_private=False):
+    if not include_private:
+        properties = [prop for prop in properties if prop.identifier not in PRIVATE_IDENTIFIERS]
     canonical = json.dumps(properties_to_json(sorted_properties(properties)), sort_keys=True)
     return hashlib.sha1(canonical.encode("utf-8")).hexdigest()

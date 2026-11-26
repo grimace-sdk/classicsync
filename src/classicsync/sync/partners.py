@@ -184,13 +184,15 @@ async def describe_device(client, description):
 
 def match_partnership(partner_ids, partnerships):
     wanted = {partner_id for partner_id in partner_ids if partner_id}
-    return next((partnership for partnership in partnerships if partnership.explicit and partnership.partner_id in wanted), None)
+    return next((partnership for partnership in partnerships
+                 if partnership.explicit and not partnership.platform and partnership.partner_id in wanted), None)
 
 
 def implicit_partnership(device_name, partnerships):
     wanted = device_name.lower()
     return next((partnership for partnership in partnerships
-                 if not partnership.explicit and partnership.name.lower() == wanted and partnership.state_path.exists()), None)
+                 if not partnership.explicit and not partnership.platform and partnership.name.lower() == wanted
+                 and partnership.state_path.exists()), None)
 
 
 async def find_partnership(client, announced_ids=(), base=None, migrate=True):

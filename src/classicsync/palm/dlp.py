@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import IntEnum
 
+from ..sync.device import DeviceSourceError
+
 FIRST_ARGUMENT = 0x20
 ARGUMENT_ID_MASK = 0x3F
 SHORT_ARGUMENT = 0x80
@@ -113,7 +115,7 @@ class DlpStatus(IntEnum):
     ARGUMENT_SIZE = 0x15
 
 
-class DlpError(Exception):
+class DlpError(DeviceSourceError):
     def __init__(self, command, status):
         self.command = command
         self.status = status
@@ -394,3 +396,12 @@ class DlpClient:
 
     async def reset_system(self):
         await self.call(DlpCommand.RESET_SYSTEM)
+
+    async def delete_record(self, handle, record_id):
+        await self.call(DlpCommand.DELETE_RECORD, struct.pack(">BBI", handle, 0, record_id))
+
+    async def clean_up_database(self, handle):
+        await self.call(DlpCommand.CLEAN_UP_DATABASE, bytes([handle]))
+
+    async def reset_sync_flags(self, handle):
+        await self.call(DlpCommand.RESET_SYNC_FLAGS, bytes([handle]))
