@@ -3,7 +3,10 @@ from .gui.settings import Settings
 from .i18n import _
 from .palm import palm_usb_session
 from .palm.backup import backup_handheld
+from .formats.pdb import write_pdb
+from .formats.plucker import COMPRESSION_DOC, COMPRESSION_ZLIB
 from .palm.install import InstallError, install_files, load_installables
+from .palm.plucker import build_plucker
 from .palm.sync import create_palm_partnership, find_palm_partnership, synchronize_handheld
 from .palm.users import new_identifier, set_user
 from .sync import FIRST_SYNC_CHOICES, FIRST_SYNC_COMBINE
@@ -119,6 +122,24 @@ async def command_palm_sync(arguments):
     print(summary.format(device=report.device, summary=report.summary()))
 
 
+async def command_palm_plucker(arguments):
+    compression = COMPRESSION_DOC if arguments.uncompressed else COMPRESSION_ZLIB
+    document, skipped = build_plucker(arguments.sources, arguments.title, arguments.depth, compression,
+                                      progress=lambda source: print(_("  reading {source}").format(source=source)))
+    for source, reason in skipped:
+        print(_("skipped {source}: {reason}").format(source=source, reason=reason))
+    output = arguments.output or f"{document.name}.pdb"
+    with open(output, "wb") as file:
+        file.write(write_pdb(document))
+    print(_("{name}: {pages} pages written to {output}").format(name=document.name, pages=len(document.records) - 1, output=output))
+    if arguments.install:
+        print(_("Waiting for a Palm handheld: press the HotSync button on the cradle."))
+        async with palm_usb_session(arguments.wait) as client:
+            await install_files(client, [(output, document)])
+            await client.end_of_sync()
+        print(_("installed {name}").format(name=document.name))
+
+
 def add_commands(subparsers):
     palm = subparsers.add_parser("palm", help=_("talk to a Palm OS handheld over HotSync"))
     palm_commands = palm.add_subparsers(dest="palm_command", required=True)
@@ -150,3 +171,12 @@ def add_commands(subparsers):
                       help=_("what to do when both sides already have items"))
     sync.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
     sync.set_defaults(handler=command_palm_sync)
+    plucker = palm_commands.add_parser("plucker", help=_("make a Plucker document from web pages or text files"))
+    plucker.add_argument("sources", nargs="+", help=_("web addresses, HTML files or text files; the first is the home page"))
+    plucker.add_argument("--title", help=_("document name (default: the first page's title)"))
+    plucker.add_argument("--depth", type=int, default=0, help=_("follow links on the same site this many levels deep"))
+    plucker.add_argument("-o", "--output", help=_("where to save the .pdb (default: the document name)"))
+    plucker.add_argument("--uncompressed", action="store_true", help=_("don't compress, for viewers without SysZLib"))
+    plucker.add_argument("--install", action="store_true", help=_("install it on the handheld afterwards"))
+    plucker.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
+    plucker.set_defaults(handler=command_palm_plucker)
