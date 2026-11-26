@@ -41,6 +41,9 @@ CLOSE_UPDATE_BACKUP_DATE = 0x80
 READ_ALL = 0xFFFF
 RECORD_HEADER = struct.Struct(">IHHBB")
 RESOURCE_HEADER = struct.Struct(">4sHHH")
+USER_MODIFY_ALL = 0xFF
+WRITE_RECORD_FLAGS = 0x80
+DB_ATTRIBUTE_OPEN_MASK = 0x8000
 
 
 class DlpCommand(IntEnum):
@@ -121,17 +124,18 @@ class DlpError(Exception):
         super().__init__(f"{DlpCommand(command).name.lower()}: {name}")
 
 
-def encode_argument(index, data):
+def encode_argument(index, data, short=False):
     identifier = FIRST_ARGUMENT + index
-    if len(data) <= TINY_MAX:
+    if len(data) <= TINY_MAX and not short:
         return bytes([identifier, len(data)]) + data
     if len(data) <= SHORT_MAX:
         return struct.pack(">BBH", identifier | SHORT_ARGUMENT, 0, len(data)) + data
     return struct.pack(">BBI", identifier | LONG_ARGUMENT, 0, len(data)) + data
 
 
-def encode_request(command, arguments, first=0):
-    return bytes([command, len(arguments)]) + b"".join(encode_argument(first + index, data) for index, data in enumerate(arguments))
+def encode_request(command, arguments, first=0, short=False):
+    encoded = b"".join(encode_argument(first + index, data, short) for index, data in enumerate(arguments))
+    return bytes([command, len(arguments)]) + encoded
 
 
 def decode_response(command, payload):
@@ -156,6 +160,12 @@ def decode_response(command, payload):
         arguments[identifier & ARGUMENT_ID_MASK] = payload[offset:offset + length]
         offset += length
     return arguments
+
+
+def encode_date(moment):
+    if moment is None:
+        return DATE.pack(0, 0, 0, 0, 0, 0)
+    return DATE.pack(moment.year, moment.month, moment.day, moment.hour, moment.minute, moment.second)
 
 
 def decode_date(raw):
@@ -273,8 +283,8 @@ class DlpClient:
     def __init__(self, link):
         self.link = link
 
-    async def call(self, command, *arguments, first=0):
-        payload = await self.link.request(encode_request(command, arguments, first))
+    async def call(self, command, *arguments, first=0, short=False):
+        payload = await self.link.request(encode_request(command, arguments, first, short))
         return decode_response(command, payload)
 
     async def read_sys_info(self, host_version=HOST_DLP_VERSION):
@@ -345,3 +355,42 @@ class DlpClient:
         data = arguments[FIRST_ARGUMENT]
         kind, resource_id, _index, size = RESOURCE_HEADER.unpack_from(data)
         return kind.decode("latin-1"), resource_id, data[RESOURCE_HEADER.size:RESOURCE_HEADER.size + size]
+
+    async def write_user_info(self, user_id, viewer_id, last_sync_pc, last_sync, name):
+        encoded = name.encode("latin-1") + b"\0"
+        await self.call(DlpCommand.WRITE_USER_INFO, struct.pack(">III", user_id, viewer_id, last_sync_pc) + encode_date(last_sync)
+                        + struct.pack(">BB", USER_MODIFY_ALL, len(encoded)) + encoded)
+
+    async def delete_database(self, name, card=0):
+        try:
+            await self.call(DlpCommand.DELETE_DB, struct.pack(">BB", card, 0) + name.encode("latin-1") + b"\0")
+        except DlpError as error:
+            if error.status != DlpStatus.NOT_FOUND:
+                raise
+            return False
+        return True
+
+    async def create_database(self, name, creator, kind, attributes, version, card=0):
+        request = (struct.pack(">4s4sBBHH", creator.encode("latin-1"), kind.encode("latin-1"), card, 0,
+                               attributes & ~DB_ATTRIBUTE_OPEN_MASK, version) + name.encode("latin-1") + b"\0")
+        return (await self.call(DlpCommand.CREATE_DB, request))[FIRST_ARGUMENT][0]
+
+    async def _write_block(self, command, handle, data):
+        await self.call(command, struct.pack(">BBH", handle, 0, len(data)) + data, short=True)
+
+    async def write_app_block(self, handle, data):
+        await self._write_block(DlpCommand.WRITE_APP_BLOCK, handle, data)
+
+    async def write_sort_block(self, handle, data):
+        await self._write_block(DlpCommand.WRITE_SORT_BLOCK, handle, data)
+
+    async def write_record(self, handle, record_id, attributes, category, data):
+        request = struct.pack(">BBIBB", handle, WRITE_RECORD_FLAGS, record_id, attributes, category) + data
+        return struct.unpack(">I", (await self.call(DlpCommand.WRITE_RECORD, request, short=True))[FIRST_ARGUMENT][:4])[0]
+
+    async def write_resource(self, handle, kind, resource_id, data):
+        request = struct.pack(">BB4sHH", handle, 0, kind.encode("latin-1"), resource_id, len(data)) + data
+        await self.call(DlpCommand.WRITE_RESOURCE, request, short=True)
+
+    async def reset_system(self):
+        await self.call(DlpCommand.RESET_SYSTEM)

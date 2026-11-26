@@ -1,6 +1,9 @@
+from .gui.settings import Settings
 from .i18n import _
 from .palm import palm_usb_session
 from .palm.backup import backup_handheld
+from .palm.install import InstallError, install_files, load_installables
+from .palm.users import new_identifier, set_user
 
 DEFAULT_WAIT = 60.0
 
@@ -47,6 +50,39 @@ async def command_palm_backup(arguments):
         written=len(result.written), unchanged=len(result.unchanged), skipped=len(result.skipped)))
 
 
+def pc_identifier():
+    settings = Settings.load()
+    if not settings.palm_pc_id:
+        settings.palm_pc_id = new_identifier()
+        settings.save()
+    return settings.palm_pc_id
+
+
+async def command_palm_install(arguments):
+    try:
+        databases = load_installables(arguments.files)
+    except InstallError as error:
+        raise ValueError(str(error)) from error
+    print(_("Waiting for a Palm handheld: press the HotSync button on the cradle."))
+    async with palm_usb_session(arguments.wait) as client:
+        result = await install_files(client, databases, progress=lambda name: print(_("  installing {name}").format(name=name)))
+        if result.reset_needed:
+            await client.reset_system()
+        await client.end_of_sync()
+    for name in result.installed:
+        print((_("replaced {name}") if name in result.replaced else _("installed {name}")).format(name=name))
+    if result.reset_needed:
+        print(_("The handheld will restart to finish installing."))
+
+
+async def command_palm_user(arguments):
+    print(_("Waiting for a Palm handheld: press the HotSync button on the cradle."))
+    async with palm_usb_session(arguments.wait) as client:
+        user_id = await set_user(client, arguments.name, pc_identifier())
+        await client.end_of_sync()
+    print(_("HotSync user set to {name} (ID {user_id:#x})").format(name=arguments.name, user_id=user_id))
+
+
 def add_commands(subparsers):
     palm = subparsers.add_parser("palm", help=_("talk to a Palm OS handheld over HotSync"))
     palm_commands = palm.add_subparsers(dest="palm_command", required=True)
@@ -59,3 +95,11 @@ def add_commands(subparsers):
     backup.add_argument("--all", action="store_true", help=_("include databases HotSync would leave out"))
     backup.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
     backup.set_defaults(handler=command_palm_backup)
+    install = palm_commands.add_parser("install", help=_("install .prc, .pdb or .pqa files on the handheld"))
+    install.add_argument("files", nargs="+")
+    install.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
+    install.set_defaults(handler=command_palm_install)
+    user = palm_commands.add_parser("user", help=_("set the handheld's HotSync user name"))
+    user.add_argument("name")
+    user.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
+    user.set_defaults(handler=command_palm_user)

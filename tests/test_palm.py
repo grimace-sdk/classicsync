@@ -10,6 +10,8 @@ from classicsync.palm.dlp import DlpCommand, decode_response, encode_request, pa
 from classicsync.palm.netsync import HEADER, desktop_confirm, desktop_options
 from classicsync.formats.pdb import PalmDatabase, PdbRecord, PdbResource, read_pdb, write_pdb
 from classicsync.palm.backup import backup_file_name, backup_handheld
+from classicsync.palm.install import InstallError, install_files, load_installable
+from classicsync.palm.users import set_user
 from classicsync.palm.usb import hotsync_port
 
 M500_HELLO = bytes.fromhex("90010000000000000020000000080000010000000000")
@@ -212,3 +214,81 @@ def test_backup_reads_each_database(run, tmp_path):
     assert [(record.unique_id, record.attributes, record.data) for record in memo_file.records] == [
         (0x111111, 0x41, b"First memo\0"), (0x111112, 0x10, b"Private\0")]
     assert read_pdb((tmp_path / "Giraffe.PRC").read_bytes()).resources == [PdbResource("code", 0, b"\x4e\x75")]
+
+
+def write_handheld():
+    handheld = FakeHandheld(m500_replies())
+    handheld.replies.update({
+        0x1A: bytes.fromhex("9a000005"),
+        0x18: bytes.fromhex("980100002001") + b"\x07",
+        0x24: bytes.fromhex("a4000000"),
+        0x1C: bytes.fromhex("9c000000"),
+        0x21: lambda payload: bytes.fromhex("a10100002004") + payload[8:12],
+        0x19: bytes.fromhex("99000000"),
+        0x11: bytes.fromhex("91000000"),
+    })
+    return handheld
+
+
+def test_install_writes_a_prc_like_the_install_conduit(run, tmp_path):
+    game = PalmDatabase("MineHunt", "appl", "mine", attributes=0x0001, version=2,
+                        resources=[PdbResource("code", 1, b"\x4e\x75"), PdbResource("tAIN", 1000, b"MineHunt\0")])
+    (tmp_path / "MINEHUNT.PRC").write_bytes(write_pdb(game))
+    handheld = write_handheld()
+
+    async def scenario():
+        link = NetSyncLink(handheld)
+        await link.accept()
+        return await install_files(DlpClient(link), [("MINEHUNT.PRC", load_installable(tmp_path / "MINEHUNT.PRC"))])
+
+    result = run(scenario)
+    assert result.installed == ["MINEHUNT.PRC"] and result.replaced == [] and not result.reset_needed
+    requests = handheld.sent[2:]
+    assert requests[0] == bytes.fromhex("1a01200b0000") + b"MineHunt\0"
+    assert requests[1] == bytes.fromhex("18012017") + b"mineappl" + bytes.fromhex("000000010002") + b"MineHunt\0"
+    assert requests[2] == bytes.fromhex("2401a000000c" "0700") + b"code" + bytes.fromhex("00010002") + b"\x4e\x75"
+    assert requests[3][:6] == bytes.fromhex("2401a0000013")
+    assert requests[4] == bytes.fromhex("1901220207" "80")
+
+
+def test_install_writes_records_with_their_ids(run, tmp_path):
+    memos = PalmDatabase("MemoDB", "DATA", "Memo", app_info=b"\0" * 276, records=[
+        PdbRecord(b"Kept\0", 0x10 | 2, 0x101), PdbRecord(b"", 0x80, 0x102)])
+    (tmp_path / "memo.pdb").write_bytes(write_pdb(memos))
+    handheld = write_handheld()
+
+    async def scenario():
+        link = NetSyncLink(handheld)
+        await link.accept()
+        return await install_files(DlpClient(link), [("memo.pdb", load_installable(tmp_path / "memo.pdb"))])
+
+    run(scenario)
+    requests = handheld.sent[2:]
+    assert requests[1][14:16] == bytes.fromhex("0008")
+    assert requests[2][:8] == bytes.fromhex("1c01a00001180700") and requests[2][8:10] == bytes.fromhex("0114")
+    assert requests[3] == bytes.fromhex("2101a000000d" "0780" "00000101" "1002") + b"Kept\0"
+    assert len(requests) == 5
+
+
+def test_install_rejects_bad_files(tmp_path):
+    (tmp_path / "notes.txt").write_text("hello")
+    with pytest.raises(InstallError):
+        load_installable(tmp_path / "notes.txt")
+    (tmp_path / "broken.prc").write_bytes(b"short")
+    with pytest.raises(InstallError):
+        load_installable(tmp_path / "broken.prc")
+
+
+def test_set_user_keeps_an_existing_id_and_records_the_pc(run):
+    handheld = write_handheld()
+
+    async def scenario():
+        link = NetSyncLink(handheld)
+        await link.accept()
+        return await set_user(DlpClient(link), "Phil", 0x1234)
+
+    user_id = run(scenario)
+    request = handheld.sent[-1]
+    assert 0x100 <= user_id <= 0x7FFF
+    assert request[:4] == bytes.fromhex("1101201b") and request[4:16] == struct.pack(">III", user_id, 0, 0x1234)
+    assert request[24:] == bytes.fromhex("ff05") + b"Phil\0"

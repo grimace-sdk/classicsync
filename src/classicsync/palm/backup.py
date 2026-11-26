@@ -63,7 +63,7 @@ async def read_database(client, info):
                 flags = (attributes & RECORD_FLAGS_MASK) | (category & CATEGORY_MASK)
                 database.records.append(PdbRecord(data, flags, record_id))
     finally:
-        await client.close_database(handle)
+        await client.close_database(handle, update_backup_date=True)
     return database
 
 

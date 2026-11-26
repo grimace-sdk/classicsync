@@ -31,6 +31,7 @@ class Settings:
     last_download_folder: str = ""
     window_rect: list = field(default_factory=list)
     saved_passwords: dict = field(default_factory=dict)
+    palm_pc_id: int = 0
 
     @classmethod
     def path(cls):
