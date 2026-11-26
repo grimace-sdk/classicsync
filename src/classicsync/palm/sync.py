@@ -1,15 +1,14 @@
 from datetime import datetime, timezone
 
 from ..sync.engine import synchronize
-from ..sync.objects import CALENDAR, CONTACTS, TASKS, DeviceInfo
-from ..sync.plugins import load_providers
+from ..sync.objects import DeviceInfo
+from ..sync.plugins import discover_plugins, conduits_from_sources, providers_from_sources
 from ..sync.providers.notes.provider import NOTES, NotesProvider, TEXT_NOTES_PLATFORM
 from ..sync.state import Partnership
-from .source import PalmDatabaseSource, PalmMemoSource
+from .conduit import ConduitContext, FreeformConduit, RecordConduit
 from .users import set_user
 
 PLATFORM = TEXT_NOTES_PLATFORM
-PALM_TYPES = (CONTACTS.key, CALENDAR.key, TASKS.key, NOTES.key)
 
 
 def palm_partnerships(base=None):
@@ -29,32 +28,49 @@ def create_palm_partnership(name, user_id, base=None):
     return partnership
 
 
-def palm_source(client, object_type, options, provider=None):
-    if object_type.key not in PALM_TYPES:
-        raise ValueError(f"Palm handhelds do not sync {object_type.key}")
-    if object_type.key == NOTES.key:
-        return PalmMemoSource(client, object_type)
-    return PalmDatabaseSource(client, object_type)
+def ordered_conduits(conduit_classes):
+    return sorted((conduit_class() for conduit_class in conduit_classes.values()), key=lambda conduit: conduit.priority)
 
 
-def palm_options(options, providers):
+def record_conduits(conduits):
+    return {conduit.object_type.key: conduit for conduit in conduits if isinstance(conduit, RecordConduit)}
+
+
+def palm_options(options, providers, by_type):
     primary = providers.get(options.provider)
     handles_notes = primary is not None and any(object_type.key == NOTES.key for object_type in primary.object_types)
-    if not handles_notes and NOTES.key not in options.type_providers:
+    if NOTES.key in by_type and not handles_notes and NOTES.key not in options.type_providers:
         options.type_providers = {**options.type_providers, NOTES.key: NotesProvider.name}
-    wanted = options.object_types or PALM_TYPES
-    options.object_types = [key for key in wanted if key in PALM_TYPES]
+    wanted = options.object_types or list(by_type)
+    options.object_types = [key for key in wanted if key in by_type]
     return options
 
 
-async def synchronize_handheld(client, partnership, pc_id, options=None, progress=None, providers=None, first_sync=None):
+async def synchronize_handheld(client, partnership, pc_id, options=None, progress=None, providers=None, first_sync=None,
+                               conduits=None, log=None):
+    if providers is None or conduits is None:
+        sources = discover_plugins()
+        providers = providers if providers is not None else providers_from_sources(sources)
+        conduits = conduits if conduits is not None else conduits_from_sources(sources)
+    active = ordered_conduits(conduits)
+    by_type = record_conduits(active)
     system = await client.read_sys_info()
     user = await client.read_user_info()
     device = DeviceInfo(name=user.name or partnership.name, os_major=system.rom_version >> 24, os_minor=system.rom_version >> 20 & 0x0F,
                         extra={"platform": PLATFORM})
-    providers = providers or load_providers()
-    options = palm_options(options or partnership.load_options(), providers)
+    options = palm_options(options or partnership.load_options(), providers, by_type)
+
+    def palm_source(source_client, object_type, source_options, provider=None):
+        return by_type[object_type.key].source(source_client)
+
     report = await synchronize(client, partnership, options, progress, providers, first_sync, device=device, source_for=palm_source)
+    context = ConduitContext(client, partnership, user, partnership.directory, log or (lambda text: None), options.dry_run)
+    for conduit in active:
+        if isinstance(conduit, FreeformConduit):
+            try:
+                await conduit.run(context)
+            except (OSError, ValueError, ConnectionError) as error:
+                report.errors.append(f"{conduit.display_name}: {error}")
     if not options.dry_run:
         await set_user(client, user.name or partnership.name, pc_id, user_id=partnership.partner_id)
     return report

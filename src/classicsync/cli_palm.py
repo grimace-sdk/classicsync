@@ -108,7 +108,7 @@ async def command_palm_sync(arguments):
             partnership.save_options(options)
         options.dry_run = arguments.dry_run
         report = await synchronize_handheld(client, partnership, pc_identifier(), options, print_progress,
-                                            first_sync=lambda question: arguments.first_sync)
+                                            first_sync=lambda question: arguments.first_sync, log=print)
         await client.end_of_sync()
     for action in report.actions:
         if action.action != "match" or arguments.verbose:

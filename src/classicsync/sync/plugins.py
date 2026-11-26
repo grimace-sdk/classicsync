@@ -18,6 +18,7 @@ from .provider import Provider
 log = logging.getLogger("classicsync.sync")
 
 ENTRY_POINT_GROUP = "classicsync.sync_providers"
+CONDUIT_ENTRY_POINT_GROUP = "classicsync.palm_conduits"
 LIBRARY_FOLDER = "lib"
 
 ORIGIN_BUILTIN = "built-in"
@@ -38,6 +39,7 @@ class PluginSource:
     version: str = ""
     providers: list = field(default_factory=list)
     errors: list = field(default_factory=list)
+    conduits: list = field(default_factory=list)
 
 
 def normalized_name(name):
@@ -73,6 +75,21 @@ def builtin_providers():
     return builtin_plugins()[0]
 
 
+def builtin_conduits():
+    from ..palm.conduits import CONDUITS
+    return list(CONDUITS)
+
+
+def conduits_in_module(module):
+    from ..palm.conduit import Conduit, FreeformConduit, RecordConduit
+    exported = getattr(module, "CONDUITS", None)
+    if exported is not None:
+        return list(exported)
+    return [value for value in vars(module).values()
+            if inspect.isclass(value) and issubclass(value, Conduit) and value not in (Conduit, RecordConduit, FreeformConduit)
+            and value.__module__ == module.__name__ and value.name]
+
+
 def providers_in_module(module):
     exported = getattr(module, "PROVIDERS", None)
     if exported is not None:
@@ -94,7 +111,8 @@ def is_inside(path, directory):
 
 
 def distribution_entry_points(distribution):
-    return [entry_point for entry_point in distribution.entry_points if entry_point.group == ENTRY_POINT_GROUP]
+    return [entry_point for entry_point in distribution.entry_points
+            if entry_point.group in (ENTRY_POINT_GROUP, CONDUIT_ENTRY_POINT_GROUP)]
 
 
 def source_from_distribution(distribution, origin):
@@ -110,7 +128,10 @@ def source_from_distribution(distribution, origin):
             log.warning("sync provider %s failed to load: %s", entry_point.name, error)
             source.errors.append(f"{entry_point.name}: {error}")
             continue
-        source.providers.extend(providers_in_module(loaded) if inspect.ismodule(loaded) else [loaded])
+        if entry_point.group == CONDUIT_ENTRY_POINT_GROUP:
+            source.conduits.extend(conduits_in_module(loaded) if inspect.ismodule(loaded) else [loaded])
+        else:
+            source.providers.extend(providers_in_module(loaded) if inspect.ismodule(loaded) else [loaded])
     return source
 
 
@@ -162,6 +183,7 @@ def file_sources(directory):
         try:
             module = load_plugin_module(path)
             source.providers = providers_in_module(module)
+            source.conduits = conduits_in_module(module)
             source.version = str(getattr(module, "__version__", ""))
         except Exception as error:
             log.warning("sync plugin %s failed to load: %s", path, error)
@@ -180,7 +202,8 @@ def classicsync_version():
 def discover_plugins(plugin_directory=None):
     library = activate_library(plugin_directory)
     providers, errors = builtin_plugins()
-    builtin = PluginSource("classicsync", ORIGIN_BUILTIN, version=classicsync_version(), providers=providers, errors=errors)
+    builtin = PluginSource("classicsync", ORIGIN_BUILTIN, version=classicsync_version(), providers=providers, errors=errors,
+                           conduits=builtin_conduits())
     legacy_directory = None if plugin_directory else sync_plugins_directory()
     plugin_directory = Path(plugin_directory or plugins_directory())
     return [builtin, *environment_sources(library), *library_sources(library), *file_sources(legacy_directory),
@@ -201,3 +224,19 @@ def providers_from_sources(sources):
 
 def load_providers(plugin_directory=None):
     return providers_from_sources(discover_plugins(plugin_directory))
+
+
+def conduits_from_sources(sources):
+    conduits = {}
+    for source in sources:
+        for conduit_class in source.conduits:
+            if not getattr(conduit_class, "name", ""):
+                continue
+            if conduit_class.name in conduits:
+                log.info("Palm conduit %s from %s replaces an earlier one", conduit_class.name, conduit_class.__module__)
+            conduits[conduit_class.name] = conduit_class
+    return conduits
+
+
+def load_conduits(plugin_directory=None):
+    return conduits_from_sources(discover_plugins(plugin_directory))

@@ -228,6 +228,24 @@ classicsync plugin configure csv --device Velo csv_folder=~/Velo
 
 This one is lossy: properties not in the CSV are removed from the device record when the desktop row changes, because the engine makes the device record match `read_item`. To keep them, store the record you were given in `write_item`/`device_updated` and merge in `read_item`, as the folder provider does with its `raw/` files.
 
+## Palm conduits
+
+A Palm handheld syncs through conduits, as with HotSync: each conduit handles the databases of one handheld application, picked by creator ID or database name. Address Book, Date Book, To Do List and Memo Pad are built-in conduits that hand their records to the sync providers above (contacts, calendar, tasks and notes); Backup runs last and copies databases to `.pdb`/`.prc` files.
+
+A conduit is one of two kinds, from `classicsync.palm.conduit`:
+
+- `RecordConduit`: one database, synchronized record by record through the sync engine and a provider. Set `name`, `display_name`, `creators`, `database`, `object_type`, and implement `parse(data)` and `build(record)` (the handheld record bytes), `to_desktop(record, category, secret)` (returns the device object a provider expects: a `DeviceRecord` of properties, or a `DeviceFile`) and `from_desktop(device_object, base)` (returns the record, its category name, and `True`/`False`/`None` for private, `None` keeping what the handheld had).
+- `FreeformConduit`: implement `async run(context)`. `context` has `client` (the desktop link client: open, read and write databases), `user`, `partnership`, `folder` (the partnership's folder), `log(text)` and `dry_run`.
+
+`priority` (0 first to 4 last, default 2) sets the order. Conduits are found like providers: in a `.py` plugin file (every `Conduit` subclass with a `name`, or the classes listed in `CONDUITS`) or through the `classicsync.palm_conduits` entry point group:
+
+```toml
+[project.entry-points."classicsync.palm_conduits"]
+giraffe = "classicsync_giraffe:GiraffeScores"
+```
+
+A later conduit with the same name replaces an earlier one, so a plugin can replace a built-in.
+
 ## From the GUI
 
 ```python

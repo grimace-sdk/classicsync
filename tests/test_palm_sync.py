@@ -1,5 +1,6 @@
 import asyncio
 import struct
+import sys
 from datetime import date, time
 
 from classicsync.link.transport import Transport
@@ -172,6 +173,16 @@ class FakePalm(Transport):
             return self.reply(command)
         if command in (0x26, 0x2F):
             return self.reply(command)
+        if command == 0x1D:
+            return self.reply(command, status=5)
+        if command == 0x16:
+            entries = b""
+            for index, (name, kind, creator) in enumerate([("AddressDB", b"DATA", b"addr"), ("DatebookDB", b"DATA", b"date"),
+                                                           ("ToDoDB", b"DATA", b"todo"), ("MemoDB", b"DATA", b"memo")]):
+                entry = struct.pack(">BBH4s4sHI8s8s8sH", 0, 0x40, 0x0008, kind, creator, 0, 1, bytes(8), bytes(8), bytes(8),
+                                    index) + name.encode() + b"\0"
+                entries += bytes([len(entry)]) + entry[1:]
+            return self.reply(command, struct.pack(">HBB", 3, 0, 4) + entries)
         raise AssertionError(f"unexpected command {command:#x}")
 
 
@@ -221,6 +232,8 @@ def test_palm_sync_copies_handheld_records_and_back(run, tmp_path):
     assert record_id == 0x400003 and records.parse_todo(data).description == "Buy AA batteries"
     assert records.parse_categories(databases["ToDoDB"]["app_info"]).name_of(category) == "Errands"
     assert palm.user["pc"] == 0x0BEE and palm.user["id"] == 0x1234
+    assert {path.name for path in (partnership.directory / "Backup").iterdir()} == {
+        "AddressDB.PDB", "DatebookDB.PDB", "ToDoDB.PDB", "MemoDB.PDB"}
 
 
 def test_palm_memos_sync_as_markdown_files(run, tmp_path):
@@ -255,3 +268,37 @@ def test_extra_phones_overflow_into_free_fields():
     assert {"800-881-7256", "800-618-6719", "Int'l", "www.palm.com"} <= set(values)
     back = convert.properties_to_address(properties, address)
     assert records.build_address(back) == records.build_address(address)
+
+
+def test_conduits_load_from_plugin_files_and_run(run, tmp_path):
+    from classicsync.sync.plugins import conduits_from_sources, discover_plugins, providers_from_sources
+
+    plugins = tmp_path / "plugins"
+    plugins.mkdir()
+    (plugins / "giraffe.py").write_text(
+        "from classicsync.palm.conduit import FreeformConduit\n"
+        "RUNS = []\n"
+        "class GiraffeScores(FreeformConduit):\n"
+        "    name = 'giraffe'\n"
+        "    display_name = 'Giraffe scores'\n"
+        "    creators = ('Gira',)\n"
+        "    async def run(self, context):\n"
+        "        RUNS.append(context.user.name)\n"
+        "        context.log('giraffe ran')\n")
+    sources = discover_plugins(plugins)
+    conduits = conduits_from_sources(sources)
+    assert {"address", "datebook", "todo", "memo", "backup", "giraffe"} <= set(conduits)
+    messages = []
+    partnership = create_palm_partnership("Phil Howard", 0x1234, base=tmp_path / "partnerships")
+
+    async def scenario():
+        link = NetSyncLink(FakePalm(handheld_databases()))
+        await link.accept()
+        options = partnership.load_options()
+        options.provider_settings["folder"] = str(tmp_path / "desktop")
+        return await synchronize_handheld(DlpClient(link), partnership, 1, options, providers=providers_from_sources(sources),
+                                          conduits=conduits, log=messages.append)
+
+    report = run(scenario)
+    assert not report.errors and "giraffe ran" in messages
+    assert sys.modules["classicsync_sync_plugin_giraffe"].RUNS == ["Phil Howard"]
