@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-26 22:11+0000\n"
+"POT-Creation-Date: 2026-11-26 23:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,11 +27,11 @@ msgstr ""
 msgid "\r\nStatus: "
 msgstr ""
 
-#: classicsync/cli_palm.py:70
+#: classicsync/cli_palm.py:71
 msgid "  installing {name}"
 msgstr ""
 
-#: classicsync/cli_palm.py:47
+#: classicsync/cli_palm.py:48
 msgid "  reading {name}"
 msgstr ""
 
@@ -1017,7 +1017,7 @@ msgstr ""
 msgid "Also put a shortcut to each page in Pocket Internet Explorer's Favorites."
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:225
+#: classicsync/sync/providers/notes/provider.py:240
 msgid "Also synchronize Pocket Word (.pwd) files as notes. New Markdown files become Pocket Word files, so without this they stay on this computer."
 msgstr ""
 
@@ -1465,7 +1465,7 @@ msgstr ""
 msgid "Checking COM Ports"
 msgstr ""
 
-#: classicsync/sync/engine.py:474
+#: classicsync/sync/engine.py:476
 msgid "Checking {type}"
 msgstr ""
 
@@ -2063,11 +2063,11 @@ msgstr ""
 msgid "Device folder for the shortcuts; give it a different name from the pages folder."
 msgstr ""
 
-#: classicsync/sync/folder.py:340 classicsync/sync/providers/notes/provider.py:220
+#: classicsync/sync/folder.py:340 classicsync/sync/providers/notes/provider.py:235
 msgid "Device folders"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:221
+#: classicsync/sync/providers/notes/provider.py:236
 msgid "Device folders holding notes."
 msgstr ""
 
@@ -2519,11 +2519,11 @@ msgstr ""
 msgid "Hide files of these &types:"
 msgstr ""
 
-#: classicsync/cli_palm.py:85
+#: classicsync/cli_palm.py:86
 msgid "HotSync user set to {name} (ID {user_id:#x})"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:223
+#: classicsync/sync/providers/notes/provider.py:238
 msgid "How many levels of subfolders to include below each device folder."
 msgstr ""
 
@@ -2595,7 +2595,7 @@ msgstr ""
 msgid "Include &description bar for right and left panes"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:224
+#: classicsync/sync/providers/notes/provider.py:239
 msgid "Include Pocket Word files"
 msgstr ""
 
@@ -2731,7 +2731,7 @@ msgstr ""
 msgid "Ma&nually"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:218
+#: classicsync/sync/providers/notes/provider.py:233
 msgid "Markdown folder"
 msgstr ""
 
@@ -3015,7 +3015,7 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:215
+#: classicsync/sync/providers/notes/provider.py:230
 msgid "Notes as Markdown"
 msgstr ""
 
@@ -3267,7 +3267,7 @@ msgstr ""
 msgid "PNG (.png)"
 msgstr ""
 
-#: classicsync/cli_palm.py:35
+#: classicsync/cli_palm.py:36
 msgid "Palm OS {version}, desktop link protocol {major}.{minor}"
 msgstr ""
 
@@ -4095,7 +4095,7 @@ msgstr ""
 msgid "Storage free"
 msgstr ""
 
-#: classicsync/sync/folder.py:342 classicsync/sync/providers/notes/provider.py:222
+#: classicsync/sync/folder.py:342 classicsync/sync/providers/notes/provider.py:237
 msgid "Subfolder depth"
 msgstr ""
 
@@ -4291,7 +4291,7 @@ msgstr ""
 msgid "Synchronizing"
 msgstr ""
 
-#: classicsync/sync/engine.py:422
+#: classicsync/sync/engine.py:424
 msgid "Synchronizing {device} with {provider}"
 msgstr ""
 
@@ -4415,7 +4415,7 @@ msgstr ""
 msgid "The following information type on your mobile device has items that have not been synchronized with this computer before."
 msgstr ""
 
-#: classicsync/cli_palm.py:77
+#: classicsync/cli_palm.py:78
 msgid "The handheld will restart to finish installing."
 msgstr ""
 
@@ -4747,7 +4747,7 @@ msgstr ""
 msgid "User name"
 msgstr ""
 
-#: classicsync/cli_palm.py:37
+#: classicsync/cli_palm.py:38
 msgid "User: {user}"
 msgstr ""
 
@@ -4775,7 +4775,7 @@ msgstr ""
 msgid "Views"
 msgstr ""
 
-#: classicsync/cli_palm.py:29 classicsync/cli_palm.py:44 classicsync/cli_palm.py:68 classicsync/cli_palm.py:81 classicsync/cli_palm.py:94
+#: classicsync/cli_palm.py:30 classicsync/cli_palm.py:45 classicsync/cli_palm.py:69 classicsync/cli_palm.py:82 classicsync/cli_palm.py:90
 msgid "Waiting for a Palm handheld: press the HotSync button on the cradle."
 msgstr ""
 
@@ -4839,7 +4839,7 @@ msgstr ""
 msgid "When would you like Auto Connect enabled?"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:219
+#: classicsync/sync/providers/notes/provider.py:234
 msgid "Where the Markdown copies of notes are kept. Empty: a Notes folder in the device's synchronization folder."
 msgstr ""
 
@@ -4999,7 +4999,7 @@ msgstr ""
 msgid "artwork directory (default: <data directory>/artwork)"
 msgstr ""
 
-#: classicsync/cli_palm.py:50
+#: classicsync/cli_palm.py:51
 msgid "backed up {name} ({count} entries)"
 msgstr ""
 
@@ -5115,7 +5115,7 @@ msgstr ""
 msgid "copy a file to the device"
 msgstr ""
 
-#: classicsync/cli_palm.py:133
+#: classicsync/cli_palm.py:129
 msgid "copy the handheld's databases to .pdb and .prc files"
 msgstr ""
 
@@ -5183,7 +5183,7 @@ msgstr ""
 msgid "e.g. HKCU\\ControlPanel\\Comm"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:27
+#: classicsync/sync/providers/notes/provider.py:30
 msgid "edited"
 msgstr ""
 
@@ -5219,7 +5219,7 @@ msgstr ""
 msgid "folder not empty"
 msgstr ""
 
-#: classicsync/cli_palm.py:151 classicsync/cli_sync.py:266
+#: classicsync/cli_palm.py:147 classicsync/cli_sync.py:266
 msgid "folder provider: where to keep the desktop copies"
 msgstr ""
 
@@ -5239,11 +5239,11 @@ msgstr ""
 msgid "implicit, converted on next connect"
 msgstr ""
 
-#: classicsync/cli_palm.py:135
+#: classicsync/cli_palm.py:131
 msgid "include databases HotSync would leave out"
 msgstr ""
 
-#: classicsync/cli_palm.py:131
+#: classicsync/cli_palm.py:127
 msgid "include databases in ROM"
 msgstr ""
 
@@ -5251,7 +5251,7 @@ msgstr ""
 msgid "input format"
 msgstr ""
 
-#: classicsync/cli_palm.py:138
+#: classicsync/cli_palm.py:134
 msgid "install .prc, .pdb or .pqa files on the handheld"
 msgstr ""
 
@@ -5279,7 +5279,7 @@ msgstr ""
 msgid "installed package"
 msgstr ""
 
-#: classicsync/cli_palm.py:75
+#: classicsync/cli_palm.py:76
 msgid "installed {name}"
 msgstr ""
 
@@ -5399,7 +5399,7 @@ msgstr ""
 msgid "network sync failed: {error}"
 msgstr ""
 
-#: classicsync/cli_palm.py:16 classicsync/cli_sync.py:183 classicsync/cli_sync.py:163
+#: classicsync/cli_palm.py:17 classicsync/cli_sync.py:183 classicsync/cli_sync.py:163
 msgid "never"
 msgstr ""
 
@@ -5471,7 +5471,7 @@ msgstr ""
 msgid "none"
 msgstr ""
 
-#: classicsync/cli_palm.py:15
+#: classicsync/cli_palm.py:16
 msgid "none (this handheld has never been synchronized)"
 msgstr ""
 
@@ -5523,7 +5523,7 @@ msgstr ""
 msgid "only this device"
 msgstr ""
 
-#: classicsync/cli_palm.py:150
+#: classicsync/cli_palm.py:146
 msgid "only this type (repeatable)"
 msgstr ""
 
@@ -5591,7 +5591,7 @@ msgstr ""
 msgid "reading sector {sector} of {total}"
 msgstr ""
 
-#: classicsync/cli_palm.py:21
+#: classicsync/cli_palm.py:22
 msgid "records"
 msgstr ""
 
@@ -5603,7 +5603,7 @@ msgstr ""
 msgid "reinstall a sync plugin from where it came from, upgrading it"
 msgstr ""
 
-#: classicsync/cli_palm.py:152
+#: classicsync/cli_palm.py:148
 msgid "remember --provider, --only and --folder for this handheld"
 msgstr ""
 
@@ -5639,11 +5639,11 @@ msgstr ""
 msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
 msgstr ""
 
-#: classicsync/cli_palm.py:75
+#: classicsync/cli_palm.py:76
 msgid "replaced {name}"
 msgstr ""
 
-#: classicsync/cli_palm.py:21
+#: classicsync/cli_palm.py:22
 msgid "resource"
 msgstr ""
 
@@ -5659,7 +5659,7 @@ msgstr ""
 msgid "seconds to wait for a device"
 msgstr ""
 
-#: classicsync/cli_palm.py:130 classicsync/cli_palm.py:136 classicsync/cli_palm.py:140 classicsync/cli_palm.py:144 classicsync/cli_palm.py:155
+#: classicsync/cli_palm.py:126 classicsync/cli_palm.py:132 classicsync/cli_palm.py:136 classicsync/cli_palm.py:140 classicsync/cli_palm.py:151
 msgid "seconds to wait for the handheld"
 msgstr ""
 
@@ -5679,7 +5679,7 @@ msgstr ""
 msgid "set the device clock from this computer on connect"
 msgstr ""
 
-#: classicsync/cli_palm.py:142
+#: classicsync/cli_palm.py:138
 msgid "set the handheld's HotSync user name"
 msgstr ""
 
@@ -5727,15 +5727,15 @@ msgstr ""
 msgid "show the connected device's partnership slots"
 msgstr ""
 
-#: classicsync/cli_palm.py:129
+#: classicsync/cli_palm.py:125
 msgid "show the handheld's OS, HotSync user and databases"
 msgstr ""
 
-#: classicsync/cli_palm.py:147 classicsync/cli_sync.py:262
+#: classicsync/cli_palm.py:143 classicsync/cli_sync.py:262
 msgid "show what would change without changing anything"
 msgstr ""
 
-#: classicsync/cli_palm.py:121 classicsync/cli_sync.py:130
+#: classicsync/cli_palm.py:117 classicsync/cli_sync.py:130
 msgid "skipped {error}"
 msgstr ""
 
@@ -5759,12 +5759,12 @@ msgstr ""
 msgid "stopped"
 msgstr ""
 
-#: classicsync/cli_palm.py:148 classicsync/cli_sync.py:263
+#: classicsync/cli_palm.py:144 classicsync/cli_sync.py:263
 msgid "sync provider (default: folder, or the saved one)"
 msgstr ""
 
-#: classicsync/cli_palm.py:146
-msgid "synchronize addresses, the date book and to do items"
+#: classicsync/cli_palm.py:142
+msgid "synchronize addresses, the date book, to do items and memos"
 msgstr ""
 
 #: classicsync/cli_sync.py:261
@@ -5779,7 +5779,7 @@ msgstr ""
 msgid "talk Casio PC Connect (BE-300) instead of ActiveSync; PORT 'usb' means usb:07cf:2002"
 msgstr ""
 
-#: classicsync/cli_palm.py:127
+#: classicsync/cli_palm.py:123
 msgid "talk to a Palm OS handheld over HotSync"
 msgstr ""
 
@@ -5823,7 +5823,7 @@ msgstr ""
 msgid "this device"
 msgstr ""
 
-#: classicsync/cli_palm.py:99
+#: classicsync/cli_palm.py:95
 msgid "this handheld has no HotSync user yet; set one with 'classicsync palm user NAME'"
 msgstr ""
 
@@ -5863,7 +5863,7 @@ msgstr ""
 msgid "waiting for a device on {port}"
 msgstr ""
 
-#: classicsync/cli_palm.py:154
+#: classicsync/cli_palm.py:150
 msgid "what to do when both sides already have items"
 msgstr ""
 
@@ -5887,7 +5887,7 @@ msgstr ""
 msgid "with this one?"
 msgstr ""
 
-#: classicsync/cli_palm.py:119 classicsync/cli_sync.py:128
+#: classicsync/cli_palm.py:115 classicsync/cli_sync.py:128
 msgid "would {action}"
 msgstr ""
 
@@ -5911,7 +5911,7 @@ msgstr ""
 msgid "{count} conflict kept both"
 msgstr ""
 
-#: classicsync/cli_palm.py:38
+#: classicsync/cli_palm.py:39
 msgid "{count} databases:"
 msgstr ""
 
@@ -5995,7 +5995,7 @@ msgstr ""
 msgid "{device} is connected as a guest; run 'classicsync partnership create' or pass --new-partnership"
 msgstr ""
 
-#: classicsync/sync/engine.py:410
+#: classicsync/sync/engine.py:412
 msgid "{device} is connected as a guest; set up a partnership before synchronizing"
 msgstr ""
 
@@ -6015,11 +6015,11 @@ msgstr ""
 msgid "{device}: partnership {partnership}"
 msgstr ""
 
-#: classicsync/cli_palm.py:122 classicsync/cli_sync.py:131 classicsync/cli_sync.py:68
+#: classicsync/cli_palm.py:118 classicsync/cli_sync.py:131 classicsync/cli_sync.py:68
 msgid "{device}: {summary}"
 msgstr ""
 
-#: classicsync/cli_palm.py:122 classicsync/cli_sync.py:131
+#: classicsync/cli_palm.py:118 classicsync/cli_sync.py:131
 msgid "{device}: {summary} (dry run)"
 msgstr ""
 
@@ -6091,7 +6091,7 @@ msgstr ""
 msgid "{name}  ({kind})  created {created}  last sync {last_sync}"
 msgstr ""
 
-#: classicsync/cli_palm.py:17
+#: classicsync/cli_palm.py:18
 msgid "{name} (ID {user_id:#x}, last synchronized {last})"
 msgstr ""
 
@@ -6111,11 +6111,11 @@ msgstr ""
 msgid "{name} could not be converted: {error}"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:172
+#: classicsync/sync/providers/notes/provider.py:187
 msgid "{name} could not be read: {error}"
 msgstr ""
 
-#: classicsync/sync/providers/notes/provider.py:119
+#: classicsync/sync/providers/notes/provider.py:132
 msgid "{name} is an ink note, which is kept as it is on the device; your changes were saved as {copy}"
 msgstr ""
 
@@ -6281,6 +6281,6 @@ msgstr ""
 msgid "{wheel} needs {requirements}, and installing those needs uv or pip"
 msgstr ""
 
-#: classicsync/cli_palm.py:51
+#: classicsync/cli_palm.py:52
 msgid "{written} written, {unchanged} unchanged, {skipped} not backed up"
 msgstr ""

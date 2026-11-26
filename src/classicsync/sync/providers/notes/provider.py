@@ -22,6 +22,9 @@ INK_EXTENSION = ".pwi"
 WORD_EXTENSION = ".pwd"
 KIND_INK = "ink"
 KIND_WORD = "word"
+KIND_TEXT = "text"
+TEXT_EXTENSION = ".txt"
+TEXT_NOTES_PLATFORM = "palm"
 CACHE_FOLDER = "notes"
 INDEX_NAME = "index.json"
 EDITED_SUFFIX = N_("edited")
@@ -49,9 +52,10 @@ def note_kind(device_id):
 class NoteStore(Store):
     object_type = NOTES
 
-    def __init__(self, root, cache_directory, folders, depth, os_major, report, word_documents=True):
+    def __init__(self, root, cache_directory, folders, depth, os_major, report, word_documents=True, text_notes=False):
         self.root = root
         self.word_documents = word_documents
+        self.text_notes = text_notes
         self.cache_directory = cache_directory
         self.raw_directory = cache_directory / "raw"
         self.index_path = cache_directory / INDEX_NAME
@@ -71,6 +75,15 @@ class NoteStore(Store):
 
     def save_index(self):
         write_file_atomically(self.index_path, json.dumps(self.index, indent=1, sort_keys=True).encode("utf-8"))
+
+    def kind_of(self, device_id):
+        return KIND_TEXT if self.text_notes else note_kind(device_id)
+
+    def device_markdown(self, device_object):
+        return device_object.data.decode("utf-8", errors="replace") if self.text_notes else device_markdown(device_object)
+
+    def device_name(self, device_id, device_object):
+        return device_object.path if self.text_notes else device_id
 
     def path_for(self, item_id):
         return self.root.joinpath(*item_id.split("/"))
@@ -129,7 +142,7 @@ class NoteStore(Store):
         if stale:
             self.save_index()
         return {item_id: text_hash(path.read_bytes()) for item_id, path in found.items()
-                if self.word_documents or item_id in self.index}
+                if self.word_documents or self.text_notes or item_id in self.index}
 
     def device_id_for(self, item_id):
         stem = item_id[:-len(MARKDOWN_EXTENSION)]
@@ -140,6 +153,8 @@ class NoteStore(Store):
 
     def read_item(self, item_id, device_id):
         markdown = self.path_for(item_id).read_bytes()
+        if self.text_notes:
+            return DeviceFile(item_id[:-len(MARKDOWN_EXTENSION)] + TEXT_EXTENSION, markdown, self.modified(item_id))
         raw = self.raw_data(device_id)
         if raw is not None and (is_pwi(raw) or self.index.get(item_id, {}).get("hash") == text_hash(markdown)):
             return DeviceFile(device_id, raw, self.modified(item_id))
@@ -161,24 +176,24 @@ class NoteStore(Store):
 
     def remember(self, item_id, device_id, device_object):
         write_file_atomically(self.raw_path(device_id), device_object.data)
-        self.index[item_id] = {"device": device_id, "kind": note_kind(device_id),
+        self.index[item_id] = {"device": device_id, "kind": self.kind_of(device_id),
                                "hash": text_hash(self.path_for(item_id).read_bytes())}
         self.save_index()
 
     def write_item(self, item_id, device_id, device_object):
         try:
-            markdown = device_markdown(device_object).encode("utf-8")
+            markdown = self.device_markdown(device_object).encode("utf-8")
         except (ConversionError, ValueError) as error:
             raise ValueError(_("{name} could not be read: {error}").format(name=device_object.path, error=error)) from error
         device_id = device_id or device_object.path
-        item_id = item_id or self.item_id_for(device_id)
+        item_id = item_id or self.item_id_for(self.device_name(device_id, device_object))
         self.write_markdown(item_id, markdown)
         self.remember(item_id, device_id, device_object)
         return item_id, text_hash(markdown)
 
     def device_updated(self, item_id, device_id, device_object):
         write_file_atomically(self.raw_path(device_id), device_object.data)
-        self.index[item_id] = {"device": device_id, "kind": note_kind(device_id),
+        self.index[item_id] = {"device": device_id, "kind": self.kind_of(device_id),
                                "hash": text_hash(self.path_for(item_id).read_bytes())}
         self.save_index()
 
@@ -190,17 +205,17 @@ class NoteStore(Store):
         self.save_index()
 
     def find_match(self, device_id, device_object, unmatched_item_ids):
-        wanted = (posixpath.splitext(device_id)[0] + MARKDOWN_EXTENSION).lower()
+        wanted = (posixpath.splitext(self.device_name(device_id, device_object))[0] + MARKDOWN_EXTENSION).lower()
         return next((item_id for item_id in unmatched_item_ids if item_id.lower() == wanted), None)
 
     def same_content(self, item_id, device_id, device_object):
         try:
-            return device_markdown(device_object).encode("utf-8") == self.path_for(item_id).read_bytes()
+            return self.device_markdown(device_object).encode("utf-8") == self.path_for(item_id).read_bytes()
         except (ConversionError, ValueError):
             return False
 
     def describe_device(self, device_id, device_object):
-        return device_id
+        return self.device_name(device_id, device_object)
 
 
 def notes_root(settings, device_name):
@@ -242,7 +257,8 @@ class NotesProvider(Provider):
         if object_type.key != NOTES.key:
             raise ValueError(f"notes provider does not handle {object_type.key}")
         return NoteStore(self.root, self.context.partnership_directory / CACHE_FOLDER, self.folders, self.depth,
-                         self.context.device.os_major, self.context.message, self.word_documents)
+                         self.context.device.os_major, self.context.message, self.word_documents,
+                         self.context.device.extra.get("platform") == TEXT_NOTES_PLATFORM)
 
 
 PROVIDERS = [NotesProvider]

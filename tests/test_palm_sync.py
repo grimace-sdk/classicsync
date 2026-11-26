@@ -183,6 +183,9 @@ def handheld_databases():
         "DatebookDB": {"app_info": category_block(["Unfiled"]), "records": [(0x400002, 0x40, 0, appointment)]},
         "ToDoDB": {"app_info": category_block(["Unfiled", "Business", "Personal"]),
                    "records": [(0x400003, 0x40, 2, records.build_todo(records.ToDo("Buy batteries", priority=2)))]},
+        "MemoDB": {"app_info": category_block(["Unfiled", "Business", "Personal"]),
+                   "records": [(0x400004, 0x40, 1, records.build_memo("Shopping list\nmilk: 2 pints\n")),
+                               (0x400005, 0x40, 0, records.build_memo("Unfiled thought"))]},
     }
 
 
@@ -218,6 +221,27 @@ def test_palm_sync_copies_handheld_records_and_back(run, tmp_path):
     assert record_id == 0x400003 and records.parse_todo(data).description == "Buy AA batteries"
     assert records.parse_categories(databases["ToDoDB"]["app_info"]).name_of(category) == "Errands"
     assert palm.user["pc"] == 0x0BEE and palm.user["id"] == 0x1234
+
+
+def test_palm_memos_sync_as_markdown_files(run, tmp_path):
+    databases = handheld_databases()
+    partnership = create_palm_partnership("Phil Howard", 0x1234, base=tmp_path / "partnerships")
+    folder = tmp_path / "desktop"
+    report = run(lambda: sync_once(FakePalm(databases), partnership, folder))
+    assert not report.errors
+    notes = folder / "Notes"
+    assert (notes / "Business" / "Shopping list.md").read_text() == "Shopping list\nmilk: 2 pints\n"
+    assert (notes / "Unfiled thought.md").read_text() == "Unfiled thought"
+
+    (notes / "Business" / "Shopping list.md").write_text("Shopping list\nmilk: 2 pints\nbread\n")
+    (notes / "Ideas").mkdir()
+    (notes / "Ideas" / "Garden.md").write_text("Garden\nplant leeks")
+    report = run(lambda: sync_once(FakePalm(databases), partnership, folder))
+    assert not report.errors
+    memos = {records.parse_memo(data): (record_id, category) for record_id, _a, category, data in databases["MemoDB"]["records"]}
+    assert memos["Shopping list\nmilk: 2 pints\nbread\n"][0] == 0x400004
+    categories = records.parse_categories(databases["MemoDB"]["app_info"])
+    assert categories.name_of(memos["Garden\nplant leeks"][1]) == "Ideas"
 
 
 def test_extra_phones_overflow_into_free_fields():

@@ -139,10 +139,10 @@ def add_commands(subparsers):
     user.add_argument("name")
     user.add_argument("--wait", type=float, default=DEFAULT_WAIT, help=_("seconds to wait for the handheld"))
     user.set_defaults(handler=command_palm_user)
-    sync = palm_commands.add_parser("sync", help=_("synchronize addresses, the date book and to do items"))
+    sync = palm_commands.add_parser("sync", help=_("synchronize addresses, the date book, to do items and memos"))
     sync.add_argument("--dry-run", action="store_true", help=_("show what would change without changing anything"))
     sync.add_argument("--provider", help=_("sync provider (default: folder, or the saved one)"))
-    sync.add_argument("--only", action="append", metavar="TYPE", choices=["contacts", "calendar", "tasks"],
+    sync.add_argument("--only", action="append", metavar="TYPE", choices=["contacts", "calendar", "tasks", "notes"],
                       help=_("only this type (repeatable)"))
     sync.add_argument("--folder", help=_("folder provider: where to keep the desktop copies"))
     sync.add_argument("--save", action="store_true", help=_("remember --provider, --only and --folder for this handheld"))
