@@ -1,9 +1,8 @@
-import asyncio
 import sys
 
 from . import cli
 from .connection.status_channel import (
-    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, up_to_date_text,
+    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, ProgressRelay, sync_result,
 )
 from .i18n import _, ngettext
 from .sync import (
@@ -52,41 +51,25 @@ def device_os_major(desktop):
 
 
 async def sync_once(desktop, status):
+    relay = None
     if status is not None:
         await status.started()
-    pending = set()
-
-    def progress(update):
-        if status is None:
-            return
-        if update.message:
-            task = asyncio.create_task(status.text(update.message))
-        elif update.total:
-            task = asyncio.create_task(status.progress(update.done, update.total))
-        else:
-            return
-        pending.add(task)
-        task.add_done_callback(pending.discard)
-
+        relay = ProgressRelay(status)
     client = await desktop.open_rapi()
     try:
         lookup = await find_partnership(client)
-        failed = lookup.partnership is None
-        clean = False
-        if failed:
+        if lookup.partnership is None:
             summary = _("{device} is connected as a guest").format(device=lookup.device_name)
+            result, failed = summary, True
         else:
-            report = await synchronize(client, lookup.partnership, progress=progress)
+            report = await synchronize(client, lookup.partnership, progress=relay)
             summary = report.summary()
-            failed = bool(report.errors) or any(action.error for action in report.actions)
-            clean = not failed and not report.unresolved
+            result, failed = sync_result(report, device_os_major(desktop))
         print(_("{device}: {summary}").format(device=lookup.device_name, summary=summary), file=sys.stderr)
     finally:
         client.close()
-    if pending:
-        await asyncio.gather(*pending, return_exceptions=True)
-    result = up_to_date_text(device_os_major(desktop)) if clean else summary
     if status is not None:
+        await relay.flush()
         await status.finished(result, error=failed)
     return result
 
@@ -96,15 +79,15 @@ async def remote_sync(desktop):
     if status is not None and not await status.wait_for_device(REMOTE_STATUS_WAIT):
         print(_("the device did not open its sync status connection"), file=sys.stderr)
         status = None
-    result = await sync_once(desktop, status)
+    await sync_once(desktop, status)
     if status is None:
         return
     while desktop.device is not None:
         request = await status.next_request()
         if request == REQUEST_STATUS:
-            await status.text(result)
+            await status.repeat()
         elif request == REQUEST_SYNC:
-            result = await sync_once(desktop, status)
+            await sync_once(desktop, status)
         elif request == REQUEST_SYNC_CANCEL:
             print(_("the device asked to cancel; this synchronization can't be stopped part way yet"), file=sys.stderr)
         elif request == REQUEST_CLOSED:

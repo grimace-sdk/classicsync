@@ -29,6 +29,12 @@ def up_to_date_text(os_major):
     return UP_TO_DATE_TOKEN if os_major >= UP_TO_DATE_TOKEN_MAJOR else UP_TO_DATE
 
 
+def sync_result(report, os_major):
+    failed = bool(report.errors) or any(action.error for action in report.actions)
+    clean = not failed and not report.unresolved
+    return (up_to_date_text(os_major) if clean else report.summary()), failed
+
+
 def text_message(message_type, text):
     data = (text.encode("utf-16-le")[:MAX_FIELD - 3] + b"\0\0")
     return header(message_type, len(data)) + data
@@ -43,6 +49,8 @@ class StatusChannel:
         self.connected = asyncio.Event()
         self.requests = asyncio.Queue()
         self.reader_task = None
+        self.seen = False
+        self.last_text = ""
 
     async def start(self):
         self.server = await asyncio.start_server(self._accepted, self.host, self.port)
@@ -57,8 +65,8 @@ class StatusChannel:
             self.reader_task.cancel()
         log.info("device status channel from %s", writer.get_extra_info("peername"))
         self.writer = writer
-        self.requests = asyncio.Queue()
         self.reader_task = asyncio.create_task(self._read_requests(reader, writer))
+        self.seen = True
         self.connected.set()
 
     async def _read_requests(self, reader, writer):
@@ -102,7 +110,11 @@ class StatusChannel:
         await self.send(header(MESSAGE_CREATE_PROGRESS))
 
     async def text(self, text):
+        self.last_text = text
         await self.send(text_message(MESSAGE_STATUS, text))
+
+    async def repeat(self):
+        await self.send(text_message(MESSAGE_STATUS, self.last_text))
 
     async def progress(self, position, total):
         total = min(total, MAX_FIELD)
@@ -110,6 +122,7 @@ class StatusChannel:
                         header(MESSAGE_PROGRESS_POSITION, min(position, total)))
 
     async def finished(self, text, error=False):
+        self.last_text = text
         await self.send(header(MESSAGE_DESTROY_PROGRESS))
         await self.send(text_message(MESSAGE_ERROR if error else MESSAGE_STATUS, text))
 
@@ -121,3 +134,23 @@ class StatusChannel:
         self.forget()
         if self.server:
             self.server.close()
+
+
+class ProgressRelay:
+    def __init__(self, channel):
+        self.channel = channel
+        self.pending = set()
+
+    def __call__(self, update):
+        if update.message:
+            task = asyncio.create_task(self.channel.text(update.message))
+        elif update.total:
+            task = asyncio.create_task(self.channel.progress(update.done, update.total))
+        else:
+            return
+        self.pending.add(task)
+        task.add_done_callback(self.pending.discard)
+
+    async def flush(self):
+        if self.pending:
+            await asyncio.gather(*self.pending, return_exceptions=True)

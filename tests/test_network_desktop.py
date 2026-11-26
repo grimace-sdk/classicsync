@@ -119,3 +119,23 @@ def test_ce3_devices_get_the_up_to_date_token():
 
     assert up_to_date_text(2) == "Up-to-date."
     assert up_to_date_text(3) == "$UPTODATE$"
+
+
+def test_status_requests_survive_the_device_reopening_its_window(run):
+    from classicsync.connection.status_channel import REQUEST_CLOSED, REQUEST_SYNC, StatusChannel
+
+    async def scenario():
+        channel = StatusChannel("127.0.0.1", 0)
+        await channel.start()
+        reader, writer = await asyncio.open_connection("127.0.0.1", channel.listening_port())
+        writer.write(struct.pack("<I", REQUEST_CLOSED))
+        await writer.drain()
+        assert await asyncio.wait_for(channel.next_request(), 5) == REQUEST_CLOSED
+        waiting = asyncio.create_task(channel.next_request())
+        reader, writer = await asyncio.open_connection("127.0.0.1", channel.listening_port())
+        writer.write(struct.pack("<I", REQUEST_SYNC))
+        await writer.drain()
+        assert await asyncio.wait_for(waiting, 5) == REQUEST_SYNC
+        writer.close()
+        channel.close()
+    run(scenario)

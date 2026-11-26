@@ -190,13 +190,14 @@ class SyncRunner:
 
         def progress(update):
             self.last_progress = update
+            service.status_progress(update)
             wx.CallAfter(self._notify, EVENT_PROGRESS, update)
 
         async def run(client):
             return await synchronize(client, partnership, options, progress, first_sync=self.ask_first_sync,
                                      duplicates=self.ask_duplicates)
 
-        self.future = service.submit(service.with_rapi(run))
+        self.future = service.submit(service.with_sync_status(lambda: service.with_rapi(run)))
         self.future.add_done_callback(lambda future: wx.CallAfter(self._finished, future))
         self._notify(EVENT_STARTED)
         return True
@@ -221,5 +222,5 @@ class SyncRunner:
         self._notify(EVENT_FINISHED, report)
 
     def start_on_connect(self):
-        if self.application.settings.sync_mode == SYNC_MODE_CONNECT:
+        if self.application.settings.sync_mode == SYNC_MODE_CONNECT or self.application.service.remote_sync_requested():
             self.start()

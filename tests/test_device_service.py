@@ -117,3 +117,96 @@ def test_missing_serial_adapter_is_not_an_error_while_usb_is_enabled(run, fake_u
         supervisor.cancel()
         assert all(error is None for state, error in states)
     run(scenario)
+
+
+class FakeNetwork:
+    def __init__(self):
+        self.arrived = asyncio.Event()
+        self.closed = False
+
+    async def wait_for_device(self):
+        await self.arrived.wait()
+        return "network device"
+
+    async def close(self):
+        self.closed = True
+
+
+def with_fake_network(device_service, network):
+    async def open_network():
+        return network if device_service.settings.network_enabled else None
+
+    async def network_session(opened):
+        device_service.sessions.append("network")
+        await asyncio.Event().wait()
+    device_service._open_network = open_network
+    device_service._run_network_session = network_session
+
+
+def test_network_device_replaces_a_waiting_serial_session(run, fake_usb):
+    async def scenario():
+        device_service = make_service(serial_port="/dev/cu.usbserial-10", usb_enabled=False, network_enabled=True)
+        network = FakeNetwork()
+        with_fake_network(device_service, network)
+        supervisor = asyncio.create_task(device_service._supervise())
+        await wait_until(lambda: device_service.sessions == ["/dev/cu.usbserial-10"])
+        network.arrived.set()
+        await wait_until(lambda: "network" in device_service.sessions)
+        supervisor.cancel()
+        assert device_service.sessions == ["/dev/cu.usbserial-10", "closed /dev/cu.usbserial-10", "network"]
+    run(scenario)
+
+
+def test_network_only_waits_for_a_device(run, fake_usb):
+    async def scenario():
+        device_service = make_service(serial_enabled=False, usb_enabled=False, network_enabled=True)
+        network = FakeNetwork()
+        with_fake_network(device_service, network)
+        supervisor = asyncio.create_task(device_service._supervise())
+        await wait_until(lambda: device_service.state == STATE_WAITING)
+        assert device_service.sessions == []
+        network.arrived.set()
+        await wait_until(lambda: device_service.sessions == ["network"])
+        supervisor.cancel()
+    run(scenario)
+
+
+def test_unavailable_network_alone_is_reported(run, fake_usb):
+    async def scenario():
+        device_service = make_service(serial_enabled=False, usb_enabled=False, network_enabled=True)
+        errors = []
+        device_service.notify = lambda state, announcement, error: errors.append(error)
+
+        async def no_network():
+            return None
+        device_service._open_network = no_network
+        supervisor = asyncio.create_task(device_service._supervise())
+        await wait_until(lambda: any(errors))
+        supervisor.cancel()
+    run(scenario)
+
+
+def test_gui_sync_reports_to_a_remote_device(run):
+    import struct
+    from types import SimpleNamespace
+
+    from classicsync.connection.status_channel import StatusChannel
+
+    async def scenario():
+        device_service = make_service()
+        status = StatusChannel("127.0.0.1", 0)
+        await status.start()
+        device_service.network = device_service.desktop = SimpleNamespace(status=status)
+        device_service.announcement = SimpleNamespace(info=SimpleNamespace(remote_sync=True, os_major=3))
+        reader, writer = await asyncio.open_connection("127.0.0.1", status.listening_port())
+        assert await status.wait_for_device(5)
+
+        async def operation():
+            return SimpleNamespace(errors=[], actions=[], unresolved=[], summary=lambda: "nothing to do")
+        await device_service.with_sync_status(operation)
+        final = "$UPTODATE$\0".encode("utf-16-le")
+        expected = struct.pack("<II", 0x005A0000, 0x005B0000) + struct.pack("<I", 0x00010000 | len(final)) + final
+        assert await asyncio.wait_for(reader.readexactly(len(expected)), 5) == expected
+        writer.close()
+        status.close()
+    run(scenario)

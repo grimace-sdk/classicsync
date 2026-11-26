@@ -320,6 +320,11 @@ class CeServicesFrontend(Frontend):
         self.settings.save()
         self.application.apply_settings(True)
 
+    def toggle_network_connection(self):
+        self.settings.network_enabled = not self.settings.network_enabled
+        self.settings.save()
+        self.application.apply_settings(True)
+
     def show_device_properties(self, parent, name):
         with DevicePropertiesSheet(parent, self, self.service.announcement, name) as dialog:
             dialog.ShowModal()

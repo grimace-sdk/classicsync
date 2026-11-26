@@ -103,7 +103,7 @@ HELP_TEXT = {
 }
 
 UNAVAILABLE = {
-    ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_ENABLE_NETWORK, ID_UNDO, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS,
+    ID_HELP_TOPICS, ID_TROUBLESHOOTER, ID_UNDO, ID_LINE_UP_ICONS, ID_FOLDER_OPTIONS,
     ID_EXPLORE,
 } | {identifier for identifier, label in filter(None, WEB_ITEMS)}
 
@@ -683,6 +683,8 @@ class MobileDevicesWindow(wx.Frame):
             self.frontend.show_connection_settings(self)
         elif identifier == ID_ENABLE_SERIAL:
             self.frontend.toggle_serial_connection()
+        elif identifier == ID_ENABLE_NETWORK:
+            self.frontend.toggle_network_connection()
         elif identifier == ID_ACTIVESYNC_STATUS:
             self.frontend.show_sync_status()
         elif identifier == ID_SYNCHRONIZE_NOW:

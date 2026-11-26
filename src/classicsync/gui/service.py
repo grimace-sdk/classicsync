@@ -4,8 +4,12 @@ import logging
 import threading
 from datetime import datetime, timezone
 
-from ..connection.dccm import STATUS_NO_PARTNERSHIP
+from ..connection.dccm import STATUS_NETWORK_DISABLED, STATUS_NO_PARTNERSHIP
 from ..connection.desktop import Desktop
+from ..connection.network import NetworkDesktop
+from ..connection.status_channel import (
+    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, ProgressRelay, sync_result,
+)
 from ..connection.scanner import AUTOBAUD_SPEEDS, DTR_DROP_SECONDS
 from ..i18n import _
 from ..link.transport import open_transport, port_has_baud
@@ -24,6 +28,7 @@ STATE_CONNECTED = "connected"
 RESTART_SECONDS = 3.0
 USB_POLL_SECONDS = 0.5
 AUTOBAUD_ATTEMPT_SECONDS = 30.0
+REMOTE_STATUS_WAIT = 30.0
 
 
 class DeviceService:
@@ -42,6 +47,12 @@ class DeviceService:
         self.error = None
         self.request_password = None
         self.usb_ready = None
+        self.network = None
+        self.network_available = None
+        self.status_relay = None
+        self.status_task = None
+        self.on_sync_request = None
+        self.on_sync_cancel = None
 
     def _run_loop(self):
         asyncio.set_event_loop(self.loop)
@@ -81,6 +92,7 @@ class DeviceService:
             except (asyncio.CancelledError, Exception):
                 pass
         await self._close_desktop()
+        await self._close_network()
         self.supervisor = asyncio.create_task(self._supervise())
 
     async def _suspend(self, reason):
@@ -92,12 +104,14 @@ class DeviceService:
                 pass
             self.supervisor = None
         await self._close_desktop()
+        await self._close_network()
         self._set_state(STATE_DISABLED, error=reason)
 
     async def _shutdown(self):
         if self.supervisor:
             self.supervisor.cancel()
         await self._close_desktop()
+        await self._close_network()
 
     def _set_state(self, state, announcement=None, error=None):
         self.state = state
@@ -106,6 +120,9 @@ class DeviceService:
         self.notify(state, announcement, error)
 
     async def _close_desktop(self):
+        if self.status_task:
+            self.status_task.cancel()
+            self.status_task = None
         if self.proxy_server:
             self.proxy_server.close()
             self.proxy_server = None
@@ -117,7 +134,37 @@ class DeviceService:
                 await self.desktop.close()
             except Exception:
                 pass
+            if self.desktop is self.network:
+                self.network = None
             self.desktop = None
+
+    async def _close_network(self):
+        network, self.network = self.network, None
+        if network is not None:
+            await network.close()
+
+    async def _open_network(self):
+        if not self.settings.network_enabled:
+            await self._close_network()
+            self.network_available = None
+            return None
+        if self.network is not None:
+            return self.network
+        network = NetworkDesktop(rapi_address=self.settings.network_device_rapi or None, password_provider=self._password_provider,
+                                 partnership_policy=self._network_policy)
+        try:
+            await network.start()
+        except OSError as error:
+            log.warning("network connections unavailable: %s", error)
+            await network.close()
+            self.network_available = False
+            return None
+        self.network_available = True
+        self.network = network
+        return network
+
+    def is_network(self):
+        return self.desktop is not None and self.desktop is self.network
 
     def _serial_port(self):
         return self.settings.serial_port if self.settings.serial_enabled else ""
@@ -144,7 +191,8 @@ class DeviceService:
     async def _supervise(self):
         while True:
             usb = await self._usb_enabled()
-            if not (self._serial_port() or usb):
+            if not (self._serial_port() or usb or self.settings.network_enabled):
+                await self._close_network()
                 self._set_state(STATE_DISABLED)
                 return
             try:
@@ -173,31 +221,65 @@ class DeviceService:
         if spec:
             await self._run_session(spec)
             return
-        if not usb:
+        network = await self._open_network()
+        watches = {}
+        if usb:
+            watches[asyncio.create_task(self._usb_while_waiting())] = "usb"
+        if network:
+            watches[asyncio.create_task(network.wait_for_device())] = "network"
+        if not watches:
+            if not serial_port:
+                raise ConnectionError(_("network connections are not available"))
             await self._run_session(serial_port)
             return
-        if not serial_port:
+        serial_session = None
+        if serial_port:
+            serial_session = asyncio.create_task(self._run_session(serial_port))
+        else:
             self._set_state(STATE_WAITING)
-            await self._run_session(await self._usb_while_waiting())
-            return
-        serial_session = asyncio.create_task(self._run_session(serial_port))
-        usb_watch = asyncio.create_task(self._usb_while_waiting())
+        tasks = set(watches) | ({serial_session} if serial_session else set())
         try:
-            done, pending = await asyncio.wait({serial_session, usb_watch}, return_when=asyncio.FIRST_COMPLETED)
+            done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
         finally:
-            for task in (serial_session, usb_watch):
+            for task in tasks:
                 if not task.done():
                     task.cancel()
         if serial_session in done:
             serial_session.result()
             return
-        try:
-            await serial_session
-        except (asyncio.CancelledError, Exception):
-            pass
-        await self._close_desktop()
-        log.info("USB device %s attached; switching from %s", usb_watch.result(), serial_port)
-        await self._run_session(usb_watch.result())
+        if serial_session:
+            try:
+                await serial_session
+            except (asyncio.CancelledError, Exception):
+                pass
+            await self._close_desktop()
+        winner = next(task for task in watches if task in done)
+        if watches[winner] == "network":
+            winner.result()
+            log.info("network device connected; switching from %s", serial_port or "waiting")
+            await self._run_network_session(network)
+            return
+        await self._close_network()
+        log.info("USB device %s attached; switching from %s", winner.result(), serial_port)
+        await self._run_session(winner.result())
+
+    async def _run_network_session(self, network):
+        self.desktop = network
+        if network.status and network.device and network.device.info and network.device.info.remote_sync:
+            self.status_task = asyncio.create_task(self._relay_status_requests(network.status))
+        await self._serve_session()
+
+    async def _relay_status_requests(self, status):
+        while True:
+            request = await status.next_request()
+            if request == REQUEST_STATUS:
+                await status.repeat()
+            elif request == REQUEST_SYNC and self.on_sync_request:
+                self.on_sync_request()
+            elif request == REQUEST_SYNC_CANCEL and self.on_sync_cancel:
+                self.on_sync_cancel()
+            elif request == REQUEST_CLOSED:
+                log.info("device closed its sync status window")
 
     def _starting_baud(self):
         return self.settings.serial_baud or self.settings.last_baud or AUTOBAUD_SPEEDS[0]
@@ -288,6 +370,11 @@ class DeviceService:
             self.settings.save()
         return password
 
+    async def _network_policy(self, announcement):
+        if self.desktop is not None and not self.is_network() and self.state in (STATE_CONNECTING, STATE_CONNECTED):
+            return STATUS_NETWORK_DISABLED
+        return await self._partnership_policy(announcement)
+
     async def _partnership_policy(self, announcement):
         if not announcement.info.remote_sync:
             return 0
@@ -317,6 +404,40 @@ class DeviceService:
                     self.client.close()
                     self.client = None
             raise
+
+    def remote_sync_requested(self):
+        announcement = self.announcement
+        return self.is_network() and announcement is not None and announcement.info is not None and announcement.info.remote_sync
+
+    def status_progress(self, update):
+        if self.status_relay:
+            self.status_relay(update)
+
+    async def with_sync_status(self, operation):
+        status = self.desktop.status if self.is_network() and self.remote_sync_requested() else None
+        if status is not None and not status.seen:
+            await status.wait_for_device(REMOTE_STATUS_WAIT)
+        if status is None or not status.seen:
+            return await operation()
+        relay = ProgressRelay(status)
+        self.status_relay = relay
+        await status.started()
+        try:
+            report = await operation()
+        except asyncio.CancelledError:
+            await relay.flush()
+            await status.finished(status.last_text)
+            raise
+        except Exception as error:
+            await relay.flush()
+            await status.finished(str(error), error=True)
+            raise
+        finally:
+            self.status_relay = None
+        await relay.flush()
+        text, failed = sync_result(report, self.announcement.info.os_major)
+        await status.finished(text, error=failed)
+        return report
 
     async def _sync_clock(self):
         async def set_clock(client):

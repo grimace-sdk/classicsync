@@ -43,6 +43,8 @@ class Application(wx.App):
         self.dock_icon = None
         self.service = DeviceService(self.settings, lambda *state: wx.CallAfter(self.on_state, *state))
         self.service.request_password = lambda announcement, attempt, reply: wx.CallAfter(self._ask_password, announcement, attempt, reply)
+        self.service.on_sync_request = lambda: wx.CallAfter(self.sync.start)
+        self.service.on_sync_cancel = lambda: wx.CallAfter(self.sync.stop)
         self.service.start()
         self.sync = SyncRunner(self)
         self.backup = BackupRunner(self)
@@ -268,7 +270,8 @@ class Application(wx.App):
         if info and info.oem_info:
             rows.append((_("OEM"), info.oem_info))
         if announcement:
-            rows.append((_("Connection"), f"{self.settings.serial_port} ({announcement.address})"))
+            port = _("Network") if self.service.is_network() else self.settings.serial_port
+            rows.append((_("Connection"), f"{port} ({announcement.address})"))
             rows.append((_("Partnership"), self.partnership.name if self.partnership else _("Guest")))
         return rows
 

@@ -24,6 +24,8 @@ SERIAL_READY = N_("Serial port is ready")
 SERIAL_UNAVAILABLE = N_("Port resources are not available")
 SERIAL_DISABLED = N_("Connection disabled")
 NETWORK_DISABLED = N_("Network connections are disabled")
+NETWORK_READY = N_("Network communication is ready")
+NETWORK_UNAVAILABLE = N_("Network resources are not available")
 
 PAGE_WIDTH = 238
 PAGE_HEIGHT = 226
@@ -84,14 +86,14 @@ class CommunicationsPage(wx.Panel):
         place(self, wx.Button, 145, 129, 80, 14, _("&Install New Port")).Enable(False)
 
         place(self, wx.StaticBox, 10, 158, 220, 55, _("Device Connections via Network"))
-        network = place(self, wx.CheckBox, 15, 174, 55, 10, _("Ena&bled"))
-        network.SetValue(settings.network_enabled)
-        network.Enable(False)
+        self.network_enabled = place(self, wx.CheckBox, 15, 174, 55, 10, _("Ena&bled"))
+        self.network_enabled.SetValue(settings.network_enabled)
         place(self, wx.StaticText, 15, 192, 36, 10, _("Status:"), style=wx.ST_NO_AUTORESIZE | wx.ST_ELLIPSIZE_END)
-        place(self, wx.StaticText, 55, 192, 155, 10, _(NETWORK_DISABLED))
+        self.network_status = place(self, wx.StaticText, 55, 192, 155, 10, "")
 
         self.connection_enabled.Bind(wx.EVT_CHECKBOX, self.on_toggle)
         self.serial_enabled.Bind(wx.EVT_CHECKBOX, self.on_toggle)
+        self.network_enabled.Bind(wx.EVT_CHECKBOX, self.on_toggle)
         self.port.Bind(wx.EVT_TEXT, self.on_toggle)
         self.port.Bind(wx.EVT_COMBOBOX, self.on_toggle)
         self.auto_connect.Bind(wx.EVT_BUTTON, self.on_auto_connect)
@@ -105,10 +107,21 @@ class CommunicationsPage(wx.Panel):
     def serial_wanted(self):
         return self.connection_enabled.GetValue() and self.serial_enabled.GetValue()
 
+    def network_wanted(self):
+        return self.connection_enabled.GetValue() and self.network_enabled.GetValue()
+
     def on_toggle(self, event):
         master = self.connection_enabled.GetValue()
         serial = self.serial_wanted()
         self.serial_enabled.Enable(master)
+        self.network_enabled.Enable(master)
+        if not self.network_wanted():
+            network_text = NETWORK_DISABLED
+        elif self.frontend.service.network_available is False:
+            network_text = NETWORK_UNAVAILABLE
+        else:
+            network_text = NETWORK_READY
+        self.network_status.SetLabel(_(network_text))
         for control in (self.auto_connect, self.port):
             control.Enable(serial)
         port = self.port.GetValue().strip()
@@ -128,8 +141,10 @@ class CommunicationsPage(wx.Panel):
     def apply(self, settings):
         baud = SPEEDS[self.speed.GetSelection()]
         port = self.port.GetValue().strip()
-        changed = (settings.serial_enabled != self.serial_wanted() or settings.serial_port != port or settings.serial_baud != baud)
+        changed = (settings.serial_enabled != self.serial_wanted() or settings.serial_port != port or settings.serial_baud != baud
+                   or settings.network_enabled != self.network_wanted())
         settings.serial_enabled = self.serial_wanted()
+        settings.network_enabled = self.network_wanted()
         settings.serial_port = port
         settings.serial_baud = baud
         return changed

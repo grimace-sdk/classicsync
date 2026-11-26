@@ -73,11 +73,11 @@ class ConnectionSettingsDialog(wx.Dialog):
         self.usb_enabled.SetValue(settings.usb_enabled)
         place(self, wx.StaticText, 21, 130, 27, 10, _("Status:"))
         place(self, wx.StaticText, 50, 130, 155, 10, usb_status())
-        network = place(self, wx.CheckBox, 8, 149, 216, 19,
-                        _("Allow &network (Ethernet) and Remote Access Service (RAS) server connection with this desktop computer."))
-        network.Enable(False)
+        self.network_enabled = place(self, wx.CheckBox, 8, 149, 216, 19,
+                                     _("Allow &network (Ethernet) and Remote Access Service (RAS) server connection with this desktop computer."))
+        self.network_enabled.SetValue(settings.network_enabled)
         place(self, wx.StaticText, 21, 173, 27, 10, _("Status:"))
-        place(self, wx.StaticText, 50, 173, 155, 10, _("Network is not available"))
+        self.network_status = place(self, wx.StaticText, 50, 173, 155, 10, "")
 
         place(self, wx.StaticBox, 8, 191, 221, 30, _("Status icon"))
         self.show_icon = place(self, wx.CheckBox, 15, 204, 190, 10, _("Show status &icon in Taskbar."))
@@ -87,10 +87,12 @@ class ConnectionSettingsDialog(wx.Dialog):
         place(self, wx.Button, 149, 230, 52, 15, _("Cancel"), id=wx.ID_CANCEL)
 
         self.serial_enabled.Bind(wx.EVT_CHECKBOX, self.on_serial_toggle)
+        self.network_enabled.Bind(wx.EVT_CHECKBOX, self.on_network_toggle)
         self.port.Bind(wx.EVT_TEXT, self.on_port_change)
         self.port.Bind(wx.EVT_COMBOBOX, self.on_port_change)
         self.Bind(wx.EVT_BUTTON, self.on_ok, id=wx.ID_OK)
         self.on_serial_toggle(None)
+        self.on_network_toggle(None)
         self.update_state(application.service.state)
         self.CentreOnScreen()
 
@@ -109,6 +111,15 @@ class ConnectionSettingsDialog(wx.Dialog):
         self.port.Enable(enabled)
         self.speed.Enable(enabled and port_has_baud(self.port.GetValue()))
         self.on_port_change(None)
+
+    def on_network_toggle(self, event):
+        if not self.network_enabled.GetValue():
+            text = _("Network connections are disabled")
+        elif self.application.service.network_available is False:
+            text = _("Network is not available")
+        else:
+            text = _("Network is available")
+        self.network_status.SetLabel(text)
 
     def on_port_change(self, event):
         port = self.port.GetValue().strip()
@@ -130,8 +141,10 @@ class ConnectionSettingsDialog(wx.Dialog):
     def on_ok(self, event):
         settings = self.application.settings
         changed = (settings.serial_enabled != self.serial_enabled.GetValue() or settings.serial_port != self.port.GetValue().strip()
-                   or settings.serial_baud != SPEEDS[self.speed.GetSelection()] or settings.usb_enabled != self.usb_enabled.GetValue())
+                   or settings.serial_baud != SPEEDS[self.speed.GetSelection()] or settings.usb_enabled != self.usb_enabled.GetValue()
+                   or settings.network_enabled != self.network_enabled.GetValue())
         settings.usb_enabled = self.usb_enabled.GetValue()
+        settings.network_enabled = self.network_enabled.GetValue()
         settings.serial_enabled = self.serial_enabled.GetValue()
         settings.serial_port = self.port.GetValue().strip()
         settings.serial_baud = SPEEDS[self.speed.GetSelection()]

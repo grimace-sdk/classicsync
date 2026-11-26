@@ -12,6 +12,7 @@ class Settings:
     usb_enabled: bool = True
     last_baud: int = 0
     network_enabled: bool = False
+    network_device_rapi: str = ""
     show_tray_icon: bool = True
     open_on_connect: bool = True
     sync_clock_on_connect: bool = False

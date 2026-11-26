@@ -69,9 +69,7 @@ class TrayIcon(wx.adv.TaskBarIcon):
             menu.AppendSeparator()
             menu.Append(ID_COMMUNICATIONS, _("&Communications..."))
             menu.AppendCheckItem(ID_ENABLE_SERIAL, _("&Enable Serial Connection")).Check(settings.serial_enabled)
-            network = menu.AppendCheckItem(ID_ENABLE_NETWORK, _("Ena&ble Network Connection"))
-            network.Check(settings.network_enabled)
-            network.Enable(False)
+            menu.AppendCheckItem(ID_ENABLE_NETWORK, _("Ena&ble Network Connection")).Check(settings.network_enabled)
         menu.AppendSeparator()
         menu.Append(ID_GET_CONNECTED, _("&Get Connected..."))
         menu.Append(wx.ID_PREFERENCES, _("{product} &Settings...").format(product=PRODUCT_NAME))
@@ -92,6 +90,8 @@ class TrayIcon(wx.adv.TaskBarIcon):
             self.frontend.show_connection_settings(None)
         elif identifier == ID_ENABLE_SERIAL:
             self.frontend.toggle_serial_connection()
+        elif identifier == ID_ENABLE_NETWORK:
+            self.frontend.toggle_network_connection()
         elif identifier == ID_GET_CONNECTED:
             self.frontend.show_get_connected(None)
         elif identifier == wx.ID_PREFERENCES:
