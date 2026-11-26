@@ -37,6 +37,6 @@ ssh -N -R 15679:127.0.0.1:5679 -R 25999:127.0.0.1:15999 -L 1990:DEVICE_IP:990 GA
 classicsync serve network --network-listen 127.0.0.1:5679 --status-port 15999 --device-rapi 127.0.0.1:1990
 ```
 
-For the app, use the same tunnel but forward to the app's ports (`-R 15679:127.0.0.1:5679 -R 25999:127.0.0.1:999`), and set `"network_device_rapi": "127.0.0.1:1990"` in its `settings.json` (in `~/Library/Application Support/classicsync`, `%APPDATA%\classicsync` or `~/.config/classicsync`) while it isn't running.
+For the app, use the same tunnel but forward to the app's ports (`-R 15679:127.0.0.1:5679 -R 25999:127.0.0.1:999`), and set Device RAPI to `127.0.0.1:1990` in ClassicSync Settings.
 
 On the gateway, relay its own ports 5679 and 999 (on the device's network) to 15679 and 25999, with `socat` for example, and point the desktop's name at the gateway's address. Remote forwards bind to the gateway's loopback unless `GatewayPorts` is on in its sshd.

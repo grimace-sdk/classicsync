@@ -16,7 +16,7 @@ class PreferencesDialog(wx.Dialog):
         super().__init__(parent, title=_("{product} Settings").format(product=PRODUCT_NAME))
         self.application = application
         settings = application.settings
-        self.SetClientSize(dialog_size(self, 240, 196))
+        self.SetClientSize(dialog_size(self, 240, 228))
         place(self, wx.StaticText, 8, 8, 224, 18,
               _("Choose which desktop software to recreate. Automatic matches the software to the device's version of Windows CE."))
         place(self, wx.StaticText, 8, 34, 62, 9, _("&Desktop software:"))
@@ -36,16 +36,20 @@ class PreferencesDialog(wx.Dialog):
         place(self, wx.StaticText, 8, 88, 62, 9, _("&Local RAPI address:"))
         self.proxy = place(self, wx.TextCtrl, 72, 86, 90, 12, settings.rapi_proxy)
         place(self, wx.StaticText, 72, 101, 160, 18, _("Command-line tools reach the connected device here."))
-        place(self, wx.StaticLine, 8, 124, 224, 1)
-        place(self, wx.StaticText, 8, 130, 224, 36, disclaimer())
-        place(self, wx.Button, 128, 176, 50, 14, _("OK"), id=wx.ID_OK).SetDefault()
-        place(self, wx.Button, 182, 176, 50, 14, _("Cancel"), id=wx.ID_CANCEL)
+        place(self, wx.StaticText, 8, 120, 62, 9, _("D&evice RAPI:"))
+        self.device_rapi = place(self, wx.TextCtrl, 72, 118, 90, 12, settings.network_device_rapi)
+        place(self, wx.StaticText, 72, 133, 160, 18, _("For network devices reached through a tunnel. Leave empty to use the device's own address."))
+        place(self, wx.StaticLine, 8, 156, 224, 1)
+        place(self, wx.StaticText, 8, 162, 224, 36, disclaimer())
+        place(self, wx.Button, 128, 208, 50, 14, _("OK"), id=wx.ID_OK).SetDefault()
+        place(self, wx.Button, 182, 208, 50, 14, _("Cancel"), id=wx.ID_CANCEL)
         self.Bind(wx.EVT_BUTTON, self.on_ok, id=wx.ID_OK)
         self.CentreOnScreen()
 
     def on_ok(self, event):
         settings = self.application.settings
-        proxy_changed = settings.rapi_proxy != self.proxy.GetValue().strip()
+        device_rapi = self.device_rapi.GetValue().strip()
+        connection_changed = settings.rapi_proxy != self.proxy.GetValue().strip() or settings.network_device_rapi != device_rapi
         language = self.languages[self.language.GetSelection()]
         naming = self.namings[self.naming.GetSelection()]
         presentation_changed = language != settings.language or naming != settings.naming
@@ -53,13 +57,14 @@ class PreferencesDialog(wx.Dialog):
         settings.naming = naming
         settings.language = language
         settings.rapi_proxy = self.proxy.GetValue().strip()
+        settings.network_device_rapi = device_rapi
         settings.save()
         set_naming(naming)
         self.EndModal(wx.ID_OK)
         if presentation_changed:
             wx.MessageBox(_("Naming and language changes take effect the next time {product} starts.").format(product=PRODUCT_NAME),
                           PRODUCT_NAME, wx.OK | wx.ICON_INFORMATION)
-        self.application.apply_settings(proxy_changed)
+        self.application.apply_settings(connection_changed)
 
 
 def show_preferences(parent, application):
