@@ -112,3 +112,10 @@ def test_status_channel_passes_on_the_device_requests(run):
         writer.close()
         channel.close()
     run(scenario)
+
+
+def test_ce3_devices_get_the_up_to_date_token():
+    from classicsync.connection.status_channel import up_to_date_text
+
+    assert up_to_date_text(2) == "Up-to-date."
+    assert up_to_date_text(3) == "$UPTODATE$"

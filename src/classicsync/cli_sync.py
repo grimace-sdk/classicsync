@@ -3,7 +3,7 @@ import sys
 
 from . import cli
 from .connection.status_channel import (
-    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, UP_TO_DATE,
+    REQUEST_CLOSED, REQUEST_STATUS, REQUEST_SYNC, REQUEST_SYNC_CANCEL, up_to_date_text,
 )
 from .i18n import _, ngettext
 from .sync import (
@@ -45,6 +45,12 @@ async def partnership_for_sync(client, arguments):
 REMOTE_STATUS_WAIT = 30.0
 
 
+def device_os_major(desktop):
+    device = getattr(desktop, "device", None)
+    info = getattr(device, "info", None)
+    return info.os_major if info else 0
+
+
 async def sync_once(desktop, status):
     if status is not None:
         await status.started()
@@ -79,7 +85,7 @@ async def sync_once(desktop, status):
         client.close()
     if pending:
         await asyncio.gather(*pending, return_exceptions=True)
-    result = UP_TO_DATE if clean else summary
+    result = up_to_date_text(device_os_major(desktop)) if clean else summary
     if status is not None:
         await status.finished(result, error=failed)
     return result

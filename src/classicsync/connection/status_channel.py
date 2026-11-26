@@ -13,6 +13,8 @@ MESSAGE_PROGRESS_RANGE = 0x005C
 MESSAGE_PROGRESS_POSITION = 0x005D
 MAX_FIELD = 0xFFFF
 UP_TO_DATE = "Up-to-date."
+UP_TO_DATE_TOKEN = "$UPTODATE$"
+UP_TO_DATE_TOKEN_MAJOR = 3
 REQUEST_CLOSED = 0
 REQUEST_STATUS = 1
 REQUEST_SYNC = 2
@@ -21,6 +23,10 @@ REQUEST_SYNC_CANCEL = 3
 
 def header(message_type, value=0):
     return struct.pack("<I", (message_type << 16) | (value & MAX_FIELD))
+
+
+def up_to_date_text(os_major):
+    return UP_TO_DATE_TOKEN if os_major >= UP_TO_DATE_TOKEN_MAJOR else UP_TO_DATE
 
 
 def text_message(message_type, text):
