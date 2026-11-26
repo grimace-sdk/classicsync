@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-from . import cli_artwork, cli_backup, cli_convert, cli_install, cli_plugins, cli_sync, cli_translations
+from . import cli_artwork, cli_backup, cli_convert, cli_install, cli_palm, cli_plugins, cli_sync, cli_translations
 from .connection.desktop import DESKTOP_IP, DEVICE_IP, Desktop
 from .connection.dccm import CONNECTION_PORT
 from .connection.network import DEFAULT_LISTEN, NetworkDesktop
@@ -15,6 +15,7 @@ from .connection.status_channel import STATUS_PORT
 from .gui.settings import Settings
 from .i18n import _, ngettext, set_language
 from .link.transport import open_transport
+from .palm import DlpError
 from .pcconnect import PcConnectSession, open_pc_connect_transport
 from .rapi import cedb
 from .rapi.client import (
@@ -438,7 +439,7 @@ def add_link_arguments(parser):
 
 
 def build_parser():
-    parser = argparse.ArgumentParser(prog="classicsync", description=_("Talk to Windows CE 1.x-3.x devices."))
+    parser = argparse.ArgumentParser(prog="classicsync", description=_("Talk to Windows CE 1.x-3.x and Palm OS devices."))
     parser.add_argument("-v", "--verbose", action="count", default=0)
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -512,6 +513,7 @@ def build_parser():
     cli_sync.add_commands(subparsers, device_command)
     cli_backup.add_commands(subparsers, device_command)
     cli_plugins.add_commands(subparsers)
+    cli_palm.add_commands(subparsers)
     return parser
 
 
@@ -528,7 +530,7 @@ def main(argv=None):
     logging.basicConfig(level=max(logging.DEBUG, level), format="%(name)s: %(message)s")
     try:
         asyncio.run(arguments.handler(arguments))
-    except (TimeoutError, ConnectionError, RapiError, ValueError, OSError, PartnershipError) as error:
+    except (TimeoutError, ConnectionError, RapiError, DlpError, ValueError, OSError, PartnershipError) as error:
         print(f"classicsync: {error}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:
