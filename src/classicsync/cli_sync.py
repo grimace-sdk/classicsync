@@ -1,3 +1,4 @@
+import asyncio
 import sys
 
 from . import cli
@@ -36,6 +37,41 @@ async def partnership_for_sync(client, arguments):
     partnership = await create_partnership(client, partners=lookup.partners)
     print(_("created partnership {partnership}").format(partnership=describe_partnership(partnership)), file=sys.stderr)
     return partnership
+
+
+REMOTE_STATUS_WAIT = 30.0
+
+
+async def remote_sync(desktop):
+    status = desktop.status
+    if status is not None and not await status.wait_for_device(REMOTE_STATUS_WAIT):
+        print(_("the device did not open its sync status connection"), file=sys.stderr)
+    if status is not None:
+        await status.started()
+    pending = set()
+
+    def progress(update):
+        if status is None or not update.message:
+            return
+        task = asyncio.create_task(status.text(update.message))
+        pending.add(task)
+        task.add_done_callback(pending.discard)
+
+    client = await desktop.open_rapi()
+    try:
+        lookup = await find_partnership(client)
+        if lookup.partnership is None:
+            summary = _("{device} is connected as a guest").format(device=lookup.device_name)
+        else:
+            report = await synchronize(client, lookup.partnership, progress=progress)
+            summary = report.summary()
+        print(_("{device}: {summary}").format(device=lookup.device_name, summary=summary), file=sys.stderr)
+    finally:
+        client.close()
+    if pending:
+        await asyncio.gather(*pending, return_exceptions=True)
+    if status is not None:
+        await status.finished(summary)
 
 
 async def command_sync(arguments):

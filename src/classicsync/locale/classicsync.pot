@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-24 17:04+0000\n"
+"POT-Creation-Date: 2026-11-26 15:58+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,11 +27,11 @@ msgstr ""
 msgid "\r\nStatus: "
 msgstr ""
 
-#: classicsync/cli_sync.py:141
+#: classicsync/cli_sync.py:177
 msgid "  slot {slot}: partner {partner} {desktop}"
 msgstr ""
 
-#: classicsync/cli_sync.py:144
+#: classicsync/cli_sync.py:180
 msgid "  {count} free slot"
 msgid_plural "  {count} free slots"
 msgstr[0] ""
@@ -869,7 +869,7 @@ msgstr ""
 msgid "A&utomatically synchronize upon connecting."
 msgstr ""
 
-#: classicsync/cli.py:184
+#: classicsync/cli.py:204
 msgid "AC"
 msgstr ""
 
@@ -2075,7 +2075,7 @@ msgstr ""
 msgid "Device name"
 msgstr ""
 
-#: classicsync/cli.py:56
+#: classicsync/cli.py:62
 msgid "Device password: "
 msgstr ""
 
@@ -2819,7 +2819,7 @@ msgstr ""
 msgid "N&o, I want to synchronize with two computers."
 msgstr ""
 
-#: classicsync/cli.py:393
+#: classicsync/cli.py:413
 msgid "NAND window {sectors} sectors of {size} bytes"
 msgstr ""
 
@@ -3027,11 +3027,11 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: classicsync/cli.py:175
+#: classicsync/cli.py:195
 msgid "Object store: unavailable ({error})"
 msgstr ""
 
-#: classicsync/cli.py:173
+#: classicsync/cli.py:193
 msgid "Object store: {free} free of {total}"
 msgstr ""
 
@@ -3379,7 +3379,7 @@ msgstr ""
 msgid "Port resources are not available"
 msgstr ""
 
-#: classicsync/cli.py:186
+#: classicsync/cli.py:206
 msgid "Power: {source}, main battery {percent}"
 msgstr ""
 
@@ -3423,7 +3423,7 @@ msgstr ""
 msgid "Processor Type:"
 msgstr ""
 
-#: classicsync/cli.py:170
+#: classicsync/cli.py:190
 msgid "Processor: {processor}, page size {page_size}"
 msgstr ""
 
@@ -3431,7 +3431,7 @@ msgstr ""
 msgid "Program description"
 msgstr ""
 
-#: classicsync/cli.py:178
+#: classicsync/cli.py:198
 msgid "Program memory: {free} free of {total}"
 msgstr ""
 
@@ -4271,7 +4271,7 @@ msgstr ""
 msgid "System default"
 msgstr ""
 
-#: classicsync/cli.py:421
+#: classicsync/cli.py:441
 msgid "Talk to Windows CE 1.x-3.x devices."
 msgstr ""
 
@@ -4807,7 +4807,7 @@ msgstr ""
 msgid "While Auto Connect is enabled, your COM port cannot be used for another purpose (such as an external modem or digital camera)."
 msgstr ""
 
-#: classicsync/cli.py:68
+#: classicsync/cli.py:78
 msgid "Windows CE 1.x device at {address}"
 msgstr ""
 
@@ -4827,7 +4827,7 @@ msgstr ""
 msgid "Windows CE {version} (build {build})"
 msgstr ""
 
-#: classicsync/cli.py:168
+#: classicsync/cli.py:188
 msgid "Windows CE {version} build {build} ({platform})"
 msgstr ""
 
@@ -4931,11 +4931,11 @@ msgstr ""
 msgid "already exists"
 msgstr ""
 
-#: classicsync/cli_sync.py:151
+#: classicsync/cli_sync.py:187
 msgid "already partnered: {partnership}"
 msgstr ""
 
-#: classicsync/cli_sync.py:200
+#: classicsync/cli_sync.py:236
 msgid "also clear the partnership on the connected device"
 msgstr ""
 
@@ -4947,7 +4947,7 @@ msgstr ""
 msgid "artwork directory (default: <data directory>/artwork)"
 msgstr ""
 
-#: classicsync/cli.py:184
+#: classicsync/cli.py:204
 msgid "battery"
 msgstr ""
 
@@ -5011,7 +5011,7 @@ msgstr ""
 msgid "choose the sync provider for a partnership"
 msgstr ""
 
-#: classicsync/cli.py:441 classicsync/cli_sync.py:180
+#: classicsync/cli.py:471 classicsync/cli_sync.py:216
 msgid "classicsync serve address (default {address})"
 msgstr ""
 
@@ -5027,19 +5027,19 @@ msgstr ""
 msgid "computer from the list and click Delete to remove that partnership."
 msgstr ""
 
-#: classicsync/cli_sync.py:212
+#: classicsync/cli_sync.py:248
 msgid "conflict policy, one of {policies}, for all types or one type"
 msgstr ""
 
-#: classicsync/cli.py:440 classicsync/cli_sync.py:178
+#: classicsync/cli.py:470 classicsync/cli_sync.py:214
 msgid "connect directly on this serial port or tcp:HOST:PORT instead of using 'serve'"
 msgstr ""
 
-#: classicsync/cli.py:432
+#: classicsync/cli.py:462
 msgid "connect once and report what the device sends"
 msgstr ""
 
-#: classicsync/cli.py:371 classicsync/cli.py:388 classicsync/cli.py:83 classicsync/cli.py:362 classicsync/cli.py:134
+#: classicsync/cli.py:391 classicsync/cli.py:408 classicsync/cli.py:93 classicsync/cli.py:382 classicsync/cli.py:144
 msgid "connected: {device}"
 msgstr ""
 
@@ -5047,15 +5047,15 @@ msgstr ""
 msgid "convert Pocket Word, Pocket Excel and 2bp files to and from desktop formats"
 msgstr ""
 
-#: classicsync/cli_sync.py:29
+#: classicsync/cli_sync.py:30
 msgid "converted the existing {name} partnership (partner {partner})"
 msgstr ""
 
-#: classicsync/cli.py:448
+#: classicsync/cli.py:478
 msgid "copy a file from the device"
 msgstr ""
 
-#: classicsync/cli.py:451
+#: classicsync/cli.py:481
 msgid "copy a file to the device"
 msgstr ""
 
@@ -5071,11 +5071,11 @@ msgstr ""
 msgid "could not start {program}: {error}"
 msgstr ""
 
-#: classicsync/cli.py:455
+#: classicsync/cli.py:485
 msgid "create a device folder"
 msgstr ""
 
-#: classicsync/cli_sync.py:37 classicsync/cli_sync.py:160
+#: classicsync/cli_sync.py:38 classicsync/cli_sync.py:196
 msgid "created partnership {partnership}"
 msgstr ""
 
@@ -5083,23 +5083,23 @@ msgstr ""
 msgid "default"
 msgstr ""
 
-#: classicsync/cli_sync.py:198
+#: classicsync/cli_sync.py:234
 msgid "delete a partnership from this computer"
 msgstr ""
 
-#: classicsync/cli.py:454
+#: classicsync/cli.py:484
 msgid "delete device files"
 msgstr ""
 
-#: classicsync/cli_sync.py:196
+#: classicsync/cli_sync.py:232
 msgid "delete the device's partnership in this slot first (see 'partnership device')"
 msgstr ""
 
-#: classicsync/cli_sync.py:172
+#: classicsync/cli_sync.py:208
 msgid "deleted partnership {partnership}; desktop copies in the sync folder were kept"
 msgstr ""
 
-#: classicsync/connection/desktop.py:78
+#: classicsync/connection/desktop.py:78 classicsync/connection/network.py:205
 msgid "device RAPI server not reachable: {error}"
 msgstr ""
 
@@ -5107,15 +5107,19 @@ msgstr ""
 msgid "device closed the RAPI connection"
 msgstr ""
 
-#: classicsync/cli.py:417
+#: classicsync/connection/network.py:163
+msgid "device disconnected"
+msgstr ""
+
+#: classicsync/cli.py:437
 msgid "device password, if it has one"
 msgstr ""
 
-#: classicsync/cli.py:139
+#: classicsync/cli.py:152
 msgid "disconnected"
 msgstr ""
 
-#: classicsync/cli.py:469
+#: classicsync/cli.py:499
 msgid "e.g. HKCU\\ControlPanel\\Comm"
 msgstr ""
 
@@ -5155,7 +5159,7 @@ msgstr ""
 msgid "folder not empty"
 msgstr ""
 
-#: classicsync/cli_sync.py:210
+#: classicsync/cli_sync.py:246
 msgid "folder provider: where to keep the desktop copies"
 msgstr ""
 
@@ -5167,11 +5171,11 @@ msgstr ""
 msgid "hhpcex11.exe, WCES22-2.EXE or msasync.exe (or another copy of those installers)"
 msgstr ""
 
-#: classicsync/cli.py:425
+#: classicsync/cli.py:445
 msgid "hold the connection to a device and offer RAPI to other commands"
 msgstr ""
 
-#: classicsync/cli_sync.py:124
+#: classicsync/cli_sync.py:160
 msgid "implicit, converted on next connect"
 msgstr ""
 
@@ -5223,7 +5227,7 @@ msgstr ""
 msgid "invalid parameter"
 msgstr ""
 
-#: classicsync/cli_sync.py:107
+#: classicsync/cli_sync.py:143
 msgid "last sync: {stamp}  {result}"
 msgstr ""
 
@@ -5231,7 +5235,7 @@ msgstr ""
 msgid "let wceload ask where to install instead of /noaskdest"
 msgstr ""
 
-#: classicsync/gui/service.py:261
+#: classicsync/gui/service.py:263
 msgid "link closed"
 msgstr ""
 
@@ -5243,15 +5247,15 @@ msgstr ""
 msgid "link did not come up"
 msgstr ""
 
-#: classicsync/cli.py:368
+#: classicsync/cli.py:388
 msgid "link up: desktop {desktop}, device {device}"
 msgstr ""
 
-#: classicsync/cli.py:447
+#: classicsync/cli.py:477
 msgid "list a device folder"
 msgstr ""
 
-#: classicsync/cli.py:474
+#: classicsync/cli.py:504
 msgid "list or dump object store databases"
 msgstr ""
 
@@ -5263,19 +5267,19 @@ msgstr ""
 msgid "list sync plugins and the providers they offer"
 msgstr ""
 
-#: classicsync/cli_sync.py:188
+#: classicsync/cli_sync.py:224
 msgid "list the partnerships on this computer"
 msgstr ""
 
-#: classicsync/cli_sync.py:186
+#: classicsync/cli_sync.py:222
 msgid "list, create and delete partnerships"
 msgstr ""
 
-#: classicsync/cli.py:127
+#: classicsync/cli.py:137
 msgid "listening for a device on {port}; RAPI on {address}"
 msgstr ""
 
-#: classicsync/cli.py:427
+#: classicsync/cli.py:457
 msgid "local RAPI address (default {address})"
 msgstr ""
 
@@ -5283,7 +5287,7 @@ msgstr ""
 msgid "locale directory (default: <data directory>/locale)"
 msgstr ""
 
-#: classicsync/cli_sync.py:219
+#: classicsync/cli_sync.py:255
 msgid "look for items stored twice on this computer and remove the extra copies here and on the device"
 msgstr ""
 
@@ -5303,15 +5307,19 @@ msgstr ""
 msgid "more than one partnership; choose one with --device: {names}"
 msgstr ""
 
-#: classicsync/cli.py:457
+#: classicsync/cli.py:487
 msgid "move or rename a device file"
 msgstr ""
 
-#: classicsync/cli.py:382
+#: classicsync/cli.py:402
 msgid "nand-dump talks to the device directly: give --port and --pc-connect"
 msgstr ""
 
-#: classicsync/cli_sync.py:127 classicsync/cli_sync.py:107
+#: classicsync/cli.py:162
+msgid "network sync failed: {error}"
+msgstr ""
+
+#: classicsync/cli_sync.py:163 classicsync/cli_sync.py:143
 msgid "never"
 msgstr ""
 
@@ -5327,7 +5335,7 @@ msgstr ""
 msgid "no English build of the same product for: {names}"
 msgstr ""
 
-#: classicsync/cli.py:96
+#: classicsync/cli.py:106
 msgid "no classicsync server at {address} ({error}); run 'classicsync serve PORT' or pass --port"
 msgstr ""
 
@@ -5335,7 +5343,7 @@ msgstr ""
 msgid "no collection called {wanted!r} on {server} ({key}); found: {names}"
 msgstr ""
 
-#: classicsync/connection/desktop.py:60 classicsync/gui/service.py:303 classicsync/pcconnect/session.py:152 classicsync/pcconnect/session.py:156
+#: classicsync/connection/desktop.py:60 classicsync/connection/network.py:193 classicsync/connection/network.py:172 classicsync/connection/network.py:176 classicsync/gui/service.py:305 classicsync/pcconnect/session.py:152 classicsync/pcconnect/session.py:156
 msgid "no device connected"
 msgstr ""
 
@@ -5351,15 +5359,15 @@ msgstr ""
 msgid "no more items"
 msgstr ""
 
-#: classicsync/cli_plugins.py:100 classicsync/cli_sync.py:166
+#: classicsync/cli_plugins.py:100 classicsync/cli_sync.py:202
 msgid "no partnership called {name!r}"
 msgstr ""
 
-#: classicsync/cli_sync.py:121
+#: classicsync/cli_sync.py:157
 msgid "no partnerships"
 msgstr ""
 
-#: classicsync/cli_plugins.py:106 classicsync/cli_sync.py:94
+#: classicsync/cli_plugins.py:106 classicsync/cli_sync.py:130
 msgid "no partnerships yet; run 'classicsync partnership create' with a device connected"
 msgstr ""
 
@@ -5427,7 +5435,7 @@ msgstr ""
 msgid "only for these information types, separated by commas (for example contacts,calendar); the rest stay with the current provider"
 msgstr ""
 
-#: classicsync/cli_sync.py:221
+#: classicsync/cli_sync.py:257
 msgid "only this device"
 msgstr ""
 
@@ -5435,7 +5443,7 @@ msgstr ""
 msgid "output format"
 msgstr ""
 
-#: classicsync/cli_sync.py:124
+#: classicsync/cli_sync.py:160
 msgid "partner {partner}"
 msgstr ""
 
@@ -5443,7 +5451,7 @@ msgstr ""
 msgid "partnership name (needed when there is more than one)"
 msgstr ""
 
-#: classicsync/cli_sync.py:199
+#: classicsync/cli_sync.py:235
 msgid "partnership name or partner id"
 msgstr ""
 
@@ -5451,7 +5459,7 @@ msgstr ""
 msgid "path not found"
 msgstr ""
 
-#: classicsync/cli.py:363
+#: classicsync/cli.py:383
 msgid "platform release: {release}"
 msgstr ""
 
@@ -5475,15 +5483,15 @@ msgstr ""
 msgid "provider name"
 msgstr ""
 
-#: classicsync/cli_sync.py:104
+#: classicsync/cli_sync.py:140
 msgid "provider: {provider}"
 msgstr ""
 
-#: classicsync/cli_sync.py:102
+#: classicsync/cli_sync.py:138
 msgid "provider: {provider} ({folder})"
 msgstr ""
 
-#: classicsync/cli.py:467
+#: classicsync/cli.py:497
 msgid "read and write the device registry"
 msgstr ""
 
@@ -5491,11 +5499,11 @@ msgstr ""
 msgid "read failed: {error}"
 msgstr ""
 
-#: classicsync/cli.py:399
+#: classicsync/cli.py:419
 msgid "reading sector {sector} of {total}"
 msgstr ""
 
-#: classicsync/cli.py:267
+#: classicsync/cli.py:287
 msgid "registry path must start with HKLM, HKCU, HKCR or HKU: {path}"
 msgstr ""
 
@@ -5503,7 +5511,7 @@ msgstr ""
 msgid "reinstall a sync plugin from where it came from, upgrading it"
 msgstr ""
 
-#: classicsync/cli_sync.py:213
+#: classicsync/cli_sync.py:249
 msgid "remember --provider, --only, --folder and --conflict for this device"
 msgstr ""
 
@@ -5511,7 +5519,7 @@ msgstr ""
 msgid "remove a program from the device with Unload.exe"
 msgstr ""
 
-#: classicsync/cli.py:456
+#: classicsync/cli.py:486
 msgid "remove an empty device folder"
 msgstr ""
 
@@ -5519,7 +5527,7 @@ msgstr ""
 msgid "remove an installed sync plugin and the packages only it needed"
 msgstr ""
 
-#: classicsync/cli_sync.py:194
+#: classicsync/cli_sync.py:230
 msgid "remove the device's other partnerships (default: keep them; a device holds two)"
 msgstr ""
 
@@ -5531,35 +5539,35 @@ msgstr ""
 msgid "removed {name} from this computer's list"
 msgstr ""
 
-#: classicsync/cli_sync.py:192
+#: classicsync/cli_sync.py:228
 msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
 msgstr ""
 
-#: classicsync/cli.py:464
+#: classicsync/cli.py:494
 msgid "save the whole NAND flash of a Casio BE-300 (with --port and --pc-connect)"
 msgstr ""
 
-#: classicsync/cli.py:405
+#: classicsync/cli.py:425
 msgid "saved {path}"
 msgstr ""
 
-#: classicsync/cli.py:416
+#: classicsync/cli.py:436
 msgid "seconds to wait for a device"
 msgstr ""
 
-#: classicsync/cli.py:426
-msgid "serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP or tcp:HOST:PORT"
+#: classicsync/cli.py:446
+msgid "serial device (/dev/ttyUSB0, /dev/cu.usbserial-X, COM1), usb, usb:VVVV:PPPP, tcp:HOST:PORT, or network to wait for devices syncing over the network"
 msgstr ""
 
-#: classicsync/cli.py:411
+#: classicsync/cli.py:431
 msgid "serial speed (default 19200, or 115200 with --pc-connect)"
 msgstr ""
 
-#: classicsync/cli.py:463
+#: classicsync/cli.py:493
 msgid "set the device clock from this computer"
 msgstr ""
 
-#: classicsync/cli.py:428
+#: classicsync/cli.py:458
 msgid "set the device clock from this computer on connect"
 msgstr ""
 
@@ -5567,11 +5575,11 @@ msgstr ""
 msgid "set the server address first: classicsync plugin configure caldav caldav_url=..."
 msgstr ""
 
-#: classicsync/cli_sync.py:214
+#: classicsync/cli_sync.py:250
 msgid "set up a partnership first if the device is a guest"
 msgstr ""
 
-#: classicsync/cli_sync.py:191
+#: classicsync/cli_sync.py:227
 msgid "set up a partnership with the connected device"
 msgstr ""
 
@@ -5591,7 +5599,7 @@ msgstr ""
 msgid "sheet number to write to CSV (from 0)"
 msgstr ""
 
-#: classicsync/cli.py:446
+#: classicsync/cli.py:476
 msgid "show device version, memory and power"
 msgstr ""
 
@@ -5599,19 +5607,19 @@ msgstr ""
 msgid "show or change a sync provider's settings"
 msgstr ""
 
-#: classicsync/cli_sync.py:220
+#: classicsync/cli_sync.py:256
 msgid "show partnerships and the result of their last sync"
 msgstr ""
 
-#: classicsync/cli_sync.py:189
+#: classicsync/cli_sync.py:225
 msgid "show the connected device's partnership slots"
 msgstr ""
 
-#: classicsync/cli_sync.py:206
+#: classicsync/cli_sync.py:242
 msgid "show what would change without changing anything"
 msgstr ""
 
-#: classicsync/cli_sync.py:74
+#: classicsync/cli_sync.py:110
 msgid "skipped {error}"
 msgstr ""
 
@@ -5619,7 +5627,7 @@ msgstr ""
 msgid "skipped {message}"
 msgstr ""
 
-#: classicsync/cli.py:460
+#: classicsync/cli.py:490
 msgid "start a program on the device"
 msgstr ""
 
@@ -5627,23 +5635,27 @@ msgstr ""
 msgid "started \\Windows\\Unload.exe \"{name}\"; check the device screen"
 msgstr ""
 
-#: classicsync/cli.py:254
+#: classicsync/cli.py:274
 msgid "started process {process}"
 msgstr ""
 
-#: classicsync/cli_sync.py:207
+#: classicsync/connection/network.py:250
+msgid "stopped"
+msgstr ""
+
+#: classicsync/cli_sync.py:243
 msgid "sync provider (default: folder, or the saved one)"
 msgstr ""
 
-#: classicsync/cli_sync.py:205
+#: classicsync/cli_sync.py:241
 msgid "synchronize files, contacts, calendar and tasks with this computer"
 msgstr ""
 
-#: classicsync/cli_sync.py:209
+#: classicsync/cli_sync.py:245
 msgid "synchronize only this type: files, contacts, calendar, tasks or mail (repeatable)"
 msgstr ""
 
-#: classicsync/cli.py:413
+#: classicsync/cli.py:433
 msgid "talk Casio PC Connect (BE-300) instead of ActiveSync; PORT 'usb' means usb:07cf:2002"
 msgstr ""
 
@@ -5667,6 +5679,10 @@ msgstr ""
 msgid "the device did not answer the PC Connect handshake; choose Connect Now on the device"
 msgstr ""
 
+#: classicsync/cli_sync.py:48
+msgid "the device did not open its sync status connection"
+msgstr ""
+
 #: classicsync/sync/mail/device.py:158
 msgid "the device has no room for another Inbox folder"
 msgstr ""
@@ -5687,7 +5703,7 @@ msgstr ""
 msgid "transport closed"
 msgstr ""
 
-#: classicsync/cli.py:71 classicsync/cli.py:184 classicsync/cli.py:185 classicsync/cli.py:363 classicsync/pcconnect/session.py:38 classicsync/pcconnect/session.py:39 classicsync/pcconnect/session.py:39
+#: classicsync/cli.py:81 classicsync/cli.py:204 classicsync/cli.py:205 classicsync/cli.py:383 classicsync/pcconnect/session.py:38 classicsync/pcconnect/session.py:39 classicsync/pcconnect/session.py:39
 msgid "unknown"
 msgstr ""
 
@@ -5695,7 +5711,7 @@ msgstr ""
 msgid "unknown setting {key}; known settings: {keys}"
 msgstr ""
 
-#: classicsync/cli.py:496
+#: classicsync/cli.py:526
 msgid "unrecognized arguments: {arguments}"
 msgstr ""
 
@@ -5707,23 +5723,35 @@ msgstr ""
 msgid "vCard version for new contacts"
 msgstr ""
 
-#: classicsync/cli.py:117
+#: classicsync/cli.py:127
 msgid "waiting for a USB device ({error})"
 msgstr ""
 
-#: classicsync/cli.py:358 classicsync/cli.py:386 classicsync/cli.py:81
+#: classicsync/cli.py:378 classicsync/cli.py:406 classicsync/cli.py:91
 msgid "waiting for a device on {port}"
 msgstr ""
 
-#: classicsync/cli_sync.py:216
+#: classicsync/cli_sync.py:252
 msgid "when both sides already have items of a type never synchronized: combine them (default), replace the device's items with this computer's, or skip the type"
+msgstr ""
+
+#: classicsync/cli.py:449
+msgid "with network: address and port to accept devices on (default {address})"
+msgstr ""
+
+#: classicsync/cli.py:452
+msgid "with network: port the device reports sync status on (default {port}; 0 to turn off)"
+msgstr ""
+
+#: classicsync/cli.py:455
+msgid "with network: reach the device's RAPI here instead of at its own address, for example through an SSH tunnel"
 msgstr ""
 
 #: classicsync/gui/common/replace_dialog.py:73
 msgid "with this one?"
 msgstr ""
 
-#: classicsync/cli_sync.py:72
+#: classicsync/cli_sync.py:108
 msgid "would {action}"
 msgstr ""
 
@@ -5755,7 +5783,7 @@ msgstr ""
 msgid "{count} delete to device"
 msgstr ""
 
-#: classicsync/cli_sync.py:80
+#: classicsync/cli_sync.py:116
 msgid "{count} duplicate item found; run again with --remove-duplicates to remove it"
 msgid_plural "{count} duplicate items found; run again with --remove-duplicates to remove them"
 msgstr[0] ""
@@ -5795,13 +5823,13 @@ msgid_plural "{count} steps failed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli_sync.py:84
+#: classicsync/cli_sync.py:120
 msgid "{count} unresolved conflict; run again with --conflict device or --conflict desktop"
 msgid_plural "{count} unresolved conflicts; run again with --conflict device or --conflict desktop"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli_sync.py:113
+#: classicsync/cli_sync.py:149
 msgid "{count} unresolved: {items}"
 msgid_plural "{count} unresolved: {items}"
 msgstr[0] ""
@@ -5819,7 +5847,11 @@ msgstr ""
 msgid "{database} Options"
 msgstr ""
 
-#: classicsync/cli_sync.py:34
+#: classicsync/cli_sync.py:64
+msgid "{device} is connected as a guest"
+msgstr ""
+
+#: classicsync/cli_sync.py:35
 msgid "{device} is connected as a guest; run 'classicsync partnership create' or pass --new-partnership"
 msgstr ""
 
@@ -5835,19 +5867,19 @@ msgstr ""
 msgid "{device} now synchronizes {types} with {provider}"
 msgstr ""
 
-#: classicsync/cli_sync.py:139
+#: classicsync/cli_sync.py:175
 msgid "{device}: guest"
 msgstr ""
 
-#: classicsync/cli_sync.py:136
+#: classicsync/cli_sync.py:172
 msgid "{device}: partnership {partnership}"
 msgstr ""
 
-#: classicsync/cli_sync.py:75
+#: classicsync/cli_sync.py:111 classicsync/cli_sync.py:68
 msgid "{device}: {summary}"
 msgstr ""
 
-#: classicsync/cli_sync.py:75
+#: classicsync/cli_sync.py:111
 msgid "{device}: {summary} (dry run)"
 msgstr ""
 
@@ -5915,15 +5947,15 @@ msgstr ""
 msgid "{language}: {translations} translations, {derived} without accelerators, {conflicts} conflicts -> {path}"
 msgstr ""
 
-#: classicsync/cli_sync.py:126
+#: classicsync/cli_sync.py:162
 msgid "{name}  ({kind})  created {created}  last sync {last_sync}"
 msgstr ""
 
-#: classicsync/cli_sync.py:22
+#: classicsync/cli_sync.py:23
 msgid "{name} (partner {partner})"
 msgstr ""
 
-#: classicsync/cli.py:70
+#: classicsync/cli.py:80
 msgid "{name} ({platform}, Windows CE {version} build {build}, {processor})"
 msgstr ""
 
@@ -6049,7 +6081,7 @@ msgid_plural "{size} bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli.py:153
+#: classicsync/cli.py:173
 msgid "{source} -> {destination} ({count} byte)"
 msgid_plural "{source} -> {destination} ({count} bytes)"
 msgstr[0] ""
@@ -6063,11 +6095,11 @@ msgstr ""
 msgid "{tool} could not install {spec}:\n{output}"
 msgstr ""
 
-#: classicsync/cli_sync.py:78
+#: classicsync/cli_sync.py:114
 msgid "{type}: first synchronization, {choice}"
 msgstr ""
 
-#: classicsync/cli_sync.py:106
+#: classicsync/cli_sync.py:142
 msgid "{type}: provider {provider}"
 msgstr ""
 
@@ -6075,7 +6107,7 @@ msgstr ""
 msgid "{type}: {collection}"
 msgstr ""
 
-#: classicsync/cli_sync.py:111
+#: classicsync/cli_sync.py:147
 msgid "{type}: {count} item"
 msgid_plural "{type}: {count} items"
 msgstr[0] ""

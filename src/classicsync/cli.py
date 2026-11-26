@@ -11,6 +11,7 @@ from . import cli_artwork, cli_backup, cli_convert, cli_install, cli_plugins, cl
 from .connection.desktop import DESKTOP_IP, DEVICE_IP, Desktop
 from .connection.dccm import CONNECTION_PORT
 from .connection.network import DEFAULT_LISTEN, NetworkDesktop
+from .connection.status_channel import STATUS_PORT
 from .gui.settings import Settings
 from .i18n import _, ngettext, set_language
 from .link.transport import open_transport
@@ -65,7 +66,7 @@ def make_desktop(arguments):
     if arguments.port == NETWORK_PORT:
         host, _separator, port = getattr(arguments, "network_listen", "").rpartition(":")
         return NetworkDesktop(host or DEFAULT_LISTEN, int(port or CONNECTION_PORT), getattr(arguments, "device_rapi", None),
-                              password_provider=ask_password)
+                              password_provider=ask_password, status_port=getattr(arguments, "status_port", STATUS_PORT))
     transport = open_transport(arguments.port, arguments.baud or DEFAULT_BAUD)
     return Desktop(transport, arguments.desktop_ip, arguments.device_ip, password_provider=ask_password)
 
@@ -141,6 +142,9 @@ async def command_serve(arguments):
             await desktop.device_changed.wait()
             if desktop.device:
                 print(_("connected: {device}").format(device=describe_device(desktop.device)), file=sys.stderr)
+                info = getattr(desktop.device, "info", None)
+                if isinstance(desktop, NetworkDesktop) and info is not None and info.remote_sync:
+                    asyncio.create_task(report_failure(cli_sync.remote_sync(desktop)))
                 if arguments.sync_time:
                     async with rapi_session(argparse.Namespace(port=None, connect=arguments.listen)) as client:
                         await sync_clock(client)
@@ -149,6 +153,13 @@ async def command_serve(arguments):
     finally:
         server.close()
         await desktop.close()
+
+
+async def report_failure(coroutine):
+    try:
+        await coroutine
+    except Exception as error:
+        print(_("network sync failed: {error}").format(error=error), file=sys.stderr)
 
 
 async def sync_clock(client):
@@ -437,6 +448,9 @@ def build_parser():
     serve.add_argument("--network-listen", default=f"{DEFAULT_LISTEN}:{CONNECTION_PORT}",
                        help=_("with network: address and port to accept devices on (default {address})").format(
                            address=f"{DEFAULT_LISTEN}:{CONNECTION_PORT}"))
+    serve.add_argument("--status-port", type=int, default=STATUS_PORT,
+                       help=_("with network: port the device reports sync status on (default {port}; 0 to turn off)").format(
+                           port=STATUS_PORT))
     serve.add_argument("--device-rapi", metavar="HOST:PORT",
                        help=_("with network: reach the device's RAPI here instead of at its own address, for example through an "
                               "SSH tunnel"))

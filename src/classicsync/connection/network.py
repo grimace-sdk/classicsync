@@ -4,6 +4,7 @@ import logging
 from ..i18n import _
 from .dccm import CONNECTION_PORT, ConnectionManager, PasswordRejected, encode_password
 from .desktop import PROXY_BUFFER, RAPI_CONNECT_ATTEMPTS, RAPI_PASSWORD_TIMEOUT, RAPI_PORT, RAPI_RETRY_SECONDS
+from .status_channel import STATUS_PORT, StatusChannel
 from ..rapi.client import RapiClient
 
 log = logging.getLogger("classicsync.network")
@@ -117,10 +118,11 @@ class NetworkTransport:
 
 class NetworkDesktop:
     def __init__(self, host=DEFAULT_LISTEN, port=CONNECTION_PORT, rapi_address=None, password_provider=None,
-                 partnership_policy=None):
+                 partnership_policy=None, status_port=STATUS_PORT):
         self.host = host
         self.port = port
         self.rapi_address = rapi_address
+        self.status = StatusChannel(host, status_port) if status_port else None
         self.transport = NetworkTransport(f"network {host}:{port}")
         self.stack = HostStack(host)
         self.connection_manager = ConnectionManager(self.stack, password_provider, partnership_policy, port=port,
@@ -134,6 +136,12 @@ class NetworkDesktop:
         self.link = NetworkLink()
         self.connection_manager.start()
         await self.stack.open_listeners()
+        if self.status:
+            try:
+                await self.status.start()
+            except OSError as error:
+                log.warning("sync status port %d unavailable: %s", self.status.port, error)
+                self.status = None
         self.watch_task = asyncio.create_task(self._watch_devices())
 
     async def _watch_devices(self):
@@ -236,5 +244,7 @@ class NetworkDesktop:
         if self.watch_task:
             self.watch_task.cancel()
         await self.connection_manager.stop()
+        if self.status:
+            self.status.close()
         if self.link:
             self.link.close(_("stopped"))
