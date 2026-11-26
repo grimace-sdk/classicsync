@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: classicsync\n"
-"POT-Creation-Date: 2026-11-26 15:58+0000\n"
+"POT-Creation-Date: 2026-11-26 16:00+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,11 +27,11 @@ msgstr ""
 msgid "\r\nStatus: "
 msgstr ""
 
-#: classicsync/cli_sync.py:177
+#: classicsync/cli_sync.py:184
 msgid "  slot {slot}: partner {partner} {desktop}"
 msgstr ""
 
-#: classicsync/cli_sync.py:180
+#: classicsync/cli_sync.py:187
 msgid "  {count} free slot"
 msgid_plural "  {count} free slots"
 msgstr[0] ""
@@ -4931,11 +4931,11 @@ msgstr ""
 msgid "already exists"
 msgstr ""
 
-#: classicsync/cli_sync.py:187
+#: classicsync/cli_sync.py:194
 msgid "already partnered: {partnership}"
 msgstr ""
 
-#: classicsync/cli_sync.py:236
+#: classicsync/cli_sync.py:243
 msgid "also clear the partnership on the connected device"
 msgstr ""
 
@@ -5011,7 +5011,7 @@ msgstr ""
 msgid "choose the sync provider for a partnership"
 msgstr ""
 
-#: classicsync/cli.py:471 classicsync/cli_sync.py:216
+#: classicsync/cli.py:471 classicsync/cli_sync.py:223
 msgid "classicsync serve address (default {address})"
 msgstr ""
 
@@ -5027,11 +5027,11 @@ msgstr ""
 msgid "computer from the list and click Delete to remove that partnership."
 msgstr ""
 
-#: classicsync/cli_sync.py:248
+#: classicsync/cli_sync.py:255
 msgid "conflict policy, one of {policies}, for all types or one type"
 msgstr ""
 
-#: classicsync/cli.py:470 classicsync/cli_sync.py:214
+#: classicsync/cli.py:470 classicsync/cli_sync.py:221
 msgid "connect directly on this serial port or tcp:HOST:PORT instead of using 'serve'"
 msgstr ""
 
@@ -5075,7 +5075,7 @@ msgstr ""
 msgid "create a device folder"
 msgstr ""
 
-#: classicsync/cli_sync.py:38 classicsync/cli_sync.py:196
+#: classicsync/cli_sync.py:38 classicsync/cli_sync.py:203
 msgid "created partnership {partnership}"
 msgstr ""
 
@@ -5083,7 +5083,7 @@ msgstr ""
 msgid "default"
 msgstr ""
 
-#: classicsync/cli_sync.py:234
+#: classicsync/cli_sync.py:241
 msgid "delete a partnership from this computer"
 msgstr ""
 
@@ -5091,11 +5091,11 @@ msgstr ""
 msgid "delete device files"
 msgstr ""
 
-#: classicsync/cli_sync.py:232
+#: classicsync/cli_sync.py:239
 msgid "delete the device's partnership in this slot first (see 'partnership device')"
 msgstr ""
 
-#: classicsync/cli_sync.py:208
+#: classicsync/cli_sync.py:215
 msgid "deleted partnership {partnership}; desktop copies in the sync folder were kept"
 msgstr ""
 
@@ -5159,7 +5159,7 @@ msgstr ""
 msgid "folder not empty"
 msgstr ""
 
-#: classicsync/cli_sync.py:246
+#: classicsync/cli_sync.py:253
 msgid "folder provider: where to keep the desktop copies"
 msgstr ""
 
@@ -5175,7 +5175,7 @@ msgstr ""
 msgid "hold the connection to a device and offer RAPI to other commands"
 msgstr ""
 
-#: classicsync/cli_sync.py:160
+#: classicsync/cli_sync.py:167
 msgid "implicit, converted on next connect"
 msgstr ""
 
@@ -5227,7 +5227,7 @@ msgstr ""
 msgid "invalid parameter"
 msgstr ""
 
-#: classicsync/cli_sync.py:143
+#: classicsync/cli_sync.py:150
 msgid "last sync: {stamp}  {result}"
 msgstr ""
 
@@ -5267,11 +5267,11 @@ msgstr ""
 msgid "list sync plugins and the providers they offer"
 msgstr ""
 
-#: classicsync/cli_sync.py:224
+#: classicsync/cli_sync.py:231
 msgid "list the partnerships on this computer"
 msgstr ""
 
-#: classicsync/cli_sync.py:222
+#: classicsync/cli_sync.py:229
 msgid "list, create and delete partnerships"
 msgstr ""
 
@@ -5287,7 +5287,7 @@ msgstr ""
 msgid "locale directory (default: <data directory>/locale)"
 msgstr ""
 
-#: classicsync/cli_sync.py:255
+#: classicsync/cli_sync.py:262
 msgid "look for items stored twice on this computer and remove the extra copies here and on the device"
 msgstr ""
 
@@ -5319,7 +5319,7 @@ msgstr ""
 msgid "network sync failed: {error}"
 msgstr ""
 
-#: classicsync/cli_sync.py:163 classicsync/cli_sync.py:143
+#: classicsync/cli_sync.py:170 classicsync/cli_sync.py:150
 msgid "never"
 msgstr ""
 
@@ -5359,15 +5359,15 @@ msgstr ""
 msgid "no more items"
 msgstr ""
 
-#: classicsync/cli_plugins.py:100 classicsync/cli_sync.py:202
+#: classicsync/cli_plugins.py:100 classicsync/cli_sync.py:209
 msgid "no partnership called {name!r}"
 msgstr ""
 
-#: classicsync/cli_sync.py:157
+#: classicsync/cli_sync.py:164
 msgid "no partnerships"
 msgstr ""
 
-#: classicsync/cli_plugins.py:106 classicsync/cli_sync.py:130
+#: classicsync/cli_plugins.py:106 classicsync/cli_sync.py:137
 msgid "no partnerships yet; run 'classicsync partnership create' with a device connected"
 msgstr ""
 
@@ -5435,7 +5435,7 @@ msgstr ""
 msgid "only for these information types, separated by commas (for example contacts,calendar); the rest stay with the current provider"
 msgstr ""
 
-#: classicsync/cli_sync.py:257
+#: classicsync/cli_sync.py:264
 msgid "only this device"
 msgstr ""
 
@@ -5443,7 +5443,7 @@ msgstr ""
 msgid "output format"
 msgstr ""
 
-#: classicsync/cli_sync.py:160
+#: classicsync/cli_sync.py:167
 msgid "partner {partner}"
 msgstr ""
 
@@ -5451,7 +5451,7 @@ msgstr ""
 msgid "partnership name (needed when there is more than one)"
 msgstr ""
 
-#: classicsync/cli_sync.py:235
+#: classicsync/cli_sync.py:242
 msgid "partnership name or partner id"
 msgstr ""
 
@@ -5483,11 +5483,11 @@ msgstr ""
 msgid "provider name"
 msgstr ""
 
-#: classicsync/cli_sync.py:140
+#: classicsync/cli_sync.py:147
 msgid "provider: {provider}"
 msgstr ""
 
-#: classicsync/cli_sync.py:138
+#: classicsync/cli_sync.py:145
 msgid "provider: {provider} ({folder})"
 msgstr ""
 
@@ -5511,7 +5511,7 @@ msgstr ""
 msgid "reinstall a sync plugin from where it came from, upgrading it"
 msgstr ""
 
-#: classicsync/cli_sync.py:249
+#: classicsync/cli_sync.py:256
 msgid "remember --provider, --only, --folder and --conflict for this device"
 msgstr ""
 
@@ -5527,7 +5527,7 @@ msgstr ""
 msgid "remove an installed sync plugin and the packages only it needed"
 msgstr ""
 
-#: classicsync/cli_sync.py:230
+#: classicsync/cli_sync.py:237
 msgid "remove the device's other partnerships (default: keep them; a device holds two)"
 msgstr ""
 
@@ -5539,7 +5539,7 @@ msgstr ""
 msgid "removed {name} from this computer's list"
 msgstr ""
 
-#: classicsync/cli_sync.py:228
+#: classicsync/cli_sync.py:235
 msgid "rename the device first (starts with a letter; A-Z, 0-9 and _)"
 msgstr ""
 
@@ -5575,11 +5575,11 @@ msgstr ""
 msgid "set the server address first: classicsync plugin configure caldav caldav_url=..."
 msgstr ""
 
-#: classicsync/cli_sync.py:250
+#: classicsync/cli_sync.py:257
 msgid "set up a partnership first if the device is a guest"
 msgstr ""
 
-#: classicsync/cli_sync.py:227
+#: classicsync/cli_sync.py:234
 msgid "set up a partnership with the connected device"
 msgstr ""
 
@@ -5607,19 +5607,19 @@ msgstr ""
 msgid "show or change a sync provider's settings"
 msgstr ""
 
-#: classicsync/cli_sync.py:256
+#: classicsync/cli_sync.py:263
 msgid "show partnerships and the result of their last sync"
 msgstr ""
 
-#: classicsync/cli_sync.py:225
+#: classicsync/cli_sync.py:232
 msgid "show the connected device's partnership slots"
 msgstr ""
 
-#: classicsync/cli_sync.py:242
+#: classicsync/cli_sync.py:249
 msgid "show what would change without changing anything"
 msgstr ""
 
-#: classicsync/cli_sync.py:110
+#: classicsync/cli_sync.py:117
 msgid "skipped {error}"
 msgstr ""
 
@@ -5643,15 +5643,15 @@ msgstr ""
 msgid "stopped"
 msgstr ""
 
-#: classicsync/cli_sync.py:243
+#: classicsync/cli_sync.py:250
 msgid "sync provider (default: folder, or the saved one)"
 msgstr ""
 
-#: classicsync/cli_sync.py:241
+#: classicsync/cli_sync.py:248
 msgid "synchronize files, contacts, calendar and tasks with this computer"
 msgstr ""
 
-#: classicsync/cli_sync.py:245
+#: classicsync/cli_sync.py:252
 msgid "synchronize only this type: files, contacts, calendar, tasks or mail (repeatable)"
 msgstr ""
 
@@ -5731,7 +5731,7 @@ msgstr ""
 msgid "waiting for a device on {port}"
 msgstr ""
 
-#: classicsync/cli_sync.py:252
+#: classicsync/cli_sync.py:259
 msgid "when both sides already have items of a type never synchronized: combine them (default), replace the device's items with this computer's, or skip the type"
 msgstr ""
 
@@ -5751,7 +5751,7 @@ msgstr ""
 msgid "with this one?"
 msgstr ""
 
-#: classicsync/cli_sync.py:108
+#: classicsync/cli_sync.py:115
 msgid "would {action}"
 msgstr ""
 
@@ -5783,7 +5783,7 @@ msgstr ""
 msgid "{count} delete to device"
 msgstr ""
 
-#: classicsync/cli_sync.py:116
+#: classicsync/cli_sync.py:123
 msgid "{count} duplicate item found; run again with --remove-duplicates to remove it"
 msgid_plural "{count} duplicate items found; run again with --remove-duplicates to remove them"
 msgstr[0] ""
@@ -5823,13 +5823,13 @@ msgid_plural "{count} steps failed"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli_sync.py:120
+#: classicsync/cli_sync.py:127
 msgid "{count} unresolved conflict; run again with --conflict device or --conflict desktop"
 msgid_plural "{count} unresolved conflicts; run again with --conflict device or --conflict desktop"
 msgstr[0] ""
 msgstr[1] ""
 
-#: classicsync/cli_sync.py:149
+#: classicsync/cli_sync.py:156
 msgid "{count} unresolved: {items}"
 msgid_plural "{count} unresolved: {items}"
 msgstr[0] ""
@@ -5847,7 +5847,7 @@ msgstr ""
 msgid "{database} Options"
 msgstr ""
 
-#: classicsync/cli_sync.py:64
+#: classicsync/cli_sync.py:70
 msgid "{device} is connected as a guest"
 msgstr ""
 
@@ -5867,19 +5867,19 @@ msgstr ""
 msgid "{device} now synchronizes {types} with {provider}"
 msgstr ""
 
-#: classicsync/cli_sync.py:175
+#: classicsync/cli_sync.py:182
 msgid "{device}: guest"
 msgstr ""
 
-#: classicsync/cli_sync.py:172
+#: classicsync/cli_sync.py:179
 msgid "{device}: partnership {partnership}"
 msgstr ""
 
-#: classicsync/cli_sync.py:111 classicsync/cli_sync.py:68
+#: classicsync/cli_sync.py:118 classicsync/cli_sync.py:75
 msgid "{device}: {summary}"
 msgstr ""
 
-#: classicsync/cli_sync.py:111
+#: classicsync/cli_sync.py:118
 msgid "{device}: {summary} (dry run)"
 msgstr ""
 
@@ -5947,7 +5947,7 @@ msgstr ""
 msgid "{language}: {translations} translations, {derived} without accelerators, {conflicts} conflicts -> {path}"
 msgstr ""
 
-#: classicsync/cli_sync.py:162
+#: classicsync/cli_sync.py:169
 msgid "{name}  ({kind})  created {created}  last sync {last_sync}"
 msgstr ""
 
@@ -6095,11 +6095,11 @@ msgstr ""
 msgid "{tool} could not install {spec}:\n{output}"
 msgstr ""
 
-#: classicsync/cli_sync.py:114
+#: classicsync/cli_sync.py:121
 msgid "{type}: first synchronization, {choice}"
 msgstr ""
 
-#: classicsync/cli_sync.py:142
+#: classicsync/cli_sync.py:149
 msgid "{type}: provider {provider}"
 msgstr ""
 
@@ -6107,7 +6107,7 @@ msgstr ""
 msgid "{type}: {collection}"
 msgstr ""
 
-#: classicsync/cli_sync.py:147
+#: classicsync/cli_sync.py:154
 msgid "{type}: {count} item"
 msgid_plural "{type}: {count} items"
 msgstr[0] ""

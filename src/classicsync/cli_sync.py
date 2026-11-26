@@ -51,27 +51,34 @@ async def remote_sync(desktop):
     pending = set()
 
     def progress(update):
-        if status is None or not update.message:
+        if status is None:
             return
-        task = asyncio.create_task(status.text(update.message))
+        if update.message:
+            task = asyncio.create_task(status.text(update.message))
+        elif update.total:
+            task = asyncio.create_task(status.progress(update.done, update.total))
+        else:
+            return
         pending.add(task)
         task.add_done_callback(pending.discard)
 
     client = await desktop.open_rapi()
     try:
         lookup = await find_partnership(client)
-        if lookup.partnership is None:
+        failed = lookup.partnership is None
+        if failed:
             summary = _("{device} is connected as a guest").format(device=lookup.device_name)
         else:
             report = await synchronize(client, lookup.partnership, progress=progress)
             summary = report.summary()
+            failed = bool(report.errors) or any(action.error for action in report.actions)
         print(_("{device}: {summary}").format(device=lookup.device_name, summary=summary), file=sys.stderr)
     finally:
         client.close()
     if pending:
         await asyncio.gather(*pending, return_exceptions=True)
     if status is not None:
-        await status.finished(summary)
+        await status.finished(summary, error=failed)
 
 
 async def command_sync(arguments):

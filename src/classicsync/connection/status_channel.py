@@ -5,12 +5,12 @@ import struct
 log = logging.getLogger("classicsync.status")
 
 STATUS_PORT = 999
-MESSAGE_TEXT = 0x0001
-MESSAGE_FINAL = 0x000A
-MESSAGE_STARTED = 0x005A
-MESSAGE_FINISHED = 0x005B
-MESSAGE_POSITION = 0x005C
-MESSAGE_RANGE = 0x005D
+MESSAGE_STATUS = 0x0001
+MESSAGE_ERROR = 0x000A
+MESSAGE_CREATE_PROGRESS = 0x005A
+MESSAGE_DESTROY_PROGRESS = 0x005B
+MESSAGE_PROGRESS_RANGE = 0x005C
+MESSAGE_PROGRESS_POSITION = 0x005D
 MAX_FIELD = 0xFFFF
 
 
@@ -19,7 +19,7 @@ def header(message_type, value=0):
 
 
 def text_message(message_type, text):
-    data = text.encode("utf-16-le")[:MAX_FIELD & ~1]
+    data = (text.encode("utf-16-le")[:MAX_FIELD - 3] + b"\0\0")
     return header(message_type, len(data)) + data
 
 
@@ -66,18 +66,19 @@ class StatusChannel:
         self.connected.clear()
 
     async def started(self):
-        await self.send(header(MESSAGE_STARTED))
+        await self.send(header(MESSAGE_CREATE_PROGRESS))
 
     async def text(self, text):
-        await self.send(text_message(MESSAGE_TEXT, text))
+        await self.send(text_message(MESSAGE_STATUS, text))
 
     async def progress(self, position, total):
-        await self.send(header(MESSAGE_RANGE, min(total, MAX_FIELD)) + header(MESSAGE_POSITION) +
-                        struct.pack("<I", min(position, total, MAX_FIELD)))
+        total = min(total, MAX_FIELD)
+        await self.send(header(MESSAGE_PROGRESS_RANGE) + struct.pack("<I", total << 16) +
+                        header(MESSAGE_PROGRESS_POSITION, min(position, total)))
 
-    async def finished(self, text):
-        await self.send(header(MESSAGE_FINISHED))
-        await self.send(text_message(MESSAGE_FINAL, text))
+    async def finished(self, text, error=False):
+        await self.send(header(MESSAGE_DESTROY_PROGRESS))
+        await self.send(text_message(MESSAGE_ERROR if error else MESSAGE_STATUS, text))
         if self.writer is not None:
             self.writer.close()
         self.forget()

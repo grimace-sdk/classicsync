@@ -74,11 +74,26 @@ def test_status_channel_sends_the_original_message_sequence(run):
         await channel.finished("nothing to do")
         data = await reader.read()
         assert data[:4] == struct.pack("<I", 0x005A0000)
-        text = "Checking Contacts...".encode("utf-16-le")
+        text = "Checking Contacts...\0".encode("utf-16-le")
         assert data[4:8] == struct.pack("<I", 0x00010000 | len(text)) and data[8:8 + len(text)] == text
         rest = data[8 + len(text):]
-        final = "nothing to do".encode("utf-16-le")
-        assert rest == struct.pack("<I", 0x005B0000) + struct.pack("<I", 0x000A0000 | len(final)) + final
+        final = "nothing to do\0".encode("utf-16-le")
+        assert rest == struct.pack("<I", 0x005B0000) + struct.pack("<I", 0x00010000 | len(final)) + final
+        writer.close()
+        channel.close()
+    run(scenario)
+
+
+def test_status_channel_progress_sets_range_then_position(run):
+    from classicsync.connection.status_channel import StatusChannel
+
+    async def scenario():
+        channel = StatusChannel("127.0.0.1", 0)
+        await channel.start()
+        reader, writer = await asyncio.open_connection("127.0.0.1", channel.listening_port())
+        assert await channel.wait_for_device(5)
+        await channel.progress(3, 10)
+        assert await reader.readexactly(12) == struct.pack("<III", 0x005C0000, 10 << 16, 0x005D0003)
         writer.close()
         channel.close()
     run(scenario)
