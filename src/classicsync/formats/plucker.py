@@ -83,11 +83,14 @@ class PageBuilder:
             self.end_paragraph()
 
     def code(self, code, *data):
+        if self.pending_space and self.current and not self.current.endswith(b" "):
+            self.current += b" "
+        self.pending_space = False
         self.current += function(code, *data)
 
     def new_line(self):
-        self.code(NEW_LINE)
         self.pending_space = False
+        self.code(NEW_LINE)
 
     def end_paragraph(self):
         if self.current.strip(b" "):
