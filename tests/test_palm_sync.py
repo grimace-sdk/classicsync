@@ -215,11 +215,11 @@ def test_palm_sync_copies_handheld_records_and_back(run, tmp_path):
     folder = tmp_path / "desktop"
     report = run(lambda: sync_once(FakePalm(databases), partnership, folder))
     assert not report.errors and report.device == "Phil Howard"
-    contact = next((folder / "contacts").glob("*.vcf")).read_text()
+    contact = next((folder / "Contacts").glob("*.vcf")).read_text()
     assert "Fellows" in contact and "jane@example.com" in contact and "CATEGORIES:Business" in contact
-    event = next((folder / "calendar").glob("*.ics")).read_text()
+    event = next((folder / "Calendar").glob("*.ics")).read_text()
     assert "SUMMARY:Dentist" in event
-    task_path = next((folder / "tasks").glob("*.ics"))
+    task_path = next((folder / "Tasks").glob("*.ics"))
     assert "PRIORITY:3" in task_path.read_text() and "CATEGORIES:Personal" in task_path.read_text()
     assert all(attributes & 0x40 == 0 for database in databases.values() for _id, attributes, _c, _d in database["records"])
 
